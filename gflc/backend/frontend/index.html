@@ -275,6 +275,57 @@
     transition:border-color var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
   .drop:hover{border-color:var(--primary);background:var(--accent);color:var(--fg-2)}
 
+  /* ===== v3 指挥台布局（对标 Linear/Vercel：一屏一个 hero + 指标带 + 队列） ===== */
+  .v3-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .v3-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
+  .v3-c4{grid-column:span 4}.v3-c5{grid-column:span 5}.v3-c6{grid-column:span 6}
+  .v3-c7{grid-column:span 7}.v3-c8{grid-column:span 8}.v3-c12{grid-column:span 12}
+  @media(max-width:900px){.v3-c4,.v3-c5,.v3-c6,.v3-c7,.v3-c8{grid-column:span 12}}
+  .v3-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
+  .v3-hd h1{font-size:20px;font-weight:500;letter-spacing:-.2px;margin:0}
+  .v3-hd .sub{font-size:12.5px;color:var(--muted-foreground);margin-top:3px}
+  .v3-hero .lab{font-size:12px;color:var(--muted-foreground)}
+  .v3-hero .big{font-size:44px;font-weight:500;letter-spacing:-1.4px;line-height:1.05;margin:8px 0 6px}
+  .v3-hero .big small{font-size:14px;font-weight:400;color:var(--muted-foreground);letter-spacing:0;margin-left:6px}
+  .v3-hero .delta{font-size:12.5px;color:var(--muted-foreground)}
+  .v3-hero .delta b{font-weight:500;color:var(--success)}
+  .v3-acts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .v3-sh{font-size:13px;font-weight:500;color:var(--fg-2);margin-bottom:12px;
+    display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .v3-sh .meta{font-size:11.5px;color:var(--muted-foreground);font-family:var(--mono);font-weight:400}
+  .v3-strip{display:flex;align-items:stretch;padding:18px 24px}
+  .v3-strip .m{flex:1;min-width:0;padding:0 20px}
+  .v3-strip .m:first-child{padding-left:0}.v3-strip .m:last-child{padding-right:0}
+  .v3-strip .m+.m{border-left:1px solid var(--border)}
+  .v3-strip .k{font-size:11.5px;color:var(--muted-foreground)}
+  .v3-strip .v{font-size:22px;font-weight:500;letter-spacing:-.5px;line-height:1.25;margin-top:2px}
+  .v3-strip .v small{font-size:12px;color:var(--muted-foreground);font-weight:400;letter-spacing:0;margin-left:3px}
+  .v3-strip .d{font-size:11.5px;color:var(--muted-foreground);margin-top:2px}
+  .v3-strip .d b{font-weight:500}
+  @media(max-width:640px){.v3-strip{flex-wrap:wrap;gap:12px}.v3-strip .m{flex:1 1 40%}.v3-strip .m+.m{border-left:0}}
+  .v3-qrow{position:relative;display:flex;align-items:center;gap:12px;
+    padding:10px;margin:0 -10px;border-radius:6px;overflow:hidden}
+  .v3-qfill{position:absolute;left:0;top:0;bottom:0;z-index:0;border-radius:6px;
+    background:color-mix(in srgb,var(--primary) 10%,transparent)}
+  .v3-qrow>*:not(.v3-qfill){position:relative;z-index:1}
+  .v3-qname{flex:1;min-width:0}
+  .v3-qname .n{font-size:13.5px;font-weight:500}
+  .v3-qname .m{font-size:11.5px;color:var(--muted-foreground);margin-top:2px}
+  .v3-qbar{width:76px;height:4px;border-radius:99px;background:var(--secondary);overflow:hidden;flex:0 0 76px}
+  .v3-qbar i{display:block;height:100%;background:var(--primary);border-radius:99px}
+  .v3-qnum{font-size:13px;font-family:var(--mono);color:var(--fg-2);width:30px;text-align:right}
+  .v3-resume{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+  .v3-resume:last-child{border-bottom:0;padding-bottom:0}
+  .v3-resume:first-child{padding-top:0}
+  .v3-rt{flex:1;min-width:0}
+  .v3-rt .a{font-size:13px;font-weight:500}
+  .v3-rt .b{font-size:11.5px;color:var(--muted-foreground);margin-top:2px}
+  .v3-chart{margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
+  .v3-chart .t{font-size:12px;color:var(--muted-foreground);margin-bottom:8px}
+  .v3-axis{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted-foreground);
+    font-family:var(--mono);margin-top:6px}
+  .v3-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+
   /* ===== 仪表盘 ===== */
   .genbar{display:flex;gap:8px;align-items:center}
   .dash-title{font-size:20px;font-weight:500;letter-spacing:-.3px;line-height:1.3}
@@ -698,7 +749,7 @@ const S = { user:null, tab:'dash', stats:null, docs:[], due:[], qbank:[], plan:n
             banks:[], qChapters:[], studyMode:'quiz', studyChapter:'', studyBank:null,
             vNotes:[], vTpls:['summary','outline','qa'], vActive:'summary', vList:[], vFrames:[], vFrameNote:null, vTitle:'',
             reciteIdx:0, reciteShow:false, nPreview:false, qaStrategy:'auto',
-            sidebarCollapsed:false, notesPage:1, studyBank:null, studyDeck:null };
+            sidebarCollapsed:false, notesPage:1, studyBank:null, studyDeck:null, dashView:'overview' };
 
 /* ---------- utils ---------- */
 function fitAll(){ /* 布局变动后无需重算，占位以兼容调用 */ }
@@ -966,7 +1017,7 @@ function renderShell(){
   if(_scrim) _scrim.onclick=()=>setDrawer(false);
   setTitle(); render();
 }
-const TITLES={dash:['仪表盘','按主题生成的进度概览'],
+const TITLES={dash:['仪表盘','一屏看清今天该做什么，AI 看板可切换'],
   notes:['笔记','文件夹管理，AI 协作补写'],docs:['文档','上传资料，解析并生成卡片'],
   deck:['卡包','按大纲章节组织的背诵卡包'],study:['学习','刷题、背诵、错题一页'],
   review:['复习','按遗忘曲线安排复习'],qa:['问答','先查你的资料，再联网，最后用学科知识'],
@@ -1075,23 +1126,148 @@ function summarize(r){
 
 /* ---------- dashboard ---------- */
 function pageDash(v){
+  const view=S.dashView||'overview';  // overview | ai
+  v.innerHTML=`
+    <div class="v3-hd">
+      <div>
+        <h1>今天</h1>
+        <div class="sub">${new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'})} · 一屏看清该做什么</div>
+      </div>
+      <div class="tabs" id="dashTabs">
+        <button data-view="overview" class="${view==='overview'?'on':''}">概览</button>
+        <button data-view="ai" class="${view==='ai'?'on':''}">AI 看板</button>
+      </div>
+    </div>
+    <div id="dashPane">${view==='ai'?aiDashBoard():commandBoard()}</div>`;
+  document.querySelectorAll('#dashTabs button').forEach(b=>b.onclick=()=>{S.dashView=b.dataset.view;render();});
+  if(view==='ai') bindAiBoard(); else bindCommandBoard();
+}
+/* AI 看板（原功能，移到二级 tab） */
+function aiDashBoard(){
   const scopes=[['day','日'],['week','周'],['month','月']];
   const cur=(S.dash&&S.dash.scope)||S.scope||'week';
-  v.innerHTML=`
-    <div class="genbar" style="margin-bottom:16px">
+  return `<div class="genbar" style="margin-bottom:16px">
       <input id="theme" placeholder="输入主题，AI 生成专属仪表盘（如：考研冲刺计划 / 期末复习 / 英语六级）">
       <button class="btn" id="gen">AI 生成</button>
       <div class="seg" id="scopes">${scopes.map(([k,n])=>
         `<button data-scope="${k}" class="${cur===k?'on':''}">${n}</button>`).join('')}</div>
       ${S.dash?`<button class="btn ghost sm" id="reset">默认视图</button>`:''}
-    </div>` + (S.dash?dashGrid(S.dash):defaultDash());
-  const t=document.getElementById('theme');
+    </div>` + (S.dash?dashGrid(S.dash):`<div class="empty">还没有 AI 看板。输入主题点「AI 生成」，或切回「概览」看默认指挥台。</div>`);
+}
+function bindAiBoard(){
+  const t=document.getElementById('theme'); if(!t) return;
   t.value = S.dash? S.dash.theme : '';
   document.getElementById('gen').onclick=genDash;
   t.onkeydown=e=>{if(e.key==='Enter')genDash();};
   document.querySelectorAll('#scopes button').forEach(b=>b.onclick=()=>switchScope(b.dataset.scope));
   const rs=document.getElementById('reset'); if(rs) rs.onclick=()=>{S.dash=null;render();};
-  if(S.dash) bindDrag(S.dash.id); else bindDrop();
+  if(S.dash) bindDrag(S.dash.id);
+}
+/* v3 指挥台（默认视图）：真实数据驱动，无数据显示空态 */
+function commandBoard(){
+  const s=S.stats||{documents:0,chunks:0,cards:0,due:0,reviewed:0,questions:0,attempts:0,accuracy:0,week:[],chapters:[]};
+  const due=+s.due||0, reviewed=+s.reviewed||0, acc=+s.accuracy||0;
+  const chapters=(s.chapters||[]).slice().sort((a,b)=>b.cards-a.cards);
+  const maxCh=Math.max(1,...chapters.map(c=>+c.cards||0));
+  const week=(s.week||[]), maxW=Math.max(1,...week.map(x=>+x.value||0));
+  const pts=week.map((x,i)=>[8+(week.length>1?i*624/(week.length-1):312),
+    120-((+x.value||0)/maxW)*96]);
+  let line='';
+  if(pts.length>1){
+    line=pts.map((p,i)=>{
+      if(i===0) return `M${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
+      const p0=pts[i-1],p1=pts[i],p2=pts[i+1]||p1,p3=pts[i+2]||p2;
+      const c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6;
+      const c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6;
+      return ` C${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+    }).join('');
+  }
+  const failedDocs=(S.docs||[]).filter(d=>d.status==='failed');
+  return `<div class="v3-grid">
+    <section class="v3-card v3-hero v3-c8">
+      <div class="lab">今天要复习</div>
+      <div class="big"><span class="hl">${due}</span><small>张卡片</small></div>
+      <div class="delta">${reviewed>0?`已复习 <b>${reviewed}</b> 张 · `:''}${due>0?'建议现在开始':'暂无到期卡片，稍后再来'}</div>
+      <div class="v3-acts">
+        <button class="btn" id="goReview" ${due>0?'':'disabled'}>开始复习</button>
+        <button class="btn ghost" id="goUpload">上传资料</button>
+      </div>
+      <div class="v3-chart">
+        <div class="t">近 ${week.length||7} 天作答</div>
+        ${week.some(x=>+x.value>0)?`<svg viewBox="0 0 640 120" width="100%" height="112" preserveAspectRatio="none">
+          ${[0,.5,1].map(t=>`<line x1="0" y1="${(8+96*t).toFixed(1)}" x2="640" y2="${(8+96*t).toFixed(1)}" stroke="var(--border)" stroke-width="1" vector-effect="non-scaling-stroke"/>`).join('')}
+          ${line?`<path d="${line} L632 120 L8 120 Z" fill="var(--primary)" opacity=".05"/><path d="${line}" fill="none" stroke="var(--primary)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round"/>`:''}
+        </svg>
+        <div class="v3-axis">${week.map(x=>`<span>${esc(x.label)}</span>`).join('')}</div>`:
+        `<div class="empty" style="padding:24px 0">还没有作答记录，去「刷题」或「复习」开始吧。</div>`}
+      </div>
+    </section>
+
+    <section class="v3-card v3-c4">
+      <div class="v3-sh">接下来要复习<span class="meta">${chapters.length} 个卡包</span></div>
+      ${chapters.length?chapters.slice(0,4).map(c=>{
+        const n=+c.cards||0, pct=Math.round(n/maxCh*100);
+        return `<div class="v3-qrow"><span class="v3-qfill" style="width:${pct}%"></span>
+          <div class="v3-qname"><div class="n">${esc(c.name||'未分章')}</div><div class="m">占今天 ${pct}%</div></div>
+          <div class="v3-qnum">${n}</div></div>`;
+      }).join(''):`<div class="empty" style="padding:20px 0">还没有卡包，上传资料后自动生成。</div>`}
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12.5px;color:var(--muted-foreground)">累计复习 <b style="color:var(--fg-2)">${reviewed}</b> 张</span>
+        <button class="btn ghost sm" id="goDecks">全部卡包</button>
+      </div>
+    </section>
+
+    <section class="v3-card v3-c12 v3-strip">
+      <div class="m"><div class="k">文档</div><div class="v">${s.documents||0}<small>份</small></div><div class="d">已解析 ${s.chunks||0} 个切片</div></div>
+      <div class="m"><div class="k">卡片</div><div class="v">${s.cards||0}<small>张</small></div><div class="d">${reviewsText(reviewed,s.cards)}</div></div>
+      <div class="m"><div class="k">答题</div><div class="v">${s.attempts||0}<small>次</small></div><div class="d">题目 ${s.questions||0} 道</div></div>
+      <div class="m"><div class="k">正确率</div><div class="v">${acc}<small>%</small></div><div class="d">${acc>=80?'<b>状态很好</b>':acc>0?'继续练习':'暂无数据'}</div></div>
+    </section>
+
+    <section class="v3-card v3-c6">
+      <div class="v3-sh">最近资料<span class="meta">${S.docs.length||0} 份</span></div>
+      ${(S.docs.length?S.docs.slice(0,4):[]).map(d=>`<div class="v3-resume">
+        <div class="v3-rt"><div class="a">${esc(d.title||'未命名')}</div>
+          <div class="b">${esc(d.source_type==='video'?'视频':d.source_type==='note'?'笔记':'文档')} · ${fmtTime(d.updated_at||d.created_at)}</div></div>
+        <span class="badge ${d.status==='ready'?'ok':(d.status==='failed'?'bad':'')}">${st(d.status)}</span></div>`).join('')
+      ||`<div class="empty" style="padding:20px 0">还没有资料，上传一份 PDF 开始。</div>`}
+    </section>
+
+    <section class="v3-card v3-c6">
+      <div class="v3-sh">需要注意</div>
+      ${failedDocs.length?failedDocs.slice(0,3).map(d=>`<div class="v3-resume">
+        <div class="v3-rt"><div class="a">${esc(d.title||'未命名')} 解析失败</div><div class="b">点击可重新解析</div></div>
+        <button class="btn ghost sm" data-reparse="${d.id}">重试</button></div>`).join(''):''}
+      ${due>0?`<div class="v3-resume"><div class="v3-rt"><div class="a">${due} 张卡片到期</div><div class="b">间隔重复到期，建议今天补上</div></div>
+        <button class="btn ghost sm" id="goReview2">去复习</button></div>`:''}
+      ${!failedDocs.length&&due===0?`<div class="empty" style="padding:20px 0">一切正常，没有待处理事项。</div>`:''}
+    </section>
+
+    <section class="v3-card v3-c12">
+      <div class="v3-sh">快速上传<span class="meta">PDF · 自动解析分卡</span></div>
+      <div class="drop" id="drop" style="margin:0"><div style="font-size:14px;font-weight:500;color:var(--foreground);margin-bottom:4px">点击或拖拽 PDF 到此处</div>
+        <div style="font-size:12.5px">上传后自动解析、生成背诵卡片</div></div>
+      <input type="file" id="file" accept="application/pdf" hidden>
+    </section>
+  </div>`;
+}
+function reviewsText(reviewed,total){ const t=+total||0; if(!t) return '还没有卡片'; return `已复习 ${Math.min(100,Math.round(reviewed/t*100))}%`; }
+function fmtTime(ts){ if(!ts) return '—'; const d=new Date(ts); if(isNaN(d.getTime())) return '—';
+  const diff=(Date.now()-d.getTime())/86400000;
+  if(diff<1) return '今天'; if(diff<2) return '昨天'; if(diff<7) return Math.floor(diff)+' 天前';
+  return d.toLocaleDateString('zh-CN',{month:'numeric',day:'numeric'}); }
+function bindCommandBoard(){
+  bindDrop();
+  const up=document.getElementById('goUpload'); if(up) up.onclick=()=>{const f=document.getElementById('file'); if(f) f.click();};
+  const gd=document.getElementById('goDecks'); if(gd) gd.onclick=()=>{S.tab='deck';renderShell();refresh();};
+  document.querySelectorAll('[data-reparse]').forEach(b=>b.onclick=async()=>{
+    const id=b.dataset.reparse; b.disabled=true; b.textContent='重试中';
+    try{
+      await runTask('/documents/'+id+'/parse',{method:'POST'},'重新解析');
+      toast('已重新提交解析'); await refresh();
+    }catch(e){ toast(e.message); b.disabled=false; b.textContent='重试'; }
+  });
+  const gr2=document.getElementById('goReview2'); if(gr2) gr2.onclick=()=>{S.tab='review';renderShell();refresh();};
 }
 async function switchScope(scope){
   if(!S.dash || S.dash.scope===scope) return;
