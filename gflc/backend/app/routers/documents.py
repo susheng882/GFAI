@@ -68,6 +68,11 @@ async def create_document(body: dict, user=Depends(get_current_user), db: Sessio
     title = body.get("title") or os.path.basename(key)
     if not key:
         raise APIError(ErrCode.COMMON_400, "缺少 storage_key")
+    # S1 越权防护：storage_key 必须属于当前用户目录，且不得含路径穿越字符。
+    # presign 下发的 key 形如 "{user.id}/{uuid}_{filename}"，其它前缀一律拒绝。
+    prefix = f"{user.id}/"
+    if not key.startswith(prefix) or key == prefix or ".." in key or "\\" in key or key.startswith("/"):
+        raise APIError(ErrCode.AUTH_403, "storage_key 不属于当前用户或格式非法", 403)
     try:
         real_size = stat_size(key)
     except Exception as e:

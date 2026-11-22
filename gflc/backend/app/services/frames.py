@@ -79,7 +79,7 @@ def _run_ffmpeg(src: str, vf: str, outdir: str, prefix: str) -> tuple[list[str],
     cmd = ["ffmpeg", "-y", "-hide_banner", "-i", src, "-vf", vf,
            "-fps_mode", "vfr", "-q:v", "3", pattern]
     try:
-        res = subprocess.run(cmd, capture_output=True, timeout=1800)
+        res = subprocess.run(cmd, capture_output=True, timeout=300)
     except (OSError, subprocess.SubprocessError) as e:
         _log.warning("抽帧 ffmpeg 执行失败：%s", e)
         return [], []
@@ -252,8 +252,13 @@ async def _ocr_one(frame: dict) -> str:
     return (res.text or "").strip()
 
 
-async def ocr_frames(frames: list[dict], max_ocr: int = 12) -> list[dict]:
-    """对关键帧做视觉转写，文档帧优先；单帧失败跳过。"""
+async def ocr_frames(frames: list[dict], max_ocr: int = 12, on_progress=None) -> list[dict]:
+    """对关键帧做视觉转写，文档帧优先；单帧失败跳过。
+
+    提速（2026-11-22）：并发识别（Semaphore 限流，默认 4 路），
+    替代原来逐帧串行 await（12 帧 × 单次 LLM 往返）。每帧完成回写进度，
+    避免抽帧/OCR 阶段长时间无进度被看门狗误判超时。
+    """
     if not frames or max_ocr <= 0:
         return []
     # 文档帧优先送识别，剩余名额给其他帧，最终仍按时间顺序输出
@@ -261,18 +266,28 @@ async def ocr_frames(frames: list[dict], max_ocr: int = 12) -> list[dict]:
     picked = ordered[:max_ocr]
     picked_ids = {id(f) for f in picked}
     results: dict[int, dict] = {}
-    for f in picked:
-        try:
-            text = await _ocr_one(f)
-        except Exception as e:
-            _log.warning("帧 %s 转写失败：%s", f.get("ts_label"), e)
-            continue
-        if text:
-            results[id(f)] = {
-                "ts": f.get("ts"), "ts_label": f.get("ts_label"),
-                "path": f.get("name") or os.path.basename(f.get("path", "")),
-                "text": text, "is_doc": bool(f.get("is_doc")),
-            }
+    sem = asyncio.Semaphore(4)
+    done = 0
+
+    async def _one(frame: dict):
+        nonlocal done
+        async with sem:
+            try:
+                text = await _ocr_one(frame)
+                if text:
+                    results[id(frame)] = {
+                        "ts": frame.get("ts"), "ts_label": frame.get("ts_label"),
+                        "path": frame.get("name") or os.path.basename(frame.get("path", "")),
+                        "text": text, "is_doc": bool(frame.get("is_doc")),
+                    }
+            except Exception as e:
+                _log.warning("帧 %s 转写失败：%s", frame.get("ts_label"), e)
+            finally:
+                done += 1
+                if on_progress:
+                    on_progress(done, len(picked))
+
+    await asyncio.gather(*[_one(f) for f in picked])
     return [results[id(f)] for f in frames if id(f) in results and id(f) in picked_ids]
 
 

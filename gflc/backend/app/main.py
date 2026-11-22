@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """GFLC FastAPI 入口：鉴权 + 上传 + PDF 解析切块 + 卡片 + 复习 + 仪表盘 + 前端静态页。"""
+import asyncio
+import logging
 import os
 import uuid
 from contextlib import asynccontextmanager
@@ -16,23 +18,40 @@ from app.services.storage import ensure_bucket
 from app.worker import runner
 from app.worker.handlers import register_all
 
+log = logging.getLogger(__name__)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    try:
-        ensure_bucket()
-    except Exception:
-        pass
+    # S6：MinIO 可能比 app 慢就绪（compose 用 service_started），失败要重试并留痕，
+    # 不能像以前那样静默 pass——否则存储不可用会让所有上传失败且无日志可查。
+    for attempt in range(1, 6):
+        try:
+            ensure_bucket()
+            log.info("storage bucket ready")
+            break
+        except Exception as e:
+            log.warning("ensure_bucket attempt %d/5 failed: %s", attempt, e)
+            if attempt == 5:
+                log.error("storage bucket unavailable after 5 attempts; uploads will fail")
+            else:
+                await asyncio.sleep(2 * attempt)
     register_all()
     runner.start()
     yield
 
 
-app = FastAPI(title="GFLC API", version="0.2.0", lifespan=lifespan)
+_IS_PROD = settings.APP_ENV.lower() in ("prod", "production", "live")
+app = FastAPI(
+    title="GFLC API", version="0.2.0", lifespan=lifespan,
+    docs_url=None if _IS_PROD else "/docs",
+    redoc_url=None if _IS_PROD else "/redoc",
+    openapi_url=None if _IS_PROD else "/openapi.json",
+)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://localhost"],
+    allow_origins=[o.strip() for o in settings.CORS_ORIGINS.split(",") if o.strip()],
     allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
 )
 

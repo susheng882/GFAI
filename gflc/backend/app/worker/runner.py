@@ -19,6 +19,7 @@ from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import select
 
+from app.core.budget import set_current_user_id
 from app.core.config import settings
 from app.db.session import SessionLocal
 from app.models.models import Task
@@ -144,6 +145,10 @@ def _run_task(gen: int, task_id: int, task_type: str, payload: dict):
         task.error_message = None
         db.commit()
 
+        # S3：后台任务也要把用户写入 ContextVar，否则 ai 层读不到归属、
+        # 预算拦截被跳过或记到别的请求名下。asyncio.run 会继承当前 context。
+        set_current_user_id(task.user_id)
+
         def update(p: int, message: str | None = None):
             task.progress = max(1, min(99, int(p)))
             db.commit()
@@ -151,6 +156,15 @@ def _run_task(gen: int, task_id: int, task_type: str, payload: dict):
                 m = _meta.get(task_id)
                 if m is not None:
                     m["progress"] = time.time()
+
+        # 心跳：长阶段（如 ffmpeg 抽帧）无法回写百分比时，用它刷新看门狗时间戳，
+        # 避免「任务正常执行中却被判 TASK-TIMEOUT」。只刷新内存时间戳，不写 DB。
+        def beat():
+            with _state:
+                m = _meta.get(task_id)
+                if m is not None:
+                    m["progress"] = time.time()
+        update.beat = beat
 
         fn = _handlers.get(task_type)
         if not fn:
@@ -191,6 +205,7 @@ def _run_task(gen: int, task_id: int, task_type: str, payload: dict):
         except Exception:  # noqa: BLE001
             pass
     finally:
+        set_current_user_id(None)  # 清除任务身份，避免下一个任务继承
         with _state:
             _meta.pop(task_id, None)
             _queued.discard(task_id)

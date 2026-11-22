@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     APP_NAME: str = "GFLC"
     APP_ENV: str = "dev"
     API_PREFIX: str = "/api"
+    # 生产同源部署填域名即可；多个来源用逗号分隔
+    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://localhost"
 
     # 运行模式（本地零依赖跑通用）
     DEV_MODE: bool = False          # True 时可用 sqlite + 本地存储
@@ -54,6 +56,19 @@ class Settings(BaseSettings):
     CHUNK_OVERLAP: int = 100
     PARAGRAPH_SPLIT_THRESHOLD: int = 800
     PARENT_CHUNK_SIZE: int = 1200
+
+    # 检索提速开关（2026-11-22）：默认走零成本规则路径，关掉两次串行 LLM 调用。
+    # 需要极致召回质量时可置 True 恢复 LLM 查询改写 + LLM 语义重排（问答会更慢）。
+    QA_USE_LLM_REWRITE: bool = False
+    QA_USE_LLM_RERANK: bool = False
+    # 问答作答模型：默认沿用强推理模型（质量优先，~18s）。
+    # 追求速度可设为 deepseek-flash（中档，带引用约束不变，通常 5-8s）。
+    QA_ANSWER_MODEL: str = ""  # 空=用 LLM_STRONG_MODEL
+
+    # 后台任务看门狗：无进度判定超时（提速对齐：需 > 单步 ffmpeg 时长）。
+    # 抽帧/OCR 阶段已有心跳刷新时间戳，故这里按最长单步留足余量。
+    TASK_TIMEOUT: int = 1800
+    TASK_WATCH_INTERVAL: int = 15
 
     # 会话
     SESSION_SECRET: str = "change-me-in-prod"

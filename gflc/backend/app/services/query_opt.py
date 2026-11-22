@@ -154,5 +154,31 @@ async def rerank(question: str, snippets: list[str]) -> list[float]:
         return [0.0] * n
 
 
+def rerank_local(question: str, snippets: list[str]) -> list[float]:
+    """零成本规则重排（提速默认路径）：问题词覆盖率 + 命中密度 + 片段长度信号，
+    归一到 0-5 分，接口与 rerank 一致。不做语义理解，但足以过滤明显无关片段，
+    真正的语义兜底由生成前的 _coverage 门控与联网降级承担。"""
+    import jieba
+    jieba.setLogLevel(20)
+    qwords = [w.strip() for w in jieba.cut(question or "") if len(w.strip()) >= 2]
+    if not qwords or not snippets:
+        return [0.0] * len(snippets)
+    out: list[float] = []
+    for s in snippets:
+        text = (s or "").lower()
+        if not text.strip():
+            out.append(0.0)
+            continue
+        hits = sum(1 for w in set(qwords) if w.lower() in text)
+        coverage = hits / len(set(qwords))
+        # 覆盖率主导（0.34 覆盖率 ≈ 2.7 分），命中 3 词以上直接满分档
+        score = min(5.0, coverage * 8.0)
+        # 极短片段（<40 字）信息量不足，轻微降权
+        if len(text) < 40:
+            score *= 0.7
+        out.append(round(score, 2))
+    return out
+
+
 def is_relevant(score: float) -> bool:
     return score >= RELEVANT_SCORE

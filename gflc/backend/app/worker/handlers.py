@@ -365,7 +365,25 @@ def _video_pipeline(db, task, src_path, title, update, raw: bytes, templates=Non
     if _is_video_src(src_path):
         try:
             update(92, "提取关键帧")
-            frames = extract_frames(src_path, frame_dir(), max_frames=24)
+            # 抽帧 ffmpeg 可能全片解码数分钟且无法回写百分比：后台心跳刷新看门狗时间戳，
+            # 防止正常执行的长任务被误判 TASK-TIMEOUT。
+            import threading
+            _beat_stop = threading.Event()
+
+            def _heartbeat():
+                while not _beat_stop.wait(20):
+                    try:
+                        update.beat()
+                    except Exception:
+                        pass
+
+            _beat = threading.Thread(target=_heartbeat, daemon=True, name="gflc-frame-beat")
+            _beat.start()
+            try:
+                frames = extract_frames(src_path, frame_dir(), max_frames=24)
+            finally:
+                _beat_stop.set()
+                _beat.join(timeout=2)
             frames = dedupe_frames(frames)[:24]
             for f in frames:
                 f["is_doc"] = is_doc_frame(f)

@@ -29,7 +29,7 @@ def extract_audio(src: str, dst: str) -> None:
     try:
         subprocess.run(
             ["ffmpeg", "-y", "-i", src, "-vn", "-ac", "1", "-ar", "16000", "-f", "wav", dst],
-            check=True, capture_output=True, timeout=1800,
+            check=True, capture_output=True, timeout=600,
         )
     except FileNotFoundError as e:
         raise APIError(ErrCode.PARSE_001, "未安装 ffmpeg，无法抽取音频") from e

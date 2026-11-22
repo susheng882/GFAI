@@ -28,7 +28,7 @@ from app.models.models import Document, Note, QuestionBank
 from app.routers.deps import get_current_user
 from app.schemas.schemas import QaIn
 from app.services import query_opt, websearch
-from app.services.rag import retrieve, tokenize
+from app.services.rag import retrieve_multi, tokenize
 
 router = APIRouter(prefix="/qa", tags=["qa"])
 log = logging.getLogger(__name__)
@@ -94,12 +94,15 @@ async def _ask_llm(system: str, user_text: str, max_tokens: int = _MAX_ANSWER_TO
     """一问一答的必经点：事前做预算拦截，事后补一笔账本（QA 原本不记 CostLedger）。"""
     est = estimate_tokens(system) + estimate_tokens(user_text) + max_tokens // 4
     budget.check(user_id, task_type, est)
-    res = await chat(settings.LLM_STRONG_MODEL,
+    answer_model = settings.QA_ANSWER_MODEL or settings.LLM_STRONG_MODEL
+    is_reasoning = "reasoner" in answer_model.lower() or "v4-pro" in answer_model.lower()
+    kwargs = dict(temperature=0.1, max_tokens=max_tokens, json_mode=False)
+    if is_reasoning:
+        kwargs["effort"] = "low"  # 推理模型降低推理强度，避免正文被 reasoning 吃光
+    res = await chat(answer_model,
                      [{"role": "system", "content": system}, {"role": "user", "content": user_text}],
-                     temperature=0.1, max_tokens=max_tokens, json_mode=False,
-                     effort="low")  # V4 为推理模型，降低推理强度避免正文被 reasoning 吃光
-    budget.record(user_id, task_type, res.prompt_tokens, res.completion_tokens,
-                  settings.LLM_STRONG_MODEL)
+                     **kwargs)
+    budget.record(user_id, task_type, res.prompt_tokens, res.completion_tokens, answer_model)
     text = (res.text or "").strip()
     if not text:
         log.warning("qa empty answer: task=%s prompt_tokens=%s completion_tokens=%s max=%s",
@@ -271,20 +274,27 @@ def _no_answer(strategy: str = "auto") -> dict:
             "sources": [], "refused": True, "mode": "none", "confidence": 0.0}
 
 
+async def _rerank(question: str, snippets: list[str]) -> list[float]:
+    """统一重排入口：默认走零成本规则重排；QA_USE_LLM_RERANK=True 才调 LLM。"""
+    if settings.QA_USE_LLM_RERANK:
+        try:
+            return await query_opt.rerank(question, snippets)
+        except Exception as e:
+            log.warning("llm rerank failed, fallback local: %s", e)
+    return query_opt.rerank_local(question, snippets)
+
+
 async def _recall(db: Session, user_id: int, queries: list[str],
                   document_id: int | None) -> list:
-    """多路召回并按 chunk_id 去重，保留最高分。"""
-    merged: dict[int, tuple] = {}
-    for q in queries[:3]:
-        try:
-            part = retrieve(db, user_id, q, document_id, top_k=_TOP_K)
-        except Exception as e:
-            log.warning("retrieve failed for %r: %s", q, e)
-            continue
-        for c, s in part:
-            if c.id not in merged or s > merged[c.id][1]:
-                merged[c.id] = (c, s)
-    return [c for c, _ in sorted(merged.values(), key=lambda x: -x[1])[:_TOP_K]]
+    """多路召回并按 chunk_id 去重，保留最高分。
+    提速：一次建索引、多条查询分别取分（retrieve_multi），
+    替代原来每条 query 各建一次全量 BM25 索引的重复开销。"""
+    try:
+        hits = retrieve_multi(db, user_id, queries, document_id, top_k=_TOP_K)
+    except Exception as e:
+        log.warning("retrieve_multi failed: %s", e)
+        return []
+    return [c for c, _ in hits]
 
 
 def _recall_notes(db: Session, user_id: int, queries: list[str], top_k: int = 2) -> list:
@@ -329,7 +339,7 @@ async def _web_or_model(question: str, queries: list[str], user_id: int | None =
     if results:
         snippets = [f"{r.get('title', '')} {r.get('snippet', '')}" for r in results]
         try:
-            scores = await query_opt.rerank(question, snippets)
+            scores = await _rerank(question, snippets)
         except Exception as e:
             log.warning("web rerank failed: %s", e)
             scores = []
@@ -378,9 +388,12 @@ async def _pick_strategy(request: Request, default: str = "auto") -> str:
 
 
 async def _build_queries(db: Session, user_id: int, question: str) -> list[str]:
+    """构造检索查询。
+    提速（2026-11-22）：默认走规则改写（去疑问词 + 领域词消歧，零 LLM 调用）；
+    只有 QA_USE_LLM_REWRITE=True 且问题很短易歧义时才花一次 LLM 改写。"""
     try:
         domain = _domain_words(db, user_id)
-        if len(question) < _REWRITE_MAX_LEN:
+        if settings.QA_USE_LLM_REWRITE and len(question) < _REWRITE_MAX_LEN:
             queries = await query_opt.rewrite(question, domain)
         else:
             queries = query_opt.rewrite_with_domain(question, domain)
@@ -416,15 +429,11 @@ async def _kb_relevant(db: Session, user_id: int, question: str, queries: list[s
         return [], 0.5
 
     cand = hits[:_TOP_K + len(note_hits)]
-    scores: list[float] = []
-    if len(cand) == 1:
-        scores = [5.0 if _coverage(question, cand[0].content or "") >= _MIN_COVERAGE else 0.0]
-    else:
-        try:
-            scores = await query_opt.rerank(question, [(c.content or "")[:400] for c in cand])
-        except Exception as e:
-            log.warning("kb rerank failed: %s", e)
-            scores = []
+    try:
+        scores = await _rerank(question, [(c.content or "")[:400] for c in cand])
+    except Exception as e:
+        log.warning("kb rerank failed: %s", e)
+        scores = []
 
     if scores and len(scores) == len(cand):
         confidence = round(min(1.0, sum(scores) / len(scores) / 5), 2)
@@ -453,7 +462,7 @@ async def _web_keep(question: str, queries: list[str], limit: int = 4) -> tuple[
         return [], 0.0
 
     try:
-        scores = await query_opt.rerank(
+        scores = await _rerank(
             question, [(r.get("title", "") + " " + (r.get("snippet") or ""))[:380] for r in results])
     except Exception as e:
         log.warning("web rerank failed: %s", e)
@@ -646,12 +655,27 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
             yield json.dumps({"type": "done", "full": msg}, ensure_ascii=False) + "\n"
             return
 
+        # S2：流式路径此前完全没有 budget.check，可被无限调用烧 token。
+        # 与主回答对齐；预留 1.5 倍覆盖可能的强模型补答。
+        try:
+            from app.core.budget import budget as _budget, estimate_tokens as _est_tokens
+            est = int((_est_tokens(system) + _est_tokens(user_text)
+                       + _MAX_ANSWER_TOKENS // 4) * 1.5)
+            _budget.check(user_id, "qa_stream", est)
+        except APIError as e:
+            yield json.dumps({"type": "error", "code": e.code, "message": e.message},
+                             ensure_ascii=False) + "\n"
+            return
+        except Exception as e:
+            log.warning("qa stream budget check failed: %s", e)
+
         yield json.dumps({"type": "sources", "mode": mode, "strategy": strategy,
                           "sources": sources, "confidence": confidence,
                           "hint": ("已检索 %d 条资料" % len(sources)) if sources else "无外部资料，改用学科知识",
                           }, ensure_ascii=False) + "\n"
 
         buf: list[str] = []   # 模型原始输出（判断 refusal / 估算长度）
+        used_strong = False   # 是否触发过强模型补答（记账按实际模型估成本）
         out: list[str] = []   # 实际下发的文本（done.full 用它，保证与 deltas 一致）
         msgs = [{"role": "system", "content": system}, {"role": "user", "content": user_text}]
 
@@ -695,6 +719,7 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
                                  ensure_ascii=False) + "\n"
                 sys2 = (QA_SYSTEM + "\n注意：本次检索片段与问题领域不符，请直接依据你的学科知识完整作答，"
                         "给出定义、公式（LaTeX）、条件与例子，不要提及检索片段。")
+                used_strong = True
                 async for piece in chat_stream(
                         settings.LLM_STRONG_MODEL,
                         [{"role": "system", "content": sys2},
@@ -706,6 +731,7 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
                 yield json.dumps({"type": "notice",
                                   "text": "\n\n_（内容偏简，正在用更强的模型补充…）_\n\n"},
                                  ensure_ascii=False) + "\n"
+                used_strong = True
                 async for piece in chat_stream(settings.LLM_STRONG_MODEL, msgs,
                                                temperature=0.1, max_tokens=_MAX_ANSWER_TOKENS, effort="low"):
                     buf.append(piece)
@@ -721,10 +747,12 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
 
             tok_in = int((len(system) + len(user_text)) / 1.5)
             tok_out = int(len("".join(buf)) / 1.5)
+            # 触发过强模型补答时按强档估成本，避免看板低估（此前写死 mid）
+            model_used = settings.LLM_STRONG_MODEL if used_strong else settings.LLM_MID_MODEL
             ldb = SessionLocal()
-            ldb.add(CostLedger(user_id=user_id, task_type="qa_stream", model=settings.LLM_MID_MODEL,
+            ldb.add(CostLedger(user_id=user_id, task_type="qa_stream", model=model_used,
                                prompt_tokens=tok_in, completion_tokens=tok_out,
-                               cost_cny=estimate_cost(settings.LLM_MID_MODEL, tok_in, tok_out)))
+                               cost_cny=estimate_cost(model_used, tok_in, tok_out)))
             ldb.commit()
             ldb.close()
         except Exception as e:

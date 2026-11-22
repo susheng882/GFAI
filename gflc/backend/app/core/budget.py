@@ -10,6 +10,7 @@
 - 记账归属：卡片/笔记等业务层已自行写 CostLedger，这里不重复写；record() 只用于原本没有
   账本的路径（如 QA），避免一套调用记两笔账。
 """
+import contextvars
 import hashlib
 import logging
 import os
@@ -36,9 +37,11 @@ _CACHE_MAX = 512
 _usage_cache: "OrderedDict[str, tuple[float, Any]]" = OrderedDict()
 _cache_lock = threading.RLock()
 
-# 当前请求的用户（上下文变量；HTTP 依赖里写入，供 ai 层读取）
-_current_user_id: int | None = None
-_ctx_lock = threading.RLock()
+# S3：用 ContextVar 而非模块全局变量——全局变量在并发请求/worker 线程间会串号，
+# ContextVar 天然按 asyncio 任务和线程隔离，HTTP 依赖写入，ai 层读取。
+_current_user_id: contextvars.ContextVar[int | None] = contextvars.ContextVar(
+    "gflc_current_user_id", default=None
+)
 
 
 # ---------------------------------------------------------------- env 读取
@@ -71,14 +74,11 @@ def limits() -> dict:
 
 # ------------------------------------------------------- 当前用户（上下文）
 def set_current_user_id(user_id: int | None) -> None:
-    global _current_user_id
-    with _ctx_lock:
-        _current_user_id = user_id
+    _current_user_id.set(user_id)
 
 
 def current_user_id() -> int | None:
-    with _ctx_lock:
-        return _current_user_id
+    return _current_user_id.get()
 
 
 # ------------------------------------------------------------ 进程内缓存

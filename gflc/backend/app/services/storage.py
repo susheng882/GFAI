@@ -32,7 +32,8 @@ class LocalStorage(Storage):
 
     def _path(self, key: str) -> str:
         p = os.path.abspath(os.path.join(self.base, key))
-        if not p.startswith(self.base):
+        # 用 commonpath 而非 startswith，避免 /data/uploads_evil 绕过前缀检查
+        if os.path.commonpath([self.base, p]) != self.base:
             raise ValueError("非法存储路径")
         return p
 
