@@ -14,9 +14,13 @@
      所有尺寸走 4px 栅格；字重只用 400/500；一个强调色（墨蓝）
      ============================================================ */
   :root{
+    /* 圆角：--radius 单一事实源，其余派生（shadcn 单源派生规则） */
     --radius:8px;
-    /* 半径阶梯：控件 8 / 卡片 12 / 面板 14 */
-    --r-xs:4px; --r-sm:6px; --r-md:8px; --r-lg:12px; --r-xl:14px;
+    --r-xs:calc(var(--radius) * .5);   /* 4  控件小 */
+    --r-sm:calc(var(--radius) * .75);  /* 6  小圆角 */
+    --r-md:var(--radius);              /* 8  输入/按钮 */
+    --r-lg:calc(var(--radius) * 1.5);  /* 12 卡片 */
+    --r-xl:calc(var(--radius) * 1.75); /* 14 面板 */
 
     /* 纸墨中性阶（暖纸） */
     --background:#f7f4ee;
@@ -54,9 +58,13 @@
     --info:#1f4d6b;
     --info-soft:#e8eef2;
 
-    /* 动效：一条曲线 */
-    --ease:cubic-bezier(.22,1,.36,1);
-    --t-fast:140ms; --t-mid:180ms; --t-slow:320ms;
+    /* 动效 token（transitions.dev：进慢出快，语义命名，禁止散落魔法数字） */
+    --ease:cubic-bezier(.22,1,.36,1);          /* = --ease-smooth-out 万金油 */
+    --t-fast:140ms; --t-mid:180ms; --t-slow:320ms;  /* 兼容既有过渡 */
+    --dur-quick:150ms;   /* 关闭 / 文字切换 / tooltip 现 */
+    --dur-fast:250ms;    /* 打开 / tabs 滑动 */
+    --dur-medium:350ms;  /* 面板 / 强调入场 */
+    --blur-sm:2px;       /* 交叉溶解模糊档 */
 
     /* 等宽：只给数字、时间戳、代码 */
     --mono:ui-monospace,"SF Mono","Cascadia Mono","JetBrains Mono",Menlo,Consolas,monospace;
@@ -245,7 +253,10 @@
     transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
   .seg button:hover,.tabs button:hover{color:var(--foreground)}
   .seg button.on,.tabs button.on{background:var(--card);color:var(--foreground);font-weight:500;
-    box-shadow:0 1px 2px rgba(31,27,22,.06)}
+    box-shadow:0 1px 2px rgba(31,27,22,.06);
+    transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease),
+      transform var(--dur-quick) var(--ease)}
+  .seg button.on:active,.tabs button.on:active{transform:scale(.96)}
 
   /* ---------- 表格 ---------- */
   table.tb{width:100%;border-collapse:collapse}
@@ -285,7 +296,9 @@
   .v3-hd h1{font-size:20px;font-weight:500;letter-spacing:-.2px;margin:0}
   .v3-hd .sub{font-size:12.5px;color:var(--muted-foreground);margin-top:3px}
   .v3-hero .lab{font-size:12px;color:var(--muted-foreground)}
-  .v3-hero .big{font-size:44px;font-weight:500;letter-spacing:-1.4px;line-height:1.05;margin:8px 0 6px}
+  .v3-hero .big{font-size:44px;font-weight:500;letter-spacing:-1.4px;line-height:1.05;margin:8px 0 6px;
+    animation:numPop var(--dur-medium) var(--ease) both}
+  @keyframes numPop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}
   .v3-hero .big small{font-size:14px;font-weight:400;color:var(--muted-foreground);letter-spacing:0;margin-left:6px}
   .v3-hero .delta{font-size:12.5px;color:var(--muted-foreground)}
   .v3-hero .delta b{font-weight:500;color:var(--success)}
@@ -632,6 +645,47 @@
   .src{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
   .src .s{font-size:11px;padding:2px 7px;border-radius:var(--r-xs);
     background:var(--secondary);color:var(--muted-foreground);font-family:var(--mono)}
+  .src a.s{text-decoration:none;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+  .src a.s:hover{background:var(--info-soft);color:var(--info)}
+
+  /* ---- AI 过程可视化（Beautiful UI：把黑盒变白盒，克制版） ---- */
+  .aiproc{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;
+    font-size:11.5px;color:var(--muted-foreground)}
+  .aiproc .step{display:inline-flex;align-items:center;gap:5px;
+    padding:2px 8px;border-radius:99px;border:1px solid var(--border);
+    background:var(--card);color:var(--muted-foreground);
+    transition:color var(--dur-quick) var(--ease),background var(--dur-quick) var(--ease),
+      border-color var(--dur-quick) var(--ease)}
+  .aiproc .step .dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.5}
+  .aiproc .step.done{color:var(--success);border-color:transparent;background:var(--success-soft)}
+  .aiproc .step.done .dot{opacity:1}
+  .aiproc .step.active{color:var(--info);border-color:var(--info);background:var(--info-soft)}
+  .aiproc .step.active .dot{opacity:1;animation:aippulse 1.2s var(--ease) infinite}
+  @keyframes aippulse{0%,100%{opacity:.35}50%{opacity:1}}
+  .aiproc .elapsed{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted-foreground)}
+  /* 思考轨迹：可展开，安静的左竖线 */
+  .think{margin:0 0 10px;border-left:2px solid var(--border);padding:2px 0 2px 12px}
+  .think>summary{cursor:pointer;list-style:none;font-size:11.5px;color:var(--muted-foreground);
+    display:flex;align-items:center;gap:6px;user-select:none}
+  .think>summary::-webkit-details-marker{display:none}
+  .think>summary .caret{transition:transform var(--t-fast) var(--ease);display:inline-block}
+  .think[open]>summary .caret{transform:rotate(90deg)}
+  .think .trace{margin-top:6px;display:flex;flex-direction:column;gap:4px;
+    font-size:11.5px;color:var(--muted-foreground)}
+  /* 流式光标：跟随最后一个字符 */
+  .bubble .stream-caret{display:inline-block;width:2px;height:1em;vertical-align:-2px;
+    margin-left:2px;background:var(--primary);animation:spcaret 1s steps(2) infinite}
+  @keyframes spcaret{0%,50%{opacity:1}51%,100%{opacity:0}}
+  /* follow-up 建议问题：药丸芯片 */
+  .followups{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  .followups .fu{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;
+    padding:5px 11px;border-radius:99px;border:1px solid var(--border);background:var(--card);
+    color:var(--fg-2);cursor:pointer;font-family:inherit;
+    transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
+      border-color var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+  .followups .fu:hover{background:var(--accent);color:var(--foreground);border-color:var(--input)}
+  .followups .fu:active{transform:scale(.97)}
+  .followups .fu .ic{display:inline-flex;color:var(--muted-foreground)}
 
   /* ===== 复习 / 闪卡 ===== */
   .rev-page{min-height:calc(100vh - 210px);display:flex;flex-direction:column;justify-content:center}
@@ -679,12 +733,17 @@
     margin-bottom:8px;font-size:12.5px;line-height:1.7}
   .tidy-item .rm{color:var(--muted-foreground);font-size:11.5px;margin-top:4px}
 
-  .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,8px);
+  .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,12px);
     background:var(--foreground);color:var(--background);padding:9px 16px;
     border-radius:var(--r-md);font-size:13px;opacity:0;pointer-events:none;
-    transition:opacity var(--t-mid) var(--ease),transform var(--t-mid) var(--ease);
+    filter:blur(var(--blur-sm));
+    /* 进慢出快：打开 --dur-fast 250ms，关闭 --dur-quick 150ms（transitions.dev） */
+    transition:opacity var(--dur-quick) var(--ease),transform var(--dur-quick) var(--ease),
+      filter var(--dur-quick) var(--ease);
     z-index:100;max-width:80vw}
-  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .toast.show{opacity:1;transform:translate(-50%,0);filter:blur(0);
+    transition:opacity var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease),
+      filter var(--dur-fast) var(--ease)}
 
   .taskdock{position:fixed;right:20px;bottom:20px;width:300px;display:flex;
     flex-direction:column;gap:8px;z-index:95}
@@ -2431,23 +2490,66 @@ function pageQa(v){
     S.qaStrategy=b.dataset.s; render();
   });
   ask.focus();
-  const chat=document.getElementById('chat'); if(chat){ chat.scrollTop=chat.scrollHeight; typeset(chat); }
+  const chat=document.getElementById('chat');
+  if(chat){
+    chat.scrollTop=chat.scrollHeight; typeset(chat);
+    // follow-up 建议问题：事件委托，点击后直接带入提问
+    chat.onclick=(e)=>{
+      const fu=e.target.closest('.fu'); if(!fu) return;
+      const input=document.getElementById('ask'); if(input){ input.value=fu.dataset.fu||''; doAsk(); }
+    };
+  }
 }
 function msgHtml(m){
   const mode=m.mode||'';
   const badge = mode==='knowledge'?'<span class="badge blue">知识库</span>'
     : mode==='web'?'<span class="badge warn">联网检索</span>'
+    : mode==='model'?'<span class="badge">学科知识</span>'
     : mode==='none'?'<span class="badge">未找到依据</span>':'';
   const src=(m.sources||[]).map(s=>{
     if(s.url) return `<a class="s" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title||s.url)}</a>`;
     return `<span class="s">第 ${s.page||'?'} 页</span>`;
   }).join('');
-  const txt=m.pending
-    ? `<span class="spin"></span> ${esc(m.hint||'正在检索知识库…')}`
-    : (m.role==='bot' ? mdToHtml(m.text) : esc(m.text));
+  // 过程可视化：检索资料 → 核对来源 → 生成回答（Beautiful UI 状态行轮换）
+  let proc='';
+  if(m.showProc){
+    const stages=['检索资料','核对来源','生成回答'];
+    const cur=m.stage==null?0:m.stage;
+    const el=m.elapsed!=null?m.elapsed.toFixed(1):'0.0';
+    proc=`<div class="aiproc">${stages.map((s,i)=>
+      `<span class="step ${i<cur?'done':(i===cur?'active':'')}"><span class="dot"></span>${s}</span>`).join('')}
+      <span class="elapsed">${el}s</span></div>`;
+  }
+  // 思考轨迹：展示真实检索依据，不伪造推理过程
+  let trace='';
+  if((m.trace||[]).length){
+    trace=`<details class="think"><summary><span class="caret">▸</span> 检索依据（${m.trace.length}）</summary>
+      <div class="trace">${m.trace.map(t=>`<div>· ${esc(t)}</div>`).join('')}</div></details>`;
+  }
+  // 进行中：过程行代替转圈；有文本后显示气泡 + 流式光标
+  const busy=!!(m.pending||m.streaming);
+  let bubble='';
+  if(m.text||m.role==='user'||!busy){
+    const body=m.role==='bot'?mdToHtml(m.text):esc(m.text);
+    bubble=`<div class="bubble">${body}${m.streaming?'<span class="stream-caret"></span>':''}</div>`;
+  }
+  // follow-up 建议问题
+  let fu='';
+  if(!busy && (m.followups||[]).length){
+    fu=`<div class="followups">${m.followups.map(q=>
+      `<button class="fu" data-fu="${esc(q)}"><span class="ic">${ICONS.spark}</span>${esc(q)}</button>`).join('')}</div>`;
+  }
   return `<div class="msg ${m.role}"><div class="who">${m.role==='user'?'你':'AI'}</div>
-    <div style="min-width:0"><div class="bubble">${txt}</div>
-    ${(badge||src)?`<div class="src">${badge}${src}</div>`:''}</div></div>`;
+    <div style="min-width:0">${proc}${trace}${bubble}
+    ${(badge||src)?`<div class="src">${badge}${src}</div>`:''}${fu}</div></div>`;
+}
+function genFollowups(mode){
+  const base = mode==='web'
+    ? ['这个结论有最新数据吗？','能给出官方网站出处吗？','换一个观点对比一下']
+    : mode==='knowledge'
+    ? ['能标出具体页码吗？','这部分怎么用在题目里？','还有相关的其他考点吗？']
+    : ['能举一个具体的例子吗？','能再简化一点吗？','展开讲讲推导过程'];
+  return base.slice(0,3);
 }
 function renderChatOnly(){
   const chat=document.getElementById('chat'); if(!chat) return;
@@ -2460,12 +2562,20 @@ async function doAsk(){
   const q=inp.value.trim(); if(!q) return;
   S.qaMsgs.push({role:'user',text:q}); inp.value='';
   const idx=S.qaMsgs.length;
-  S.qaMsgs.push({role:'bot',text:'',pending:true});
+  const t0=Date.now();
+  S.qaMsgs.push({role:'bot',text:'',pending:true,showProc:true,stage:0,elapsed:0});
   render();
-  let full='', meta=null, lastPaint=0;
+  let full='', meta=null, lastPaint=0, stage=0;
+  // 耗时计数（Beautiful UI：已耗时显示，让等待可感知）
+  const timer=setInterval(()=>{
+    const m=S.qaMsgs[idx];
+    if(m){ m.elapsed=(Date.now()-t0)/1000; renderChatOnly(); }
+  },200);
+  const bump=(s)=>{ if(s>stage){ stage=s; } };
   const paint=()=>{
     S.qaMsgs[idx]={role:'bot',text:full,pending:!full,streaming:true,
-                   hint:meta&&meta.hint,mode:meta&&meta.mode,sources:(meta&&meta.sources)||[]};
+                   hint:meta&&meta.hint,mode:meta&&meta.mode,sources:(meta&&meta.sources)||[],
+                   showProc:true,stage,elapsed:(Date.now()-t0)/1000};
     renderChatOnly();
   };
   try{
@@ -2483,22 +2593,30 @@ async function doAsk(){
         const line=buf.slice(0,nl); buf=buf.slice(nl+1);
         if(!line.trim()) continue;
         let ev; try{ ev=JSON.parse(line); }catch(e){ continue; }
-        if(ev.type==='status'){ meta={...(meta||{}),hint:ev.hint}; paint(); }
+        if(ev.type==='status'){ meta={...(meta||{}),hint:ev.hint}; bump(0); paint(); }
         else if(ev.type==='sources'||ev.type==='meta'){
-          meta={...(meta||{}),mode:ev.mode,sources:ev.sources||[],hint:ev.hint}; paint();
+          meta={...(meta||{}),mode:ev.mode,sources:ev.sources||[],hint:ev.hint}; bump(1); paint();
         }
-        else if(ev.type==='delta'||ev.type==='notice'){ full+=ev.text||''; }
-        else if(ev.type==='done'){ if(ev.full) full=ev.full; }
+        else if(ev.type==='delta'||ev.type==='notice'){ full+=ev.text||''; bump(2); }
+        else if(ev.type==='done'){ if(ev.full) full=ev.full; bump(2); }
         else if(ev.type==='error'){ toast(ev.message||'生成中断'); }
       }
       const now=Date.now();
       if(now-lastPaint>90){ lastPaint=now; paint(); }
     }
-    S.qaMsgs[idx]={role:'bot',text:full||'（没有返回内容）',pending:false,
-                   mode:meta&&meta.mode,sources:(meta&&meta.sources)||[]};
+    clearInterval(timer);
+    const finalMode=meta&&meta.mode;
+    const srcs=(meta&&meta.sources)||[];
+    // 思考轨迹：展示真实命中的依据，不编造推理
+    const trace=srcs.map(s=>s.url?`联网：${s.title||s.url}`:
+      (s.page?`资料第 ${s.page} 页`+(s.title?` · ${s.title}`:''):(s.title||'资料片段'))).slice(0,5);
+    S.qaMsgs[idx]={role:'bot',text:full||'（没有返回内容）',pending:false,streaming:false,
+                   mode:finalMode,sources:srcs,showProc:false,stage:3,
+                   elapsed:(Date.now()-t0)/1000,trace,followups:genFollowups(finalMode)};
     render();
   }catch(e){
-    S.qaMsgs[idx]={role:'bot',text:'出错：'+e.message};
+    clearInterval(timer);
+    S.qaMsgs[idx]={role:'bot',text:'出错：'+e.message,showProc:false};
     render();
   }
 }
