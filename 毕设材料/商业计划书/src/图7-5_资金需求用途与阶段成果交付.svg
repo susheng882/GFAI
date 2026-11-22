@@ -1,0 +1,135 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">资金需求、用途与阶段成果交付</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Funding Requirement / Allocation / Milestone-based Spending / Exit (Simplified)</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　资金需求与来源（毕设口径，非融资）</text>
+<rect x="24.0" y="96.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">科目</text>
+<text x="126.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">金额</text>
+<text x="294.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">来源</text>
+<text x="478.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">说明</text>
+<line x1="120.0" y1="96.0" x2="120.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="288.0" y1="96.0" x2="288.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="472.0" y1="96.0" x2="472.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="122.0" width="632.0" height="46.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="122.0" x2="120.0" y2="168.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="122.0" x2="288.0" y2="168.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="122.0" x2="472.0" y2="168.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="148.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">云服务器</text>
+<text x="126.0" y="148.0" font-size="9.0" fill="#1D1D1F">¥188 / 年</text>
+<text x="294.0" y="148.0" font-size="9.0" fill="#1D1D1F">自筹（腾讯云新人活动价）</text>
+<text x="478.0" y="148.0" font-size="9.0" fill="#1D1D1F">2C4G5M，次年续费 ¥65/月需重估</text>
+<rect x="24.0" y="168.0" width="632.0" height="46.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="168.0" x2="120.0" y2="214.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="168.0" x2="288.0" y2="214.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="168.0" x2="472.0" y2="214.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="194.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">大模型订阅</text>
+<text x="126.0" y="194.0" font-size="9.0" fill="#1D1D1F">¥312–632 / 8 个月</text>
+<text x="294.0" y="194.0" font-size="9.0" fill="#1D1D1F">自筹（Token Plan 月付）</text>
+<text x="478.0" y="194.0" font-size="9.0" fill="#1D1D1F">Lite ¥39/月 或 Essential ¥79/月</text>
+<rect x="24.0" y="214.0" width="632.0" height="46.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="214.0" x2="120.0" y2="260.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="214.0" x2="288.0" y2="260.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="214.0" x2="472.0" y2="260.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="240.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">域名</text>
+<text x="126.0" y="240.0" font-size="9.0" fill="#1D1D1F">¥60–80 / 年</text>
+<text x="294.0" y="240.0" font-size="9.0" fill="#1D1D1F">自筹（.com）</text>
+<text x="478.0" y="240.0" font-size="9.0" fill="#1D1D1F">.cn 约 ¥29/年可替代</text>
+<rect x="24.0" y="260.0" width="632.0" height="46.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="260.0" x2="120.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="260.0" x2="288.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="260.0" x2="472.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="286.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">学生抵扣金</text>
+<text x="126.0" y="286.0" font-size="9.0" fill="#1D1D1F">-¥300</text>
+<text x="294.0" y="286.0" font-size="9.0" fill="#1D1D1F">阿里云学生免费领</text>
+<text x="478.0" y="286.0" font-size="9.0" fill="#1D1D1F">可覆盖约 7 个月 Lite 订阅</text>
+<rect x="24.0" y="306.0" width="632.0" height="46.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="306.0" x2="120.0" y2="352.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="306.0" x2="288.0" y2="352.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="306.0" x2="472.0" y2="352.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="332.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">合计实付</text>
+<text x="126.0" y="332.0" font-size="9.0" fill="#1D1D1F">≈¥260–880</text>
+<text x="294.0" y="332.0" font-size="9.0" fill="#1D1D1F">自筹 + 抵扣金</text>
+<text x="478.0" y="332.0" font-size="9.0" fill="#1D1D1F">见 图 7-3 八个月总账</text>
+<text x="24.0" y="374.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　资金用途分配</text>
+<rect x="24.0" y="380.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="397.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">用途</text>
+<text x="140.0" y="397.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">占比</text>
+<text x="290.0" y="397.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">投放阶段</text>
+<text x="476.0" y="397.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">停止 / 止损条件</text>
+<line x1="134.0" y1="380.0" x2="134.0" y2="406.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="284.0" y1="380.0" x2="284.0" y2="406.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="470.0" y1="380.0" x2="470.0" y2="406.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="406.0" width="632.0" height="48.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="134.0" y1="406.0" x2="134.0" y2="454.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="284.0" y1="406.0" x2="284.0" y2="454.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="406.0" x2="470.0" y2="454.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="433.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">计算资源</text>
+<text x="140.0" y="433.0" font-size="9.0" fill="#1D1D1F">约 35%</text>
+<text x="290.0" y="433.0" font-size="9.0" fill="#1D1D1F">全周期常驻</text>
+<text x="476.0" y="433.0" font-size="9.0" fill="#1D1D1F">内测结束即降配或停机</text>
+<rect x="24.0" y="454.0" width="632.0" height="48.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="134.0" y1="454.0" x2="134.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="284.0" y1="454.0" x2="284.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="454.0" x2="470.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="481.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">模型调用</text>
+<text x="140.0" y="481.0" font-size="9.0" fill="#1D1D1F">约 50%</text>
+<text x="290.0" y="481.0" font-size="9.0" fill="#1D1D1F">W5–W16 密集使用</text>
+<text x="476.0" y="481.0" font-size="9.0" fill="#1D1D1F">触发日阈值自动降档</text>
+<rect x="24.0" y="502.0" width="632.0" height="48.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="134.0" y1="502.0" x2="134.0" y2="550.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="284.0" y1="502.0" x2="284.0" y2="550.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="502.0" x2="470.0" y2="550.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="529.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">域名与证书</text>
+<text x="140.0" y="529.0" font-size="9.0" fill="#1D1D1F">约 10%</text>
+<text x="290.0" y="529.0" font-size="9.0" fill="#1D1D1F">W12 起上线准备</text>
+<text x="476.0" y="529.0" font-size="9.0" fill="#1D1D1F">未通过 G7 备案则不续费</text>
+<rect x="24.0" y="550.0" width="632.0" height="48.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="134.0" y1="550.0" x2="134.0" y2="598.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="284.0" y1="550.0" x2="284.0" y2="598.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="550.0" x2="470.0" y2="598.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="577.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">预留缓冲</text>
+<text x="140.0" y="577.0" font-size="9.0" fill="#1D1D1F">约 5%</text>
+<text x="290.0" y="577.0" font-size="9.0" fill="#1D1D1F">应急（续费跳涨 / 补量）</text>
+<text x="476.0" y="577.0" font-size="9.0" fill="#1D1D1F">不动用即结余</text>
+<rect x="24.0" y="608.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="626.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">W1–W4 技术验证</text>
+<text x="190.0" y="626.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">W5–W10 主线开发</text>
+<text x="348.0" y="626.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">W11–W14 闭环与上线</text>
+<text x="506.0" y="626.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">W15–W16 验收交付</text>
+<text x="24.0" y="656.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　阶段成果交付与「退出」安排（毕设简化）</text>
+<rect x="24.0" y="662.0" width="205.3" height="94.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,667.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 12 L11 16 L17 8"/></g>
+<text x="50.0" y="679.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">阶段交付</text>
+<text x="32.0" y="695.0" font-size="8.8" fill="#3A3A3C">G1 技术验证门</text>
+<text x="32.0" y="708.0" font-size="8.8" fill="#3A3A3C">40 份评测集回归</text>
+<text x="32.0" y="721.0" font-size="8.8" fill="#3A3A3C">四条主路径演示</text>
+<rect x="237.3" y="662.0" width="205.3" height="94.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,667.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="263.3" y="679.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">成果形态</text>
+<text x="245.3" y="695.0" font-size="8.8" fill="#3A3A3C">可运行系统 + 两套文档</text>
+<text x="245.3" y="708.0" font-size="8.8" fill="#3A3A3C">40 张学术图表册</text>
+<text x="245.3" y="721.0" font-size="8.8" fill="#3A3A3C">BiliNote 对标拆解</text>
+<rect x="450.7" y="662.0" width="205.3" height="94.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,667.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="476.7" y="679.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">后续路径</text>
+<text x="458.7" y="695.0" font-size="8.8" fill="#3A3A3C">开源（MIT）反哺社区</text>
+<text x="458.7" y="708.0" font-size="8.8" fill="#3A3A3C">或校内课程工具试点</text>
+<text x="458.7" y="721.0" font-size="8.8" fill="#3A3A3C">不设股权与融资退出</text>
+<rect x="24.0" y="766.0" width="632.0" height="69.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,772.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 9 C9 6 15 6 15 9 C15 12 12 12 12 15"/><circle cx="12" cy="18.5" r="0.8" fill="#0071E3"/></g>
+<text x="56.0" y="784.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">为什么按「毕设简化」处理融资与退出</text>
+<text x="36.0" y="801.0" font-size="9.0" fill="#48484A">本项目为单人毕业设计，不存在外部投资人与股权结构，故不编造估值、轮次与退出回报。</text>
+<text x="36.0" y="815.0" font-size="9.0" fill="#48484A">本章保留 BP 的「资金需求—用途—里程碑—成果交付」逻辑骨架，替代常规的融资与退出章节。</text>
+<text x="36.0" y="829.0" font-size="9.0" fill="#48484A">金额取自 图 7-3 采购清单的真实报价；用途占比为量级归纳，用于说明资金结构，非审计数据。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：金额口径同 图 7-3；W＝第几周，与 图 9-1 甘特图刻度一致；◆ 抵扣金为可选项。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 7-5　资金需求、用途与阶段成果交付</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 7-5 Funding requirement, allocation and milestone delivery</text>
+</svg>

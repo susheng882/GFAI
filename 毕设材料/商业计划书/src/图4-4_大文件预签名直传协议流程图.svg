@@ -1,0 +1,160 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">大文件预签名直传协议流程图拆解</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">第二章 · 三步协议 + 四泳道 + 判定分支 + 安全边界矩阵 · 技术方案 2.6 / 5.6 / 5.7</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　四泳道标准流程图：大文件预签名直传三步协议（◆ 架构评审拍板）</text>
+<rect x="24.0" y="88.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="88.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="109.0" font-size="9.2" fill="#0071E3" font-weight="bold">① 浏览器</text>
+<text x="30.0" y="125.0" font-size="8.4" fill="#6E6E73">React SPA</text>
+<rect x="24.0" y="176.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="176.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="197.0" font-size="9.2" fill="#0071E3" font-weight="bold">② API</text>
+<text x="30.0" y="213.0" font-size="8.4" fill="#6E6E73">FastAPI</text>
+<rect x="24.0" y="264.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="264.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="285.0" font-size="9.2" fill="#0071E3" font-weight="bold">③ MinIO</text>
+<text x="30.0" y="301.0" font-size="8.4" fill="#6E6E73">对象存储</text>
+<rect x="24.0" y="352.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="352.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="373.0" font-size="9.2" fill="#0071E3" font-weight="bold">④ PG</text>
+<text x="30.0" y="389.0" font-size="8.4" fill="#6E6E73">业务库</text>
+<rect x="110" y="110" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="160.0" y="129.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">选择文件</text>
+<text x="160.0" y="140.6" font-size="8.4" fill="#48484A" text-anchor="middle">视频 / PDF</text>
+<rect x="110.0" y="198.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="160.0" y="217.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">签发请求</text>
+<text x="160.0" y="228.6" font-size="8.4" fill="#48484A" text-anchor="middle">name / size / type</text>
+<path d="M 268.0,198 L 318,220.0 L 268.0,242 L 218,220.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="268.0" y="217.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">合规判定</text>
+<text x="268.0" y="228.6" font-size="8.4" fill="#48484A" text-anchor="middle">配额 / 水位？</text>
+<rect x="326.0" y="198.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="376.0" y="217.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">生成预签名</text>
+<text x="376.0" y="228.6" font-size="8.4" fill="#48484A" text-anchor="middle">PUT URL + key</text>
+<rect x="434" y="198" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="484.0" y="217.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">返回 URL</text>
+<text x="484.0" y="228.6" font-size="8.4" fill="#48484A" text-anchor="middle">有效期 15 min</text>
+<path d="M 443,286 L 534,286 L 525,330 L 434,330 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="484.0" y="305.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">PUT 直传</text>
+<text x="484.0" y="316.6" font-size="8.4" fill="#48484A" text-anchor="middle">字节流不进 API</text>
+<rect x="434.0" y="110.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="484.0" y="129.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">上传进度</text>
+<text x="484.0" y="140.6" font-size="8.4" fill="#48484A" text-anchor="middle">XHR / 分片</text>
+<rect x="542.0" y="110.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="592.0" y="129.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">confirm</text>
+<text x="592.0" y="140.6" font-size="8.4" fill="#48484A" text-anchor="middle">POST /uploads</text>
+<path d="M 551,286 L 642,286 L 633,330 L 542,330 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="592.0" y="305.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">HEAD / stat</text>
+<text x="592.0" y="316.6" font-size="8.4" fill="#48484A" text-anchor="middle">实际大小 / ETag</text>
+<path d="M 551,374 L 642,374 L 633,418 L 542,418 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="592.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">写 materials</text>
+<text x="592.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">建解析任务</text>
+<path d="M 376.0,374 L 426,396.0 L 376.0,418 L 326,396.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="376.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">stat 一致？</text>
+<text x="376.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">以 stat 为准</text>
+<rect x="110" y="374" width="100" height="44" rx="22.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="160.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">拒绝 / 清理</text>
+<text x="160.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">超配额或残留</text>
+<line x1="160.0" y1="154.0" x2="160.0" y2="198.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="210.0" y1="220.0" x2="218.0" y2="220.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="318.0" y1="220.0" x2="326.0" y2="220.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="426.0" y1="220.0" x2="434.0" y2="220.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="484.0" y1="242.0" x2="484.0" y2="286.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="484.0" y1="330.0" x2="484.0" y2="374.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="534.0" y1="308.0" x2="542.0" y2="308.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<path d="M 592,154 L 592,286" fill="none" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="534.0" y1="132.0" x2="542.0" y2="132.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<path d="M 592,330 L 592,352 L 376,352 L 376,374" fill="none" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="426.0" y1="396.0" x2="542.0" y2="396.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="326.0" y1="396.0" x2="210.0" y2="396.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<text x="224.0" y="390.0" font-size="8.4" fill="#B4472F">否 → 拒绝并清理残留</text>
+<text x="452.0" y="390.0" font-size="8.4" fill="#6E6E73">是 → 落库</text>
+<text x="494.0" y="176.0" font-size="8.4" fill="#6E6E73">进度回传不经过 API 业务层</text>
+<text x="546.0" y="262.0" font-size="8.4" fill="#B4472F">K1 直传</text>
+<rect x="24.0" y="446.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">第 1 步　签发 presign</text>
+<text x="190.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">第 2 步　浏览器直传 MinIO</text>
+<text x="348.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">第 3 步　confirm 以 stat 为准</text>
+<text x="506.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">异常　拒绝 / 清理残留</text>
+<text x="24.0" y="484.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　协议约束、安全边界与失败分支</text>
+<rect x="24.0" y="492.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">项目</text>
+<text x="126.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">协议约定</text>
+<text x="326.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">理由与落点</text>
+<line x1="120.0" y1="492.0" x2="120.0" y2="518.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="320.0" y1="492.0" x2="320.0" y2="518.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="518.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="518.0" x2="120.0" y2="548.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="518.0" x2="320.0" y2="548.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="536.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">签发入参</text>
+<text x="126.0" y="536.0" font-size="9.0" fill="#1D1D1F">文件名 / 大小 / MIME / 用户配额</text>
+<text x="326.0" y="536.0" font-size="9.0" fill="#1D1D1F">服务端按白名单 MIME 与 UPLOAD_MAX 校验，不信任客户端声明</text>
+<rect x="24.0" y="548.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="548.0" x2="120.0" y2="578.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="548.0" x2="320.0" y2="578.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="566.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">预签名 URL</text>
+<text x="126.0" y="566.0" font-size="9.0" fill="#1D1D1F">PUT 限定 object_key，15 min 有效</text>
+<text x="326.0" y="566.0" font-size="9.0" fill="#1D1D1F">最小权限：只能写这一个 key，不能列举 / 删除桶内对象</text>
+<rect x="24.0" y="578.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="578.0" x2="120.0" y2="608.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="578.0" x2="320.0" y2="608.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="596.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">直传通道</text>
+<text x="126.0" y="596.0" font-size="9.0" fill="#1D1D1F">浏览器 → MinIO（Nginx 反代）</text>
+<text x="326.0" y="596.0" font-size="9.0" fill="#1D1D1F">字节流不进 API 进程，两个并发 1 GB 上传不打爆 4 GB 内存</text>
+<rect x="24.0" y="608.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="608.0" x2="120.0" y2="638.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="608.0" x2="320.0" y2="638.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="626.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">confirm 校验</text>
+<text x="126.0" y="626.0" font-size="9.0" fill="#1D1D1F">以 MinIO HEAD/stat 的 size / ETag 为准</text>
+<text x="326.0" y="626.0" font-size="9.0" fill="#1D1D1F">防「客户端声称成功但对象不完整」；不一致标记失败并清理</text>
+<rect x="24.0" y="638.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="638.0" x2="120.0" y2="668.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="638.0" x2="320.0" y2="668.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="656.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">磁盘治理</text>
+<text x="126.0" y="656.0" font-size="9.0" fill="#1D1D1F">水位 ≥80% 冻结；单任务 ≤5 GB</text>
+<text x="326.0" y="656.0" font-size="9.0" fill="#1D1D1F">与 5.7 节磁盘水位告警、临时文件清理联动</text>
+<rect x="24.0" y="668.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="668.0" x2="120.0" y2="698.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="668.0" x2="320.0" y2="698.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="686.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">幂等与版本</text>
+<text x="126.0" y="686.0" font-size="9.0" fill="#1D1D1F">object_key = task_id + 内容哈希</text>
+<text x="326.0" y="686.0" font-size="9.0" fill="#1D1D1F">重复 confirm 不产生第二条 materials；开启桶版本控制</text>
+<rect x="24.0" y="698.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="698.0" x2="120.0" y2="728.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="698.0" x2="320.0" y2="728.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="716.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">失败分支</text>
+<text x="126.0" y="716.0" font-size="9.0" fill="#1D1D1F">超配额 / 水位冻结 / stat 不符 / 过期</text>
+<text x="326.0" y="716.0" font-size="9.0" fill="#1D1D1F">统一返回明确错误码，前端展示「部分成功」而非静默吞掉</text>
+<text x="24.0" y="738.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　评审动机、信任边界与链路衔接</text>
+<rect x="24.0" y="744.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,749.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="50.0" y="761.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">评审动机</text>
+<text x="32.0" y="777.0" font-size="8.5" fill="#3A3A3C">隐含的 Nginx → FastAPI 上传路径会让</text>
+<text x="32.0" y="790.0" font-size="8.5" fill="#3A3A3C">1 GB 视频流经 API 进程；而「上传文件</text>
+<text x="32.0" y="803.0" font-size="8.5" fill="#3A3A3C">优先」是核心入口策略，必须绕开</text>
+<rect x="237.3" y="744.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,749.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L21 6 L21 12 C21 17 17 21 12 22 C7 21 3 17 3 12 L3 6 Z"/><path d="M8 12 L11 15 L16 9"/></g>
+<text x="263.3" y="761.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">信任边界</text>
+<text x="245.3" y="777.0" font-size="8.5" fill="#3A3A3C">客户端不可信：大小、类型、成功状态</text>
+<text x="245.3" y="790.0" font-size="8.5" fill="#3A3A3C">一律以服务端校验与对象存储 stat 为准；</text>
+<text x="245.3" y="803.0" font-size="8.5" fill="#3A3A3C">预签名 URL 限定单 key 与短时效</text>
+<rect x="450.7" y="744.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,749.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="476.7" y="761.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">链路衔接</text>
+<text x="458.7" y="777.0" font-size="8.5" fill="#3A3A3C">materials 落库后与图 4-3 的 K2 入队</text>
+<text x="458.7" y="790.0" font-size="8.5" fill="#3A3A3C">链路衔接；K1 / K2 / K3 编号与图 4-1、</text>
+<text x="458.7" y="803.0" font-size="8.5" fill="#3A3A3C">图 3-2 互相锚定，可跨图引用</text>
+<rect x="24.0" y="818.0" width="632.0" height="40.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<text x="36.0" y="836.0" font-size="8.8" fill="#48484A">注 1：三步协议（签发 → 直传 → confirm）源自技术方案 2.6 节；磁盘水位与配额治理见 5.7 节。</text>
+<text x="36.0" y="850.0" font-size="8.8" fill="#48484A">注 2：数据源另见产品报告第五章（六）架构评审修订；◆ 表示 2026-11 评审新增项。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">圆角＝起止　矩形＝处理　菱形＝判定　平行四边形＝数据　虚线＝旁路　朱红＝异常出口　◆ 评审拍板</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 4-4　大文件预签名直传协议流程图拆解</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 4-4　Flowchart decomposition of the presigned direct-upload protocol</text>
+</svg>

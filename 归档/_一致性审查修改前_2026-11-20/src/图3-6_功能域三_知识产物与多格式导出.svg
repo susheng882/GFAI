@@ -1,0 +1,152 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">知识产物与多格式导出 · 功能域展开</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Knowledge Artifacts &amp; Export / Hub-and-Spoke Artifact Derivation / 知识产品 · 7 项功能 · 主线 5 / V1.5 2</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　单一知识单元 → 六类产物放射派生（含同源与来源绑定机制）</text>
+<rect x="24.0" y="96.0" width="632.0" height="44.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.5"/>
+<text x="32.0" y="109.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">域定位：同一知识单元派生多种复习载体，避免重复生成</text>
+<text x="32.0" y="123.0" font-size="8.2" fill="#3A3A3C">对应痛点 ④ 笔记碎片 · ③ 无法溯源　｜　产物带来源，可导出、可打印、可迁移</text>
+<text x="32.0" y="136.0" font-size="8.0" fill="#6E6E73">知识产品 · 7 项功能 · 主线 5 / V1.5 2</text>
+<text x="24.0" y="152.0" font-size="8.6" fill="#48484A" font-weight="bold">单一知识单元（共享主键）→ 六类派生产物：同源不重复调用模型</text>
+<rect x="24.0" y="160.0" width="192.0" height="38.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(30.0,168.0) scale(0.52)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="49.0" y="176.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">结构化笔记 F17</text>
+<text x="49.0" y="190.0" font-size="8.0" fill="#6E6E73">备考四档风格预设</text>
+<line x1="120.0" y1="198.0" x2="340.0" y2="210.0" stroke="#86868B" stroke-width="0.8"/>
+<rect x="244.0" y="160.0" width="192.0" height="38.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(250.0,168.0) scale(0.52)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M6 9 L18 9 M6 13 L18 13 M6 17 L13 17"/></g>
+<text x="269.0" y="176.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">背诵卡片 F18</text>
+<text x="269.0" y="190.0" font-size="8.0" fill="#6E6E73">问答 / 填空两类</text>
+<line x1="340.0" y1="198.0" x2="340.0" y2="210.0" stroke="#86868B" stroke-width="0.8"/>
+<rect x="464.0" y="160.0" width="192.0" height="38.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(470.0,168.0) scale(0.52)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 9 C9 6 15 6 15 9 C15 12 12 12 12 15"/><circle cx="12" cy="18.5" r="0.8" fill="#0071E3"/></g>
+<text x="489.0" y="176.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">智能组卷 F19</text>
+<text x="489.0" y="190.0" font-size="8.0" fill="#6E6E73">按科目与掌握度</text>
+<line x1="560.0" y1="198.0" x2="340.0" y2="210.0" stroke="#86868B" stroke-width="0.8"/>
+<rect x="210.0" y="210.0" width="260.0" height="60.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="340.0" y="230.0" font-size="10.0" fill="#1D1D1F" text-anchor="middle" font-weight="bold">knowledge_units</text>
+<text x="219.0" y="245.0" font-size="7.9" fill="#3A3A3C">共享主键 · 带 source_id</text>
+<text x="219.0" y="256.0" font-size="7.9" fill="#3A3A3C">同源派生不重复调模型</text>
+<text x="219.0" y="267.0" font-size="7.9" fill="#3A3A3C">时间戳 / 页码硬字段</text>
+<rect x="24.0" y="278.0" width="192.0" height="38.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(30.0,286.0) scale(0.52)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="49.0" y="294.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">错题本 F20</text>
+<text x="49.0" y="308.0" font-size="8.0" fill="#6E6E73">附来源与错误归因</text>
+<line x1="340.0" y1="270.0" x2="120.0" y2="278.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="244.0" y="278.0" width="192.0" height="38.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(250.0,286.0) scale(0.52)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6 L12 12 L16 15"/></g>
+<text x="269.0" y="294.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">多版本记录 F21</text>
+<text x="269.0" y="308.0" font-size="8.0" fill="#6E6E73">版本快照 G4 可回滚</text>
+<line x1="340.0" y1="270.0" x2="340.0" y2="278.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="464.0" y="278.0" width="192.0" height="38.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(470.0,286.0) scale(0.52)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 7 L12 12 L2 7 Z M2 12 L12 17 L22 12 M2 17 L12 22 L22 17"/></g>
+<text x="489.0" y="294.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">导出包 F22 / F23</text>
+<text x="489.0" y="308.0" font-size="8.0" fill="#6E6E73">Markdown / PDF / Anki</text>
+<line x1="340.0" y1="270.0" x2="560.0" y2="278.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<text x="24.0" y="218.0" font-size="8.8" fill="#B4472F" font-weight="bold">同源派生原则</text>
+<text x="24.0" y="232.0" font-size="7.9" fill="#3A3A3C">笔记 / 卡片 / 错题 / 组卷</text>
+<text x="24.0" y="244.0" font-size="7.9" fill="#3A3A3C">共用 knowledge_units 主键</text>
+<text x="24.0" y="256.0" font-size="7.9" fill="#3A3A3C">避免重复生成与重复计费</text>
+<text x="480.0" y="218.0" font-size="8.8" fill="#B4472F" font-weight="bold">来源绑定机制</text>
+<text x="480.0" y="232.0" font-size="7.9" fill="#3A3A3C">每个产物带时间戳或页码</text>
+<text x="480.0" y="244.0" font-size="7.9" fill="#3A3A3C">错题附原文出处与归因</text>
+<text x="480.0" y="256.0" font-size="7.9" fill="#3A3A3C">可回指、可打印、可迁移</text>
+<text x="24.0" y="340.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　七项功能 2×4 宫格 + 落点分布统计</text>
+<rect x="24.0" y="346.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="24.0" y="346.0" width="152.0" height="16.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="29.0" y="358.0" font-size="7.9" fill="#1D1D1F" font-weight="bold">F17　·　主线</text>
+<text x="29.0" y="378.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">结构化笔记</text>
+<text x="29.0" y="393.0" font-size="7.8" fill="#3A3A3C">备考四档风格预设（精简/详细/学术</text>
+<text x="29.0" y="405.0" font-size="7.8" fill="#3A3A3C">/教程）</text>
+<text x="29.0" y="431.0" font-size="7.6" fill="#6E6E73">理论：测试效应</text>
+<rect x="184.0" y="346.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="184.0" y="346.0" width="152.0" height="16.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="189.0" y="358.0" font-size="7.9" fill="#1D1D1F" font-weight="bold">F18　·　主线</text>
+<text x="189.0" y="378.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">背诵卡片</text>
+<text x="189.0" y="393.0" font-size="7.8" fill="#3A3A3C">问答与填空两类卡片自动生成</text>
+<text x="189.0" y="431.0" font-size="7.6" fill="#6E6E73">理论：主动检索</text>
+<rect x="344.0" y="346.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="344.0" y="346.0" width="152.0" height="16.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="349.0" y="358.0" font-size="7.9" fill="#1D1D1F" font-weight="bold">F19　·　主线</text>
+<text x="349.0" y="378.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">智能组卷</text>
+<text x="349.0" y="393.0" font-size="7.8" fill="#3A3A3C">按科目、范围与掌握度自动出卷</text>
+<text x="349.0" y="431.0" font-size="7.6" fill="#6E6E73">理论：合意困难</text>
+<rect x="504.0" y="346.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="504.0" y="346.0" width="152.0" height="16.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="509.0" y="358.0" font-size="7.9" fill="#1D1D1F" font-weight="bold">F20　·　主线</text>
+<text x="509.0" y="378.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">错题本</text>
+<text x="509.0" y="393.0" font-size="7.8" fill="#3A3A3C">测验错题自动沉淀，附来源与错误归因</text>
+<text x="509.0" y="431.0" font-size="7.6" fill="#6E6E73">理论：来源可验证</text>
+<rect x="24.0" y="448.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="24.0" y="448.0" width="152.0" height="16.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="29.0" y="460.0" font-size="7.9" fill="#1D1D1F" font-weight="bold">F21　·　主线</text>
+<text x="29.0" y="480.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">笔记多版本记录</text>
+<text x="29.0" y="495.0" font-size="7.8" fill="#3A3A3C">版本随数据快照留存，对应上线标准 </text>
+<text x="29.0" y="507.0" font-size="7.8" fill="#3A3A3C">G4</text>
+<text x="29.0" y="533.0" font-size="7.6" fill="#6E6E73">理论：G4 可回滚</text>
+<rect x="184.0" y="448.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="184.0" y="448.0" width="152.0" height="16.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="189.0" y="460.0" font-size="7.9" fill="#1D1D1F" font-weight="bold">F22　·　V1.5</text>
+<text x="189.0" y="480.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">Markdown 与 PDF 导出</text>
+<text x="189.0" y="495.0" font-size="7.8" fill="#3A3A3C">满足复习打印场景</text>
+<text x="189.0" y="533.0" font-size="7.6" fill="#6E6E73">理论：G3 可携带</text>
+<rect x="344.0" y="448.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="344.0" y="448.0" width="152.0" height="16.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="349.0" y="460.0" font-size="7.9" fill="#1D1D1F" font-weight="bold">F23　·　V1.5</text>
+<text x="349.0" y="480.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">Anki 卡组导出</text>
+<text x="349.0" y="495.0" font-size="7.8" fill="#3A3A3C">兼容既有学习习惯</text>
+<text x="349.0" y="533.0" font-size="7.6" fill="#6E6E73">理论：兼容既有习惯</text>
+<rect x="504.0" y="448.0" width="152.0" height="94.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="504.0" y="448.0" width="152.0" height="16.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="509.0" y="460.0" font-size="7.9" fill="#FFFFFF" font-weight="bold">落点分布统计</text>
+<text x="509.0" y="480.0" font-size="7.8" fill="#48484A" font-weight="bold">主线 5 项 / V1.5 2 项</text>
+<text x="509.0" y="492.0" font-size="7.8" fill="#3A3A3C">共享主键同源派生</text>
+<text x="509.0" y="504.0" font-size="7.8" fill="#3A3A3C">F22 / F23 第 11 周</text>
+<text x="509.0" y="516.0" font-size="7.8" fill="#3A3A3C">未达标可降级</text>
+<text x="509.0" y="528.0" font-size="7.8" fill="#3A3A3C">依据：成本工程原则</text>
+<text x="24.0" y="564.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　设计理论 · 优化手段 · 验收口径</text>
+<rect x="24.0" y="570.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="587.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">设计理论 / 依据</text>
+<text x="206.0" y="587.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">落地参数与优化手段</text>
+<text x="440.0" y="587.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">可核验验收口径</text>
+<line x1="200.0" y1="570.0" x2="200.0" y2="596.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="434.0" y1="570.0" x2="434.0" y2="596.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="596.0" width="632.0" height="46.3" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="596.0" x2="200.0" y2="642.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="596.0" x2="434.0" y2="642.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="622.2" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">测试效应 Roediger &amp; Karpicke 2006</text>
+<text x="206.0" y="622.2" font-size="8.8" fill="#1D1D1F">主动检索（卡片/组卷）优于重复阅读，80% vs 34%</text>
+<text x="440.0" y="622.2" font-size="8.8" fill="#1D1D1F">卡片与组卷覆盖每个知识单元</text>
+<rect x="24.0" y="642.3" width="632.0" height="46.3" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="642.3" x2="200.0" y2="688.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="642.3" x2="434.0" y2="688.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="668.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">双重编码 Paivio 1986 / Mayer 2009</text>
+<text x="206.0" y="668.5" font-size="8.8" fill="#1D1D1F">文字笔记 + 关键帧截图并列呈现</text>
+<text x="440.0" y="668.5" font-size="8.8" fill="#1D1D1F">图文一致性纳入人工可用率</text>
+<rect x="24.0" y="688.7" width="632.0" height="46.3" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="688.7" x2="200.0" y2="735.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="688.7" x2="434.0" y2="735.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="714.8" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">合意困难 Bjork &amp; Bjork 2011</text>
+<text x="206.0" y="714.8" font-size="8.8" fill="#1D1D1F">组卷按掌握度调节难度，不总给熟悉题</text>
+<text x="440.0" y="714.8" font-size="8.8" fill="#1D1D1F">难度分布随 p(L) 动态调整</text>
+<rect x="24.0" y="745.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">Markdown 导出</text>
+<text x="190.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">PDF 打印</text>
+<text x="348.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">Anki 卡组迁移</text>
+<text x="506.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">G3 全量数据可带走</text>
+<rect x="24.0" y="781.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,787.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="56.0" y="799.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">依赖关系与版本说明</text>
+<text x="36.0" y="816.0" font-size="9.0" fill="#48484A">所有产物共享 knowledge_units 主键，笔记/卡片/错题/组卷不重复调用模型，这是控制调用成本的关键设计。</text>
+<text x="36.0" y="830.0" font-size="9.0" fill="#48484A">版本快照（F21）支撑 G4 可回滚；导出能力（F22/F23）同时满足 G3「全量数据可带走」。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：产物与实体关系见 图 4-2（ER）；V1.5 导出项在第 11 周未达标可降级。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 3-6　功能域三：知识产物与多格式导出</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 3-6 Domain III: knowledge artifacts and multi-format export</text>
+</svg>

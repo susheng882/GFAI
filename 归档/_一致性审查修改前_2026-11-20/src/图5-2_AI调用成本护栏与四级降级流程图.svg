@@ -1,0 +1,184 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">成本护栏判定与四级降级流程图</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">第三章 · 三重护栏判定链 + 四级降级阶梯 + 阈值矩阵 + 可观测性 · 技术方案 3.3 / 3.4 / 5.8</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　成本护栏判定与四级降级标准流程图（◆ 架构评审拍板）</text>
+<text x="24.0" y="96.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">护栏判定链（任一触发即进入降级，而非直接失败）</text>
+<rect x="30" y="104" width="150" height="46" rx="23.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="105.0" y="124.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">请求到达</text>
+<text x="105.0" y="135.6" font-size="8.4" fill="#48484A" text-anchor="middle">携带 user_id / 任务体积</text>
+<path d="M 247.0,104 L 322,127.0 L 247.0,150 L 172,127.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="247.0" y="124.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">用户日配额？</text>
+<text x="247.0" y="135.6" font-size="8.4" fill="#48484A" text-anchor="middle">token / 次数</text>
+<path d="M 413.0,104 L 488,127.0 L 413.0,150 L 338,127.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="413.0" y="124.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">单任务上限？</text>
+<text x="413.0" y="135.6" font-size="8.4" fill="#48484A" text-anchor="middle">体积 / token 预算</text>
+<path d="M 579.0,104 L 654,127.0 L 579.0,150 L 504,127.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="579.0" y="124.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">平台日成本？</text>
+<text x="579.0" y="135.6" font-size="8.4" fill="#48484A" text-anchor="middle">阈值 = 剩余预算</text>
+<line x1="180.0" y1="127.0" x2="172.0" y2="127.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="322.0" y1="127.0" x2="338.0" y2="127.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="488.0" y1="127.0" x2="504.0" y2="127.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<text x="30.0" y="168.0" font-size="8.8" fill="#6E6E73">任一判定为「是」→ 进入下方四级降级阶梯；全部为「否」→ 正常路由（图 4-5）</text>
+<text x="24.0" y="190.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">四级降级阶梯（成本由高到低，用户感知仅为「慢一点」）</text>
+<rect x="24.0" y="198.0" width="150.5" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="32.0" y="215.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">D1　强档换中档</text>
+<text x="32.0" y="232.0" font-size="8.4" fill="#3A3A3C">HEAVY → MID，保留完整字段</text>
+<text x="32.0" y="245.0" font-size="8.4" fill="#3A3A3C">成本约降至 1/4；不改变产物结构</text>
+<line x1="175.5" y1="229.0" x2="183.5" y2="229.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<rect x="184.5" y="198.0" width="150.5" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="192.5" y="215.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">D2　长上下文分段</text>
+<text x="192.5" y="232.0" font-size="8.4" fill="#3A3A3C">超长输入按预算二分切块</text>
+<text x="192.5" y="245.0" font-size="8.4" fill="#3A3A3C">多轮归并，避免单次超大请求</text>
+<line x1="336.0" y1="229.0" x2="344.0" y2="229.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<rect x="345.0" y="198.0" width="150.5" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="353.0" y="215.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">D3　缓存命中复用</text>
+<text x="353.0" y="232.0" font-size="8.4" fill="#3A3A3C">同 material + 同 Prompt 命中</text>
+<text x="353.0" y="245.0" font-size="8.4" fill="#3A3A3C">产物缓存，零模型调用</text>
+<line x1="496.5" y1="229.0" x2="504.5" y2="229.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<rect x="505.5" y="198.0" width="150.5" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="513.5" y="215.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">D4　本地模板兜底</text>
+<text x="513.5" y="232.0" font-size="8.4" fill="#3A3A3C">额度耗尽 / 断网时切离线档</text>
+<text x="513.5" y="245.0" font-size="8.4" fill="#3A3A3C">模板化产物 + 明确降级标记</text>
+<text x="24.0" y="278.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　三重护栏参数与阈值设定（按 §5.8 真实报价校准）</text>
+<rect x="24.0" y="286.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="303.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">护栏</text>
+<text x="130.0" y="303.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">约束对象</text>
+<text x="258.0" y="303.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">阈值 / 配置</text>
+<text x="414.0" y="303.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">设定依据</text>
+<text x="564.0" y="303.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">触发动作</text>
+<line x1="124.0" y1="286.0" x2="124.0" y2="312.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="252.0" y1="286.0" x2="252.0" y2="312.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="408.0" y1="286.0" x2="408.0" y2="312.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="558.0" y1="286.0" x2="558.0" y2="312.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="312.0" width="632.0" height="36.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="124.0" y1="312.0" x2="124.0" y2="348.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="312.0" x2="252.0" y2="348.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="408.0" y1="312.0" x2="408.0" y2="348.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="558.0" y1="312.0" x2="558.0" y2="348.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="333.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">护栏一 · 用户日配额</text>
+<text x="130.0" y="327.8" font-size="8.8" fill="#1D1D1F">单用户每日</text>
+<text x="130.0" y="338.2" font-size="8.8" fill="#1D1D1F">token / 次数上限</text>
+<text x="258.0" y="327.8" font-size="8.8" fill="#1D1D1F">GFLC_DAILY_USER_TOKEN</text>
+<text x="258.0" y="338.2" font-size="8.8" fill="#1D1D1F">= 50 000</text>
+<text x="414.0" y="327.8" font-size="8.8" fill="#1D1D1F">防单账号误用或脚本</text>
+<text x="414.0" y="338.2" font-size="8.8" fill="#1D1D1F">刷量打爆预算</text>
+<text x="564.0" y="327.8" font-size="8.8" fill="#1D1D1F">超限返回 429 +</text>
+<text x="564.0" y="338.2" font-size="8.8" fill="#1D1D1F">次日重置提示</text>
+<rect x="24.0" y="348.0" width="632.0" height="36.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="124.0" y1="348.0" x2="124.0" y2="384.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="348.0" x2="252.0" y2="384.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="408.0" y1="348.0" x2="408.0" y2="384.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="558.0" y1="348.0" x2="558.0" y2="384.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="369.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">护栏二 · 单任务上限</text>
+<text x="130.0" y="363.8" font-size="8.8" fill="#1D1D1F">单任务体积与</text>
+<text x="130.0" y="374.2" font-size="8.8" fill="#1D1D1F">token 预算</text>
+<text x="258.0" y="363.8" font-size="8.8" fill="#1D1D1F">40 min 视频 / ≤5 GB</text>
+<text x="258.0" y="374.2" font-size="8.8" fill="#1D1D1F">/ ≤120 s</text>
+<text x="414.0" y="363.8" font-size="8.8" fill="#1D1D1F">分块器按体积预算</text>
+<text x="414.0" y="374.2" font-size="8.8" fill="#1D1D1F">二分切块</text>
+<text x="564.0" y="363.8" font-size="8.8" fill="#1D1D1F">超限自动降级</text>
+<text x="564.0" y="374.2" font-size="8.8" fill="#1D1D1F">为分段处理</text>
+<rect x="24.0" y="384.0" width="632.0" height="36.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="124.0" y1="384.0" x2="124.0" y2="420.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="384.0" x2="252.0" y2="420.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="408.0" y1="384.0" x2="408.0" y2="420.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="558.0" y1="384.0" x2="558.0" y2="420.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="405.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">护栏三 · 平台日成本</text>
+<text x="130.0" y="399.8" font-size="8.8" fill="#1D1D1F">全平台当日累计</text>
+<text x="130.0" y="410.2" font-size="8.8" fill="#1D1D1F">LLM 支出</text>
+<text x="258.0" y="399.8" font-size="8.8" fill="#1D1D1F">GFLC_DAILY_PLATFORM</text>
+<text x="258.0" y="410.2" font-size="8.8" fill="#1D1D1F">_COST_CNY</text>
+<text x="414.0" y="399.8" font-size="8.8" fill="#1D1D1F">阈值按 ¥82/月实价</text>
+<text x="414.0" y="410.2" font-size="8.8" fill="#1D1D1F">折算设初值</text>
+<text x="564.0" y="399.8" font-size="8.8" fill="#1D1D1F">触顶冻结 HEAVY</text>
+<text x="564.0" y="410.2" font-size="8.8" fill="#1D1D1F">档并告警</text>
+<text x="24.0" y="430.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　降级可观测性、恢复条件与验收口径</text>
+<rect x="24.0" y="438.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="455.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">项目</text>
+<text x="122.0" y="455.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">实现</text>
+<text x="322.0" y="455.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">理由与验收</text>
+<line x1="116.0" y1="438.0" x2="116.0" y2="464.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="316.0" y1="438.0" x2="316.0" y2="464.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="464.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="464.0" x2="116.0" y2="496.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="316.0" y1="464.0" x2="316.0" y2="496.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="483.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">降级日志</text>
+<text x="122.0" y="483.0" font-size="9.0" fill="#1D1D1F">每次降档写结构化日志</text>
+<text x="322.0" y="483.0" font-size="9.0" fill="#1D1D1F">记录 task_id / 触发护栏 / 原档位 / 目标档位 / 时间戳</text>
+<rect x="24.0" y="496.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="496.0" x2="116.0" y2="528.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="316.0" y1="496.0" x2="316.0" y2="528.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="515.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">成本看板</text>
+<text x="122.0" y="515.0" font-size="9.0" fill="#1D1D1F">按日聚合展示调用量与支出</text>
+<text x="322.0" y="515.0" font-size="9.0" fill="#1D1D1F">与图 7-2 月度成本构成共用数据源，支持答辩现场核验</text>
+<rect x="24.0" y="528.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="528.0" x2="116.0" y2="560.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="316.0" y1="528.0" x2="316.0" y2="560.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="547.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">恢复条件</text>
+<text x="122.0" y="547.0" font-size="9.0" fill="#1D1D1F">当日额度重置或用量回落阈值下</text>
+<text x="322.0" y="547.0" font-size="9.0" fill="#1D1D1F">自动恢复默认档位，无需人工介入；不静默吞掉降级事件</text>
+<rect x="24.0" y="560.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="560.0" x2="116.0" y2="592.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="316.0" y1="560.0" x2="316.0" y2="592.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="579.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">验收口径</text>
+<text x="122.0" y="579.0" font-size="9.0" fill="#1D1D1F">降级链路 100% 可复现</text>
+<text x="322.0" y="579.0" font-size="9.0" fill="#1D1D1F">G3 幻觉率 ≤3%、G5 存储一致性、G6 可观测性门禁共同覆盖</text>
+<text x="24.0" y="606.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　降级演练验收清单（可现场复现的验收用例）</text>
+<rect x="24.0" y="614.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="630.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">演练项</text>
+<text x="150.0" y="630.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">触发方式</text>
+<text x="370.0" y="630.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">期望结果</text>
+<line x1="144.0" y1="614.0" x2="144.0" y2="638.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="364.0" y1="614.0" x2="364.0" y2="638.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="638.0" width="632.0" height="28.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="638.0" x2="144.0" y2="666.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="364.0" y1="638.0" x2="364.0" y2="666.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="655.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">用户日配额触顶</text>
+<text x="150.0" y="655.0" font-size="8.8" fill="#1D1D1F">测试账号连续提交 60 次轻量任务</text>
+<text x="370.0" y="655.0" font-size="8.8" fill="#1D1D1F">第 51 次返回 429；护栏日志留痕，次日额度自动恢复</text>
+<rect x="24.0" y="666.0" width="632.0" height="28.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="666.0" x2="144.0" y2="694.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="364.0" y1="666.0" x2="364.0" y2="694.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="683.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">平台成本触顶</text>
+<text x="150.0" y="683.0" font-size="8.8" fill="#1D1D1F">日阈值临时调至 ¥1 后批量触发 HEAVY</text>
+<text x="370.0" y="683.0" font-size="8.8" fill="#1D1D1F">自动冻结强档，全部请求降至 MID 并触发告警</text>
+<rect x="24.0" y="694.0" width="632.0" height="28.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="694.0" x2="144.0" y2="722.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="364.0" y1="694.0" x2="364.0" y2="722.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="711.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">断网离线兜底</text>
+<text x="150.0" y="711.0" font-size="8.8" fill="#1D1D1F">断开 LLM API 出网连接</text>
+<text x="370.0" y="711.0" font-size="8.8" fill="#1D1D1F">切换本地模板产物并显示降级标记，不返回 5xx</text>
+<text x="24.0" y="736.0" font-size="10.5" fill="#0071E3" font-weight="bold">E　理论依据与工程权衡</text>
+<rect x="24.0" y="742.0" width="205.3" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,747.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L21 6 L21 12 C21 17 17 21 12 22 C7 21 3 17 3 12 L3 6 Z"/><path d="M8 12 L11 15 L16 9"/></g>
+<text x="50.0" y="759.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">优雅降级原则</text>
+<text x="32.0" y="775.0" font-size="8.3" fill="#3A3A3C">系统在高负载或预算触顶时</text>
+<text x="32.0" y="788.0" font-size="8.3" fill="#3A3A3C">保持可用而非拒绝服务；用户</text>
+<text x="32.0" y="801.0" font-size="8.3" fill="#3A3A3C">感知为延迟而非功能缺失</text>
+<rect x="237.3" y="742.0" width="205.3" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,747.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 7 L12 12 L16 7 M12 12 L12 18 M8 13 L16 13 M8 16 L16 16"/></g>
+<text x="263.3" y="759.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">成本可解释</text>
+<text x="245.3" y="775.0" font-size="8.3" fill="#3A3A3C">阈值不写死为占位配置，</text>
+<text x="245.3" y="788.0" font-size="8.3" fill="#3A3A3C">按 §5.8 真实报价设初值，</text>
+<text x="245.3" y="801.0" font-size="8.3" fill="#3A3A3C">任何数字可被答辩追问核验</text>
+<rect x="450.7" y="742.0" width="205.3" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,747.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="476.7" y="759.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">与路由共用设施</text>
+<text x="458.7" y="775.0" font-size="8.3" fill="#3A3A3C">与图 4-5 三档路由、图 4-6</text>
+<text x="458.7" y="788.0" font-size="8.3" fill="#3A3A3C">NL 问数共用判档与校验设施；</text>
+<text x="458.7" y="801.0" font-size="8.3" fill="#3A3A3C">不新增独立服务</text>
+<rect x="24.0" y="810.0" width="632.0" height="42.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<text x="36.0" y="828.0" font-size="8.8" fill="#48484A">注 1：三重护栏与四级降级为技术方案 3.3 / 3.4 节拍板项；阈值按图 7-2、图 7-3 的 2026-11-14 实价校准。</text>
+<text x="36.0" y="842.0" font-size="8.8" fill="#48484A">注 2：BiliNote 无输出契约、异常被 print 吞掉等反例见 3.6 节；◆ 为评审新增，与图 6-2 的 G3/G5/G6 门禁对应。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">菱形＝判定　实线＝主路径　→ 降级递进　◆ 评审拍板　·　价格与阈值出处：技术方案 5.8</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 5-2　成本护栏判定与四级降级流程图</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 5-2　Cost guardrail decision and four-level degradation flow</text>
+</svg>

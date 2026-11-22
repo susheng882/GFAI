@@ -1,0 +1,121 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">市场痛点与需求缺口</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Market Pains / Failure of Existing Solutions / Quantified Gaps</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　六大市场痛点与现有方案失效点</text>
+<rect x="24.0" y="96.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">痛点</text>
+<text x="126.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">用户可观察表现</text>
+<text x="276.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">现有方案为何失效</text>
+<text x="476.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">GFLC 对策</text>
+<line x1="120.0" y1="96.0" x2="120.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="270.0" y1="96.0" x2="270.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="470.0" y1="96.0" x2="470.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="122.0" width="632.0" height="53.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="122.0" x2="120.0" y2="175.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="270.0" y1="122.0" x2="270.0" y2="175.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="122.0" x2="470.0" y2="175.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="151.5" font-size="9.3" fill="#0071E3" font-weight="bold">① 信息过载</text>
+<text x="126.0" y="151.5" font-size="8.9" fill="#1D1D1F">收藏几十小时视频未看</text>
+<text x="276.0" y="151.5" font-size="8.9" fill="#1D1D1F">工具只管存，不做结构化</text>
+<text x="476.0" y="151.5" font-size="8.9" fill="#1D1D1F">待整理清单 + 智能切片成单元</text>
+<rect x="24.0" y="175.0" width="632.0" height="53.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="175.0" x2="120.0" y2="228.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="270.0" y1="175.0" x2="270.0" y2="228.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="175.0" x2="470.0" y2="228.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="204.5" font-size="9.3" fill="#0071E3" font-weight="bold">② 看完即忘</text>
+<text x="126.0" y="204.5" font-size="8.9" fill="#1D1D1F">一周后回忆率明显下降</text>
+<text x="276.0" y="204.5" font-size="8.9" fill="#1D1D1F">无复习调度，纯靠自觉</text>
+<text x="476.0" y="204.5" font-size="8.9" fill="#1D1D1F">R1–R4 间隔排程（Ebbinghaus）</text>
+<rect x="24.0" y="228.0" width="632.0" height="53.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="228.0" x2="120.0" y2="281.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="270.0" y1="228.0" x2="270.0" y2="281.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="228.0" x2="470.0" y2="281.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="257.5" font-size="9.3" fill="#0071E3" font-weight="bold">③ 无法溯源</text>
+<text x="126.0" y="257.5" font-size="8.9" fill="#1D1D1F">想回看却找不到原片段</text>
+<text x="276.0" y="257.5" font-size="8.9" fill="#1D1D1F">AI 摘要普遍不带时间戳</text>
+<text x="476.0" y="257.5" font-size="8.9" fill="#1D1D1F">溯源硬字段：时间戳/页码必填</text>
+<rect x="24.0" y="281.0" width="632.0" height="53.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="281.0" x2="120.0" y2="334.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="270.0" y1="281.0" x2="270.0" y2="334.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="281.0" x2="470.0" y2="334.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="310.5" font-size="9.3" fill="#0071E3" font-weight="bold">④ 笔记碎片</text>
+<text x="126.0" y="310.5" font-size="8.9" fill="#1D1D1F">笔记散落在多个应用</text>
+<text x="276.0" y="310.5" font-size="8.9" fill="#1D1D1F">生成与复习系统彼此割裂</text>
+<text x="476.0" y="310.5" font-size="8.9" fill="#1D1D1F">六种知识产物同一数据链</text>
+<rect x="24.0" y="334.0" width="632.0" height="53.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="334.0" x2="120.0" y2="387.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="270.0" y1="334.0" x2="270.0" y2="387.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="334.0" x2="470.0" y2="387.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="363.5" font-size="9.3" fill="#0071E3" font-weight="bold">⑤ 复习无计划</text>
+<text x="126.0" y="363.5" font-size="8.9" fill="#1D1D1F">考前突击、负荷不均</text>
+<text x="276.0" y="363.5" font-size="8.9" fill="#1D1D1F">计划静态、不随执行重排</text>
+<text x="476.0" y="363.5" font-size="8.9" fill="#1D1D1F">计划生成重排 + 掌握度模型</text>
+<rect x="24.0" y="387.0" width="632.0" height="53.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="387.0" x2="120.0" y2="440.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="270.0" y1="387.0" x2="270.0" y2="440.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="470.0" y1="387.0" x2="470.0" y2="440.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="416.5" font-size="9.3" fill="#0071E3" font-weight="bold">⑥ 成本不可控</text>
+<text x="126.0" y="416.5" font-size="8.9" fill="#1D1D1F">担心 AI 调用账单失控</text>
+<text x="276.0" y="416.5" font-size="8.9" fill="#1D1D1F">按量付费无护栏与降级</text>
+<text x="476.0" y="416.5" font-size="8.9" fill="#1D1D1F">三重护栏 + 四级降级 + 日阈值</text>
+<text x="24.0" y="462.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　痛点的可量化判定口径</text>
+<rect x="24.0" y="468.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="485.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">指标</text>
+<text x="150.0" y="485.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">当前基线（设计假设）</text>
+<text x="406.0" y="485.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">目标值与验收方式</text>
+<line x1="144.0" y1="468.0" x2="144.0" y2="494.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="400.0" y1="468.0" x2="400.0" y2="494.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="494.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="494.0" x2="144.0" y2="544.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="494.0" x2="400.0" y2="544.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="522.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">溯源覆盖率</text>
+<text x="150.0" y="522.0" font-size="9.0" fill="#1D1D1F">通用摘要工具 ≈0%</text>
+<text x="406.0" y="522.0" font-size="9.0" fill="#1D1D1F">GFLC 100% 知识点带时间戳，落库硬校验</text>
+<rect x="24.0" y="544.0" width="632.0" height="50.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="544.0" x2="144.0" y2="594.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="544.0" x2="400.0" y2="594.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="572.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">一周后保持率</text>
+<text x="150.0" y="572.0" font-size="9.0" fill="#1D1D1F">单次学习约 30–40%（文献量级）</text>
+<text x="406.0" y="572.0" font-size="9.0" fill="#1D1D1F">R*=0.90 目标，测验正确率对比上版</text>
+<rect x="24.0" y="594.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="594.0" x2="144.0" y2="644.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="594.0" x2="400.0" y2="644.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="622.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">单次任务成本</text>
+<text x="150.0" y="622.0" font-size="9.0" fill="#1D1D1F">全量云端转写 + 强档模型</text>
+<text x="406.0" y="622.0" font-size="9.0" fill="#1D1D1F">字幕优先取材链降一个量级，≤日阈值</text>
+<text x="24.0" y="666.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　需求缺口归纳</text>
+<rect x="24.0" y="672.0" width="205.3" height="99.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,677.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 20 L21 20 M5 20 L5 13 M10 20 L10 7 M15 20 L15 10 M20 20 L20 4"/></g>
+<text x="50.0" y="689.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">上半场已拥挤</text>
+<text x="32.0" y="705.0" font-size="8.8" fill="#3A3A3C">7 款以上在线收费产品</text>
+<text x="32.0" y="718.0" font-size="8.8" fill="#3A3A3C">转写与摘要能力已商品化</text>
+<text x="32.0" y="731.0" font-size="8.8" fill="#3A3A3C">价格带 $0–20/月</text>
+<rect x="237.3" y="672.0" width="205.3" height="99.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,677.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M20 9 A8 8 0 0 0 5 8 M4 4 L4 9 L9 9 M4 15 A8 8 0 0 0 19 16 M20 20 L20 15 L15 15"/></g>
+<text x="263.3" y="689.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">下半场只做一半</text>
+<text x="245.3" y="705.0" font-size="8.8" fill="#3A3A3C">间隔重复产品不接自有解析</text>
+<text x="245.3" y="718.0" font-size="8.8" fill="#3A3A3C">摘要产品不做复习调度</text>
+<text x="245.3" y="731.0" font-size="8.8" fill="#3A3A3C">两类中无一打通</text>
+<rect x="450.7" y="672.0" width="205.3" height="99.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,677.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#0071E3"/></g>
+<text x="476.7" y="689.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">空白点</text>
+<text x="458.7" y="705.0" font-size="8.8" fill="#3A3A3C">解析 → 溯源 → 调度 → 掌握度</text>
+<text x="458.7" y="718.0" font-size="8.8" fill="#3A3A3C">→ 回炉 同一条数据链</text>
+<text x="458.7" y="731.0" font-size="8.8" fill="#3A3A3C">11 款竞品均无满行</text>
+<rect x="24.0" y="781.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,787.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="56.0" y="799.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">从痛点到功能的映射原则</text>
+<text x="36.0" y="816.0" font-size="9.0" fill="#48484A">每个痛点至少对应一条主路径功能与一条可核验验收口径，避免「有功能、无证据」；映射总表见图 3-2 与图 3-3。</text>
+<text x="36.0" y="830.0" font-size="9.0" fill="#48484A">「现有方案失效」一列依据技术方案 1.4 的 11 款已上线产品实证对比，非主观判断。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：痛点编号 ①–⑥ 在图 3-4～3-9 各功能域展开图中复用，用于「痛点→功能→理论」三段式论证。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 2-2　市场痛点与需求缺口</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 2-2 Market pains, failure modes and quantified demand gaps</text>
+</svg>

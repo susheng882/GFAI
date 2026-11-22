@@ -1,0 +1,166 @@
+<!-- typography-v2 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 960" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0" y="0" width="680" height="960" fill="#FFFFFF"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">数据模型与知识产物关系图（ER）</text>
+<text x="340.0" y="58.0" font-size="9.8" fill="#6E6E73" text-anchor="middle">第七章 · 九类实体 · 1:N 关系 · 四存储职责边界 · 技术方案 2.1 / 2.5 / 2.7</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.8" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<g transform="translate(24.00,14.66) scale(0.92941)"><g xmlns="http://www.w3.org/2000/svg" font-size="9.2">
+    <rect x="36" y="78" width="176" height="118" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="36" y="78" width="176" height="22" fill="#0071E3"/>
+    <text x="124" y="93" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">users（用户）</text>
+    <text x="46" y="116" font-size="9" fill="#333">id uuid PK · email / phone</text>
+    <text x="46" y="130" font-size="9" fill="#333">password_hash（Argon2id ◆）</text>
+    <text x="46" y="144" font-size="9" fill="#333">plan_tier · quota_daily</text>
+    <text x="46" y="158" font-size="9" fill="#333">created_at · status</text>
+    <text x="46" y="176" font-size="8.8" fill="#777">HttpOnly Cookie + Redis session ◆</text>
+    <text x="46" y="188" font-size="8.8" fill="#777">会话态不落本表（§2.7）</text>
+
+    <!-- 实体：materials -->
+    <rect x="252" y="78" width="188" height="118" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="252" y="78" width="188" height="22" fill="#3A3A3C"/>
+    <text x="346" y="93" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">materials（原始资料）</text>
+    <text x="262" y="116" font-size="9" fill="#333">id uuid PK · user_id FK</text>
+    <text x="262" y="130" font-size="9" fill="#333">source_type（视频/PDF/题库/音频）</text>
+    <text x="262" y="144" font-size="9" fill="#333">object_key → MinIO（S3）</text>
+    <text x="262" y="158" font-size="9" fill="#333">duration_s · page_cnt · size_b</text>
+    <text x="262" y="176" font-size="8.8" fill="#777">字节流走预签名直传，不进 API</text>
+    <text x="262" y="188" font-size="8.8" fill="#777">确认以 stat 为准（§2.6，K1）</text>
+
+    <!-- 实体：tasks -->
+    <rect x="480" y="78" width="164" height="118" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="480" y="78" width="164" height="22" fill="#6E6E73"/>
+    <text x="562" y="93" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">tasks（AI 任务）</text>
+    <text x="490" y="116" font-size="9" fill="#333">id uuid PK · material_id FK</text>
+    <text x="490" y="130" font-size="9" fill="#333">task_type · model_tier · status</text>
+    <text x="490" y="144" font-size="9" fill="#333">trace_id · cost_cny</text>
+    <text x="490" y="158" font-size="9" fill="#333">schema_valid · degrade_level</text>
+    <text x="490" y="176" font-size="8.8" fill="#777">状态机在 PG，任务态指针在 Redis</text>
+    <text x="490" y="188" font-size="8.8" fill="#777">队列载荷 ≤ 4 KB（§2.5，K2）</text>
+
+    <!-- 实体：knowledge_units -->
+    <rect x="36" y="248" width="196" height="130" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="36" y="248" width="196" height="22" fill="#3A3A3C"/>
+    <text x="134" y="263" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">knowledge_units（知识单元）</text>
+    <text x="46" y="286" font-size="9" fill="#333">id uuid PK · material_id FK</text>
+    <text x="46" y="300" font-size="9" fill="#333">title_level · content · seq_no</text>
+    <text x="46" y="314" font-size="9" fill="#333">start_ts / end_ts（时间戳溯源 ◆）</text>
+    <text x="46" y="328" font-size="9" fill="#333">embedding vector(1024) ◆</text>
+    <text x="46" y="342" font-size="9" fill="#333">source_ref（页码 / 视频秒数）</text>
+    <text x="46" y="360" font-size="8.8" fill="#777">bge-m3 生成向量；业务表与向量可 JOIN</text>
+    <text x="46" y="372" font-size="8.8" fill="#777">溯源跳转为 P0 硬字段（§3.7）</text>
+
+    <!-- 实体：notes -->
+    <rect x="272" y="248" width="176" height="130" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="272" y="248" width="176" height="22" fill="#0071E3"/>
+    <text x="360" y="263" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">notes（结构化笔记）</text>
+    <text x="282" y="286" font-size="9" fill="#333">id uuid PK · task_id FK</text>
+    <text x="282" y="300" font-size="9" fill="#333">summary · key_points JSON[]</text>
+    <text x="282" y="314" font-size="9" fill="#333">five_sections JSON（五段）</text>
+    <text x="282" y="328" font-size="9" fill="#333">outline_h2 / h3 · tokens_out</text>
+    <text x="282" y="342" font-size="9" fill="#333">schema_version · cached（产物缓存）</text>
+    <text x="282" y="360" font-size="8.8" fill="#777">输出受 JSON Schema 契约校验（§3.4）</text>
+    <text x="282" y="372" font-size="8.8" fill="#777">命中缓存不重生成，直接降本</text>
+
+    <!-- 实体：cards -->
+    <rect x="488" y="248" width="156" height="130" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="488" y="248" width="156" height="22" fill="#6E6E73"/>
+    <text x="566" y="263" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">cards（卡片 / 题目）</text>
+    <text x="498" y="286" font-size="9" fill="#333">id uuid PK · note_id FK</text>
+    <text x="498" y="300" font-size="9" fill="#333">question · answer · tag</text>
+    <text x="498" y="314" font-size="9" fill="#333">unit_id FK（关联知识点）</text>
+    <text x="498" y="328" font-size="9" fill="#333">difficulty · source_ts</text>
+    <text x="498" y="342" font-size="9" fill="#333">mastery（当前掌握度）</text>
+    <text x="498" y="360" font-size="8.8" fill="#777">字段完整率 ≥ 95% 为评测指标</text>
+    <text x="498" y="372" font-size="8.8" fill="#777">问答须带来源（§3.7 P0）</text>
+
+    <!-- 实体：review_logs -->
+    <rect x="36" y="430" width="196" height="118" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="36" y="430" width="196" height="22" fill="#6E6E73"/>
+    <text x="134" y="445" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">review_logs（复习记录）</text>
+    <text x="46" y="468" font-size="9" fill="#333">id uuid PK · user_id FK</text>
+    <text x="46" y="482" font-size="9" fill="#333">card_id FK · unit_id FK</text>
+    <text x="46" y="496" font-size="9" fill="#333">result（对/错/半对）· elapsed_ms</text>
+    <text x="46" y="510" font-size="9" fill="#333">reviewed_at · interval_days</text>
+    <text x="46" y="528" font-size="8.8" fill="#777">掌握度模型的唯一事实来源</text>
+    <text x="46" y="540" font-size="8.8" fill="#777">见 图 3-10 学习闭环</text>
+
+    <!-- 实体：plans -->
+    <rect x="272" y="430" width="176" height="118" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="272" y="430" width="176" height="22" fill="#3A3A3C"/>
+    <text x="360" y="445" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">plans / plan_items（计划）</text>
+    <text x="282" y="468" font-size="9" fill="#333">id uuid PK · user_id FK</text>
+    <text x="282" y="482" font-size="9" fill="#333">goal · time_window · target_date</text>
+    <text x="282" y="496" font-size="9" fill="#333">item_type · card_id / unit_id FK</text>
+    <text x="282" y="510" font-size="9" fill="#333">status · rescheduled_from</text>
+    <text x="282" y="528" font-size="8.8" fill="#777">重排留痕：可解释、可回放</text>
+    <text x="282" y="540" font-size="8.8" fill="#777">AI 依据执行情况重排后续任务</text>
+
+    <!-- 实体：usage / cost -->
+    <rect x="488" y="430" width="156" height="118" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+    <rect x="488" y="430" width="156" height="22" fill="#0071E3"/>
+    <text x="566" y="445" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">usage（成本与观测）</text>
+    <text x="498" y="468" font-size="9" fill="#333">id uuid PK · task_id FK</text>
+    <text x="498" y="482" font-size="9" fill="#333">token_in / token_out</text>
+    <text x="498" y="496" font-size="9" fill="#333">latency_ms · cost_cny</text>
+    <text x="498" y="510" font-size="9" fill="#333">trace_id · logged_at</text>
+    <text x="498" y="528" font-size="8.8" fill="#777">成本看板按日聚合（§5.5）</text>
+    <text x="498" y="540" font-size="8.8" fill="#777">超阈值触发降档（§3.3）</text>
+  </g>
+
+  <g xmlns="http://www.w3.org/2000/svg" font-size="8.8" fill="#555" stroke="#1D1D1F" stroke-width="0.9">
+    <line x1="212" y1="137" x2="250" y2="137"/>
+    <text x="216" y="131" stroke="none">1 : N</text>
+    <line x1="440" y1="137" x2="478" y2="137"/>
+    <text x="442" y="131" stroke="none">1 : N</text>
+    <line x1="134" y1="196" x2="134" y2="246"/>
+    <text x="138" y="222" stroke="none">1 : N（切片）</text>
+    <line x1="346" y1="196" x2="360" y2="246"/>
+    <text x="350" y="222" stroke="none">1 : 1</text>
+    <line x1="562" y1="196" x2="566" y2="246"/>
+    <text x="570" y="222" stroke="none">1 : N</text>
+    <line x1="232" y1="313" x2="270" y2="313"/>
+    <text x="234" y="307" stroke="none">1 : N</text>
+    <line x1="448" y1="313" x2="486" y2="313"/>
+    <text x="450" y="307" stroke="none">1 : N</text>
+    <line x1="134" y1="378" x2="134" y2="428"/>
+    <text x="138" y="404" stroke="none">N : 1（回写）</text>
+    <line x1="360" y1="378" x2="360" y2="428"/>
+    <text x="364" y="404" stroke="none">1 : N</text>
+    <line x1="566" y1="378" x2="566" y2="428"/>
+    <text x="570" y="404" stroke="none">1 : N</text>
+  </g>
+
+  <rect xmlns="http://www.w3.org/2000/svg" x="36" y="566" width="608" height="96" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="1"/>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="586" font-size="10" font-weight="bold" fill="#1D1D1F">存储边界（单机 2C4G 下的职责划分）</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="605" font-size="9.6" fill="#333">PostgreSQL 16 + pgvector：全部业务表 + 1024 维向量同库；Alembic 版本化迁移 ◆；产物缓存表避免重复生成。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="621" font-size="9.6" fill="#333">Redis（maxmemory 256 mb）：任务队列 List、任务态小状态、配额计数、session ◆ —— 只存小状态，产物不进 Redis。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="637" font-size="9.6" fill="#333">MinIO：原始文件、关键帧、导出物，版本控制（G4）+ 30 天非当前版本清理 ◆；业务表只存 object_key。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="653" font-size="9.6" fill="#333">本地磁盘 /data/tmp：任务中间产物，单任务 5 GB 配额，终态即清理；水位 80% 冻结入队（§5.7）。</text>
+
+  <rect xmlns="http://www.w3.org/2000/svg" x="36" y="678" width="608" height="134" fill="#FAFAFC" stroke="#999" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="698" font-size="9.8" fill="#333">注 1：本图为概念级 ER 视图，字段名与技术方案 §2.1 / §2.5 / §2.7 及工程骨架一致；物理索引与约束以 Alembic 迁移脚本为准。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="716" font-size="9.8" fill="#333">注 2：选择 pgvector 同库而非 Milvus / ChromaDB：业务表与向量可 JOIN 溯源，单机零运维；Chroma 仅保留为本地离线降级（§2.1）。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="734" font-size="9.8" fill="#333">注 3：所有 AI 产物经 JSON Schema 契约校验后落库（schema_version 字段留痕），契约失败触发重试与降级（§3.4）。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="752" font-size="9.8" fill="#333">注 4：时间戳（start_ts/end_ts/source_ts）为溯源跳转的硬字段，跨 notes / cards / knowledge_units 三表贯通，缺字段即判定契约失败。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="770" font-size="9.8" fill="#333">注 5：usage 表九字段与 trace_id 贯通结构化日志，是 G1/G5 门禁与成本看板的数据来源（§4.3 / §5.5）。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="788" font-size="9.8" fill="#333">注 6：◆ 为 2026-11-14 架构评审新增项；K1/K2 链路与图 4-1、图 3-2 编号互相锚定。</text>
+
+  <g xmlns="http://www.w3.org/2000/svg" font-size="9.8" fill="#444">
+    <rect x="50" y="838" width="14" height="10" fill="#0071E3"/>
+    <text x="70" y="847">核心业务实体</text>
+    <rect x="160" y="838" width="14" height="10" fill="#A1A1A6"/>
+    <text x="180" y="847">辅助 / 观测实体</text>
+    <text x="310" y="847">PK 主键　·　FK 外键　·　1 : N 一对多　·　◆ 评审新增</text>
+  </g>
+  </g>
+<text x="24.0" y="854.0" font-size="8.8" fill="#1D1D1F"/>
+<rect x="24.0" y="74.0" width="632.0" height="780.0" fill="none" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.4" fill="#3A3A3C">矩形＝实体　连线＝1:N　◆ 硬字段　·　数据出处：技术方案 2.1</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 4-2　数据模型与知识产物关系图（ER）</text>
+<text x="340.0" y="924.0" font-size="9.8" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 4-2　Entity-relationship model of data and knowledge artifacts</text>
+</svg>

@@ -1,0 +1,254 @@
+<!-- typography-v2 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 960" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0" y="0" width="680" height="960" fill="#FFFFFF"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">16 周工程里程碑与排期映射甘特图</text>
+<text x="340.0" y="58.0" font-size="9.8" fill="#6E6E73" text-anchor="middle">第六章 · WBS 14 项任务 · 16 周刻度 · 关键路径与依赖 · 单人投入曲线 · P0–P6 出口门禁 · 技术方案 §6</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.8" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<rect x="24.0" y="76.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="86.0" font-size="10" fill="#0071E3" font-weight="bold">A　16 周甘特主体（WBS 14 项任务 · 周刻度 · 依赖 · 里程碑）</text>
+<line x1="224.0" y1="96.0" x2="224.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="251.0" y1="96.0" x2="251.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="278.0" y1="96.0" x2="278.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="305.0" y1="96.0" x2="305.0" y2="482.0" stroke="#A8CEF7" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="332.0" y1="96.0" x2="332.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="359.0" y1="96.0" x2="359.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="386.0" y1="96.0" x2="386.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="413.0" y1="96.0" x2="413.0" y2="482.0" stroke="#A8CEF7" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="440.0" y1="96.0" x2="440.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="467.0" y1="96.0" x2="467.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="494.0" y1="96.0" x2="494.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="521.0" y1="96.0" x2="521.0" y2="482.0" stroke="#A8CEF7" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="548.0" y1="96.0" x2="548.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="575.0" y1="96.0" x2="575.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="602.0" y1="96.0" x2="602.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="629.0" y1="96.0" x2="629.0" y2="482.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<rect x="24.0" y="96.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="112.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">阶段 / WBS / 工程任务</text>
+<text x="237.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W1</text>
+<text x="264.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W2</text>
+<text x="291.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W3</text>
+<text x="318.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W4</text>
+<text x="345.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W5</text>
+<text x="372.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W6</text>
+<text x="399.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W7</text>
+<text x="426.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W8</text>
+<text x="453.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W9</text>
+<text x="480.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W10</text>
+<text x="507.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W11</text>
+<text x="534.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W12</text>
+<text x="561.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W13</text>
+<text x="588.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W14</text>
+<text x="615.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W15</text>
+<text x="642.5" y="112.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">W16</text>
+<rect x="24.0" y="120.0" width="632.0" height="24.0" fill="#EEF5FD" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="120.0" width="4.0" height="24.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="32.0" y="136.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P0</text>
+<text x="72.0" y="136.0" font-size="9.8" fill="#6E6E73">1.1</text>
+<text x="104.0" y="136.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">需求与契约 Schema</text>
+<rect x="226.0" y="125.0" width="50.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="251.0" y="135.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">1–2</text>
+<rect x="24.0" y="144.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#F0F4F8" stroke-width="0.4"/>
+<text x="32.0" y="160.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P0</text>
+<text x="72.0" y="160.0" font-size="9.8" fill="#6E6E73">1.2</text>
+<text x="104.0" y="160.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">Compose 与服务编排</text>
+<rect x="253.0" y="149.0" width="50.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="278.0" y="159.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">2–3</text>
+<rect x="24.0" y="168.0" width="632.0" height="24.0" fill="#EEF5FD" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="168.0" width="4.0" height="24.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="32.0" y="184.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P1</text>
+<text x="72.0" y="184.0" font-size="9.8" fill="#6E6E73">2.1</text>
+<text x="104.0" y="184.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">ASR / PDF / OCR 适配器</text>
+<rect x="280.0" y="173.0" width="77.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="318.5" y="183.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">3–5</text>
+<rect x="24.0" y="192.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#F0F4F8" stroke-width="0.4"/>
+<text x="32.0" y="208.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P1</text>
+<text x="72.0" y="208.0" font-size="9.8" fill="#6E6E73">2.2</text>
+<text x="104.0" y="208.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">三档路由与四级降级</text>
+<rect x="307.0" y="197.0" width="77.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="345.5" y="207.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">4–6</text>
+<rect x="24.0" y="216.0" width="632.0" height="24.0" fill="#EEF5FD" stroke="#F0F4F8" stroke-width="0.4"/>
+<text x="32.0" y="232.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P1</text>
+<text x="72.0" y="232.0" font-size="9.8" fill="#6E6E73">2.3</text>
+<text x="104.0" y="232.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">字幕优先取材链</text>
+<rect x="334.0" y="221.0" width="50.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="359.0" y="231.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">5–6</text>
+<rect x="24.0" y="240.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#F0F4F8" stroke-width="0.4"/>
+<text x="32.0" y="256.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P1</text>
+<text x="72.0" y="256.0" font-size="9.8" fill="#6E6E73">2.4</text>
+<text x="104.0" y="256.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">Worker + Redis 队列</text>
+<rect x="361.0" y="245.0" width="50.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="386.0" y="255.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">6–7</text>
+<rect x="24.0" y="264.0" width="632.0" height="24.0" fill="#EEF5FD" stroke="#F0F4F8" stroke-width="0.4"/>
+<text x="32.0" y="280.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P1</text>
+<text x="72.0" y="280.0" font-size="9.8" fill="#6E6E73">2.5</text>
+<text x="104.0" y="280.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">预签名上传 + Alembic</text>
+<rect x="388.0" y="269.0" width="50.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="413.0" y="279.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">7–8</text>
+<rect x="24.0" y="288.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="288.0" width="4.0" height="24.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="32.0" y="304.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P2</text>
+<text x="72.0" y="304.0" font-size="9.8" fill="#6E6E73">3.1</text>
+<text x="104.0" y="304.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">计划与复习调度</text>
+<rect x="415.0" y="293.0" width="77.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="453.5" y="303.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">8–10</text>
+<rect x="24.0" y="312.0" width="632.0" height="24.0" fill="#EEF5FD" stroke="#F0F4F8" stroke-width="0.4"/>
+<text x="32.0" y="328.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P2</text>
+<text x="72.0" y="328.0" font-size="9.8" fill="#6E6E73">3.2</text>
+<text x="104.0" y="328.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">掌握度模型 + pgvector</text>
+<rect x="442.0" y="317.0" width="77.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="480.5" y="327.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">9–11</text>
+<rect x="24.0" y="336.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="336.0" width="4.0" height="24.0" fill="#B4472F" stroke="none" stroke-width="0"/>
+<text x="32.0" y="352.0" font-size="9.8" fill="#B4472F" font-weight="bold">P3</text>
+<text x="72.0" y="352.0" font-size="9.8" fill="#6E6E73">4.1</text>
+<text x="104.0" y="352.0" font-size="9.8" fill="#1D1D1F">时间戳溯源（可牺牲）</text>
+<rect x="469.0" y="341.0" width="77.0" height="14.0" fill="#FFFFFF" stroke="#B4472F" stroke-width="0.9" stroke-dasharray="4 3"/>
+<text x="507.5" y="351.5" font-size="9.8" fill="#B4472F" text-anchor="middle" font-weight="bold">10–12</text>
+<rect x="24.0" y="360.0" width="632.0" height="24.0" fill="#EEF5FD" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="360.0" width="4.0" height="24.0" fill="#B4472F" stroke="none" stroke-width="0"/>
+<text x="32.0" y="376.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P3.5</text>
+<text x="72.0" y="376.0" font-size="9.8" fill="#6E6E73">5.1</text>
+<text x="104.0" y="376.0" font-size="9.8" fill="#1D1D1F">V1.5 增量（截图/导出）</text>
+<rect x="523.0" y="365.0" width="77.0" height="14.0" fill="#A8CEF7" stroke="#6E6E73" stroke-width="0.8"/>
+<text x="561.5" y="375.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">12–14</text>
+<rect x="24.0" y="384.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="384.0" width="4.0" height="24.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="32.0" y="400.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P4</text>
+<text x="72.0" y="400.0" font-size="9.8" fill="#6E6E73">6.1</text>
+<text x="104.0" y="400.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">E2E + 性能压测</text>
+<rect x="550.0" y="389.0" width="77.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="588.5" y="399.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">13–15</text>
+<rect x="24.0" y="408.0" width="632.0" height="24.0" fill="#EEF5FD" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="408.0" width="4.0" height="24.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="32.0" y="424.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P5</text>
+<text x="72.0" y="424.0" font-size="9.8" fill="#6E6E73">7.1</text>
+<text x="104.0" y="424.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">CI 门禁 + 备份恢复演练</text>
+<rect x="577.0" y="413.0" width="77.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="615.5" y="423.5" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">14–16</text>
+<rect x="24.0" y="432.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#F0F4F8" stroke-width="0.4"/>
+<rect x="24.0" y="432.0" width="4.0" height="24.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="32.0" y="448.0" font-size="9.8" fill="#6E6E73" font-weight="bold">P6</text>
+<text x="72.0" y="448.0" font-size="9.8" fill="#6E6E73">8.1</text>
+<text x="104.0" y="448.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">灰度 5/25/100 + 回滚</text>
+<rect x="631.0" y="437.0" width="23.0" height="14.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="1.0"/>
+<rect x="24.0" y="458.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="474.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">里程碑 / 门禁</text>
+<path d="M 291.5,462 L 298.5,470 L 291.5,478 L 284.5,470 Z" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.7"/>
+<text x="291.5" y="493.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">M1 G1</text>
+<path d="M 399.5,462 L 406.5,470 L 399.5,478 L 392.5,470 Z" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.7"/>
+<text x="399.5" y="493.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">M2 评测</text>
+<path d="M 507.5,462 L 514.5,470 L 507.5,478 L 500.5,470 Z" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.7"/>
+<text x="507.5" y="493.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">M3 路径</text>
+<path d="M 556.1,462 L 563.1,470 L 556.1,478 L 549.1,470 Z" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.7"/>
+<text x="556.1" y="493.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">M4 降级</text>
+<path d="M 602.0,462 L 609.0,470 L 602.0,478 L 595.0,470 Z" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.7"/>
+<text x="602.0" y="493.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">M5 Go</text>
+<path d="M 642.5,462 L 649.5,470 L 642.5,478 L 635.5,470 Z" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.7"/>
+<text x="642.5" y="493.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">M6 回滚</text>
+<rect x="24.0" y="498.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="508.0" font-size="10" fill="#0071E3" font-weight="bold">B　单人周工时投入曲线（计划值 · 峰值与缓冲对照）</text>
+<rect x="224.0" y="520.0" width="432.0" height="70.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.6"/>
+<line x1="224.0" y1="590.0" x2="656.0" y2="590.0" stroke="#F0F4F8" stroke-width="0.5"/>
+<text x="218.0" y="593.0" font-size="9.8" fill="#6E6E73" text-anchor="end">0</text>
+<line x1="224.0" y1="558.9" x2="656.0" y2="558.9" stroke="#F0F4F8" stroke-width="0.5"/>
+<text x="218.0" y="561.9" font-size="9.8" fill="#6E6E73" text-anchor="end">20</text>
+<line x1="224.0" y1="527.8" x2="656.0" y2="527.8" stroke="#F0F4F8" stroke-width="0.5"/>
+<text x="218.0" y="530.8" font-size="9.8" fill="#6E6E73" text-anchor="end">40</text>
+<text x="30.0" y="534.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">工时</text>
+<text x="30.0" y="550.0" font-size="9.8" fill="#6E6E73">h / 周</text>
+<polyline points="237.5,555.8 264.5,546.4 291.5,543.3 318.5,537.1 345.5,534.0 372.5,530.9 399.5,535.6 426.5,540.2 453.5,534.0 480.5,527.8 507.5,530.9 534.5,543.3 561.5,537.1 588.5,540.2 615.5,546.4 642.5,558.9" fill="none" stroke="#0071E3" stroke-width="1.5"/>
+<circle cx="237.5" cy="555.8" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="264.5" cy="546.4" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="291.5" cy="543.3" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="318.5" cy="537.1" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="345.5" cy="534.0" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="372.5" cy="530.9" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="399.5" cy="535.6" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="426.5" cy="540.2" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="453.5" cy="534.0" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="480.5" cy="527.8" r="1.8" fill="#B4472F" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="507.5" cy="530.9" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="534.5" cy="543.3" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="561.5" cy="537.1" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="588.5" cy="540.2" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="615.5" cy="546.4" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<circle cx="642.5" cy="558.9" r="1.8" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.5"/>
+<line x1="224.0" y1="527.8" x2="656.0" y2="527.8" stroke="#B4472F" stroke-width="0.7" stroke-dasharray="4 3"/>
+<text x="652.0" y="523.8" font-size="9.8" fill="#B4472F" text-anchor="end">缓冲上限 40 h</text>
+<text x="30.0" y="602.0" font-size="9.8" fill="#48484A">峰值 W10（40 h）；均值约 32 h/周；单人实际排期按 20–24 周折算。</text>
+<rect x="24.0" y="608.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="618.0" font-size="10" fill="#0071E3" font-weight="bold">C　阶段出口条件与上线门禁映射（技术方案 §6 · G1–G7）</text>
+<rect x="24.0" y="628.0" width="632.0" height="20.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="29.0" y="642.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">阶段</text>
+<text x="145.0" y="642.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">周次</text>
+<text x="207.0" y="642.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">出口条件（可核验）</text>
+<text x="555.0" y="642.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">门禁</text>
+<rect x="24.0" y="648.0" width="632.0" height="15.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="659.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P0 需求与设计</text>
+<text x="145.0" y="659.0" font-size="9.8" fill="#1D1D1F">W1–W3</text>
+<text x="207.0" y="659.0" font-size="9.8" fill="#1D1D1F">Compose config 通过；契约 Schema 可单测</text>
+<text x="555.0" y="659.0" font-size="9.8" fill="#1D1D1F">G1 门</text>
+<rect x="24.0" y="663.0" width="632.0" height="15.0" fill="#F5F5F7" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="674.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P1 内容管线</text>
+<text x="145.0" y="674.0" font-size="9.8" fill="#1D1D1F">W3–W8</text>
+<text x="207.0" y="674.0" font-size="9.8" fill="#1D1D1F">40 份评测集字段完整率 ≥95%；Worker/直传/迁移就位</text>
+<text x="555.0" y="674.0" font-size="9.8" fill="#1D1D1F">G1 质量</text>
+<rect x="24.0" y="678.0" width="632.0" height="15.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="689.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P2 学习闭环</text>
+<text x="145.0" y="689.0" font-size="9.8" fill="#1D1D1F">W8–W11</text>
+<text x="207.0" y="689.0" font-size="9.8" fill="#1D1D1F">四条主路径 API 测试 100%；掌握度可解释</text>
+<text x="555.0" y="689.0" font-size="9.8" fill="#1D1D1F">G1 功能</text>
+<rect x="24.0" y="693.0" width="632.0" height="15.0" fill="#F5F5F7" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="704.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P3 视频链路</text>
+<text x="145.0" y="704.0" font-size="9.8" fill="#1D1D1F">W10–W12</text>
+<text x="207.0" y="704.0" font-size="9.8" fill="#1D1D1F">第 11 周未达标即降 V1.5，不拖主线</text>
+<text x="555.0" y="704.0" font-size="9.8" fill="#1D1D1F">降级决策</text>
+<rect x="24.0" y="708.0" width="632.0" height="15.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="719.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P3.5 V1.5 增量</text>
+<text x="145.0" y="719.0" font-size="9.8" fill="#1D1D1F">W12–W14</text>
+<text x="207.0" y="719.0" font-size="9.8" fill="#1D1D1F">截图与导出可独立降级，不阻塞主路径</text>
+<text x="555.0" y="719.0" font-size="9.8" fill="#1D1D1F">可选</text>
+<rect x="24.0" y="723.0" width="632.0" height="15.0" fill="#F5F5F7" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="734.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P4 内测打磨</text>
+<text x="145.0" y="734.0" font-size="9.8" fill="#1D1D1F">W13–W15</text>
+<text x="207.0" y="734.0" font-size="9.8" fill="#1D1D1F">P95 ≤3 s；解析成功率 ≥90%；错误案例库</text>
+<text x="555.0" y="734.0" font-size="9.8" fill="#1D1D1F">G2 性能</text>
+<rect x="24.0" y="738.0" width="632.0" height="15.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="749.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P5 上线准备</text>
+<text x="145.0" y="749.0" font-size="9.8" fill="#1D1D1F">W14–W16</text>
+<text x="207.0" y="749.0" font-size="9.8" fill="#1D1D1F">CI 门禁 + 恢复演练 + 成本告警；G3 三项达标</text>
+<text x="555.0" y="749.0" font-size="9.8" fill="#1D1D1F">G3/G4/G5</text>
+<rect x="24.0" y="753.0" width="632.0" height="15.0" fill="#F5F5F7" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="29.0" y="764.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">P6 灰度发布</text>
+<text x="145.0" y="764.0" font-size="9.8" fill="#1D1D1F">W16</text>
+<text x="207.0" y="764.0" font-size="9.8" fill="#1D1D1F">5/25/100 灰度；回滚 ≤10 min；Go/No-Go</text>
+<text x="555.0" y="764.0" font-size="9.8" fill="#1D1D1F">G7 发布</text>
+<line x1="140.0" y1="628.0" x2="140.0" y2="768.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="202.0" y1="628.0" x2="202.0" y2="768.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="550.0" y1="628.0" x2="550.0" y2="768.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<rect x="24.0" y="774.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="784.0" font-size="10" fill="#0071E3" font-weight="bold">D　进度风险缓冲与范围控制</text>
+<rect x="24.0" y="792.0" width="204.0" height="50.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<g transform="translate(31.0,797.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6 L12 12 L16 15"/></g>
+<text x="50.0" y="808.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">缓冲周</text>
+<text x="31.0" y="823.0" font-size="9.8" fill="#1D1D1F">W12 / W15 各留 0.5 周浮量</text>
+<text x="31.0" y="836.0" font-size="9.8" fill="#6E6E73">吸收 ASR 与第三方接口波动</text>
+<rect x="237.0" y="792.0" width="204.0" height="50.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<g transform="translate(244.0,797.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="263.0" y="808.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">可牺牲项</text>
+<text x="244.0" y="823.0" font-size="9.8" fill="#1D1D1F">P3 时间戳溯源第 11 周判定</text>
+<text x="244.0" y="836.0" font-size="9.8" fill="#6E6E73">未达标即降 V1.5，主线不受影响</text>
+<rect x="450.0" y="792.0" width="204.0" height="50.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<g transform="translate(457.0,797.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="476.0" y="808.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">关键路径</text>
+<text x="457.0" y="823.0" font-size="9.8" fill="#1D1D1F">P0 → P1 → P2 → P4 → P5 → P6</text>
+<text x="457.0" y="836.0" font-size="9.8" fill="#6E6E73">任一延期直接顺延答辩演示</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.4" fill="#3A3A3C">深灰实条＝主线任务　·　浅灰＝V1.5 增量　·　朱红虚线框＝可牺牲项　·　竖虚线＝阶段门禁周　·　◆＝里程碑/门禁　·　数据出处：技术方案 §6</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 9-1　16 周工程里程碑与排期映射甘特图</text>
+<text x="340.0" y="924.0" font-size="9.8" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 9-1　Sixteen-week milestone and schedule Gantt chart</text>
+</svg>

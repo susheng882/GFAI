@@ -1,0 +1,290 @@
+<!-- typography-v2 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 960" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0" y="0" width="680" height="960" fill="#FFFFFF"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">功能全景流程图：38 项功能 × 五阶段主链路</text>
+<text x="340.0" y="58.0" font-size="9.8" fill="#6E6E73" text-anchor="middle">第五章 · 五阶段泳道 · F01–F38 全景节点 · K1–K3 关键链路 · 错题回炉闭环 · 产品报告第四章（八）</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.8" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<rect x="24.0" y="76.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="86.0" font-size="10" fill="#0071E3" font-weight="bold">A　五阶段主链路（阶段编号 · 驱动机制 · 功能容量）</text>
+<rect x="24.0" y="96.0" width="118.0" height="78.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<rect x="24.0" y="96.0" width="118.0" height="21.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="31.0" y="111.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">① 素材接入层</text>
+<g transform="translate(32.0,121.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M10 9 L16 12 L10 15 Z"/></g>
+<text x="51.0" y="134.0" font-size="9.8" fill="#6E6E73">Collection</text>
+<text x="51.0" y="148.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">6 项 功能</text>
+<text x="31.0" y="165.0" font-size="9.8" fill="#3A3A3C">链接 / 文件 / 待整</text>
+<line x1="143.0" y1="135.0" x2="149.2" y2="135.0" stroke="#1D1D1F" stroke-width="0.9" marker-end="url(#ar)"/>
+<rect x="151.2" y="96.0" width="118.0" height="78.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<rect x="151.2" y="96.0" width="118.0" height="21.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="158.2" y="111.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">② 入口与调度层</text>
+<g transform="translate(159.2,121.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="178.2" y="134.0" font-size="9.8" fill="#6E6E73">Orchestration</text>
+<text x="178.2" y="148.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">6 项 功能</text>
+<text x="158.2" y="165.0" font-size="9.8" fill="#3A3A3C">统一提交 / 鉴权 / </text>
+<line x1="270.2" y1="135.0" x2="276.4" y2="135.0" stroke="#1D1D1F" stroke-width="0.9" marker-end="url(#ar)"/>
+<rect x="278.4" y="96.0" width="118.0" height="78.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<rect x="278.4" y="96.0" width="118.0" height="21.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="285.4" y="111.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">③ 内容解析与生成</text>
+<g transform="translate(286.4,121.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5 C9 2 5 3 4 7 C2 9 3 13 5 14 C4 18 7 21 10 20 L12 21 L14 20 C17 21 20 18 19 14 C21 13 22 9 20 7 C19 3 15 2 12 5 Z"/><path d="M12 5 L12 21 M6 10 L9 10 M15 10 L18 10"/></g>
+<text x="305.4" y="134.0" font-size="9.8" fill="#6E6E73">Content Parsing</text>
+<text x="305.4" y="148.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">10 项 功能</text>
+<text x="285.4" y="165.0" font-size="9.8" fill="#3A3A3C">三级取材 · 契约校验 </text>
+<line x1="397.4" y1="135.0" x2="403.6" y2="135.0" stroke="#1D1D1F" stroke-width="0.9" marker-end="url(#ar)"/>
+<rect x="405.6" y="96.0" width="118.0" height="78.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<rect x="405.6" y="96.0" width="118.0" height="21.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="412.6" y="111.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">④ 知识产品层</text>
+<g transform="translate(413.6,121.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M6 9 L18 9 M6 13 L18 13 M6 17 L13 17"/></g>
+<text x="432.6" y="134.0" font-size="9.8" fill="#6E6E73">Knowledge</text>
+<text x="432.6" y="148.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">9 项 功能</text>
+<text x="412.6" y="165.0" font-size="9.8" fill="#3A3A3C">笔记 / 卡片 / 组卷</text>
+<line x1="524.6" y1="135.0" x2="530.8" y2="135.0" stroke="#1D1D1F" stroke-width="0.9" marker-end="url(#ar)"/>
+<rect x="532.8" y="96.0" width="118.0" height="78.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<rect x="532.8" y="96.0" width="118.0" height="21.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="539.8" y="111.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">⑤ 学习闭环层</text>
+<g transform="translate(540.8,121.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#0071E3"/></g>
+<text x="559.8" y="134.0" font-size="9.8" fill="#6E6E73">Learning Loop</text>
+<text x="559.8" y="148.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">7 项 功能</text>
+<text x="539.8" y="165.0" font-size="9.8" fill="#3A3A3C">遗忘曲线 · 掌握度驱动</text>
+<rect x="24.0" y="182.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="192.0" font-size="10" fill="#0071E3" font-weight="bold">B　五阶段泳道功能全景（F01–F38 · 节点内流程顺序 · 版本以框型区分）</text>
+<rect x="24.0" y="202.0" width="632.0" height="69.0" fill="#EEF5FD" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="202.0" width="104.0" height="69.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="224.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">① 素材接入层</text>
+<text x="30.0" y="240.0" font-size="9.8" fill="#EAF3FF">Collection</text>
+<text x="30.0" y="259.0" font-size="9.6" fill="#EAF3FF">6 项 · 链接 / 文件</text>
+<rect x="134.0" y="210.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="227.0" font-size="9.8" fill="#6E6E73">F01</text>
+<text x="168.0" y="227.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">B站链接</text>
+<line x1="235.0" y1="223.0" x2="238.0" y2="223.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="210.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="245.5" y="227.0" font-size="9.8" fill="#6E6E73">F02</text>
+<text x="273.5" y="227.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">本地上传</text>
+<line x1="340.5" y1="223.0" x2="343.5" y2="223.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="345.0" y="210.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="351.0" y="227.0" font-size="9.8" fill="#6E6E73">F03</text>
+<text x="379.0" y="227.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">待整理清单</text>
+<line x1="446.0" y1="223.0" x2="449.0" y2="223.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="450.5" y="210.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="456.5" y="227.0" font-size="9.8" fill="#6E6E73">F04</text>
+<text x="484.5" y="227.0" font-size="9.8" fill="#1D1D1F">YouTube 源</text>
+<line x1="551.5" y1="223.0" x2="554.5" y2="223.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="556.0" y="210.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#86868B" stroke-width="0.8" stroke-dasharray="4 3"/>
+<text x="562.0" y="227.0" font-size="9.8" fill="#6E6E73">F05</text>
+<text x="590.0" y="227.0" font-size="9.8" fill="#1D1D1F">插件收藏</text>
+<rect x="134.0" y="241.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#86868B" stroke-width="0.8" stroke-dasharray="4 3"/>
+<text x="140.0" y="258.0" font-size="9.8" fill="#6E6E73">F06</text>
+<text x="168.0" y="258.0" font-size="9.8" fill="#1D1D1F">播放列表</text>
+<line x1="76.0" y1="271.0" x2="76.0" y2="273.6" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<rect x="24.0" y="274.0" width="632.0" height="69.0" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="274.0" width="104.0" height="69.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="296.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">② 入口与调度层</text>
+<text x="30.0" y="312.0" font-size="9.8" fill="#EAF3FF">Orchestration</text>
+<text x="30.0" y="331.0" font-size="9.6" fill="#EAF3FF">6 项 · 统一提交 / </text>
+<rect x="134.0" y="282.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="299.0" font-size="9.8" fill="#6E6E73">F34</text>
+<text x="168.0" y="299.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">注册与会话</text>
+<line x1="235.0" y1="295.0" x2="238.0" y2="295.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="282.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="245.5" y="299.0" font-size="9.8" fill="#6E6E73">F35</text>
+<text x="273.5" y="299.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">成本护栏</text>
+<line x1="340.5" y1="295.0" x2="343.5" y2="295.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="345.0" y="282.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="351.0" y="299.0" font-size="9.8" fill="#6E6E73">F36</text>
+<text x="379.0" y="299.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">注销/导出</text>
+<line x1="446.0" y1="295.0" x2="449.0" y2="295.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="450.5" y="282.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="456.5" y="299.0" font-size="9.8" fill="#6E6E73">F37</text>
+<text x="484.5" y="299.0" font-size="9.8" fill="#1D1D1F">供应商管理</text>
+<line x1="551.5" y1="295.0" x2="554.5" y2="295.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="556.0" y="282.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="562.0" y="299.0" font-size="9.8" fill="#6E6E73">F38</text>
+<text x="590.0" y="299.0" font-size="9.8" fill="#1D1D1F">图片本域代理</text>
+<rect x="134.0" y="313.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="330.0" font-size="9.8" fill="#6E6E73">F31</text>
+<text x="168.0" y="330.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">任务回看</text>
+<line x1="76.0" y1="343.0" x2="76.0" y2="345.6" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<rect x="24.0" y="346.0" width="632.0" height="69.0" fill="#EEF5FD" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="346.0" width="104.0" height="69.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="368.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">③ 内容解析与生成</text>
+<text x="30.0" y="384.0" font-size="9.8" fill="#EAF3FF">Content Parsing</text>
+<text x="30.0" y="403.0" font-size="9.6" fill="#EAF3FF">10 项 · 三级取材 · </text>
+<rect x="134.0" y="354.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="371.0" font-size="9.8" fill="#6E6E73">F07</text>
+<text x="168.0" y="371.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">取材降本链</text>
+<line x1="235.0" y1="367.0" x2="238.0" y2="367.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="354.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="245.5" y="371.0" font-size="9.8" fill="#6E6E73">F08</text>
+<text x="273.5" y="371.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">语音转写</text>
+<line x1="340.5" y1="367.0" x2="343.5" y2="367.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="345.0" y="354.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="351.0" y="371.0" font-size="9.8" fill="#6E6E73">F09</text>
+<text x="379.0" y="371.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">PDF 解析</text>
+<line x1="446.0" y1="367.0" x2="449.0" y2="367.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="450.5" y="354.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="456.5" y="371.0" font-size="9.8" fill="#6E6E73">F10</text>
+<text x="484.5" y="371.0" font-size="9.8" fill="#1D1D1F">扫描 OCR</text>
+<line x1="551.5" y1="367.0" x2="554.5" y2="367.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="556.0" y="354.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="562.0" y="371.0" font-size="9.8" fill="#6E6E73">F11</text>
+<text x="590.0" y="371.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">智能切片</text>
+<rect x="134.0" y="385.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="402.0" font-size="9.8" fill="#6E6E73">F12</text>
+<text x="168.0" y="402.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">三档路由</text>
+<line x1="235.0" y1="398.0" x2="238.0" y2="398.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="385.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="245.5" y="402.0" font-size="9.8" fill="#6E6E73">F13</text>
+<text x="273.5" y="402.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">契约校验降级</text>
+<line x1="340.5" y1="398.0" x2="343.5" y2="398.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="345.0" y="385.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="351.0" y="402.0" font-size="9.8" fill="#6E6E73">F14</text>
+<text x="379.0" y="402.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">断点续传</text>
+<line x1="446.0" y1="398.0" x2="449.0" y2="398.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="450.5" y="385.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="456.5" y="402.0" font-size="9.8" fill="#6E6E73">F15</text>
+<text x="484.5" y="402.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">溯源硬字段</text>
+<line x1="551.5" y1="398.0" x2="554.5" y2="398.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="556.0" y="385.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="562.0" y="402.0" font-size="9.8" fill="#6E6E73">F16</text>
+<text x="590.0" y="402.0" font-size="9.8" fill="#1D1D1F">关键帧截图</text>
+<line x1="76.0" y1="415.0" x2="76.0" y2="417.6" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<rect x="24.0" y="418.0" width="632.0" height="69.0" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="418.0" width="104.0" height="69.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="440.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">④ 知识产品层</text>
+<text x="30.0" y="456.0" font-size="9.8" fill="#EAF3FF">Knowledge</text>
+<text x="30.0" y="475.0" font-size="9.6" fill="#EAF3FF">9 项 · 笔记 / 卡片</text>
+<rect x="134.0" y="426.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="443.0" font-size="9.8" fill="#6E6E73">F17</text>
+<text x="168.0" y="443.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">结构化笔记</text>
+<line x1="235.0" y1="439.0" x2="238.0" y2="439.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="426.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="245.5" y="443.0" font-size="9.8" fill="#6E6E73">F18</text>
+<text x="273.5" y="443.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">背诵卡片</text>
+<line x1="340.5" y1="439.0" x2="343.5" y2="439.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="345.0" y="426.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="351.0" y="443.0" font-size="9.8" fill="#6E6E73">F19</text>
+<text x="379.0" y="443.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">智能组卷</text>
+<line x1="446.0" y1="439.0" x2="449.0" y2="439.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="450.5" y="426.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="456.5" y="443.0" font-size="9.8" fill="#6E6E73">F20</text>
+<text x="484.5" y="443.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">错题本</text>
+<line x1="551.5" y1="439.0" x2="554.5" y2="439.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="556.0" y="426.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="562.0" y="443.0" font-size="9.8" fill="#6E6E73">F21</text>
+<text x="590.0" y="443.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">多版本笔记</text>
+<rect x="134.0" y="457.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="140.0" y="474.0" font-size="9.8" fill="#6E6E73">F22</text>
+<text x="168.0" y="474.0" font-size="9.8" fill="#1D1D1F">MD/PDF 导出</text>
+<line x1="235.0" y1="470.0" x2="238.0" y2="470.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="457.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="245.5" y="474.0" font-size="9.8" fill="#6E6E73">F23</text>
+<text x="273.5" y="474.0" font-size="9.8" fill="#1D1D1F">Anki 导出</text>
+<line x1="340.5" y1="470.0" x2="343.5" y2="470.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="345.0" y="457.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="351.0" y="474.0" font-size="9.8" fill="#6E6E73">F30</text>
+<text x="379.0" y="474.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">带来源问答</text>
+<line x1="446.0" y1="470.0" x2="449.0" y2="470.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="450.5" y="457.0" width="100.0" height="26.0" fill="#F5F5F7" stroke="#86868B" stroke-width="0.8"/>
+<text x="456.5" y="474.0" font-size="9.8" fill="#6E6E73">F33</text>
+<text x="484.5" y="474.0" font-size="9.8" fill="#1D1D1F">成长记录</text>
+<line x1="76.0" y1="487.0" x2="76.0" y2="489.6" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<rect x="24.0" y="490.0" width="632.0" height="69.0" fill="#EEF5FD" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="490.0" width="104.0" height="69.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="512.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">⑤ 学习闭环层</text>
+<text x="30.0" y="528.0" font-size="9.8" fill="#EAF3FF">Learning Loop</text>
+<text x="30.0" y="547.0" font-size="9.6" fill="#EAF3FF">7 项 · 遗忘曲线 · </text>
+<rect x="134.0" y="498.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="515.0" font-size="9.8" fill="#6E6E73">F24</text>
+<text x="168.0" y="515.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">今日任务卡</text>
+<line x1="235.0" y1="511.0" x2="238.0" y2="511.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="498.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="245.5" y="515.0" font-size="9.8" fill="#6E6E73">F25</text>
+<text x="273.5" y="515.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">拖拽仪表盘</text>
+<line x1="340.5" y1="511.0" x2="343.5" y2="511.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="345.0" y="498.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="351.0" y="515.0" font-size="9.8" fill="#6E6E73">F26</text>
+<text x="379.0" y="515.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">计划与重排</text>
+<line x1="446.0" y1="511.0" x2="449.0" y2="511.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="450.5" y="498.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="456.5" y="515.0" font-size="9.8" fill="#6E6E73">F27</text>
+<text x="484.5" y="515.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">复习排程</text>
+<line x1="551.5" y1="511.0" x2="554.5" y2="511.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="556.0" y="498.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="562.0" y="515.0" font-size="9.8" fill="#6E6E73">F28</text>
+<text x="590.0" y="515.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">掌握度模型</text>
+<rect x="134.0" y="529.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="140.0" y="546.0" font-size="9.8" fill="#6E6E73">F29</text>
+<text x="168.0" y="546.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">错题回炉</text>
+<line x1="235.0" y1="542.0" x2="238.0" y2="542.0" stroke="#86868B" stroke-width="0.7" marker-end="url(#ar)"/>
+<rect x="239.5" y="529.0" width="100.0" height="26.0" fill="#FFFFFF" stroke="#86868B" stroke-width="0.8" stroke-dasharray="4 3"/>
+<text x="245.5" y="546.0" font-size="9.8" fill="#6E6E73">F32</text>
+<text x="273.5" y="546.0" font-size="9.8" fill="#1D1D1F">NL 问数</text>
+<rect x="24.0" y="568.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="578.0" font-size="10" fill="#0071E3" font-weight="bold">C　关键链路 K1–K3 与错题回炉闭环（编号与图 4-1 互相锚定）</text>
+<rect x="24.0" y="588.0" width="204.0" height="56.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="31.0" y="604.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">K1　大文件直传</text>
+<text x="31.0" y="620.0" font-size="9.8" fill="#48484A">presign → 直传 → confirm</text>
+<text x="31.0" y="634.0" font-size="9.8" fill="#6E6E73">以 stat 为准，字节流不进 API</text>
+<rect x="237.0" y="588.0" width="204.0" height="56.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="244.0" y="604.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">K2　长任务入队</text>
+<text x="244.0" y="620.0" font-size="9.8" fill="#48484A">入队 → Worker 消费 → 产物写回</text>
+<text x="244.0" y="634.0" font-size="9.8" fill="#6E6E73">API 与 CPU 密集管线分进程</text>
+<rect x="450.0" y="588.0" width="204.0" height="56.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="457.0" y="604.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">K3　任务态反馈</text>
+<text x="457.0" y="620.0" font-size="9.8" fill="#48484A">3→15 s 退避 · 心跳 · 60 min 超时</text>
+<text x="457.0" y="634.0" font-size="9.8" fill="#6E6E73">不引入 WebSocket 长连接</text>
+<path d="M 650,536 L 660,536 L 660,352 L 650,352" fill="none" stroke="#B4472F" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#ar)"/>
+<text x="640.0" y="566.0" font-size="9.8" fill="#B4472F" text-anchor="end">错题回炉：低掌握度知识点 → 回流内容解析链路生成变式练习</text>
+<g transform="translate(30.0,648.0) scale(0.62)" fill="none" stroke="#B4472F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M20 9 A8 8 0 0 0 5 8 M4 4 L4 9 L9 9 M4 15 A8 8 0 0 0 19 16 M20 20 L20 15 L15 15"/></g>
+<text x="49.0" y="657.0" font-size="9.8" fill="#B4472F">闭环合龙：mastery &lt; θ=0.85 触发回炉，复习行为回流掌握度模型（技术方案 3.9）</text>
+<rect x="24.0" y="676.0" width="3.0" height="12.0" fill="#0071E3" stroke="none" stroke-width="0"/>
+<text x="33.0" y="686.0" font-size="10" fill="#0071E3" font-weight="bold">D　功能版本分布、六功能域构成与关键功能验收口径</text>
+<text x="28.0" y="706.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">版本切分（38 项）</text>
+<rect x="28.0" y="712.0" width="213.2" height="20.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="134.6" y="726.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">主线 27</text>
+<rect x="241.2" y="712.0" width="63.2" height="20.0" fill="#C7C7CC" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="272.7" y="726.0" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">V1.5 8</text>
+<rect x="304.3" y="712.0" width="23.7" height="20.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8" stroke-dasharray="4 3"/>
+<text x="28.0" y="746.0" font-size="9.8" fill="#48484A">主线 27 项为答辩可演示范围；V1.5 8 项可独立降级，不阻塞主路径。</text>
+<text x="28.0" y="760.0" font-size="9.8" fill="#48484A">验收：四条主路径 100% / 解析成功率 ≥90% / 溯源字段不可缺省。</text>
+<rect x="352.0" y="700.0" width="300.0" height="20.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="358.0" y="714.0" font-size="9.8" fill="#FFFFFF" font-weight="bold">功能域</text>
+<text x="528.0" y="714.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">项数</text>
+<text x="598.0" y="714.0" font-size="9.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">主/V1.5/规划</text>
+<rect x="352.0" y="720.0" width="300.0" height="16.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="358.0" y="731.5" font-size="9.8" fill="#1D1D1F">收集与入口</text>
+<text x="528.0" y="731.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">6</text>
+<text x="598.0" y="731.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle">3/1/2</text>
+<rect x="352.0" y="736.0" width="300.0" height="16.0" fill="#F5F5F7" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="358.0" y="747.5" font-size="9.8" fill="#1D1D1F">内容解析</text>
+<text x="528.0" y="747.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">10</text>
+<text x="598.0" y="747.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle">8/2/0</text>
+<rect x="352.0" y="752.0" width="300.0" height="16.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="358.0" y="763.5" font-size="9.8" fill="#1D1D1F">知识产品</text>
+<text x="528.0" y="763.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">7</text>
+<text x="598.0" y="763.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle">5/2/0</text>
+<rect x="352.0" y="768.0" width="300.0" height="16.0" fill="#F5F5F7" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="358.0" y="779.5" font-size="9.8" fill="#1D1D1F">学习闭环</text>
+<text x="528.0" y="779.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">6</text>
+<text x="598.0" y="779.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle">6/0/0</text>
+<rect x="352.0" y="784.0" width="300.0" height="16.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="358.0" y="795.5" font-size="9.8" fill="#1D1D1F">增强能力</text>
+<text x="528.0" y="795.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">4</text>
+<text x="598.0" y="795.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle">2/1/1</text>
+<rect x="352.0" y="800.0" width="300.0" height="16.0" fill="#F5F5F7" stroke="#EAF3FF" stroke-width="0.4"/>
+<text x="358.0" y="811.5" font-size="9.8" fill="#1D1D1F">平台与账号</text>
+<text x="528.0" y="811.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">5</text>
+<text x="598.0" y="811.5" font-size="9.8" fill="#1D1D1F" text-anchor="middle">3/2/0</text>
+<line x1="520.0" y1="700.0" x2="520.0" y2="816.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="572.0" y1="700.0" x2="572.0" y2="816.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<rect x="24.0" y="824.0" width="632.0" height="30.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.7" stroke-dasharray="5 3"/>
+<text x="31.0" y="836.0" font-size="9.8" fill="#48484A">注 1：节点编号 F01–F38 与产品报告第四章（八）功能全景清单一一对应；白底实框＝主线，灰底＝V1.5，虚线框＝规划池。</text>
+<text x="31.0" y="849.0" font-size="9.8" fill="#48484A">注 2：K1/K2/K3 与图 6-1、2-2、2-3、5-1 编号一致；数据出处：产品报告第四章（八）、技术方案 2.5 / 2.6 / 3.9。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.4" fill="#3A3A3C">白底实框＝主线 27　·　灰底＝V1.5 8　·　虚线框＝规划池 3　·　实线箭头＝主流程　·　朱红虚线＝闭环回授　·　数据出处：产品报告第四章（八）</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 3-2　功能全景流程图（38 项功能 × 五阶段）</text>
+<text x="340.0" y="924.0" font-size="9.8" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 3-2　End-to-end functional flow of 38 features across five stages</text>
+</svg>

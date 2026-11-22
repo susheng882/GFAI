@@ -1,0 +1,157 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">学习闭环与间隔复习 · 功能域展开</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Learning Loop &amp; Spaced Repetition / Closed Loop &amp; Spacing Timeline / 学习闭环 · 6 项功能 · 全部主线</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　学习闭环环形回路 + R1–R4 间隔复习时间轴</text>
+<rect x="24.0" y="96.0" width="632.0" height="44.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.5"/>
+<text x="32.0" y="109.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">域定位：把「学完」延长为「按遗忘规律反复取回」</text>
+<text x="32.0" y="123.0" font-size="8.2" fill="#3A3A3C">对应痛点 ② 看完即忘 · ⑤ 复习无计划　｜　排程、掌握度、回炉三者构成可演示闭环</text>
+<text x="32.0" y="136.0" font-size="8.0" fill="#6E6E73">学习闭环 · 6 项功能 · 全部主线</text>
+<text x="24.0" y="152.0" font-size="8.6" fill="#48484A" font-weight="bold">左：五节点学习闭环（朱红＝错题回炉回授）　｜　右：R1–R4 间隔复习时间轴</text>
+<circle cx="177.0" cy="230.0" r="62" fill="#EEF5FD" stroke="#A8CEF7" stroke-width="0.9"/>
+<rect x="146.0" y="158.0" width="62.0" height="20.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="177.0" y="171.5" font-size="7.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">生成计划</text>
+<rect x="205.0" y="200.8" width="62.0" height="20.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="236.0" y="214.3" font-size="7.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">间隔排程</text>
+<rect x="182.4" y="270.2" width="62.0" height="20.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="213.4" y="283.7" font-size="7.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">今日三卡</text>
+<rect x="109.6" y="270.2" width="62.0" height="20.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="140.6" y="283.7" font-size="7.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">测验自评</text>
+<rect x="87.0" y="200.8" width="62.0" height="20.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="118.0" y="214.3" font-size="7.8" fill="#1D1D1F" text-anchor="middle" font-weight="bold">掌握度更新</text>
+<text x="177.0" y="226.0" font-size="8.6" fill="#1D1D1F" text-anchor="middle" font-weight="bold">p(L) 掌握度</text>
+<text x="177.0" y="240.0" font-size="8.8" fill="#B4472F" text-anchor="middle">θ = 0.85</text>
+<text x="177.0" y="254.0" font-size="7.8" fill="#6E6E73" text-anchor="middle">低于阈值回炉</text>
+<line x1="28.0" y1="298.0" x2="172.0" y2="298.0" stroke="#B4472F" stroke-width="1.2" marker-end="url(#ar)"/>
+<rect x="340.0" y="160.0" width="316.0" height="132.0" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="0.6"/>
+<text x="348.0" y="174.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">间隔复习排程（R1–R4）与保持率示意</text>
+<line x1="354.0" y1="256.0" x2="648.0" y2="256.0" stroke="#1D1D1F" stroke-width="0.9" marker-end="url(#ar)"/>
+<line x1="354.0" y1="194.0" x2="354.0" y2="256.0" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="358.0" y="192.0" font-size="7.8" fill="#6E6E73">R(t)</text>
+<line x1="354.0" y1="208.0" x2="644.0" y2="208.0" stroke="#A8CEF7" stroke-width="0.6" stroke-dasharray="3 3"/>
+<rect x="584" y="193" width="56" height="13" fill="#FFFFFF" opacity="0.92"/>
+<text x="642.0" y="205.0" font-size="7.6" fill="#6E6E73" text-anchor="end">R*=0.90</text>
+<line x1="354.0" y1="236.0" x2="644.0" y2="236.0" stroke="#A8CEF7" stroke-width="0.6" stroke-dasharray="3 3"/>
+<rect x="584" y="221" width="56" height="13" fill="#FFFFFF" opacity="0.92"/>
+<text x="642.0" y="233.0" font-size="7.6" fill="#6E6E73" text-anchor="end">θ=0.85</text>
+<path d="M 350,206 L 378,228 L 410,240 L 450,210 L 480,228 L 530,214 L 562,236 L 610,218 L 646,242" fill="none" stroke="#1D1D1F" stroke-width="1.1"/>
+<line x1="450.0" y1="256.0" x2="450.0" y2="252.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="450.0" y="268.0" font-size="7.6" fill="#48484A" text-anchor="middle">R1 1d</text>
+<line x1="490.0" y1="256.0" x2="490.0" y2="252.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="490.0" y="268.0" font-size="7.6" fill="#48484A" text-anchor="middle">R2 3d</text>
+<line x1="545.0" y1="256.0" x2="545.0" y2="252.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="545.0" y="268.0" font-size="7.6" fill="#48484A" text-anchor="middle">R3 7d</text>
+<line x1="610.0" y1="256.0" x2="610.0" y2="252.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="610.0" y="268.0" font-size="7.6" fill="#48484A" text-anchor="middle">R4 14d</text>
+<text x="348.0" y="284.0" font-size="7.7" fill="#3A3A3C">示意曲线（非实测）｜R(t)=e^(−t/S)｜Cepeda 2006 · 254 项元分析</text>
+<text x="24.0" y="326.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　六项功能纵向时间线（编号 / 说明 / 落点）</text>
+<line x1="40.0" y1="338.0" x2="40.0" y2="486.0" stroke="#A8CEF7" stroke-width="1.0"/>
+<circle cx="40.0" cy="344.0" r="9" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="40.0" y="347.0" font-size="8.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">1</text>
+<rect x="56.0" y="332.0" width="600.0" height="24.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.5"/>
+<text x="64.0" y="348.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">F24　今日任务卡</text>
+<text x="214.0" y="348.0" font-size="8.2" fill="#3A3A3C">今天该做的三件事，从计划与复习排程生成</text>
+<rect x="576.0" y="336.0" width="72.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="612.0" y="347.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<circle cx="40.0" cy="370.0" r="9" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="40.0" y="373.0" font-size="8.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">2</text>
+<rect x="56.0" y="358.0" width="600.0" height="24.0" fill="#EEF5FD" stroke="#EAF3FF" stroke-width="0.5"/>
+<text x="64.0" y="374.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">F25　可拖拽学习仪表盘</text>
+<text x="214.0" y="374.0" font-size="8.2" fill="#3A3A3C">卡片布局自定义，所见即复习指挥台</text>
+<rect x="576.0" y="362.0" width="72.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="612.0" y="373.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<circle cx="40.0" cy="396.0" r="9" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="40.0" y="399.0" font-size="8.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">3</text>
+<rect x="56.0" y="384.0" width="600.0" height="24.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.5"/>
+<text x="64.0" y="400.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">F26　学习计划生成与重排</text>
+<text x="214.0" y="400.0" font-size="8.2" fill="#3A3A3C">执行情况回流，AI 重排后续任务</text>
+<rect x="576.0" y="388.0" width="72.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="612.0" y="399.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<circle cx="40.0" cy="422.0" r="9" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="40.0" y="425.0" font-size="8.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">4</text>
+<rect x="56.0" y="410.0" width="600.0" height="24.0" fill="#EEF5FD" stroke="#EAF3FF" stroke-width="0.5"/>
+<text x="64.0" y="426.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">F27　复习排程</text>
+<text x="214.0" y="426.0" font-size="8.2" fill="#3A3A3C">间隔重复调度，到点进今日任务</text>
+<rect x="576.0" y="414.0" width="72.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="612.0" y="425.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<circle cx="40.0" cy="448.0" r="9" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="40.0" y="451.0" font-size="8.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">5</text>
+<rect x="56.0" y="436.0" width="600.0" height="24.0" fill="#FFFFFF" stroke="#EAF3FF" stroke-width="0.5"/>
+<text x="64.0" y="452.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">F28　掌握度模型</text>
+<text x="214.0" y="452.0" font-size="8.2" fill="#3A3A3C">答题与复习行为驱动，低于阈值触发回炉</text>
+<rect x="576.0" y="440.0" width="72.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="612.0" y="451.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<circle cx="40.0" cy="474.0" r="9" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="40.0" y="477.0" font-size="8.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">6</text>
+<rect x="56.0" y="462.0" width="600.0" height="24.0" fill="#EEF5FD" stroke="#EAF3FF" stroke-width="0.5"/>
+<text x="64.0" y="478.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">F29　错题回炉</text>
+<text x="214.0" y="478.0" font-size="8.2" fill="#3A3A3C">低掌握度知识点回流测验再生成，闭环合龙</text>
+<rect x="576.0" y="466.0" width="72.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="612.0" y="477.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<text x="24.0" y="514.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　理论模型 · 可配置参数 · 落地机制 · 验收</text>
+<rect x="24.0" y="520.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="537.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">理论模型 / 依据</text>
+<text x="198.0" y="537.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">可配置参数</text>
+<text x="348.0" y="537.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">落地机制</text>
+<text x="508.0" y="537.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">可核验验收</text>
+<line x1="192.0" y1="520.0" x2="192.0" y2="546.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="342.0" y1="520.0" x2="342.0" y2="546.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="502.0" y1="520.0" x2="502.0" y2="546.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="546.0" width="632.0" height="31.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="192.0" y1="546.0" x2="192.0" y2="577.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="342.0" y1="546.0" x2="342.0" y2="577.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="546.0" x2="502.0" y2="577.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="564.5" font-size="8.8" fill="#1D1D1F" font-weight="bold">Ebbinghaus 1885 / SM-2 / FSRS-6</text>
+<text x="198.0" y="564.5" font-size="8.4" fill="#1D1D1F">R1–R4 = 1/3/7/14 天</text>
+<text x="348.0" y="564.5" font-size="8.4" fill="#1D1D1F">R(t)=e^(−t/S) 驱动排程</text>
+<text x="508.0" y="564.5" font-size="8.4" fill="#1D1D1F">R*=0.90，θ=0.85</text>
+<rect x="24.0" y="577.0" width="632.0" height="31.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="192.0" y1="577.0" x2="192.0" y2="608.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="342.0" y1="577.0" x2="342.0" y2="608.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="577.0" x2="502.0" y2="608.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="595.5" font-size="8.8" fill="#1D1D1F" font-weight="bold">间隔效应 Cepeda 2006</text>
+<text x="198.0" y="595.5" font-size="8.4" fill="#1D1D1F">间隔步长可配置常量</text>
+<text x="348.0" y="595.5" font-size="8.4" fill="#1D1D1F">254 项元分析：拉长间隔优于集中复习</text>
+<text x="508.0" y="595.5" font-size="8.4" fill="#1D1D1F">参数写入常量并落库</text>
+<rect x="24.0" y="608.0" width="632.0" height="31.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="192.0" y1="608.0" x2="192.0" y2="639.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="342.0" y1="608.0" x2="342.0" y2="639.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="608.0" x2="502.0" y2="639.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="626.5" font-size="8.8" fill="#1D1D1F" font-weight="bold">BKT 掌握度 Corbett 1994</text>
+<text x="198.0" y="626.5" font-size="8.4" fill="#1D1D1F">p(L) 更新 / θ 阈值</text>
+<text x="348.0" y="626.5" font-size="8.4" fill="#1D1D1F">答题序列更新，低于阈值触发回炉</text>
+<text x="508.0" y="626.5" font-size="8.4" fill="#1D1D1F">四条主路径 100%（G2/G5）</text>
+<rect x="24.0" y="649.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="667.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">R(t)=e^(−t/S)</text>
+<text x="190.0" y="667.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">R*=0.90</text>
+<text x="348.0" y="667.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">θ=0.85</text>
+<text x="506.0" y="667.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">R1–R4 = 1 / 3 / 7 / 14 天</text>
+<text x="24.0" y="697.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　闭环合龙的两个判定条件</text>
+<rect x="24.0" y="703.0" width="311.0" height="68.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,708.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#0071E3"/></g>
+<text x="50.0" y="720.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">保持率目标</text>
+<text x="32.0" y="736.0" font-size="8.4" fill="#3A3A3C">R*=0.90 为排程目标</text>
+<text x="32.0" y="749.0" font-size="8.4" fill="#3A3A3C">低于 θ=0.85 触发回炉</text>
+<text x="32.0" y="762.0" font-size="8.4" fill="#3A3A3C">公式推导见图 3-10</text>
+<rect x="345.0" y="703.0" width="311.0" height="68.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(352.0,708.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M20 9 A8 8 0 0 0 5 8 M4 4 L4 9 L9 9 M4 15 A8 8 0 0 0 19 16 M20 20 L20 15 L15 15"/></g>
+<text x="371.0" y="720.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">回授与重排</text>
+<text x="353.0" y="736.0" font-size="8.4" fill="#3A3A3C">错题回炉重新索引 / 再生成</text>
+<text x="353.0" y="749.0" font-size="8.4" fill="#3A3A3C">执行结果回流重排计划</text>
+<text x="353.0" y="762.0" font-size="8.4" fill="#3A3A3C">图 3-2 朱红回授线</text>
+<rect x="24.0" y="781.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,787.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="56.0" y="799.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">依赖关系与版本说明</text>
+<text x="36.0" y="816.0" font-size="9.0" fill="#48484A">公式级推导、曲线簇、参数表与 6 条经典文献见 图 3-10；功能→理论→参数总表见 图 3-3。</text>
+<text x="36.0" y="830.0" font-size="9.0" fill="#48484A">闭环的朱红回授线（错题回炉 → 重新索引/再生成）在图 3-2 中明确画出，是答辩演示学习闭环的核心证据。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：R1–R4＝第 1/3/7/14 天复习点；θ＝触发回炉的掌握度阈值；◆ 为理论驱动的可配置参数。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 3-7　功能域四：学习闭环与间隔复习</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 3-7 Domain IV: learning loop and spaced repetition</text>
+</svg>

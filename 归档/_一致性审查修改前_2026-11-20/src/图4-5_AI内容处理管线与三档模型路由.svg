@@ -1,0 +1,215 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">AI 内容处理管线与三档模型路由</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">第三章 · 五级管线 + 三档路由实价矩阵 + 三级取材降本链 + 双索引 RAG · 技术方案 3.1 / 3.2 / 3.6</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　五级 AI 内容处理管线（全宽横向流程 · ◆ 吸收自 BiliNote）</text>
+<rect x="24.0" y="88.0" width="118.4" height="78.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,93.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M10 9 L16 12 L10 15 Z"/></g>
+<text x="50.0" y="105.0" font-size="9.2" fill="#0071E3" font-weight="bold">① 统一取材</text>
+<text x="32.0" y="121.0" font-size="8.0" fill="#3A3A3C">视频 / PDF / 链接</text>
+<text x="32.0" y="134.0" font-size="8.0" fill="#3A3A3C">三级链：字幕→音轨</text>
+<text x="32.0" y="147.0" font-size="8.0" fill="#3A3A3C">→本地转写</text>
+<rect x="152.4" y="88.0" width="118.4" height="78.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(159.4,93.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="178.4" y="105.0" font-size="9.2" fill="#0071E3" font-weight="bold">② 分块归一</text>
+<text x="160.4" y="121.0" font-size="8.0" fill="#3A3A3C">体积预算二分切块</text>
+<text x="160.4" y="134.0" font-size="8.0" fill="#3A3A3C">多轮归并</text>
+<text x="160.4" y="147.0" font-size="8.0" fill="#3A3A3C">控制单次输入上限</text>
+<rect x="280.8" y="88.0" width="118.4" height="78.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(287.8,93.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2 L12 5 M12 19 L12 22 M2 12 L5 12 M19 12 L22 12 M5 5 L7 7 M17 17 L19 19 M19 5 L17 7 M7 17 L5 19"/></g>
+<text x="306.8" y="105.0" font-size="9.2" fill="#0071E3" font-weight="bold">③ 三档路由</text>
+<text x="288.8" y="121.0" font-size="8.0" fill="#3A3A3C">LIGHT/MID/HEAVY</text>
+<text x="288.8" y="134.0" font-size="8.0" fill="#3A3A3C">按难度与体积分档</text>
+<text x="288.8" y="147.0" font-size="8.0" fill="#3A3A3C">超额自动降档</text>
+<rect x="409.2" y="88.0" width="118.4" height="78.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(416.2,93.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 12 L11 16 L17 8"/></g>
+<text x="435.2" y="105.0" font-size="9.2" fill="#0071E3" font-weight="bold">④ 生成校验</text>
+<text x="417.2" y="121.0" font-size="8.0" fill="#3A3A3C">JSON Schema 契约</text>
+<text x="417.2" y="134.0" font-size="8.0" fill="#3A3A3C">字段/类型全校验</text>
+<text x="417.2" y="147.0" font-size="8.0" fill="#3A3A3C">失败自修复 ≤2 次</text>
+<rect x="537.6" y="88.0" width="118.4" height="78.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(544.6,93.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5 L4 19 C4 21 20 21 20 19 L20 5 M4 12 C4 14 20 14 20 12"/></g>
+<text x="563.6" y="105.0" font-size="9.2" fill="#0071E3" font-weight="bold">⑤ 索引溯源</text>
+<text x="545.6" y="121.0" font-size="8.0" fill="#3A3A3C">Chroma 双索引</text>
+<text x="545.6" y="134.0" font-size="8.0" fill="#3A3A3C">笔记块+转写滑窗</text>
+<text x="545.6" y="147.0" font-size="8.0" fill="#3A3A3C">时间戳 P0 硬字段</text>
+<line x1="36.0" y1="178.0" x2="644.0" y2="178.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<text x="38.0" y="194.0" font-size="8.6" fill="#6E6E73">原始素材</text>
+<text x="164.0" y="194.0" font-size="8.6" fill="#6E6E73">文本块</text>
+<text x="290.0" y="194.0" font-size="8.6" fill="#6E6E73">档位 + Prompt</text>
+<text x="416.0" y="194.0" font-size="8.6" fill="#6E6E73">结构化产物</text>
+<text x="542.0" y="194.0" font-size="8.6" fill="#6E6E73">知识单元 + 索引</text>
+<text x="24.0" y="212.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　三档模型路由矩阵（真实报价 · 2026-11-14 阿里云百炼官网）</text>
+<rect x="24.0" y="220.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="237.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">档位</text>
+<text x="122.0" y="237.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">触发条件</text>
+<text x="294.0" y="237.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">代表模型</text>
+<text x="406.0" y="237.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">输入单价</text>
+<text x="494.0" y="237.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">输出单价</text>
+<text x="582.0" y="237.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">超时与降级</text>
+<line x1="116.0" y1="220.0" x2="116.0" y2="246.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="288.0" y1="220.0" x2="288.0" y2="246.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="400.0" y1="220.0" x2="400.0" y2="246.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="488.0" y1="220.0" x2="488.0" y2="246.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="576.0" y1="220.0" x2="576.0" y2="246.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="246.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="246.0" x2="116.0" y2="276.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="246.0" x2="288.0" y2="276.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="246.0" x2="400.0" y2="276.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="488.0" y1="246.0" x2="488.0" y2="276.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="576.0" y1="246.0" x2="576.0" y2="276.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="264.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">LIGHT 轻档</text>
+<text x="122.0" y="264.0" font-size="8.8" fill="#1D1D1F">摘要 / 分类 / 意图解析 / 短卡片</text>
+<text x="294.0" y="264.0" font-size="8.8" fill="#1D1D1F">qwen-flash</text>
+<text x="406.0" y="264.0" font-size="8.8" fill="#1D1D1F">¥0.15 / 百万</text>
+<text x="494.0" y="264.0" font-size="8.8" fill="#1D1D1F">¥1.5 / 百万</text>
+<text x="582.0" y="264.0" font-size="8.8" fill="#1D1D1F">20 s → 重试</text>
+<rect x="24.0" y="276.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="276.0" x2="116.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="276.0" x2="288.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="276.0" x2="400.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="488.0" y1="276.0" x2="488.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="576.0" y1="276.0" x2="576.0" y2="306.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="294.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">MID 中档</text>
+<text x="122.0" y="294.0" font-size="8.8" fill="#1D1D1F">章节笔记 / 闪卡生成 / 常规问答</text>
+<text x="294.0" y="294.0" font-size="8.8" fill="#1D1D1F">qwen-plus</text>
+<text x="406.0" y="294.0" font-size="8.8" fill="#1D1D1F">¥0.8 / 百万</text>
+<text x="494.0" y="294.0" font-size="8.8" fill="#1D1D1F">¥2 / 百万</text>
+<text x="582.0" y="294.0" font-size="8.8" fill="#1D1D1F">60 s → 降档</text>
+<rect x="24.0" y="306.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="306.0" x2="116.0" y2="336.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="306.0" x2="288.0" y2="336.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="306.0" x2="400.0" y2="336.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="488.0" y1="306.0" x2="488.0" y2="336.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="576.0" y1="306.0" x2="576.0" y2="336.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="324.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">HEAVY 强档</text>
+<text x="122.0" y="324.0" font-size="8.8" fill="#1D1D1F">长文推理 / 复杂结构化 / 评测集</text>
+<text x="294.0" y="324.0" font-size="8.8" fill="#1D1D1F">qwen-max</text>
+<text x="406.0" y="324.0" font-size="8.8" fill="#1D1D1F">¥2.4 / 百万</text>
+<text x="494.0" y="324.0" font-size="8.8" fill="#1D1D1F">¥9.6 / 百万</text>
+<text x="582.0" y="324.0" font-size="8.8" fill="#1D1D1F">120 s → 降档</text>
+<rect x="24.0" y="336.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="336.0" x2="116.0" y2="366.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="336.0" x2="288.0" y2="366.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="336.0" x2="400.0" y2="366.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="488.0" y1="336.0" x2="488.0" y2="366.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="576.0" y1="336.0" x2="576.0" y2="366.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="354.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">LOCAL 兜底</text>
+<text x="122.0" y="354.0" font-size="8.8" fill="#1D1D1F">订阅额度耗尽 / 断网离线档</text>
+<text x="294.0" y="354.0" font-size="8.8" fill="#1D1D1F">bge-m3 + 模板</text>
+<text x="406.0" y="354.0" font-size="8.8" fill="#1D1D1F">¥0</text>
+<text x="494.0" y="354.0" font-size="8.8" fill="#1D1D1F">¥0</text>
+<text x="582.0" y="354.0" font-size="8.8" fill="#1D1D1F">模板化产物</text>
+<rect x="24.0" y="366.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="116.0" y1="366.0" x2="116.0" y2="396.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="366.0" x2="288.0" y2="396.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="366.0" x2="400.0" y2="396.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="488.0" y1="366.0" x2="488.0" y2="396.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="576.0" y1="366.0" x2="576.0" y2="396.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="384.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">路由判定</text>
+<text x="122.0" y="384.0" font-size="8.8" fill="#1D1D1F">体积 + 任务类型 + 当日剩余额度</text>
+<text x="294.0" y="384.0" font-size="8.8" fill="#1D1D1F">白名单映射表</text>
+<text x="406.0" y="384.0" font-size="8.8" fill="#1D1D1F">—</text>
+<text x="494.0" y="384.0" font-size="8.8" fill="#1D1D1F">—</text>
+<text x="582.0" y="384.0" font-size="8.8" fill="#1D1D1F">写入成本日志</text>
+<text x="24.0" y="408.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　三级取材降本链与双索引 RAG（每级命中即短路）</text>
+<rect x="24.0" y="414.0" width="205.3" height="64.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,419.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M10 9 L16 12 L10 15 Z"/></g>
+<text x="50.0" y="431.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">第 1 级 · 平台字幕</text>
+<text x="32.0" y="447.0" font-size="8.4" fill="#3A3A3C">优先请求 B 站 / YouTube 官方字幕</text>
+<text x="32.0" y="460.0" font-size="8.4" fill="#3A3A3C">命中即返回，零转写成本；</text>
+<text x="32.0" y="473.0" font-size="8.4" fill="#3A3A3C">带秒级时间戳可直接溯源</text>
+<rect x="237.3" y="414.0" width="205.3" height="64.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,419.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 18 C3 18 2 15 4 13 C3 10 6 8 9 9 C10 5 16 5 17 9 C21 9 22 13 20 15 C21 17 19 18 18 18 Z"/></g>
+<text x="263.3" y="431.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">第 2 级 · 音轨下载</text>
+<text x="245.3" y="447.0" font-size="8.4" fill="#3A3A3C">无字幕时 yt-dlp + ffmpeg 抽音轨</text>
+<text x="245.3" y="460.0" font-size="8.4" fill="#3A3A3C">只下载音频不落视频，</text>
+<text x="245.3" y="473.0" font-size="8.4" fill="#3A3A3C">临时文件受单任务 5 GB 配额约束</text>
+<rect x="450.7" y="414.0" width="205.3" height="64.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,419.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2 L12 5 M12 19 L12 22 M2 12 L5 12 M19 12 L22 12 M5 5 L7 7 M17 17 L19 19 M19 5 L17 7 M7 17 L5 19"/></g>
+<text x="476.7" y="431.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">第 3 级 · 本地转写</text>
+<text x="458.7" y="447.0" font-size="8.4" fill="#3A3A3C">faster-whisper 在 Worker 进程执行</text>
+<text x="458.7" y="460.0" font-size="8.4" fill="#3A3A3C">CPU 可跑，零 API 费用；</text>
+<text x="458.7" y="473.0" font-size="8.4" fill="#3A3A3C">云端 Fun-ASR 仅作订阅内兜底</text>
+<rect x="24.0" y="482.0" width="205.3" height="64.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,487.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="50.0" y="499.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">笔记索引</text>
+<text x="32.0" y="515.0" font-size="8.4" fill="#3A3A3C">按 H2 / H3 标题切块</text>
+<text x="32.0" y="528.0" font-size="8.4" fill="#3A3A3C">保留层级路径与时间戳</text>
+<text x="32.0" y="541.0" font-size="8.4" fill="#3A3A3C">供章节级问答检索</text>
+<rect x="237.3" y="482.0" width="205.3" height="64.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,487.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6 L12 12 L16 15"/></g>
+<text x="263.3" y="499.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">转写索引</text>
+<text x="245.3" y="515.0" font-size="8.4" fill="#3A3A3C">15 段滑窗重叠切分</text>
+<text x="245.3" y="528.0" font-size="8.4" fill="#3A3A3C">保留起止秒数</text>
+<text x="245.3" y="541.0" font-size="8.4" fill="#3A3A3C">供视频定位与溯源跳转</text>
+<rect x="450.7" y="482.0" width="205.3" height="64.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,487.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L21 6 L21 12 C21 17 17 21 12 22 C7 21 3 17 3 12 L3 6 Z"/><path d="M8 12 L11 15 L16 9"/></g>
+<text x="476.7" y="499.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">RAG 约束</text>
+<text x="458.7" y="515.0" font-size="8.4" fill="#3A3A3C">Function Calling 限取 50 段</text>
+<text x="458.7" y="528.0" font-size="8.4" fill="#3A3A3C">回答必带来源时间戳</text>
+<text x="458.7" y="541.0" font-size="8.4" fill="#3A3A3C">无来源即拒答，不编造</text>
+<text x="24.0" y="558.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　输出契约、溯源字段与验收口径</text>
+<rect x="24.0" y="566.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="583.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">项目</text>
+<text x="126.0" y="583.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">实现约定</text>
+<text x="342.0" y="583.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">理由与落点</text>
+<line x1="120.0" y1="566.0" x2="120.0" y2="592.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="336.0" y1="566.0" x2="336.0" y2="592.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="592.0" width="632.0" height="28.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="592.0" x2="120.0" y2="620.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="336.0" y1="592.0" x2="336.0" y2="620.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="609.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">契约层</text>
+<text x="126.0" y="609.0" font-size="9.0" fill="#1D1D1F">Pydantic + JSON Schema 双重校验</text>
+<text x="342.0" y="609.0" font-size="9.0" fill="#1D1D1F">字段缺失 / 类型不符 → 自修复重试 ≤2 次，仍失败降级为模板产物</text>
+<rect x="24.0" y="620.0" width="632.0" height="28.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="620.0" x2="120.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="336.0" y1="620.0" x2="336.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="637.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">溯源硬字段</text>
+<text x="126.0" y="637.0" font-size="9.0" fill="#1D1D1F">start_sec / end_sec / page_no / source_id</text>
+<text x="342.0" y="637.0" font-size="9.0" fill="#1D1D1F">每个知识单元必须可回指原始视频秒数或 PDF 页码（P0）</text>
+<rect x="24.0" y="648.0" width="632.0" height="28.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="648.0" x2="120.0" y2="676.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="336.0" y1="648.0" x2="336.0" y2="676.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="665.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">异常可见性</text>
+<text x="126.0" y="665.0" font-size="9.0" fill="#1D1D1F">转写异常禁止 print 吞掉，统一结构化日志</text>
+<text x="342.0" y="665.0" font-size="9.0" fill="#1D1D1F">吸收 BiliNote 反例：异常必须带 task_id 且可告警</text>
+<rect x="24.0" y="676.0" width="632.0" height="28.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="676.0" x2="120.0" y2="704.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="336.0" y1="676.0" x2="336.0" y2="704.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="693.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">验收口径</text>
+<text x="126.0" y="693.0" font-size="9.0" fill="#1D1D1F">40 份评测集字段完整率 ≥95%</text>
+<text x="342.0" y="693.0" font-size="9.0" fill="#1D1D1F">溯源跳转可用率 100%、幻觉率 ≤3%（G3 门禁）</text>
+<text x="24.0" y="716.0" font-size="10.5" fill="#0071E3" font-weight="bold">E　设计依据与关键参数（对齐技术方案 3.9）</text>
+<rect x="24.0" y="722.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,727.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5 C9 2 5 3 4 7 C2 9 3 13 5 14 C4 18 7 21 10 20 L12 21 L14 20 C17 21 20 18 19 14 C21 13 22 9 20 7 C19 3 15 2 12 5 Z"/><path d="M12 5 L12 21 M6 10 L9 10 M15 10 L18 10"/></g>
+<text x="50.0" y="739.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">认知负荷</text>
+<text x="32.0" y="755.0" font-size="8.5" fill="#3A3A3C">先分块再生成，控制单次输入</text>
+<text x="32.0" y="768.0" font-size="8.5" fill="#3A3A3C">体量；结构化输出降低学习者</text>
+<text x="32.0" y="781.0" font-size="8.5" fill="#3A3A3C">整理外在负荷</text>
+<rect x="237.3" y="722.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,727.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 12 C5 7 9 5 12 5 C15 5 19 7 22 12 C19 17 15 19 12 19 C9 19 5 17 2 12 Z"/><circle cx="12" cy="12" r="3"/></g>
+<text x="263.3" y="739.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">双重编码</text>
+<text x="245.3" y="755.0" font-size="8.5" fill="#3A3A3C">文字笔记 + 关键帧截图 +</text>
+<text x="245.3" y="768.0" font-size="8.5" fill="#3A3A3C">时间戳跳转，图文双通道</text>
+<text x="245.3" y="781.0" font-size="8.5" fill="#3A3A3C">（Paivio 1986 / Mayer 2009）</text>
+<rect x="450.7" y="722.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,727.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 12 L11 16 L17 8"/></g>
+<text x="476.7" y="739.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">可验证性</text>
+<text x="458.7" y="755.0" font-size="8.5" fill="#3A3A3C">每跳产物带 source_id，</text>
+<text x="458.7" y="768.0" font-size="8.5" fill="#3A3A3C">用户可一键回到原始位置；</text>
+<text x="458.7" y="781.0" font-size="8.5" fill="#3A3A3C">拒答优于编造</text>
+<rect x="24.0" y="796.0" width="632.0" height="46.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<text x="36.0" y="814.0" font-size="8.8" fill="#48484A">注 1：单价为阿里云百炼 2026-11-14 官网按量价；订阅制 Token Plan（图 7-3）可一次付费覆盖三档模型。</text>
+<text x="36.0" y="828.0" font-size="8.8" fill="#48484A">注 2：三级取材链、体积预算分块、双索引与限 50 段均吸收自 BiliNote v2.4.4，详见技术方案 3.6 / 3.7 节。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">◆ 吸收自 BiliNote　★ 三档路由　·　单价为 2026-11-14 官网实采　·　数据出处：技术方案 3.1 / 3.2 / 5.8</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 4-5　AI 内容处理管线与三档模型路由</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 4-5　AI content pipeline and three-tier model routing</text>
+</svg>

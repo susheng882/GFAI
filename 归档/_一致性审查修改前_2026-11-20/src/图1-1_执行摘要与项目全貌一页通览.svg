@@ -1,0 +1,121 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">执行摘要 · 项目全貌一页通览</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Executive Summary / One-page Project Overview</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<rect x="24.0" y="78.0" width="632.0" height="74.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="1.0"/>
+<text x="40.0" y="110.0" font-size="17" fill="#0071E3" font-weight="bold">把「看过」变成「学会」</text>
+<text x="40.0" y="133.0" font-size="9.4" fill="#6E6E73">以溯源为底线 · 以间隔重复为节奏 · 以成本护栏为边界</text>
+<line x1="420.0" y1="90.0" x2="420.0" y2="140.0" stroke="#D2D2D7" stroke-width="0.6"/>
+<text x="432.0" y="110.0" font-size="11" fill="#0071E3" font-weight="bold">38 项</text>
+<text x="432.0" y="130.0" font-size="8.4" fill="#6E6E73">功能总账</text>
+<text x="506.0" y="110.0" font-size="11" fill="#0071E3" font-weight="bold">11 款</text>
+<text x="506.0" y="130.0" font-size="8.4" fill="#6E6E73">竞品实证</text>
+<text x="580.0" y="110.0" font-size="11" fill="#0071E3" font-weight="bold">16 周</text>
+<text x="580.0" y="130.0" font-size="8.4" fill="#6E6E73">交付排期</text>
+<text x="24.0" y="178.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　执行摘要 · 七问七答（Executive Summary）</text>
+<rect x="24.0" y="184.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="201.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">维度</text>
+<text x="126.0" y="201.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">核心结论</text>
+<text x="358.0" y="201.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">关键数字</text>
+<text x="510.0" y="201.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">依据 / 出处</text>
+<line x1="120.0" y1="184.0" x2="120.0" y2="210.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="352.0" y1="184.0" x2="352.0" y2="210.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="504.0" y1="184.0" x2="504.0" y2="210.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="210.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="210.0" x2="120.0" y2="260.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="352.0" y1="210.0" x2="352.0" y2="260.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="504.0" y1="210.0" x2="504.0" y2="260.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="238.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">痛点 Why</text>
+<text x="126.0" y="238.0" font-size="9.0" fill="#1D1D1F">视频/讲义学完即忘、笔记无溯源、复习无计划</text>
+<text x="358.0" y="238.0" font-size="9.0" fill="#1D1D1F">6 类痛点｜5 类失效方案</text>
+<text x="510.0" y="238.0" font-size="9.0" fill="#1D1D1F">产品报告第二章</text>
+<rect x="24.0" y="260.0" width="632.0" height="50.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="260.0" x2="120.0" y2="310.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="352.0" y1="260.0" x2="352.0" y2="310.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="504.0" y1="260.0" x2="504.0" y2="310.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="288.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">方案 What</text>
+<text x="126.0" y="288.0" font-size="9.0" fill="#1D1D1F">38 项功能串成「解析→溯源→调度→回炉」闭环</text>
+<text x="358.0" y="288.0" font-size="9.0" fill="#1D1D1F">38 项 / 6 功能域</text>
+<text x="510.0" y="288.0" font-size="9.0" fill="#1D1D1F">产品报告第四章（八）</text>
+<rect x="24.0" y="310.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="310.0" x2="120.0" y2="360.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="352.0" y1="310.0" x2="352.0" y2="360.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="504.0" y1="310.0" x2="504.0" y2="360.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="338.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">差异化</text>
+<text x="126.0" y="338.0" font-size="9.0" fill="#1D1D1F">不是功能多，而是同一条可验证数据链</text>
+<text x="358.0" y="338.0" font-size="9.0" fill="#1D1D1F">11 款竞品实证对比</text>
+<text x="510.0" y="338.0" font-size="9.0" fill="#1D1D1F">技术方案 1.4 · 图 2-4</text>
+<rect x="24.0" y="360.0" width="632.0" height="50.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="360.0" x2="120.0" y2="410.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="352.0" y1="360.0" x2="352.0" y2="410.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="504.0" y1="360.0" x2="504.0" y2="410.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="388.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">市场</text>
+<text x="126.0" y="388.0" font-size="9.0" fill="#1D1D1F">在线教育用户基数大，备考自学为高意愿细分</text>
+<text x="358.0" y="388.0" font-size="9.0" fill="#1D1D1F">3.27 亿｜2027 研考待公布</text>
+<text x="510.0" y="388.0" font-size="9.0" fill="#1D1D1F">CNNIC 57次 / 教育部 2026</text>
+<rect x="24.0" y="410.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="410.0" x2="120.0" y2="460.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="352.0" y1="410.0" x2="352.0" y2="460.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="504.0" y1="410.0" x2="504.0" y2="460.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="438.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">成本</text>
+<text x="126.0" y="438.0" font-size="9.0" fill="#1D1D1F">内测月支出按实价约 82 元，硬上限 250 元</text>
+<text x="358.0" y="438.0" font-size="9.0" fill="#1D1D1F">¥82/月｜¥560–880 总账</text>
+<text x="510.0" y="438.0" font-size="9.0" fill="#1D1D1F">技术方案 5.8 · 图 7-2</text>
+<rect x="24.0" y="460.0" width="632.0" height="50.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="460.0" x2="120.0" y2="510.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="352.0" y1="460.0" x2="352.0" y2="510.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="504.0" y1="460.0" x2="504.0" y2="510.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="488.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">落地</text>
+<text x="126.0" y="488.0" font-size="9.0" fill="#1D1D1F">2C4G 单机六容器，API 与 Worker 分进程</text>
+<text x="358.0" y="488.0" font-size="9.0" fill="#1D1D1F">¥188/年 · 六服务矩阵</text>
+<text x="510.0" y="488.0" font-size="9.0" fill="#1D1D1F">技术方案 2.3 · 图 6-1</text>
+<rect x="24.0" y="510.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="510.0" x2="120.0" y2="560.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="352.0" y1="510.0" x2="352.0" y2="560.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="504.0" y1="510.0" x2="504.0" y2="560.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="538.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">排期与团队</text>
+<text x="126.0" y="538.0" font-size="9.0" fill="#1D1D1F">16 周 WBS 14 项，单人角色合一 + 导师评审</text>
+<text x="358.0" y="538.0" font-size="9.0" fill="#1D1D1F">16 周｜G1–G7 门禁</text>
+<text x="510.0" y="538.0" font-size="9.0" fill="#1D1D1F">技术方案 6 · 图 9-1</text>
+<rect x="24.0" y="570.0" width="632.0" height="28.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="590.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">38 项功能</text>
+<text x="158.4" y="590.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">11 款竞品</text>
+<text x="284.8" y="590.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">¥82 / 月</text>
+<text x="411.2" y="590.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">16 周排期</text>
+<text x="537.6" y="590.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">¥560–880 总账</text>
+<text x="24.0" y="620.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　项目亮点（Investment Highlights）</text>
+<rect x="24.0" y="626.0" width="205.3" height="126.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,631.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5 C9 2 5 3 4 7 C2 9 3 13 5 14 C4 18 7 21 10 20 L12 21 L14 20 C17 21 20 18 19 14 C21 13 22 9 20 7 C19 3 15 2 12 5 Z"/><path d="M12 5 L12 21 M6 10 L9 10 M15 10 L18 10"/></g>
+<text x="50.0" y="643.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">学术可验证</text>
+<text x="32.0" y="659.0" font-size="8.8" fill="#3A3A3C">Ebbinghaus / SM-2 / FSRS</text>
+<text x="32.0" y="672.0" font-size="8.8" fill="#3A3A3C">10 组功能→理论→参数</text>
+<text x="32.0" y="685.0" font-size="8.8" fill="#3A3A3C">G1–G7 上线门禁可核验</text>
+<rect x="237.3" y="626.0" width="205.3" height="126.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,631.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2 L12 5 M12 19 L12 22 M2 12 L5 12 M19 12 L22 12 M5 5 L7 7 M17 17 L19 19 M19 5 L17 7 M7 17 L5 19"/></g>
+<text x="263.3" y="643.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">工程可运行</text>
+<text x="245.3" y="659.0" font-size="8.8" fill="#3A3A3C">API / Worker 分进程</text>
+<text x="245.3" y="672.0" font-size="8.8" fill="#3A3A3C">预签名直传不进 API</text>
+<text x="245.3" y="685.0" font-size="8.8" fill="#3A3A3C">断点续传与四级降级</text>
+<rect x="450.7" y="626.0" width="205.3" height="126.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,631.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 7 L12 12 L16 7 M12 12 L12 18 M8 13 L16 13 M8 16 L16 16"/></g>
+<text x="476.7" y="643.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">经济可持续</text>
+<text x="458.7" y="659.0" font-size="8.8" fill="#3A3A3C">采购清单全部真实报价</text>
+<text x="458.7" y="672.0" font-size="8.8" fill="#3A3A3C">≈10 个付费用户盈亏平衡</text>
+<text x="458.7" y="685.0" font-size="8.8" fill="#3A3A3C">学生抵扣金可再降本</text>
+<rect x="24.0" y="762.0" width="632.0" height="69.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,768.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="56.0" y="780.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">阅读指引</text>
+<text x="36.0" y="797.0" font-size="9.0" fill="#48484A">全册按商业计划书逻辑组织：卷首品牌 → ① 执行摘要 → ② 市场 → ③ 产品 → ④ 架构 → ⑤ AI 治理。</text>
+<text x="36.0" y="811.0" font-size="9.0" fill="#48484A">⑥ 工程落地 → ⑦ 财务可行性 → ⑧ 团队资源 → ⑨ 进度与风险，逐层展开本页七问。</text>
+<text x="36.0" y="825.0" font-size="9.0" fill="#48484A">「出处」列保留《技术方案》《产品报告》原始章节号，便于答辩时回溯原文。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：数值口径见各分图注释；带 ★ 为推荐方案；所有价格采集于 2026-11-14 官网活动页。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 1-1　执行摘要与项目全貌一页通览</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 1-1 Executive summary and one-page project overview</text>
+</svg>

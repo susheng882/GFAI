@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>GFLC · Dashboard v2 提案</title>
+<style>
+/* ============================================================
+   Dashboard v2 · Command Dashboard
+   对标：Stripe（默认时间范围+下钻）/ Linear（一屏一个 hero）/ Notion（继续上次）
+        Vercel（克制 bento）/ Mercury（先一个大数字）/ Raycast（单一 accent）
+   不复制像素，只采用可量化的决策
+   ============================================================ */
+:root{
+  --bg:#f7f4ee; --card:#fdfbf7; --raised:#efe9df; --sidebar:#f2ede4;
+  --ink:#1f1b16; --ink-2:#4a4238; --ink-3:#7b7266;
+  --line:rgba(31,27,22,.10); --line-strong:rgba(31,27,22,.16);
+  --accent:#1f4d6b; --btn:#26211b; --btn-fg:#fbf8f2;
+  --mark:#f5df87; --good:#2f6b4f; --bad:#a8322c;
+  --r-sm:6px; --r-md:8px; --r-lg:12px; --r-xl:14px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:"PingFang SC","Microsoft YaHei UI","Microsoft YaHei",-apple-system,"Segoe UI",sans-serif;
+  font-size:14px;line-height:1.6;font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.app{display:flex;min-height:100vh}
+
+/* ---------- 侧栏 240 ---------- */
+.sb{width:240px;flex:0 0 240px;background:var(--sidebar);border-right:1px solid var(--line);
+  padding:16px 12px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:8px;padding:4px 8px 20px;font-size:15px;font-weight:500}
+.logo{width:24px;height:24px;border-radius:var(--r-sm);background:var(--ink);color:var(--bg);
+  display:grid;place-items:center;font-size:13px}
+.ng{margin-bottom:12px}
+.nt{font-size:11px;color:var(--ink-3);padding:8px 10px 4px}
+.nv{display:flex;flex-direction:column;gap:2px}
+.nv a{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:var(--r-md);
+  color:var(--ink-2);font-size:14px;text-decoration:none;position:relative}
+.nv a:hover{background:var(--raised);color:var(--ink)}
+.nv a.on{background:#f0e9dc;color:var(--ink);font-weight:500}
+.nv a.on::before{content:"";position:absolute;left:-12px;top:9px;bottom:9px;width:2px;
+  background:var(--accent);border-radius:0 2px 2px 0}
+.ico{width:18px;height:18px;flex:0 0 18px;color:var(--ink-3);display:grid;place-items:center}
+.nv a.on .ico{color:var(--accent)}
+.nv a:hover .ico{color:var(--ink-2)}
+.sb-foot{margin-top:auto;border-top:1px solid var(--line);padding:12px 4px 0;
+  display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ink-3)}
+.av{width:26px;height:26px;border-radius:50%;background:var(--raised);display:grid;place-items:center;
+  color:var(--ink-2);font-size:11px}
+
+/* ---------- 主区 ---------- */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.hd{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+  padding:22px 32px 16px;border-bottom:1px solid var(--line)}
+.hd h1{font-size:20px;font-weight:500;letter-spacing:-.2px}
+.hd .sub{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+.hd .sub b{font-weight:500;color:var(--ink-2)}
+.btn{height:36px;padding:0 16px;border-radius:var(--r-md);border:1px solid transparent;
+  background:var(--btn);color:var(--btn-fg);font-size:13px;font-weight:500;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px}
+.btn.ghost{background:transparent;border-color:var(--line-strong);color:var(--ink-2)}
+.body{padding:24px 32px 56px;max-width:1440px}
+
+/* 12 列栅格：gap 16 */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.c2{grid-column:span 2}.c3{grid-column:span 3}.c4{grid-column:span 4}
+.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}
+.c8{grid-column:span 8}.c9{grid-column:span 9}.c12{grid-column:span 12}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px}
+
+/* 区块标题：13/500，与内容距 16 */
+.sh{font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:12px;
+  display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.sh .meta{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);font-weight:400}
+
+/* ---------- HERO：一屏只有这一个量级 ---------- */
+.hero{padding:24px}
+.hero .lab{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.hero .big{font-size:44px;font-weight:500;letter-spacing:-1.4px;line-height:1.05;margin:8px 0 6px}
+.hero .big small{font-size:14px;font-weight:400;color:var(--ink-3);letter-spacing:0;margin-left:6px}
+.hero .delta{font-size:12.5px;color:var(--ink-3)}
+.hero .delta b{font-weight:500;color:var(--good)}
+.hero .delta .est{color:var(--ink-3)}
+.hl{background-image:linear-gradient(180deg,transparent 58%,
+  color-mix(in srgb,var(--mark) 88%,transparent) 58%,
+  color-mix(in srgb,var(--mark) 88%,transparent) 94%,transparent 94%)}
+.hero-actions{display:flex;gap:8px;margin-top:16px}
+
+/* 主图 */
+.chart{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.chart .ch-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.chart .ch-hd .t{font-size:12px;color:var(--ink-3)}
+.seg{display:inline-flex;border:1px solid var(--line);background:var(--raised);border-radius:var(--r-md);padding:2px;gap:2px}
+.seg span{font-size:11.5px;color:var(--ink-2);padding:3px 10px;border-radius:var(--r-sm)}
+.seg span.on{background:var(--card);color:var(--ink);font-weight:500;box-shadow:0 1px 2px rgba(31,27,22,.06)}
+.chart-body{display:flex;gap:10px;align-items:stretch}
+.chart-body svg{flex:1;min-width:0}
+.yaxis{display:flex;flex-direction:column;justify-content:space-between;
+  font-size:10.5px;color:var(--ink-3);font-family:var(--mono);
+  padding:2px 0 4px;text-align:right;width:18px;flex:0 0 18px}
+.axis{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-3);
+  font-family:var(--mono);margin-top:6px;padding-left:28px}
+
+/* ---------- 队列 ---------- */
+.qrow{position:relative;display:flex;align-items:center;gap:12px;
+  padding:10px;margin:0 -10px;border-radius:6px;overflow:hidden}
+.qrow + .qrow{margin-top:2px}
+.qfill{position:absolute;left:0;top:0;bottom:0;z-index:0;border-radius:6px;
+  background:color-mix(in srgb,#1f4d6b 10%,transparent)}
+.qrow > *:not(.qfill){position:relative;z-index:1}
+
+/* 指标带：对标 Plausible 的一条带 4 指标 */
+.strip{display:flex;align-items:stretch;padding:18px 24px}
+.strip .m{flex:1;min-width:0;padding:0 24px}
+.strip .m:first-child{padding-left:0}
+.strip .m:last-child{padding-right:0}
+.strip .m + .m{border-left:1px solid var(--line)}
+.strip .k{font-size:11.5px;color:var(--ink-3)}
+.strip .v{font-size:22px;font-weight:500;letter-spacing:-.5px;line-height:1.25;margin-top:2px}
+.strip .v small{font-size:12px;color:var(--ink-3);font-weight:400;letter-spacing:0;margin-left:3px}
+.strip .d{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.strip .d b{font-weight:500}
+.qname{flex:1;min-width:0}
+.qname .n{font-size:13.5px;font-weight:500}
+.qname .m{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.qbar{width:76px;height:4px;border-radius:99px;background:var(--raised);overflow:hidden;flex:0 0 76px}
+.qbar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.qnum{font-size:13px;font-family:var(--mono);color:var(--ink-2);width:30px;text-align:right}
+
+/* ---------- KPI ---------- */
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi .k{font-size:11.5px;color:var(--ink-3)}
+.kpi .v{font-size:22px;font-weight:500;letter-spacing:-.6px;line-height:1.2}
+.kpi .v small{font-size:12px;color:var(--ink-3);font-weight:400;letter-spacing:0;margin-left:3px}
+.kpi .d{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.kpi .d b{font-weight:500}
+.up{color:var(--good)}.down{color:var(--bad)}
+
+/* ---------- 继续上次 ---------- */
+.resume{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.resume:last-child{border-bottom:0;padding-bottom:0}
+.resume:first-child{padding-top:0}
+.rt{flex:1;min-width:0}
+.rt .a{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt .b{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.tag{font-size:10.5px;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;
+  padding:1px 5px;flex:0 0 auto}
+
+/* ---------- 连续天数 ---------- */
+.streak{display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:5px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--raised)}
+.dot.on{background:var(--accent)}
+.streak .n{font-size:13px;font-weight:500}
+.streak .m{font-size:11.5px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sb">
+    <div class="brand"><span class="logo">G</span><span>GrowthForward</span></div>
+    <div class="ng"><div class="nt">学习</div><nav class="nv">
+      <a class="on"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg></span>仪表盘</a>
+      <a><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.5 3.5h8L19.5 8.5v11a1.5 1.5 0 0 1-1.5 1.5H6.5A1.5 1.5 0 0 1 5 19.5v-14A1.5 1.5 0 0 1 6.5 3.5Z"/><path d="M14 3.8V9h5"/></svg></span>笔记</a>
+      <a><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3.5 20.5 8 12 12.5 3.5 8 12 3.5Z"/><path d="M4.5 12 12 16l7.5-4"/></svg></span>学习</a>
+      <a><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.85-6.35"/><path d="M20.5 4.5V10H15"/></svg></span>复习</a>
+    </nav></div>
+    <div class="ng"><div class="nt">资料</div><nav class="nv">
+      <a><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.5 7.5a2 2 0 0 1 2-2h3.1l1.9 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5.5a2 2 0 0 1-2-2v-9Z"/></svg></span>文档</a>
+      <a><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3.5" y="8" width="12" height="12.5" rx="2"/><path d="M7.5 4.5h9a2 2 0 0 1 2 2v9"/></svg></span>卡包</a>
+      <a><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/></svg></span>视频</a>
+    </nav></div>
+    <div class="ng"><div class="nt">助手</div><nav class="nv">
+      <a><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.5 12a8 8 0 0 1-8 8H8.6l-4.1 2.4v-4.1A8 8 0 0 1 12.5 4a8 8 0 0 1 8 8Z"/></svg></span>问答</a>
+    </nav></div>
+    <div class="sb-foot"><span style="display:flex;align-items:center;gap:8px"><span class="av">D</span>demo@gflc.com</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg></div>
+  </aside>
+
+  <main class="main">
+    <header class="hd">
+      <div>
+        <h1>今天</h1>
+        <div class="sub">11 月 22 日 · 周六 · 距考研 <b>28 天</b></div>
+      </div>
+      <span class="seg"><span class="on">今天</span><span>本周</span><span>本月</span></span>
+    </header>
+
+    <div class="body">
+      <div class="grid">
+
+        <!-- HERO + 主图：8 列 -->
+        <section class="card hero c8">
+          <div class="lab">今天要复习</div>
+          <div class="big"><span class="hl">27</span><small>张卡片</small></div>
+          <div class="delta"><b>+5</b> 相比昨天 · <span class="est">预计 18 分钟</span></div>
+          <div class="hero-actions">
+            <button class="btn">开始复习</button>
+            <button class="btn ghost">只练错题</button>
+          </div>
+
+          <div class="chart">
+            <div class="ch-hd">
+              <span class="t">近 7 天复习量</span>
+              <span class="seg"><span>7 天</span><span class="on">30 天</span><span>全部</span></span>
+            </div>
+            <div class="chart-body">
+              <div class="yaxis"><span>12</span><span>6</span><span>0</span></div>
+              <svg viewBox="0 0 640 140" width="100%" height="150" preserveAspectRatio="none">
+              <line x1="0" y1="12" x2="640" y2="12" stroke="rgba(31,27,22,.10)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+              <line x1="0" y1="70" x2="640" y2="70" stroke="rgba(31,27,22,.10)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+              <line x1="0" y1="128" x2="640" y2="128" stroke="rgba(31,27,22,.10)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+              <path d="M8 104 C60 104 70 78 112 78 C154 78 164 96 206 96 C248 96 258 44 300 44 C342 44 352 62 394 62 C436 62 446 30 488 30 C530 30 540 58 582 58 C610 58 620 50 632 48 L632 140 L8 140 Z"
+                    fill="#1f4d6b" opacity=".05"/>
+              <path d="M8 104 C60 104 70 78 112 78 C154 78 164 96 206 96 C248 96 258 44 300 44 C342 44 352 62 394 62 C436 62 446 30 488 30 C530 30 540 58 582 58 C610 58 620 50 632 48"
+                    fill="none" stroke="#1f4d6b" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+              <circle cx="488" cy="30" r="3" fill="#fdfbf7" stroke="#1f4d6b" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+              </svg>
+            </div>
+            <div class="axis"><span>11-16</span><span>11-17</span><span>11-18</span><span>11-19</span><span>11-20</span><span>11-21</span><span>11-22</span></div>
+          </div>
+        </section>
+
+        <!-- 队列：4 列 -->
+        <section class="card c4">
+          <div class="sh">接下来要复习的<span class="meta">3 个卡包</span></div>
+          <div class="qrow"><span class="qfill" style="width:44%"></span>
+            <div class="qname"><div class="n">高等数学</div><div class="m">占今天 44%</div></div>
+            <div class="qnum">12</div>
+          </div>
+          <div class="qrow"><span class="qfill" style="width:33%"></span>
+            <div class="qname"><div class="n">线性代数</div><div class="m">占今天 33%</div></div>
+            <div class="qnum">9</div>
+          </div>
+          <div class="qrow"><span class="qfill" style="width:22%"></span>
+            <div class="qname"><div class="n">概率论</div><div class="m">占今天 22%</div></div>
+            <div class="qnum">6</div>
+          </div>
+          <div style="margin-top:12px;padding-top:8px;border-top:1px solid var(--line)">
+            <div class="qrow" style="border-bottom:0;padding:6px 0">
+              <div class="qname"><div class="n" style="font-size:12.5px;color:var(--ink-2)">查看全部 6 个卡包</div></div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7b7266" stroke-width="1.5" stroke-linecap="round"><path d="M9.5 6 15.5 12 9.5 18"/></svg>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding-top:14px;border-top:1px solid var(--line)">
+            <div class="streak">
+              <div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div>
+              <div><span class="n">连续 6 天</span> <span class="m">· 最长 11 天</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 指标带：一条带 4 个指标，竖发丝线分隔（对标 Plausible） -->
+        <section class="card c12 strip">
+          <div class="m">
+            <div class="k">本周已练</div>
+            <div class="v">128<small>题</small></div>
+            <div class="d"><b class="up">+12%</b> 相比上周</div>
+          </div>
+          <div class="m">
+            <div class="k">正确率</div>
+            <div class="v">63<small>%</small></div>
+            <div class="d"><b class="up">+5pt</b> 相比上周</div>
+          </div>
+          <div class="m">
+            <div class="k">专注时长</div>
+            <div class="v">214<small>分钟</small></div>
+            <div class="d"><b class="down">−8%</b> 相比上周</div>
+          </div>
+          <div class="m">
+            <div class="k">连续天数</div>
+            <div class="v">6<small>天</small></div>
+            <div class="d">最长 11 天</div>
+          </div>
+        </section>
+
+        <!-- 继续上次：6 列 -->
+        <section class="card c6">
+          <div class="sh">继续上次</div>
+          <div class="resume">
+            <div class="rt"><div class="a">泰勒公式：余项控制误差</div><div class="b">笔记 · 昨天 22:41 打开</div></div>
+            <span class="tag">笔记</span>
+          </div>
+          <div class="resume">
+            <div class="rt"><div class="a">凯哥冲刺讲义 数学一模拟卷</div><div class="b">题库 · 已做 19 / 23 题</div></div>
+            <span class="tag">题库</span>
+          </div>
+        </section>
+
+        <!-- 数据异常提示：6 列 -->
+        <section class="card c6">
+          <div class="sh">需要注意</div>
+          <div class="qrow" style="padding-top:0">
+            <div class="qname"><div class="n">1 个文档解析失败</div><div class="m">fractal-geometry.pdf · 可以重新解析</div></div>
+            <button class="btn ghost" style="height:30px;padding:0 12px;font-size:12.5px">重试</button>
+          </div>
+          <div class="qrow" style="border-bottom:0">
+            <div class="qname"><div class="n">概率论 5 天没复习</div><div class="m">间隔已过期，建议今天补上</div></div>
+            <button class="btn ghost" style="height:30px;padding:0 12px;font-size:12.5px">去复习</button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

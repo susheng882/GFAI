@@ -1,0 +1,280 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">采购清单与一次付费多模型方案</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">第五章 · 采购清单 + 一次付费多模型实证对比 + 三档映射 + 8 个月总账 · 技术方案 5.8</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　采购清单矩阵：毕设全周期只需购买 3 样，其余均为 ¥0（2026-11-14 实采）</text>
+<rect x="24.0" y="86.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="102.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">采购项目</text>
+<text x="148.0" y="102.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">是否必买</text>
+<text x="206.0" y="102.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">付费方式</text>
+<text x="288.0" y="102.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">真实价格</text>
+<text x="380.0" y="102.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">说明与约束</text>
+<line x1="142.0" y1="86.0" x2="142.0" y2="110.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="200.0" y1="86.0" x2="200.0" y2="110.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="282.0" y1="86.0" x2="282.0" y2="110.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="374.0" y1="86.0" x2="374.0" y2="110.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="110.0" width="632.0" height="28.0" fill="#F0F4F8" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="142.0" y1="110.0" x2="142.0" y2="138.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="200.0" y1="110.0" x2="200.0" y2="138.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="110.0" x2="282.0" y2="138.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="374.0" y1="110.0" x2="374.0" y2="138.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="127.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">1　云服务器 ★</text>
+<text x="148.0" y="127.0" font-size="8.8" fill="#1D1D1F">必买</text>
+<text x="206.0" y="127.0" font-size="8.8" fill="#1D1D1F">一次年付</text>
+<text x="288.0" y="127.0" font-size="8.8" fill="#1D1D1F">¥188/年</text>
+<text x="380.0" y="127.0" font-size="8.8" fill="#1D1D1F">腾讯云轻量 2C4G5M；学生认证 ¥46.43/3 月起</text>
+<rect x="24.0" y="138.0" width="632.0" height="28.0" fill="#F0F4F8" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="142.0" y1="138.0" x2="142.0" y2="166.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="200.0" y1="138.0" x2="200.0" y2="166.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="138.0" x2="282.0" y2="166.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="374.0" y1="138.0" x2="374.0" y2="166.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="155.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">2　大模型订阅 ★</text>
+<text x="148.0" y="155.0" font-size="8.8" fill="#1D1D1F">必买</text>
+<text x="206.0" y="155.0" font-size="8.8" fill="#1D1D1F">按月订阅</text>
+<text x="288.0" y="155.0" font-size="8.8" fill="#1D1D1F">¥39–79/月</text>
+<text x="380.0" y="155.0" font-size="8.8" fill="#1D1D1F">百炼 Token Plan 个人版；新客首月 ¥19.5</text>
+<rect x="24.0" y="166.0" width="632.0" height="28.0" fill="#F0F4F8" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="142.0" y1="166.0" x2="142.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="200.0" y1="166.0" x2="200.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="166.0" x2="282.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="374.0" y1="166.0" x2="374.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="183.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">3　域名</text>
+<text x="148.0" y="183.0" font-size="8.8" fill="#1D1D1F">必买</text>
+<text x="206.0" y="183.0" font-size="8.8" fill="#1D1D1F">一次年付</text>
+<text x="288.0" y="183.0" font-size="8.8" fill="#1D1D1F">¥60–80/年</text>
+<text x="380.0" y="183.0" font-size="8.8" fill="#1D1D1F">.com ¥60–80/年，.cn ¥29/年更省；G7 备案前置</text>
+<rect x="24.0" y="194.0" width="632.0" height="28.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="142.0" y1="194.0" x2="142.0" y2="222.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="200.0" y1="194.0" x2="200.0" y2="222.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="194.0" x2="282.0" y2="222.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="374.0" y1="194.0" x2="374.0" y2="222.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="211.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">4　SSL 证书</text>
+<text x="148.0" y="211.0" font-size="8.8" fill="#1D1D1F">免费</text>
+<text x="206.0" y="211.0" font-size="8.8" fill="#1D1D1F">自动续期</text>
+<text x="288.0" y="211.0" font-size="8.8" fill="#1D1D1F">¥0</text>
+<text x="380.0" y="211.0" font-size="8.8" fill="#1D1D1F">Let's Encrypt + certbot 每月 renew（◆ 评审新增）</text>
+<rect x="24.0" y="222.0" width="632.0" height="28.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="142.0" y1="222.0" x2="142.0" y2="250.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="200.0" y1="222.0" x2="200.0" y2="250.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="222.0" x2="282.0" y2="250.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="374.0" y1="222.0" x2="374.0" y2="250.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="239.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">5　备案 / 自建存储</text>
+<text x="148.0" y="239.0" font-size="8.8" fill="#1D1D1F">免费</text>
+<text x="206.0" y="239.0" font-size="8.8" fill="#1D1D1F">—</text>
+<text x="288.0" y="239.0" font-size="8.8" fill="#1D1D1F">¥0</text>
+<text x="380.0" y="239.0" font-size="8.8" fill="#1D1D1F">ICP 备案免费；MinIO / pgvector / Redis 均为自建容器</text>
+<rect x="24.0" y="250.0" width="632.0" height="28.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="142.0" y1="250.0" x2="142.0" y2="278.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="200.0" y1="250.0" x2="200.0" y2="278.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="250.0" x2="282.0" y2="278.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="374.0" y1="250.0" x2="374.0" y2="278.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="267.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">6　本地 ASR / OCR</text>
+<text x="148.0" y="267.0" font-size="8.8" fill="#1D1D1F">免费</text>
+<text x="206.0" y="267.0" font-size="8.8" fill="#1D1D1F">—</text>
+<text x="288.0" y="267.0" font-size="8.8" fill="#1D1D1F">¥0</text>
+<text x="380.0" y="267.0" font-size="8.8" fill="#1D1D1F">faster-whisper / PaddleOCR / bge-m3 在服务器 CPU 跑</text>
+<text x="24.0" y="290.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　一次付费多模型方案实证对比（诉求：一个订阅覆盖项目全部 AI 需要）</text>
+<rect x="24.0" y="298.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="314.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">方案（已上线）</text>
+<text x="162.0" y="314.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">价格</text>
+<text x="240.0" y="314.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">额度</text>
+<text x="328.0" y="314.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">模型池</text>
+<text x="428.0" y="314.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">覆盖能力</text>
+<text x="554.0" y="314.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">结论</text>
+<line x1="156.0" y1="298.0" x2="156.0" y2="322.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="234.0" y1="298.0" x2="234.0" y2="322.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="322.0" y1="298.0" x2="322.0" y2="322.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="422.0" y1="298.0" x2="422.0" y2="322.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="548.0" y1="298.0" x2="548.0" y2="322.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="322.0" width="632.0" height="36.0" fill="#F0F4F8" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="322.0" x2="156.0" y2="358.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="234.0" y1="322.0" x2="234.0" y2="358.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="322.0" y1="322.0" x2="322.0" y2="358.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="422.0" y1="322.0" x2="422.0" y2="358.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="548.0" y1="322.0" x2="548.0" y2="358.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="343.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">百炼 Token Plan Lite ★</text>
+<text x="162.0" y="343.0" font-size="8.6" fill="#1D1D1F">¥39/月</text>
+<text x="240.0" y="343.0" font-size="8.6" fill="#1D1D1F">20,000 Credits</text>
+<text x="328.0" y="337.8" font-size="8.6" fill="#1D1D1F">150+ 模型</text>
+<text x="328.0" y="348.2" font-size="8.6" fill="#1D1D1F">共享额度</text>
+<text x="428.0" y="337.8" font-size="8.6" fill="#1D1D1F">Qwen 全系 · DeepSeek</text>
+<text x="428.0" y="348.2" font-size="8.6" fill="#1D1D1F">· GLM · Kimi · Fun-ASR</text>
+<text x="554.0" y="337.8" font-size="8.6" fill="#1D1D1F">★ 三档 + ASR</text>
+<text x="554.0" y="348.2" font-size="8.6" fill="#1D1D1F">全覆盖</text>
+<rect x="24.0" y="358.0" width="632.0" height="36.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="358.0" x2="156.0" y2="394.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="234.0" y1="358.0" x2="234.0" y2="394.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="322.0" y1="358.0" x2="322.0" y2="394.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="422.0" y1="358.0" x2="422.0" y2="394.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="548.0" y1="358.0" x2="548.0" y2="394.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="379.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">百炼 Token Plan Essential</text>
+<text x="162.0" y="379.0" font-size="8.6" fill="#1D1D1F">¥79/月</text>
+<text x="240.0" y="379.0" font-size="8.6" fill="#1D1D1F">45,000 Credits</text>
+<text x="328.0" y="373.8" font-size="8.6" fill="#1D1D1F">150+ 模型</text>
+<text x="328.0" y="384.2" font-size="8.6" fill="#1D1D1F">共享额度</text>
+<text x="428.0" y="373.8" font-size="8.6" fill="#1D1D1F">Lite 全池 ·</text>
+<text x="428.0" y="384.2" font-size="8.6" fill="#1D1D1F">Agent Harness</text>
+<text x="554.0" y="373.8" font-size="8.6" fill="#1D1D1F">○ 高频内测</text>
+<text x="554.0" y="384.2" font-size="8.6" fill="#1D1D1F">· 多人共用</text>
+<rect x="24.0" y="394.0" width="632.0" height="36.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="394.0" x2="156.0" y2="430.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="234.0" y1="394.0" x2="234.0" y2="430.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="322.0" y1="394.0" x2="322.0" y2="430.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="422.0" y1="394.0" x2="422.0" y2="430.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="548.0" y1="394.0" x2="548.0" y2="430.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="415.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">腾讯云 Token Plan 通用版</text>
+<text x="162.0" y="415.0" font-size="8.6" fill="#1D1D1F">¥39 / ¥99</text>
+<text x="240.0" y="409.8" font-size="8.6" fill="#1D1D1F">780 / 1,980</text>
+<text x="240.0" y="420.2" font-size="8.6" fill="#1D1D1F">积分</text>
+<text x="328.0" y="409.8" font-size="8.6" fill="#1D1D1F">DeepSeek · GLM</text>
+<text x="328.0" y="420.2" font-size="8.6" fill="#1D1D1F">· Kimi · MiniMax</text>
+<text x="428.0" y="409.8" font-size="8.6" fill="#1D1D1F">无 Qwen 全系</text>
+<text x="428.0" y="420.2" font-size="8.6" fill="#1D1D1F">· 池较窄</text>
+<text x="554.0" y="415.0" font-size="8.6" fill="#1D1D1F">○ 备选方案</text>
+<rect x="24.0" y="430.0" width="632.0" height="36.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="430.0" x2="156.0" y2="466.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="234.0" y1="430.0" x2="234.0" y2="466.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="322.0" y1="430.0" x2="322.0" y2="466.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="422.0" y1="430.0" x2="422.0" y2="466.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="548.0" y1="430.0" x2="548.0" y2="466.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="451.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">京东 DeepSeek 资源包</text>
+<text x="162.0" y="451.0" font-size="8.6" fill="#1D1D1F">¥9.3 一次性</text>
+<text x="240.0" y="451.0" font-size="8.6" fill="#1D1D1F">1 亿 tokens</text>
+<text x="328.0" y="445.8" font-size="8.6" fill="#1D1D1F">仅 DeepSeek</text>
+<text x="328.0" y="456.2" font-size="8.6" fill="#1D1D1F">系列</text>
+<text x="428.0" y="445.8" font-size="8.6" fill="#1D1D1F">1 折限时</text>
+<text x="428.0" y="456.2" font-size="8.6" fill="#1D1D1F">· 用完即止</text>
+<text x="554.0" y="451.0" font-size="8.6" fill="#1D1D1F">△ 补充弹药</text>
+<rect x="24.0" y="466.0" width="632.0" height="36.0" fill="#F0F4F8" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="466.0" x2="156.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="234.0" y1="466.0" x2="234.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="322.0" y1="466.0" x2="322.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="422.0" y1="466.0" x2="422.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="548.0" y1="466.0" x2="548.0" y2="502.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="487.0" font-size="9.0" fill="#1D1D1F" font-weight="bold">阿里云学生抵扣金</text>
+<text x="162.0" y="487.0" font-size="8.6" fill="#1D1D1F">¥0 领取</text>
+<text x="240.0" y="487.0" font-size="8.6" fill="#1D1D1F">¥300 抵扣</text>
+<text x="328.0" y="481.8" font-size="8.6" fill="#1D1D1F">抵扣百炼</text>
+<text x="328.0" y="492.2" font-size="8.6" fill="#1D1D1F">调用费用</text>
+<text x="428.0" y="481.8" font-size="8.6" fill="#1D1D1F">需完成学生</text>
+<text x="428.0" y="492.2" font-size="8.6" fill="#1D1D1F">身份认证</text>
+<text x="554.0" y="481.8" font-size="8.6" fill="#1D1D1F">★ 先领后用</text>
+<text x="554.0" y="492.2" font-size="8.6" fill="#1D1D1F">· 抵 7 个月</text>
+<text x="24.0" y="512.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　三档路由 → 模型池映射（订阅制如何一次解决全部 AI 需求）</text>
+<rect x="24.0" y="520.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="536.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">档位</text>
+<text x="126.0" y="536.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">典型任务</text>
+<text x="286.0" y="536.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">池内可用模型</text>
+<text x="480.0" y="536.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">计价与约束</text>
+<line x1="120.0" y1="520.0" x2="120.0" y2="544.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="280.0" y1="520.0" x2="280.0" y2="544.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="474.0" y1="520.0" x2="474.0" y2="544.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="544.0" width="632.0" height="26.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="544.0" x2="120.0" y2="570.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="544.0" x2="280.0" y2="570.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="474.0" y1="544.0" x2="474.0" y2="570.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="560.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">LIGHT 轻档</text>
+<text x="126.0" y="560.0" font-size="8.8" fill="#1D1D1F">摘要 / 分类 / 意图解析</text>
+<text x="286.0" y="560.0" font-size="8.8" fill="#1D1D1F">qwen-flash · GLM-5.1-Flash</text>
+<text x="480.0" y="560.0" font-size="8.8" fill="#1D1D1F">Credits 抵扣；额度内零边际成本</text>
+<rect x="24.0" y="570.0" width="632.0" height="26.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="570.0" x2="120.0" y2="596.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="570.0" x2="280.0" y2="596.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="474.0" y1="570.0" x2="474.0" y2="596.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="586.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">MID 中档</text>
+<text x="126.0" y="586.0" font-size="8.8" fill="#1D1D1F">章节笔记 / 闪卡 / 常规问答</text>
+<text x="286.0" y="586.0" font-size="8.8" fill="#1D1D1F">qwen-plus · DeepSeek-V4.1-Flash</text>
+<text x="480.0" y="586.0" font-size="8.8" fill="#1D1D1F">Credits 抵扣；按量单价见技术方案 5.8</text>
+<rect x="24.0" y="596.0" width="632.0" height="26.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="596.0" x2="120.0" y2="622.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="596.0" x2="280.0" y2="622.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="474.0" y1="596.0" x2="474.0" y2="622.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="612.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">HEAVY 强档</text>
+<text x="126.0" y="612.0" font-size="8.8" fill="#1D1D1F">长文推理 / 复杂结构化</text>
+<text x="286.0" y="612.0" font-size="8.8" fill="#1D1D1F">qwen-max · DeepSeek-V4-Pro · Kimi-K2.6</text>
+<text x="480.0" y="612.0" font-size="8.8" fill="#1D1D1F">Credits 抵扣；受三重成本护栏限流</text>
+<rect x="24.0" y="622.0" width="632.0" height="26.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="622.0" x2="120.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="622.0" x2="280.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="474.0" y1="622.0" x2="474.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="638.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">ASR 兜底</text>
+<text x="126.0" y="638.0" font-size="8.8" fill="#1D1D1F">字幕缺失时的云端语音识别</text>
+<text x="286.0" y="638.0" font-size="8.8" fill="#1D1D1F">Fun-ASR · 万相（生图，P2）</text>
+<text x="480.0" y="638.0" font-size="8.8" fill="#1D1D1F">同池抵扣；本地 faster-whisper 优先</text>
+<text x="24.0" y="660.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　毕设 8 个月总账（按量付费 vs 订阅制 · 一次付清无月账单浮动）</text>
+<rect x="24.0" y="668.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="684.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">项目</text>
+<text x="180.0" y="684.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">单价</text>
+<text x="286.0" y="684.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">周期</text>
+<text x="368.0" y="684.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">小计</text>
+<text x="484.0" y="684.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">备注</text>
+<line x1="174.0" y1="668.0" x2="174.0" y2="692.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="280.0" y1="668.0" x2="280.0" y2="692.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="362.0" y1="668.0" x2="362.0" y2="692.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="478.0" y1="668.0" x2="478.0" y2="692.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="692.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="174.0" y1="692.0" x2="174.0" y2="716.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="692.0" x2="280.0" y2="716.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="362.0" y1="692.0" x2="362.0" y2="716.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="478.0" y1="692.0" x2="478.0" y2="716.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="707.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">云服务器（年付）</text>
+<text x="180.0" y="707.0" font-size="8.8" fill="#1D1D1F">¥188/年</text>
+<text x="286.0" y="707.0" font-size="8.8" fill="#1D1D1F">一次年付</text>
+<text x="368.0" y="707.0" font-size="8.8" fill="#1D1D1F">¥188</text>
+<text x="484.0" y="707.0" font-size="8.8" fill="#1D1D1F">覆盖整个答辩周期</text>
+<rect x="24.0" y="716.0" width="632.0" height="24.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="174.0" y1="716.0" x2="174.0" y2="740.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="716.0" x2="280.0" y2="740.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="362.0" y1="716.0" x2="362.0" y2="740.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="478.0" y1="716.0" x2="478.0" y2="740.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="731.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">大模型订阅 Lite / Essential</text>
+<text x="180.0" y="731.0" font-size="8.8" fill="#1D1D1F">¥39 / ¥79 每月</text>
+<text x="286.0" y="731.0" font-size="8.8" fill="#1D1D1F">8 个月</text>
+<text x="368.0" y="731.0" font-size="8.8" fill="#1D1D1F">¥312 – ¥632</text>
+<text x="484.0" y="731.0" font-size="8.8" fill="#1D1D1F">新客首月半价可再减</text>
+<rect x="24.0" y="740.0" width="632.0" height="24.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="174.0" y1="740.0" x2="174.0" y2="764.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="740.0" x2="280.0" y2="764.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="362.0" y1="740.0" x2="362.0" y2="764.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="478.0" y1="740.0" x2="478.0" y2="764.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="755.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">域名 .com（年付）</text>
+<text x="180.0" y="755.0" font-size="8.8" fill="#1D1D1F">¥60–80/年</text>
+<text x="286.0" y="755.0" font-size="8.8" fill="#1D1D1F">一次年付</text>
+<text x="368.0" y="755.0" font-size="8.8" fill="#1D1D1F">¥60 – ¥80</text>
+<text x="484.0" y="755.0" font-size="8.8" fill="#1D1D1F">含 ICP 备案，无额外费用</text>
+<rect x="24.0" y="764.0" width="632.0" height="24.0" fill="#F0F4F8" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="174.0" y1="764.0" x2="174.0" y2="788.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="280.0" y1="764.0" x2="280.0" y2="788.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="362.0" y1="764.0" x2="362.0" y2="788.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="478.0" y1="764.0" x2="478.0" y2="788.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="779.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">合计（未抵扣）</text>
+<text x="180.0" y="779.0" font-size="8.8" fill="#1D1D1F">—</text>
+<text x="286.0" y="779.0" font-size="8.8" fill="#1D1D1F">8 个月</text>
+<text x="368.0" y="779.0" font-size="8.8" fill="#1D1D1F">¥560 – ¥880</text>
+<text x="484.0" y="779.0" font-size="8.8" fill="#1D1D1F">叠加学生 ¥300 抵扣金实付约 ¥260 起</text>
+<rect x="24.0" y="796.0" width="205.3" height="52.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,801.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="50.0" y="813.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">⚠ 核对项 1</text>
+<text x="32.0" y="829.0" font-size="8.4" fill="#3A3A3C">个人订阅对外商用需核对服务条款</text>
+<text x="32.0" y="842.0" font-size="8.4" fill="#3A3A3C">毕业设计演示场景通常符合</text>
+<rect x="237.3" y="796.0" width="205.3" height="52.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,801.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L21 6 L21 12 C21 17 17 21 12 22 C7 21 3 17 3 12 L3 6 Z"/><path d="M8 12 L11 15 L16 9"/></g>
+<text x="263.3" y="813.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">⚠ 核对项 2</text>
+<text x="245.3" y="829.0" font-size="8.4" fill="#3A3A3C">API 程序化调用是否走 Credits 抵扣</text>
+<text x="245.3" y="842.0" font-size="8.4" fill="#3A3A3C">先用 ¥19.5 首月最小套餐实测</text>
+<rect x="450.7" y="796.0" width="205.3" height="52.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,801.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M20 9 A8 8 0 0 0 5 8 M4 4 L4 9 L9 9 M4 15 A8 8 0 0 0 19 16 M20 20 L20 15 L15 15"/></g>
+<text x="476.7" y="813.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">兜底方案</text>
+<text x="458.7" y="829.0" font-size="8.4" fill="#3A3A3C">任一不满足即回退按量付费</text>
+<text x="458.7" y="842.0" font-size="8.4" fill="#3A3A3C">报价单见图 7-2 / 技术方案 5.8</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">★ 推荐　○ 备选　△ 补充　⚠ 落地前核对　·　全部价格为 2026-11-14 官网实采　·　数据源：技术方案 5.8</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 7-3　采购清单与一次付费多模型方案</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 7-3　Procurement list and one-payment multi-model plan</text>
+</svg>

@@ -1,0 +1,139 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">收入测算与盈亏平衡分析</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Revenue Model / Unit Economics / Break-even / Sensitivity</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　定价分层与单位经济（产品报告第九章口径）</text>
+<rect x="24.0" y="96.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">层级</text>
+<text x="126.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">定价 / 成本</text>
+<text x="294.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">开通条件</text>
+<text x="478.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">经济含义</text>
+<line x1="120.0" y1="96.0" x2="120.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="288.0" y1="96.0" x2="288.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="472.0" y1="96.0" x2="472.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="122.0" width="632.0" height="46.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="122.0" x2="120.0" y2="168.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="122.0" x2="288.0" y2="168.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="122.0" x2="472.0" y2="168.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="148.2" font-size="9.4" fill="#1D1D1F" font-weight="bold">免费额度</text>
+<text x="126.0" y="148.2" font-size="9.0" fill="#1D1D1F">¥0 / 月</text>
+<text x="294.0" y="148.2" font-size="9.0" fill="#1D1D1F">新用户默认</text>
+<text x="478.0" y="148.2" font-size="9.0" fill="#1D1D1F">先验证价值，边际成本由配额护栏封顶</text>
+<rect x="24.0" y="168.4" width="632.0" height="46.4" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="168.4" x2="120.0" y2="214.9" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="168.4" x2="288.0" y2="214.9" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="168.4" x2="472.0" y2="214.9" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="194.6" font-size="9.4" fill="#1D1D1F" font-weight="bold">个人订阅</text>
+<text x="126.0" y="194.6" font-size="9.0" fill="#1D1D1F">¥10–12 / 月</text>
+<text x="294.0" y="194.6" font-size="9.0" fill="#1D1D1F">高频使用且留存达标</text>
+<text x="478.0" y="194.6" font-size="9.0" fill="#1D1D1F">单用户月成本 ¥1.5–2.5，毛利七成五</text>
+<rect x="24.0" y="214.9" width="632.0" height="46.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="214.9" x2="120.0" y2="261.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="214.9" x2="288.0" y2="261.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="214.9" x2="472.0" y2="261.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="241.1" font-size="9.4" fill="#1D1D1F" font-weight="bold">团体授权</text>
+<text x="126.0" y="241.1" font-size="9.0" fill="#1D1D1F">按席位议价</text>
+<text x="294.0" y="241.1" font-size="9.0" fill="#1D1D1F">个人层数据跑通后</text>
+<text x="478.0" y="241.1" font-size="9.0" fill="#1D1D1F">摊薄固定支出，需 B 端合规评估</text>
+<rect x="24.0" y="261.3" width="632.0" height="46.4" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="261.3" x2="120.0" y2="307.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="261.3" x2="288.0" y2="307.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="261.3" x2="472.0" y2="307.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="287.5" font-size="9.4" fill="#1D1D1F" font-weight="bold">增值服务</text>
+<text x="126.0" y="287.5" font-size="9.0" fill="#1D1D1F">按次 / 按量</text>
+<text x="294.0" y="287.5" font-size="9.0" fill="#1D1D1F">导出、组卷等重调用</text>
+<text x="478.0" y="287.5" font-size="9.0" fill="#1D1D1F">覆盖模型调用波动，防止亏损放大</text>
+<text x="24.0" y="329.7" font-size="10.5" fill="#0071E3" font-weight="bold">B　收入测算与推演（规划假设）</text>
+<rect x="24.0" y="335.7" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="352.7" font-size="9.0" fill="#FFFFFF" font-weight="bold">阶段</text>
+<text x="126.0" y="352.7" font-size="9.0" fill="#FFFFFF" font-weight="bold">付费用户</text>
+<text x="242.0" y="352.7" font-size="9.0" fill="#FFFFFF" font-weight="bold">月收入</text>
+<text x="382.0" y="352.7" font-size="9.0" fill="#FFFFFF" font-weight="bold">月成本</text>
+<text x="522.0" y="352.7" font-size="9.0" fill="#FFFFFF" font-weight="bold">净额 / 说明</text>
+<line x1="120.0" y1="335.7" x2="120.0" y2="361.7" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="236.0" y1="335.7" x2="236.0" y2="361.7" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="376.0" y1="335.7" x2="376.0" y2="361.7" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="516.0" y1="335.7" x2="516.0" y2="361.7" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="361.7" width="632.0" height="44.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="361.7" x2="120.0" y2="406.1" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="236.0" y1="361.7" x2="236.0" y2="406.1" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="361.7" x2="376.0" y2="406.1" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="516.0" y1="361.7" x2="516.0" y2="406.1" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="386.9" font-size="9.1" fill="#1D1D1F" font-weight="bold">内测（8 个月）</text>
+<text x="126.0" y="386.9" font-size="8.7" fill="#1D1D1F">20（免费）</text>
+<text x="242.0" y="386.9" font-size="8.7" fill="#1D1D1F">¥0</text>
+<text x="382.0" y="386.9" font-size="8.7" fill="#1D1D1F">≈¥82</text>
+<text x="522.0" y="386.9" font-size="8.7" fill="#1D1D1F">验证链路，不计收入</text>
+<rect x="24.0" y="406.1" width="632.0" height="44.4" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="406.1" x2="120.0" y2="450.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="236.0" y1="406.1" x2="236.0" y2="450.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="406.1" x2="376.0" y2="450.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="516.0" y1="406.1" x2="516.0" y2="450.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="431.4" font-size="9.1" fill="#1D1D1F" font-weight="bold">首年目标</text>
+<text x="126.0" y="431.4" font-size="8.7" fill="#1D1D1F">500</text>
+<text x="242.0" y="431.4" font-size="8.7" fill="#1D1D1F">¥5,000–6,000</text>
+<text x="382.0" y="431.4" font-size="8.7" fill="#1D1D1F">≈¥1,300–1,550</text>
+<text x="522.0" y="431.4" font-size="8.7" fill="#1D1D1F">含免费用户成本 ≈291 元/月</text>
+<rect x="24.0" y="450.6" width="632.0" height="44.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="450.6" x2="120.0" y2="495.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="236.0" y1="450.6" x2="236.0" y2="495.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="450.6" x2="376.0" y2="495.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="516.0" y1="450.6" x2="516.0" y2="495.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="475.8" font-size="9.1" fill="#1D1D1F" font-weight="bold">第二年情景</text>
+<text x="126.0" y="475.8" font-size="8.7" fill="#1D1D1F">2,000</text>
+<text x="242.0" y="475.8" font-size="8.7" fill="#1D1D1F">¥20,000–24,000</text>
+<text x="382.0" y="475.8" font-size="8.7" fill="#1D1D1F">≈¥4,000–5,000</text>
+<text x="522.0" y="475.8" font-size="8.7" fill="#1D1D1F">情景推演，非承诺</text>
+<text x="24.0" y="517.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　盈亏平衡分析</text>
+<rect x="24.0" y="523.0" width="632.0" height="132.0" fill="#FAFAFC" stroke="#A8CEF7" stroke-width="0.8"/>
+<line x1="70.0" y1="631.0" x2="636.0" y2="631.0" stroke="#1D1D1F" stroke-width="0.9" marker-end="url(#ar)"/>
+<line x1="70.0" y1="631.0" x2="70.0" y2="537.0" stroke="#1D1D1F" stroke-width="0.9" marker-end="url(#ar)"/>
+<text x="636.0" y="647.0" font-size="8.8" fill="#6E6E73" text-anchor="end">付费用户数 →</text>
+<text x="74.0" y="543.0" font-size="8.8" fill="#6E6E73">↑ 元/月</text>
+<line x1="70.0" y1="601.0" x2="630.0" y2="601.0" stroke="#6E6E73" stroke-width="1.1" stroke-dasharray="4 3"/>
+<text x="624.0" y="611.0" font-size="8.2" fill="#1D1D1F" text-anchor="end" font-weight="#6E6E73">固定支出 ¥82/月</text>
+<line x1="70.0" y1="631.0" x2="630.0" y2="563.0" stroke="#B4472F" stroke-width="1.8"/>
+<text x="626.0" y="557.0" font-size="8.2" fill="#1D1D1F" text-anchor="end" font-weight="#B4472F">收入 ¥10/人·月（保守）</text>
+<line x1="70.0" y1="601.0" x2="630.0" y2="588.0" stroke="#0071E3" stroke-width="1.4"/>
+<text x="626.0" y="581.0" font-size="8.2" fill="#1D1D1F" text-anchor="end" font-weight="#1D1D1F">总成本</text>
+<circle cx="357.0" cy="595.0" r="4.2" fill="#FFFFFF" stroke="#B4472F" stroke-width="1.8"/>
+<line x1="357.0" y1="595.0" x2="357.0" y2="631.0" stroke="#B4472F" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="357.0" y="571.0" font-size="8.8" fill="#B4472F" text-anchor="middle" font-weight="bold">盈亏平衡 ≈10 人</text>
+<text x="96.0" y="623.0" font-size="8.2" fill="#6E6E73">0</text>
+<text x="626.0" y="623.0" font-size="8.2" fill="#6E6E73" text-anchor="end">20</text>
+<text x="24.0" y="681.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　敏感性三情景</text>
+<rect x="24.0" y="687.0" width="205.3" height="84.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,692.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="50.0" y="704.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">保守</text>
+<text x="32.0" y="720.0" font-size="8.8" fill="#3A3A3C">客单 ¥10、变动 ¥2</text>
+<text x="32.0" y="733.0" font-size="8.8" fill="#3A3A3C">固定 ¥192（区间上限）</text>
+<text x="32.0" y="746.0" font-size="8.8" fill="#3A3A3C">平衡点约 24 人</text>
+<rect x="237.3" y="687.0" width="205.3" height="84.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,692.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 20 L21 20 M5 20 L5 13 M10 20 L10 7 M15 20 L15 10 M20 20 L20 4"/></g>
+<text x="263.3" y="704.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">基准</text>
+<text x="245.3" y="720.0" font-size="8.8" fill="#3A3A3C">客单 ¥12、变动 ¥2</text>
+<text x="245.3" y="733.0" font-size="8.8" fill="#3A3A3C">固定 ¥82</text>
+<text x="245.3" y="746.0" font-size="8.8" fill="#3A3A3C">平衡点约 8 人</text>
+<rect x="450.7" y="687.0" width="205.3" height="84.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,692.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 12 L11 16 L17 8"/></g>
+<text x="476.7" y="704.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">乐观</text>
+<text x="458.7" y="720.0" font-size="8.8" fill="#3A3A3C">叠加学生抵扣金</text>
+<text x="458.7" y="733.0" font-size="8.8" fill="#3A3A3C">固定支出可近零</text>
+<text x="458.7" y="746.0" font-size="8.8" fill="#3A3A3C">首个付费用户即转正</text>
+<rect x="24.0" y="781.0" width="632.0" height="70.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,787.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="56.0" y="799.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">口径声明</text>
+<text x="36.0" y="816.0" font-size="9.0" fill="#48484A">收入侧用户数为规划假设，未做市场调研；成本侧来自 2026-11-14 真实报价（服务器 ¥15.7/月、LLM ¥60/月、域名 ¥6/月）。</text>
+<text x="36.0" y="830.0" font-size="8.7" fill="#48484A">免费额度按 0.08–0.12 元/次 × 3 次/月计入（人均 ≈0.3 元/月）；B 区首年按 970 免费用户计 ≈291 元/月，已并入月成本。</text>
+<text x="36.0" y="844.0" font-size="9.0" fill="#48484A">结论表述为「小团队可行、单位经济为正、规模待验证」，不宣称市场规模或盈利预测；与 图 2-3 的 SAM/SOM 假设互相引用。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：朱红＝收入线（客单 ¥10），墨黑＝总成本线（变动 ¥2.0/人），灰虚线＝固定支出 ¥82/月；交点 ≈10 人。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 7-4　收入测算与盈亏平衡分析</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 7-4 Revenue projection and break-even analysis</text>
+</svg>

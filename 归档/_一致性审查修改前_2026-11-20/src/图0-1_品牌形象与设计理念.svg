@@ -1,0 +1,163 @@
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0" y="0" width="680" height="960" fill="#FFFFFF"/>
+<rect x="8" y="8" width="664" height="944" rx="10" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="24" y="24" width="18" height="18" rx="5" fill="#0071E3"/>
+<g transform="translate(25.5,25.5) scale(0.15)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="50" y="38" font-size="14" fill="#1D1D1F" font-weight="bold">GrowthForward · 品牌形象与设计理念</text>
+<text x="50" y="53" font-size="9" fill="#86868B">Brand Identity / Visual System / Design Rationale / Applications</text>
+<text x="656" y="38" font-size="8.6" fill="#86868B" text-anchor="end">GFLC · 2026</text>
+<text x="656" y="53" font-size="8.2" fill="#86868B" text-anchor="end">Apple-inspired minimal system</text>
+<line x1="24" y1="64" x2="656" y2="64" stroke="#1D1D1F" stroke-width="1"/>
+<circle cx="29" cy="78.5" r="3.4" fill="#0071E3"/><text x="38" y="82" font-size="10.4" fill="#1D1D1F" font-weight="bold" letter-spacing=".3">01　标志构造</text><text x="656" y="82" font-size="8.2" fill="#86868B" text-anchor="end" letter-spacing=".5">LOGO CONSTRUCTION</text><line x1="24" y1="88" x2="656" y2="88" stroke="#D2D2D7" stroke-width="0.8"/>
+<rect x="24" y="96" width="310" height="146" rx="11" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<g transform="translate(44,100) scale(0.78)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="9" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="9" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="9" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="140" y="148" font-size="21" font-weight="bold" letter-spacing="-.6" fill="#1D1D1F">Growth<tspan fill="#0071E3">Forward</tspan></text>
+<text x="141" y="166" font-size="9.4" fill="#6E6E73" letter-spacing=".6">成长向前 · AI 学习伴侣</text>
+<line x1="40" y1="186" x2="314" y2="186" stroke="#D2D2D7" stroke-width="0.8"/>
+<text x="40" y="202" font-size="9" fill="#1D1D1F">开口圆环 = 可延展的学习闭环</text>
+<text x="40" y="217" font-size="9" fill="#1D1D1F">冲出开口的箭头 = 持续向前</text>
+<text x="40" y="233" font-size="8.6" fill="#86868B">环内短横 = G 的字骨与每日基线</text>
+<rect x="342" y="96" width="314" height="146" rx="11" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<text x="354" y="113" font-size="9.6" fill="#1D1D1F" font-weight="bold">App Icon · 圆角方形</text>
+<g transform="translate(356,122) scale(0.78)"><defs><linearGradient id="ic1g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A84FF"/><stop offset="1" stop-color="#0058C0"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#ic1g)"/><g transform="translate(7,7) scale(0.86)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#FFFFFF" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#FFFFFF" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FFD38A" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FFD38A" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+<g transform="translate(433,134) scale(0.56)"><defs><linearGradient id="ic2g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A84FF"/><stop offset="1" stop-color="#0058C0"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#ic2g)"/><g transform="translate(7,7) scale(0.86)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#FFFFFF" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#FFFFFF" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FFD38A" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FFD38A" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+<g transform="translate(490,143) scale(0.4)"><defs><linearGradient id="ic3g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A84FF"/><stop offset="1" stop-color="#0058C0"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#ic3g)"/><g transform="translate(7,7) scale(0.86)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#FFFFFF" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#FFFFFF" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FFD38A" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FFD38A" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+<text x="356" y="207" font-size="8.6" fill="#6E6E73">蓝色渐变 + 单色 G 标，23% 圆角</text>
+<line x1="342" y1="216" x2="656" y2="216" stroke="#D2D2D7" stroke-width="0.8"/>
+<rect x="354" y="222" width="78" height="14" rx="7" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<g transform="translate(357,222.5) scale(0.13)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="374" y="232.5" font-size="8.2" fill="#86868B">单色版</text>
+<rect x="440" y="222" width="78" height="14" rx="7" fill="#1D1D1F" stroke="#1D1D1F" stroke-width="1"/>
+<g transform="translate(443,222.5) scale(0.13)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="460" y="232.5" font-size="8.2" fill="#FFFFFF">反白版</text>
+<text x="528" y="232.5" font-size="8.2" fill="#86868B">最小尺寸 16 px</text>
+<circle cx="29" cy="252.5" r="3.4" fill="#0071E3"/><text x="38" y="256" font-size="10.4" fill="#1D1D1F" font-weight="bold" letter-spacing=".3">02　吉祥物「小前」</text><text x="656" y="256" font-size="8.2" fill="#86868B" text-anchor="end" letter-spacing=".5">MASCOT · MINIMAL REBOOT</text><line x1="24" y1="262" x2="656" y2="262" stroke="#D2D2D7" stroke-width="0.8"/>
+<rect x="24" y="270" width="196" height="166" rx="11" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<g transform="translate(52,272) scale(0.76)"><defs><linearGradient id="ms1g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F5F5F7"/></linearGradient><filter id="ms1s" x="-35%" y="-35%" width="170%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#1D1D1F" flood-opacity="0.11"/></filter></defs><ellipse cx="100" cy="181" rx="43" ry="6" fill="#0071E3" opacity="0.09"/><rect x="97" y="22" width="6" height="26" rx="3" fill="#D2D2D7"/><circle cx="100" cy="19" r="7" fill="#FF9F0A"/><rect x="29" y="84" width="9" height="28" rx="4.5" fill="#D2D2D7"/><rect x="162" y="84" width="9" height="28" rx="4.5" fill="#D2D2D7"/><rect x="40" y="44" width="120" height="116" rx="38" fill="url(#ms1g)" stroke="#D2D2D7" stroke-width="2" filter="url(#ms1s)"/><rect x="55" y="60" width="90" height="76" rx="27" fill="#1D1D1F"/><circle cx="83" cy="94" r="7" fill="#FFFFFF"/><circle cx="117" cy="94" r="7" fill="#FFFFFF"/><path d="M 91 116 Q 100 123 109 116" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" opacity="0.92"/><circle cx="100" cy="150" r="2.6" fill="#D2D2D7"/></g>
+<text x="122" y="428" font-size="9.4" fill="#1D1D1F" font-weight="bold" text-anchor="middle">小前  Qian</text>
+<rect x="228" y="270" width="428" height="166" rx="11" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<circle cx="242" cy="285" r="2.6" fill="#0071E3"/>
+<text x="252" y="288" font-size="9.4" fill="#1D1D1F" font-weight="bold">① 圆角头</text>
+<text x="310" y="288" font-size="8.6" fill="#6E6E73">120×116 px 圆角 38，白到云雾的极淡渐变，柔和落影</text>
+<line x1="240" y1="296" x2="644" y2="296" stroke="#EDEDEF" stroke-width="0.7"/>
+<circle cx="242" cy="319" r="2.6" fill="#0071E3"/>
+<text x="252" y="322" font-size="9.4" fill="#1D1D1F" font-weight="bold">② 屏幕脸</text>
+<text x="310" y="322" font-size="8.6" fill="#6E6E73">深墨圆角矩形，两个白色光点 + 一条微笑弧，无五官堆叠</text>
+<line x1="240" y1="330" x2="644" y2="330" stroke="#EDEDEF" stroke-width="0.7"/>
+<circle cx="242" cy="353" r="2.6" fill="#0071E3"/>
+<text x="252" y="356" font-size="9.4" fill="#1D1D1F" font-weight="bold">③ 火花天线</text>
+<text x="310" y="356" font-size="8.6" fill="#6E6E73">银色细杆 + 火花橙光点，是全形象唯一的彩色</text>
+<line x1="240" y1="364" x2="644" y2="364" stroke="#EDEDEF" stroke-width="0.7"/>
+<circle cx="242" cy="387" r="2.6" fill="#0071E3"/>
+<text x="252" y="390" font-size="9.4" fill="#1D1D1F" font-weight="bold">④ 悬浮阴影</text>
+<text x="310" y="390" font-size="8.6" fill="#6E6E73">前进蓝 9% 椭圆投影，表达「轻量、安静、不打扰」</text>
+<line x1="240" y1="412" x2="644" y2="412" stroke="#D2D2D7" stroke-width="0.8"/>
+<text x="240" y="428" font-size="8.6" fill="#86868B">设计取舍：去掉腮红、渐变高光与装饰星；仅白 / 石墨 / 银 / 一点火花橙，可在 24 px 下辨识。</text>
+<circle cx="29" cy="448.5" r="3.4" fill="#0071E3"/><text x="38" y="452" font-size="10.4" fill="#1D1D1F" font-weight="bold" letter-spacing=".3">03　色彩系统</text><text x="656" y="452" font-size="8.2" fill="#86868B" text-anchor="end" letter-spacing=".5">COLOR SYSTEM</text><line x1="24" y1="458" x2="656" y2="458" stroke="#D2D2D7" stroke-width="0.8"/>
+<rect x="24" y="466" width="100" height="96" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="31" y="473" width="86" height="34" rx="6" fill="#1D1D1F" stroke="#D2D2D7" stroke-width=".6"/>
+<text x="31" y="522" font-size="8.8" fill="#1D1D1F" font-weight="bold">石墨 Graphite</text>
+<text x="31" y="535" font-size="8.4" fill="#0071E3">#1D1D1F</text>
+<text x="31" y="552" font-size="7.8" fill="#86868B">正文 · 主标题 · 屏幕脸</text>
+<rect x="130" y="466" width="100" height="96" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="137" y="473" width="86" height="34" rx="6" fill="#0071E3" stroke="#D2D2D7" stroke-width=".6"/>
+<text x="137" y="522" font-size="8.8" fill="#1D1D1F" font-weight="bold">前进蓝 Forward</text>
+<text x="137" y="535" font-size="8.4" fill="#0071E3">#0071E3</text>
+<text x="137" y="552" font-size="7.8" fill="#86868B">主色 · 表头 · 图形标</text>
+<rect x="236" y="466" width="100" height="96" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="243" y="473" width="86" height="34" rx="6" fill="#EAF3FF" stroke="#D2D2D7" stroke-width=".6"/>
+<text x="243" y="522" font-size="8.8" fill="#1D1D1F" font-weight="bold">冰蓝 Ice</text>
+<text x="243" y="535" font-size="8.4" fill="#0071E3">#EAF3FF</text>
+<text x="243" y="552" font-size="7.8" fill="#86868B">浅底 · 选中态 · 数据带</text>
+<rect x="342" y="466" width="100" height="96" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="349" y="473" width="86" height="34" rx="6" fill="#F5F5F7" stroke="#D2D2D7" stroke-width=".6"/>
+<text x="349" y="522" font-size="8.8" fill="#1D1D1F" font-weight="bold">云雾 Mist</text>
+<text x="349" y="535" font-size="8.4" fill="#0071E3">#F5F5F7</text>
+<text x="349" y="552" font-size="7.8" fill="#86868B">页面底 · 次级卡</text>
+<rect x="448" y="466" width="100" height="96" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="455" y="473" width="86" height="34" rx="6" fill="#D2D2D7" stroke="#D2D2D7" stroke-width=".6"/>
+<text x="455" y="522" font-size="8.8" fill="#1D1D1F" font-weight="bold">银线 Silver</text>
+<text x="455" y="535" font-size="8.4" fill="#0071E3">#D2D2D7</text>
+<text x="455" y="552" font-size="7.8" fill="#86868B">边框 · 分隔线</text>
+<rect x="554" y="466" width="100" height="96" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="561" y="473" width="86" height="34" rx="6" fill="#FF9F0A" stroke="#D2D2D7" stroke-width=".6"/>
+<text x="561" y="522" font-size="8.8" fill="#1D1D1F" font-weight="bold">火花橙 Spark</text>
+<text x="561" y="535" font-size="8.4" fill="#0071E3">#FF9F0A</text>
+<text x="561" y="552" font-size="7.8" fill="#86868B">向前箭头 · 唯一点睛</text>
+<text x="24" y="578" font-size="8.6" fill="#6E6E73">语义例外：风险 / 异常仅用砖红 #B4472F；其余场景一律不引入第三种彩色，保证 A4 黑白打印仍可读。</text>
+<line x1="24" y1="586" x2="656" y2="586" stroke="#D2D2D7" stroke-width="0.8"/>
+<circle cx="29" cy="598.5" r="3.4" fill="#0071E3"/><text x="38" y="602" font-size="10.4" fill="#1D1D1F" font-weight="bold" letter-spacing=".3">04　字体与图形规范</text><text x="656" y="602" font-size="8.2" fill="#86868B" text-anchor="end" letter-spacing=".5">TYPOGRAPHY AND GRID</text><line x1="24" y1="608" x2="656" y2="608" stroke="#D2D2D7" stroke-width="0.8"/>
+<rect x="24" y="616" width="632" height="74" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="34" y="625" width="52" height="15" rx="7.5" fill="#EAF3FF"/>
+<text x="60" y="636" font-size="8.4" fill="#0071E3" font-weight="bold" text-anchor="middle">字族</text>
+<text x="94" y="636" font-size="8.0" fill="#1D1D1F">SF Pro / 苹方 / 雅黑，全册无衬线</text>
+<rect x="340" y="625" width="52" height="15" rx="7.5" fill="#EAF3FF"/>
+<text x="366" y="636" font-size="8.4" fill="#0071E3" font-weight="bold" text-anchor="middle">字重</text>
+<text x="400" y="636" font-size="8.0" fill="#1D1D1F">标题 600 · 正文 400 · 弱化加灰</text>
+<rect x="34" y="647" width="52" height="15" rx="7.5" fill="#EAF3FF"/>
+<text x="60" y="658" font-size="8.4" fill="#0071E3" font-weight="bold" text-anchor="middle">圆角</text>
+<text x="94" y="658" font-size="8.0" fill="#1D1D1F">卡片 14 px · icon 23% · 胶囊全圆</text>
+<rect x="340" y="647" width="52" height="15" rx="7.5" fill="#EAF3FF"/>
+<text x="366" y="658" font-size="8.4" fill="#0071E3" font-weight="bold" text-anchor="middle">网格</text>
+<text x="400" y="658" font-size="8.0" fill="#1D1D1F">8 pt 基准 · 图幅 680×960</text>
+<rect x="34" y="669" width="52" height="15" rx="7.5" fill="#EAF3FF"/>
+<text x="60" y="680" font-size="8.4" fill="#0071E3" font-weight="bold" text-anchor="middle">线条</text>
+<text x="94" y="680" font-size="8.0" fill="#1D1D1F">0.5–1 px 银线，禁止粗黑框</text>
+<rect x="340" y="669" width="52" height="15" rx="7.5" fill="#EAF3FF"/>
+<text x="366" y="680" font-size="8.4" fill="#0071E3" font-weight="bold" text-anchor="middle">留白</text>
+<text x="400" y="680" font-size="8.0" fill="#1D1D1F">层级靠字号灰度，不靠彩色块</text>
+<circle cx="29" cy="702.5" r="3.4" fill="#0071E3"/><text x="38" y="706" font-size="10.4" fill="#1D1D1F" font-weight="bold" letter-spacing=".3">05　应用矩阵</text><text x="656" y="706" font-size="8.2" fill="#86868B" text-anchor="end" letter-spacing=".5">APPLICATION MATRIX</text><line x1="24" y1="712" x2="656" y2="712" stroke="#D2D2D7" stroke-width="0.8"/>
+<rect x="24" y="720" width="100" height="76" rx="9" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="33" y="729" width="18" height="18" rx="5" fill="#EAF3FF"/>
+<g transform="translate(34,730) scale(0.16)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="33" y="762" font-size="8.8" fill="#1D1D1F" font-weight="bold">页眉微标</text>
+<text x="33" y="777" font-size="7.3" fill="#86868B">10 px 图形标 </text>
+<text x="33" y="789" font-size="7.3" fill="#86868B">+ 书名，全册 54 页统一</text>
+<rect x="130" y="720" width="100" height="76" rx="9" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="139" y="729" width="18" height="18" rx="5" fill="#EAF3FF"/>
+<g transform="translate(140,730) scale(0.16)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="139" y="762" font-size="8.8" fill="#1D1D1F" font-weight="bold">扉页水印</text>
+<text x="139" y="777" font-size="7.3" fill="#86868B">大号 G 标 4% </text>
+<text x="139" y="789" font-size="7.3" fill="#86868B">透明度，作为章节底纹</text>
+<rect x="236" y="720" width="100" height="76" rx="9" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="245" y="729" width="18" height="18" rx="5" fill="#EAF3FF"/>
+<g transform="translate(246,730) scale(0.16)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="245" y="762" font-size="8.8" fill="#1D1D1F" font-weight="bold">图页角标</text>
+<text x="245" y="777" font-size="7.3" fill="#86868B">GFLC · 年份，</text>
+<text x="245" y="789" font-size="7.3" fill="#86868B">右下角弱化标注</text>
+<rect x="342" y="720" width="100" height="76" rx="9" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="351" y="729" width="18" height="18" rx="5" fill="#EAF3FF"/>
+<g transform="translate(352,730) scale(0.16)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="351" y="762" font-size="8.8" fill="#1D1D1F" font-weight="bold">App Icon</text>
+<text x="351" y="777" font-size="7.3" fill="#86868B">圆角方形蓝底，桌面与</text>
+<text x="351" y="789" font-size="7.3" fill="#86868B">小程序入口</text>
+<rect x="448" y="720" width="100" height="76" rx="9" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="457" y="729" width="18" height="18" rx="5" fill="#EAF3FF"/>
+<g transform="translate(458,730) scale(0.16)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="457" y="762" font-size="8.8" fill="#1D1D1F" font-weight="bold">封面封底</text>
+<text x="457" y="777" font-size="7.3" fill="#86868B">白纸底 + 大标题 </text>
+<text x="457" y="789" font-size="7.3" fill="#86868B">+ 极简「小前」</text>
+<rect x="554" y="720" width="100" height="76" rx="9" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="563" y="729" width="18" height="18" rx="5" fill="#EAF3FF"/>
+<g transform="translate(564,730) scale(0.16)"><path d="M 69.5 25.5 A 34 34 0 1 0 79 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 79 70 L 50 70" fill="none" stroke="#0071E3" stroke-width="12" stroke-linecap="round"/><path d="M 69.5 25.5 L 87 8" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round"/><path d="M 73 6 L 90 6 L 90 23" fill="none" stroke="#FF9F0A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="563" y="762" font-size="8.8" fill="#1D1D1F" font-weight="bold">图表强调</text>
+<text x="563" y="777" font-size="7.3" fill="#86868B">前进蓝表头 / 冰蓝</text>
+<text x="563" y="789" font-size="7.3" fill="#86868B">浅底 / 砖红风险</text>
+<circle cx="29" cy="808.5" r="3.4" fill="#0071E3"/><text x="38" y="812" font-size="10.4" fill="#1D1D1F" font-weight="bold" letter-spacing=".3">06　设计理念</text><text x="656" y="812" font-size="8.2" fill="#86868B" text-anchor="end" letter-spacing=".5">DESIGN RATIONALE</text><line x1="24" y1="818" x2="656" y2="818" stroke="#D2D2D7" stroke-width="0.8"/>
+<rect x="24" y="826" width="206" height="52" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="24" y="826" width="3" height="52" rx="1.5" fill="#0071E3"/>
+<text x="36" y="845" font-size="9.2" fill="#0071E3" font-weight="bold">生长 Growth</text>
+<text x="36" y="862" font-size="8.2" fill="#1D1D1F">开口 + 箭头 = 每天向前一步</text>
+<rect x="236" y="826" width="206" height="52" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="236" y="826" width="3" height="52" rx="1.5" fill="#0071E3"/>
+<text x="248" y="845" font-size="9.2" fill="#0071E3" font-weight="bold">可信 Trust</text>
+<text x="248" y="862" font-size="8.2" fill="#1D1D1F">数据带来源口径，图形不做虚饰</text>
+<rect x="448" y="826" width="206" height="52" rx="9" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<rect x="448" y="826" width="3" height="52" rx="1.5" fill="#0071E3"/>
+<text x="460" y="845" font-size="9.2" fill="#0071E3" font-weight="bold">克制 Restraint</text>
+<text x="460" y="862" font-size="8.2" fill="#1D1D1F">单一主色 · 大量白 · 细线圆角</text>
+<line x1="24" y1="890" x2="656" y2="890" stroke="#D2D2D7" stroke-width="0.8"/>
+<text x="24" y="903" font-size="8.4" fill="#6E6E73">图例：● 前进蓝＝主色与推进；● 火花橙＝向前箭头；● 石墨＝结构性信息；#B4472F 为唯一保留的风险语义色。</text>
+<text x="340" y="922" font-size="12.5" fill="#1D1D1F" font-weight="bold" text-anchor="middle">图 0-1　品牌形象与设计理念</text>
+<text x="340" y="939" font-size="9.2" fill="#86868B" text-anchor="middle" letter-spacing=".2">Fig. 0-1 Brand identity, visual system and design rationale</text>
+</svg>

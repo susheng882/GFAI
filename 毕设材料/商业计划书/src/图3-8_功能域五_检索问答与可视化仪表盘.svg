@@ -1,0 +1,142 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">检索问答与可视化仪表盘 · 功能域展开</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">RAG Q&amp;A &amp; Visual Dashboard / Dashboard Grid &amp; Query Funnel / 增强能力 · 4 项功能 · 主线 2 / V1.5 1 / 规划池 1</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　学习状态仪表盘（KPI 宫格 + 成长轨迹示意）</text>
+<rect x="24.0" y="96.0" width="632.0" height="44.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.5"/>
+<text x="32.0" y="109.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">域定位：让学习者随时回到原始素材核对，而不是盲信生成</text>
+<text x="32.0" y="123.0" font-size="8.2" fill="#3A3A3C">对应痛点 ③ 无法溯源 · ⑤ 复习无计划　｜　把学习状态变成可读、可问的可视化证据</text>
+<text x="32.0" y="136.0" font-size="8.0" fill="#6E6E73">增强能力 · 4 项功能 · 主线 2 / V1.5 1 / 规划池 1</text>
+<text x="24.0" y="152.0" font-size="8.6" fill="#48484A" font-weight="bold">学习状态仪表盘：关键指标宫格 + 成长轨迹示意 + 阶段复盘口径</text>
+<rect x="24.0" y="160.0" width="152.0" height="46.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="32.0" y="173.0" font-size="8.2" fill="#3A3A3C" font-weight="bold">来源覆盖率</text>
+<text x="32.0" y="192.0" font-size="13.0" fill="#0071E3" font-weight="bold">100%</text>
+<text x="168.0" y="200.0" font-size="7.5" fill="#6E6E73" text-anchor="end">回答必带来源定位</text>
+<rect x="184.0" y="160.0" width="152.0" height="46.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="192.0" y="173.0" font-size="8.2" fill="#3A3A3C" font-weight="bold">上下文上限</text>
+<text x="192.0" y="192.0" font-size="13.0" fill="#0071E3" font-weight="bold">50 段</text>
+<text x="328.0" y="200.0" font-size="7.5" fill="#6E6E73" text-anchor="end">Chroma 双索引</text>
+<rect x="344.0" y="160.0" width="152.0" height="46.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="352.0" y="173.0" font-size="8.2" fill="#3A3A3C" font-weight="bold">交互时延</text>
+<text x="352.0" y="192.0" font-size="13.0" fill="#0071E3" font-weight="bold">P95 ≤3 s</text>
+<text x="488.0" y="200.0" font-size="7.5" fill="#6E6E73" text-anchor="end">G2 验收口径</text>
+<rect x="504.0" y="160.0" width="152.0" height="46.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="512.0" y="173.0" font-size="8.2" fill="#3A3A3C" font-weight="bold">评测样本</text>
+<text x="512.0" y="192.0" font-size="13.0" fill="#0071E3" font-weight="bold">40 份</text>
+<text x="648.0" y="200.0" font-size="7.5" fill="#6E6E73" text-anchor="end">字段完整率 ≥95%</text>
+<rect x="24.0" y="212.0" width="632.0" height="70.0" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="0.6"/>
+<text x="32.0" y="225.0" font-size="8.6" fill="#1D1D1F" font-weight="bold">成长记录 / 学习轨迹（柱高为示意，非实测数据）</text>
+<rect x="38.0" y="254.0" width="12.0" height="18.0" fill="#EAF3FF" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="60.0" y="246.0" width="12.0" height="26.0" fill="#A8CEF7" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="82.0" y="250.0" width="12.0" height="22.0" fill="#EAF3FF" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="104.0" y="238.0" width="12.0" height="34.0" fill="#A8CEF7" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="126.0" y="242.0" width="12.0" height="30.0" fill="#EAF3FF" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="148.0" y="234.0" width="12.0" height="38.0" fill="#A8CEF7" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="170.0" y="239.0" width="12.0" height="33.0" fill="#EAF3FF" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="192.0" y="228.0" width="12.0" height="44.0" fill="#A8CEF7" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="214.0" y="233.0" width="12.0" height="39.0" fill="#EAF3FF" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="236.0" y="225.0" width="12.0" height="47.0" fill="#A8CEF7" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="258.0" y="230.0" width="12.0" height="42.0" fill="#EAF3FF" stroke="#A1A1A6" stroke-width="0.5"/>
+<rect x="280.0" y="222.0" width="12.0" height="50.0" fill="#A8CEF7" stroke="#A1A1A6" stroke-width="0.5"/>
+<line x1="32.0" y1="272.0" x2="310.0" y2="272.0" stroke="#1D1D1F" stroke-width="0.7"/>
+<text x="32.0" y="280.0" font-size="7.4" fill="#6E6E73">周 1</text>
+<text x="292.0" y="280.0" font-size="7.4" fill="#6E6E73" text-anchor="end">周 12</text>
+<line x1="320.0" y1="218.0" x2="320.0" y2="276.0" stroke="#EAF3FF" stroke-width="0.6"/>
+<text x="330.0" y="230.0" font-size="8.0" fill="#3A3A3C">F33 成长记录把轨迹反馈给学习者，</text>
+<text x="330.0" y="243.0" font-size="8.0" fill="#3A3A3C">支持阶段复盘与自我调节；F31 历史任务</text>
+<text x="330.0" y="256.0" font-size="8.0" fill="#3A3A3C">面板提供回看与断点续跑入口，两者</text>
+<text x="330.0" y="269.0" font-size="8.0" fill="#3A3A3C">共同构成「可读、可问、可核」的证据面。</text>
+<text x="24.0" y="306.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　问数 / 问答五级收窄漏斗（每级标注产物）</text>
+<rect x="24.0" y="312.0" width="632.0" height="17.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="32.0" y="324.0" font-size="8.4" fill="#0071E3" font-weight="bold">① 自然语言提问</text>
+<text x="648.0" y="324.0" font-size="7.9" fill="#6E6E73" text-anchor="end">→ 用户问题</text>
+<line x1="340.0" y1="329.0" x2="340.0" y2="332.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="66.0" y="332.0" width="548.0" height="17.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="74.0" y="344.0" font-size="8.4" fill="#0071E3" font-weight="bold">② 意图解析（轻档）</text>
+<text x="606.0" y="344.0" font-size="7.9" fill="#6E6E73" text-anchor="end">→ 意图 + 参数</text>
+<line x1="340.0" y1="349.0" x2="340.0" y2="352.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="108.0" y="352.0" width="464.0" height="17.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="116.0" y="364.0" font-size="8.4" fill="#0071E3" font-weight="bold">③ 白名单查询</text>
+<text x="564.0" y="364.0" font-size="7.9" fill="#6E6E73" text-anchor="end">→ 结果集 / 上下文</text>
+<line x1="340.0" y1="369.0" x2="340.0" y2="372.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="150.0" y="372.0" width="380.0" height="17.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="158.0" y="384.0" font-size="8.4" fill="#0071E3" font-weight="bold">④ 契约校验</text>
+<text x="522.0" y="384.0" font-size="7.9" fill="#6E6E73" text-anchor="end">→ 合规结果</text>
+<line x1="340.0" y1="389.0" x2="340.0" y2="392.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="192.0" y="392.0" width="296.0" height="17.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="200.0" y="404.0" font-size="8.4" fill="#0071E3" font-weight="bold">⑤ 图表与答案渲染</text>
+<text x="480.0" y="404.0" font-size="7.9" fill="#6E6E73" text-anchor="end">→ 图表 + 来源定位</text>
+<text x="24.0" y="440.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　四项功能 2×2 大卡（编号 / 说明 / 落点 / 出处）</text>
+<rect x="24.0" y="446.0" width="312.0" height="70.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="24.0" y="446.0" width="34.0" height="70.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="41.0" y="468.0" font-size="8.6" fill="#1D1D1F" text-anchor="middle" font-weight="bold">F30</text>
+<text x="68.0" y="464.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">AI 问答（带来源）</text>
+<text x="68.0" y="480.0" font-size="8.2" fill="#3A3A3C">检索增强，回答必带来源定位，查原文限流</text>
+<rect x="274.0" y="452.0" width="54.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="301.0" y="463.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<text x="68.0" y="509.0" font-size="7.5" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="344.0" y="446.0" width="312.0" height="70.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="344.0" y="446.0" width="34.0" height="70.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="361.0" y="468.0" font-size="8.6" fill="#1D1D1F" text-anchor="middle" font-weight="bold">F31</text>
+<text x="388.0" y="464.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">历史任务面板</text>
+<text x="388.0" y="480.0" font-size="8.2" fill="#3A3A3C">任务记录、回看与断点续跑入口</text>
+<rect x="594.0" y="452.0" width="54.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="621.0" y="463.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">主线</text>
+<text x="388.0" y="509.0" font-size="7.5" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="24.0" y="524.0" width="312.0" height="70.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="24.0" y="524.0" width="34.0" height="70.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="41.0" y="546.0" font-size="8.6" fill="#1D1D1F" text-anchor="middle" font-weight="bold">F32</text>
+<text x="68.0" y="542.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">自然语言问数仪表盘</text>
+<text x="68.0" y="558.0" font-size="8.2" fill="#3A3A3C">问一句看一图，白名单模板 + 图表契约双保险</text>
+<rect x="274.0" y="530.0" width="54.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="301.0" y="541.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">规划池</text>
+<text x="68.0" y="587.0" font-size="7.5" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="344.0" y="524.0" width="312.0" height="70.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="344.0" y="524.0" width="34.0" height="70.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="361.0" y="546.0" font-size="8.6" fill="#1D1D1F" text-anchor="middle" font-weight="bold">F33</text>
+<text x="388.0" y="542.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">成长记录</text>
+<text x="388.0" y="558.0" font-size="8.2" fill="#3A3A3C">学习轨迹可视化，阶段复盘素材</text>
+<rect x="594.0" y="530.0" width="54.0" height="15.0" fill="#F5F5F7" stroke="#C7C7CC" stroke-width="0.5"/>
+<text x="621.0" y="541.0" font-size="7.8" fill="#48484A" text-anchor="middle" font-weight="bold">V1.5</text>
+<text x="388.0" y="587.0" font-size="7.5" fill="#86868B">出处：产品报告 第四章（八）</text>
+<text x="24.0" y="616.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　设计理论 · 优化手段 · 验收口径</text>
+<rect x="24.0" y="622.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="639.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">设计理论 / 依据</text>
+<text x="206.0" y="639.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">落地参数与优化手段</text>
+<text x="440.0" y="639.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">可核验验收口径</text>
+<line x1="200.0" y1="622.0" x2="200.0" y2="648.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="434.0" y1="622.0" x2="434.0" y2="648.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="648.0" width="632.0" height="41.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="648.0" x2="200.0" y2="689.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="648.0" x2="434.0" y2="689.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="671.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">检索练习与来源可验证</text>
+<text x="206.0" y="671.5" font-size="8.8" fill="#1D1D1F">答案必带时间戳，点击可跳原文</text>
+<text x="440.0" y="671.5" font-size="8.8" fill="#1D1D1F">来源覆盖率 100%，幻觉率纳入门禁</text>
+<rect x="24.0" y="689.0" width="632.0" height="41.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="689.0" x2="200.0" y2="730.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="689.0" x2="434.0" y2="730.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="712.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">元认知与自我调节</text>
+<text x="206.0" y="712.5" font-size="8.8" fill="#1D1D1F">成长记录把轨迹反馈给学习者</text>
+<text x="440.0" y="712.5" font-size="8.8" fill="#1D1D1F">阶段复盘可导出为答辩佐证</text>
+<rect x="24.0" y="730.0" width="632.0" height="41.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="730.0" x2="200.0" y2="771.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="730.0" x2="434.0" y2="771.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="753.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">认知负荷 + 契约双保险</text>
+<text x="206.0" y="753.5" font-size="8.8" fill="#1D1D1F">模型只填参数，SQL/图表配置由后端生成</text>
+<text x="440.0" y="753.5" font-size="8.8" fill="#1D1D1F">越权/空集/契约失败统一降级提示</text>
+<rect x="24.0" y="781.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,787.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="56.0" y="799.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">依赖关系与版本说明</text>
+<text x="36.0" y="816.0" font-size="9.0" fill="#48484A">F32 收编为 P2 增强：复用 RAG 的意图解析与契约校验设施，边际开发约 1 周；流程拆解见 图 4-6。</text>
+<text x="36.0" y="830.0" font-size="9.0" fill="#48484A">RAG 侧使用 Chroma 双索引（笔记 H2/H3 块、转写 15 段滑窗），单次限 50 段以控制上下文成本。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：F32 为规划池（P2）；「白名单模板 + 图表契约」为防注入与防幻觉的双保险机制。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 3-8　功能域五：检索问答与可视化仪表盘</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 3-8 Domain V: RAG Q&amp;A and visual dashboard</text>
+</svg>

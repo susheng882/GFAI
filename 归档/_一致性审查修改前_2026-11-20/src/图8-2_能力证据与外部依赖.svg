@@ -1,0 +1,160 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">能力证据与外部依赖</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Capability Evidence / Verifiable Deliverables / Substitutability / Compliance Basis</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　可核验的能力证据链（能力主张 → 交付物 → 验收口径 → 证据位置）</text>
+<rect x="24.0" y="96.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">能力维度</text>
+<text x="118.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">可核验交付物</text>
+<text x="288.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">验收口径</text>
+<text x="440.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">证据位置</text>
+<text x="580.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">状态</text>
+<line x1="112.0" y1="96.0" x2="112.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="282.0" y1="96.0" x2="282.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="434.0" y1="96.0" x2="434.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="574.0" y1="96.0" x2="574.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="122.0" width="632.0" height="44.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="122.0" x2="112.0" y2="166.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="122.0" x2="282.0" y2="166.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="122.0" x2="434.0" y2="166.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="574.0" y1="122.0" x2="574.0" y2="166.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="147.2" font-size="9.4" fill="#1D1D1F" font-weight="bold">需求定义</text>
+<text x="118.0" y="147.2" font-size="9.0" fill="#1D1D1F">38 项功能 F01–F38</text>
+<text x="288.0" y="147.2" font-size="9.0" fill="#1D1D1F">编号全册一致可追溯</text>
+<text x="440.0" y="147.2" font-size="9.0" fill="#1D1D1F">图 3-2 / 3-4~3-9</text>
+<text x="580.0" y="147.2" font-size="9.0" fill="#1D1D1F">已交付</text>
+<rect x="24.0" y="166.4" width="632.0" height="44.4" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="166.4" x2="112.0" y2="210.9" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="166.4" x2="282.0" y2="210.9" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="166.4" x2="434.0" y2="210.9" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="574.0" y1="166.4" x2="574.0" y2="210.9" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="191.7" font-size="9.4" fill="#1D1D1F" font-weight="bold">系统架构</text>
+<text x="118.0" y="191.7" font-size="9.0" fill="#1D1D1F">六容器 Compose + ER</text>
+<text x="288.0" y="191.7" font-size="9.0" fill="#1D1D1F">API / Worker 分进程</text>
+<text x="440.0" y="191.7" font-size="9.0" fill="#1D1D1F">图 4-1 / 4-2</text>
+<text x="580.0" y="191.7" font-size="9.0" fill="#1D1D1F">已交付</text>
+<rect x="24.0" y="210.9" width="632.0" height="44.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="210.9" x2="112.0" y2="255.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="210.9" x2="282.0" y2="255.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="210.9" x2="434.0" y2="255.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="574.0" y1="210.9" x2="574.0" y2="255.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="236.1" font-size="9.4" fill="#1D1D1F" font-weight="bold">理论落地</text>
+<text x="118.0" y="236.1" font-size="9.0" fill="#1D1D1F">10 组理论→参数映射</text>
+<text x="288.0" y="236.1" font-size="9.0" fill="#1D1D1F">公式级常量落库可配置</text>
+<text x="440.0" y="236.1" font-size="9.0" fill="#1D1D1F">图 3-3 / 3-10</text>
+<text x="580.0" y="236.1" font-size="9.0" fill="#1D1D1F">已交付</text>
+<rect x="24.0" y="255.3" width="632.0" height="44.4" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="255.3" x2="112.0" y2="299.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="255.3" x2="282.0" y2="299.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="255.3" x2="434.0" y2="299.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="574.0" y1="255.3" x2="574.0" y2="299.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="280.6" font-size="9.4" fill="#1D1D1F" font-weight="bold">AI 质量</text>
+<text x="118.0" y="280.6" font-size="9.0" fill="#1D1D1F">40 份评测集 + 契约校验</text>
+<text x="288.0" y="280.6" font-size="9.0" fill="#1D1D1F">字段完整率 / 幻觉率阈值</text>
+<text x="440.0" y="280.6" font-size="9.0" fill="#1D1D1F">图 5-4 / 6-2</text>
+<text x="580.0" y="280.6" font-size="9.0" fill="#1D1D1F">门禁中</text>
+<rect x="24.0" y="299.8" width="632.0" height="44.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="299.8" x2="112.0" y2="344.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="282.0" y1="299.8" x2="282.0" y2="344.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="299.8" x2="434.0" y2="344.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="574.0" y1="299.8" x2="574.0" y2="344.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="325.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">成本可信</text>
+<text x="118.0" y="325.0" font-size="9.0" fill="#1D1D1F">2026-11-14 实采报价单</text>
+<text x="288.0" y="325.0" font-size="9.0" fill="#1D1D1F">单价 / 来源 / 日期可复核</text>
+<text x="440.0" y="325.0" font-size="9.0" fill="#1D1D1F">图 7-2 / 7-3</text>
+<text x="580.0" y="325.0" font-size="9.0" fill="#1D1D1F">已交付</text>
+<text x="24.0" y="366.2" font-size="10.5" fill="#0071E3" font-weight="bold">B　外部依赖可替换性评估（避免供应商锁定）</text>
+<rect x="24.0" y="372.2" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="389.2" font-size="9.0" fill="#FFFFFF" font-weight="bold">组件层</text>
+<text x="134.0" y="389.2" font-size="9.0" fill="#FFFFFF" font-weight="bold">当前选型</text>
+<text x="282.0" y="389.2" font-size="9.0" fill="#FFFFFF" font-weight="bold">替换成本</text>
+<text x="408.0" y="389.2" font-size="9.0" fill="#FFFFFF" font-weight="bold">切换触发条件</text>
+<line x1="128.0" y1="372.2" x2="128.0" y2="398.2" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="276.0" y1="372.2" x2="276.0" y2="398.2" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="402.0" y1="372.2" x2="402.0" y2="398.2" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="398.2" width="632.0" height="44.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="128.0" y1="398.2" x2="128.0" y2="442.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="276.0" y1="398.2" x2="276.0" y2="442.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="402.0" y1="398.2" x2="402.0" y2="442.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="423.4" font-size="9.4" fill="#1D1D1F" font-weight="bold">模型服务</text>
+<text x="134.0" y="423.4" font-size="9.0" fill="#1D1D1F">阿里云百炼 qwen-*</text>
+<text x="282.0" y="423.4" font-size="9.0" fill="#1D1D1F">低 · 统一适配层</text>
+<text x="408.0" y="423.4" font-size="9.0" fill="#1D1D1F">单价上浮 &gt; 2× 或质量下降 &gt; 3 pp</text>
+<rect x="24.0" y="442.7" width="632.0" height="44.4" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="128.0" y1="442.7" x2="128.0" y2="487.1" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="276.0" y1="442.7" x2="276.0" y2="487.1" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="402.0" y1="442.7" x2="402.0" y2="487.1" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="467.9" font-size="9.4" fill="#1D1D1F" font-weight="bold">存储检索</text>
+<text x="134.0" y="467.9" font-size="9.0" fill="#1D1D1F">MinIO + pgvector</text>
+<text x="282.0" y="467.9" font-size="9.0" fill="#1D1D1F">中 · S3 协议兼容</text>
+<text x="408.0" y="467.9" font-size="9.0" fill="#1D1D1F">磁盘水位 &gt; 80% 或语料超千万级</text>
+<rect x="24.0" y="487.1" width="632.0" height="44.4" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="128.0" y1="487.1" x2="128.0" y2="531.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="276.0" y1="487.1" x2="276.0" y2="531.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="402.0" y1="487.1" x2="402.0" y2="531.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="512.3" font-size="9.4" fill="#1D1D1F" font-weight="bold">语音转写</text>
+<text x="134.0" y="512.3" font-size="9.0" fill="#1D1D1F">faster-whisper</text>
+<text x="282.0" y="512.3" font-size="9.0" fill="#1D1D1F">中 · 需重跑评测集</text>
+<text x="408.0" y="512.3" font-size="9.0" fill="#1D1D1F">字幕覆盖率不足且转写成本超预算</text>
+<rect x="24.0" y="531.6" width="632.0" height="44.4" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="128.0" y1="531.6" x2="128.0" y2="576.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="276.0" y1="531.6" x2="276.0" y2="576.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="402.0" y1="531.6" x2="402.0" y2="576.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="556.8" font-size="9.4" fill="#1D1D1F" font-weight="bold">云服务器</text>
+<text x="134.0" y="556.8" font-size="9.0" fill="#1D1D1F">腾讯云轻量 2C4G5M</text>
+<text x="282.0" y="556.8" font-size="9.0" fill="#1D1D1F">低 · Compose 可迁移</text>
+<text x="408.0" y="556.8" font-size="9.0" fill="#1D1D1F">续费由 ¥188/年 跳涨至 ¥65/月</text>
+<text x="24.0" y="598.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　学术、工程与合规依据</text>
+<rect x="24.0" y="604.0" width="205.3" height="80.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,609.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 5 C6 3 9 4 12 6 C15 4 18 3 22 5 L22 19 C18 17 15 18 12 20 C9 18 6 17 2 19 Z"/><path d="M12 6 L12 20"/></g>
+<text x="50.0" y="621.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">学术依据</text>
+<text x="32.0" y="637.0" font-size="8.8" fill="#3A3A3C">Ebbinghaus / SM-2 / FSRS</text>
+<text x="32.0" y="650.0" font-size="8.8" fill="#3A3A3C">Cepeda 2006 / Roediger 2006</text>
+<text x="32.0" y="663.0" font-size="8.8" fill="#3A3A3C">Sweller / Paivio / BKT</text>
+<rect x="237.3" y="604.0" width="205.3" height="80.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,609.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 7 L12 12 L2 7 Z M2 12 L12 17 L22 12 M2 17 L12 22 L22 17"/></g>
+<text x="263.3" y="621.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">工程依据</text>
+<text x="245.3" y="637.0" font-size="8.8" fill="#3A3A3C">BiliNote（MIT）三级取材链</text>
+<text x="245.3" y="650.0" font-size="8.8" fill="#3A3A3C">架构评审 8 条技术债</text>
+<text x="245.3" y="663.0" font-size="8.8" fill="#3A3A3C">40 份评测集 + G1–G7</text>
+<rect x="450.7" y="604.0" width="205.3" height="80.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,609.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L21 6 L21 12 C21 17 17 21 12 22 C7 21 3 17 3 12 L3 6 Z"/><path d="M8 12 L11 15 L16 9"/></g>
+<text x="476.7" y="621.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">合规依据</text>
+<text x="458.7" y="637.0" font-size="8.8" fill="#3A3A3C">境内节点 ICP 备案（G7）</text>
+<text x="458.7" y="650.0" font-size="8.8" fill="#3A3A3C">素材版权与引用溯源</text>
+<text x="458.7" y="663.0" font-size="8.8" fill="#3A3A3C">HttpOnly Cookie + Argon2id</text>
+<text x="24.0" y="706.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　外部支持与验证网络</text>
+<rect x="24.0" y="712.0" width="205.3" height="76.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,717.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 5 C6 3 9 4 12 6 C15 4 18 3 22 5 L22 19 C18 17 15 18 12 20 C9 18 6 17 2 19 Z"/><path d="M12 6 L12 20"/></g>
+<text x="50.0" y="729.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">学术评审</text>
+<text x="32.0" y="745.0" font-size="8.8" fill="#3A3A3C">导师开题 / 中期 / 答辩</text>
+<text x="32.0" y="758.0" font-size="8.8" fill="#3A3A3C">文献口径并列声明</text>
+<text x="32.0" y="771.0" font-size="8.8" fill="#3A3A3C">答辩委员会质询</text>
+<rect x="237.3" y="712.0" width="205.3" height="76.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,717.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 18 C3 18 2 15 4 13 C3 10 6 8 9 9 C10 5 16 5 17 9 C21 9 22 13 20 15 C21 17 19 18 18 18 Z"/></g>
+<text x="263.3" y="729.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">产业资源</text>
+<text x="245.3" y="745.0" font-size="8.8" fill="#3A3A3C">云厂商公开文档与报价</text>
+<text x="245.3" y="758.0" font-size="8.8" fill="#3A3A3C">开源社区 issue / MIT 参照</text>
+<text x="245.3" y="771.0" font-size="8.8" fill="#3A3A3C">2026-11-14 官网实采</text>
+<rect x="450.7" y="712.0" width="205.3" height="76.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,717.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#0071E3"/></g>
+<text x="476.7" y="729.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">验证样本</text>
+<text x="458.7" y="745.0" font-size="8.8" fill="#3A3A3C">20 人内测（规划）</text>
+<text x="458.7" y="758.0" font-size="8.8" fill="#3A3A3C">40 份 AI 评测集</text>
+<text x="458.7" y="771.0" font-size="8.8" fill="#3A3A3C">四条主路径可用性验收</text>
+<rect x="24.0" y="798.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,804.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="56.0" y="816.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">诚实边界与证据回溯（与 图 8-1 / 图 9-2 联动）</text>
+<text x="36.0" y="833.0" font-size="9.0" fill="#48484A">无一手用户调研、无模型微调、无高并发与商业化运营经验；三项缺口在 图 8-1 均给出补齐或规避方式，不虚构团队与外包。</text>
+<text x="36.0" y="847.0" font-size="9.0" fill="#48484A">全部能力主张绑定到可核验交付物与 BP 重编图号；进度与风险证据见 图 9-1 / 图 9-2，答辩可逐图回溯。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：「门禁中」为毕设周期内待验证项，其余为已随文档交付；替换成本为定性评估，未引入新报价；20 人内测为规划样本。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 8-2　能力证据与外部依赖可替换性评估</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 8-2 Capability evidence, external dependencies and substitutability</text>
+</svg>

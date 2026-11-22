@@ -1,0 +1,155 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">素材接入与多源解析 · 功能域展开</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Collection &amp; Multi-source Ingestion / Multi-source Ingestion Tree / 收集与入口 · 6 项功能 · 主线 3 / V1.5 1 / 规划池 2</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　入口汇聚与三路分流（多源 → 统一网关 → 解析器）</text>
+<rect x="24.0" y="96.0" width="632.0" height="44.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.5"/>
+<text x="32.0" y="109.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">域定位：把「想学」到「开始处理」的摩擦降到最低</text>
+<text x="32.0" y="123.0" font-size="8.2" fill="#3A3A3C">对应痛点 ① 信息过载 · ⑥ 成本不可控　｜　所有素材经统一入口提交，避免多套解析逻辑</text>
+<text x="32.0" y="136.0" font-size="8.0" fill="#6E6E73">收集与入口 · 6 项功能 · 主线 3 / V1.5 1 / 规划池 2</text>
+<text x="24.0" y="152.0" font-size="8.6" fill="#48484A" font-weight="bold">多源汇聚 → 统一 task 网关 → 三路解析器：一条状态机覆盖全部入口</text>
+<rect x="24.0" y="160.0" width="160.0" height="29.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(29.0,166.0) scale(0.5)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M10 9 L16 12 L10 15 Z"/></g>
+<text x="48.0" y="173.0" font-size="8.6" fill="#0071E3" font-weight="bold">B 站视频链接</text>
+<text x="48.0" y="184.0" font-size="7.8" fill="#6E6E73">F01 · 平台字幕优先</text>
+<line x1="184.0" y1="174.5" x2="196.0" y2="240.0" stroke="#86868B" stroke-width="0.8"/>
+<rect x="24.0" y="193.0" width="160.0" height="29.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(29.0,199.0) scale(0.5)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="48.0" y="206.0" font-size="8.6" fill="#1D1D1F" font-weight="bold">本地视频 / PDF / 讲义</text>
+<text x="48.0" y="217.0" font-size="7.8" fill="#6E6E73">F02 · 预签名直传</text>
+<line x1="184.0" y1="207.5" x2="196.0" y2="240.0" stroke="#86868B" stroke-width="0.8"/>
+<rect x="24.0" y="226.0" width="160.0" height="29.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(29.0,232.0) scale(0.5)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 18 C3 18 2 15 4 13 C3 10 6 8 9 9 C10 5 16 5 17 9 C21 9 22 13 20 15 C21 17 19 18 18 18 Z"/></g>
+<text x="48.0" y="239.0" font-size="8.6" fill="#1D1D1F" font-weight="bold">YouTube 链接</text>
+<text x="48.0" y="250.0" font-size="7.8" fill="#6E6E73">F04 · V1.5 扩展渠道</text>
+<line x1="184.0" y1="240.5" x2="196.0" y2="240.0" stroke="#86868B" stroke-width="0.8"/>
+<rect x="24.0" y="259.0" width="160.0" height="29.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(29.0,265.0) scale(0.5)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 7 L12 12 L2 7 Z M2 12 L12 17 L22 12 M2 17 L12 22 L22 17"/></g>
+<text x="48.0" y="272.0" font-size="8.6" fill="#1D1D1F" font-weight="bold">插件收藏 / 播放列表</text>
+<text x="48.0" y="283.0" font-size="7.8" fill="#6E6E73">F05 / F06 · 规划池</text>
+<line x1="184.0" y1="273.5" x2="196.0" y2="240.0" stroke="#86868B" stroke-width="0.8"/>
+<rect x="196.0" y="194.0" width="176.0" height="92.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="284.0" y="214.0" font-size="10.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">统一 task 网关</text>
+<text x="205.0" y="232.0" font-size="8.0" fill="#3A3A3C">同一 task 记录 / 同一配额校验</text>
+<text x="205.0" y="245.0" font-size="8.0" fill="#3A3A3C">状态机唯一，避免多套解析逻辑</text>
+<text x="205.0" y="258.0" font-size="8.0" fill="#3A3A3C">预签名 URL → object_key + 校验</text>
+<text x="205.0" y="271.0" font-size="8.0" fill="#3A3A3C">Redis List 下发 job_id（K2）</text>
+<rect x="392.0" y="160.0" width="264.0" height="41.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="400.0" y="175.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">1　视频链</text>
+<text x="400.0" y="188.0" font-size="8.0" fill="#3A3A3C">字幕 → 音轨 → 转写，命中即短路</text>
+<text x="648.0" y="188.0" font-size="7.8" fill="#6E6E73" text-anchor="end">带时间戳文本</text>
+<line x1="372.0" y1="240.0" x2="392.0" y2="180.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="392.0" y="205.0" width="264.0" height="41.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="400.0" y="220.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">2　文档链</text>
+<text x="400.0" y="233.0" font-size="8.0" fill="#3A3A3C">PyMuPDF 抽取文本与版式</text>
+<text x="648.0" y="233.0" font-size="7.8" fill="#6E6E73" text-anchor="end">页码定位单元</text>
+<line x1="372.0" y1="240.0" x2="392.0" y2="225.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<rect x="392.0" y="250.0" width="264.0" height="41.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="400.0" y="265.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">3　图像链</text>
+<text x="400.0" y="278.0" font-size="8.0" fill="#3A3A3C">PaddleOCR 扫描讲义（V1.5）</text>
+<text x="648.0" y="278.0" font-size="7.8" fill="#6E6E73" text-anchor="end">OCR 文本 + 页码</text>
+<line x1="372.0" y1="240.0" x2="392.0" y2="270.0" stroke="#86868B" stroke-width="0.8" marker-end="url(#ar)"/>
+<text x="24.0" y="300.0" font-size="8.0" fill="#3A3A3C">验收：三条链路各 10 个真实样本跑通（G1）；1 GB 文件不占 API 进程内存（图 4-4）。</text>
+<text x="24.0" y="326.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　六项功能 3×2 宫格（编号 / 说明 / 理论锚点 / 出处）</text>
+<rect x="24.0" y="332.0" width="205.3" height="85.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="24.0" y="332.0" width="205.3" height="18.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="31.0" y="345.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">F01　·　主线</text>
+<text x="31.0" y="366.0" font-size="9.2" fill="#0071E3" font-weight="bold">B 站视频链接解析</text>
+<text x="31.0" y="383.0" font-size="8.0" fill="#3A3A3C">提交链接自动取材，平台字幕优先</text>
+<text x="31.0" y="399.0" font-size="7.9" fill="#6E6E73">依据：认知负荷理论 Sweller 1988</text>
+<text x="31.0" y="411.0" font-size="7.6" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="237.3" y="332.0" width="205.3" height="85.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="237.3" y="332.0" width="205.3" height="18.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="244.3" y="345.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">F02　·　主线</text>
+<text x="244.3" y="366.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">本地文件上传</text>
+<text x="244.3" y="383.0" font-size="8.0" fill="#3A3A3C">视频/PDF/讲义经预签名直传对象存储</text>
+<text x="244.3" y="399.0" font-size="7.9" fill="#6E6E73">依据：经济性原则 · 直传不进 API</text>
+<text x="244.3" y="411.0" font-size="7.6" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="450.6" y="332.0" width="205.3" height="85.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="450.6" y="332.0" width="205.3" height="18.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="457.6" y="345.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">F03　·　主线</text>
+<text x="457.6" y="366.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">待整理清单</text>
+<text x="457.6" y="383.0" font-size="8.0" fill="#3A3A3C">收集与整理之间的缓冲区，先攒后理</text>
+<text x="457.6" y="399.0" font-size="7.9" fill="#6E6E73">依据：工作记忆 4±1（每屏 ≤4 项）</text>
+<text x="457.6" y="411.0" font-size="7.6" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="24.0" y="425.0" width="205.3" height="85.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="24.0" y="425.0" width="205.3" height="18.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="31.0" y="438.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">F04　·　V1.5</text>
+<text x="31.0" y="459.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">YouTube 链接解析</text>
+<text x="31.0" y="476.0" font-size="8.0" fill="#3A3A3C">考研公开课与英语听力素材源</text>
+<text x="31.0" y="492.0" font-size="7.9" fill="#6E6E73">依据：第 11 周出口条件降 V1.5</text>
+<text x="31.0" y="504.0" font-size="7.6" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="237.3" y="425.0" width="205.3" height="85.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="237.3" y="425.0" width="205.3" height="18.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="244.3" y="438.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">F05　·　规划池</text>
+<text x="244.3" y="459.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">浏览器插件一键收藏</text>
+<text x="244.3" y="476.0" font-size="8.0" fill="#3A3A3C">刷到网课视频一键收进待整理清单</text>
+<text x="244.3" y="492.0" font-size="7.9" fill="#6E6E73">依据：降低收集摩擦（规划池）</text>
+<text x="244.3" y="504.0" font-size="7.6" fill="#86868B">出处：产品报告 第四章（八）</text>
+<rect x="450.6" y="425.0" width="205.3" height="85.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<rect x="450.6" y="425.0" width="205.3" height="18.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="457.6" y="438.0" font-size="8.4" fill="#1D1D1F" font-weight="bold">F06　·　规划池</text>
+<text x="457.6" y="459.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">播放列表批量整理</text>
+<text x="457.6" y="476.0" font-size="8.0" fill="#3A3A3C">按播放列表整理一门课，对齐科目组织</text>
+<text x="457.6" y="492.0" font-size="7.9" fill="#6E6E73">依据：按科目组织对齐复习计划</text>
+<text x="457.6" y="504.0" font-size="7.6" fill="#86868B">出处：产品报告 第四章（八）</text>
+<text x="24.0" y="532.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　设计理论 · 优化手段 · 验收口径</text>
+<rect x="24.0" y="538.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="555.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">设计理论 / 依据</text>
+<text x="206.0" y="555.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">落地参数与优化手段</text>
+<text x="440.0" y="555.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">可核验验收口径</text>
+<line x1="200.0" y1="538.0" x2="200.0" y2="564.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="434.0" y1="538.0" x2="434.0" y2="564.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="564.0" width="632.0" height="34.3" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="564.0" x2="200.0" y2="598.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="564.0" x2="434.0" y2="598.3" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="584.2" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">认知负荷理论 Sweller 1988</text>
+<text x="206.0" y="584.2" font-size="8.8" fill="#1D1D1F">统一入口、减少切换与重复选择</text>
+<text x="440.0" y="584.2" font-size="8.8" fill="#1D1D1F">三条解析链路各 10 个样本跑通（G1）</text>
+<rect x="24.0" y="598.3" width="632.0" height="34.3" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="598.3" x2="200.0" y2="632.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="598.3" x2="434.0" y2="632.7" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="618.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">工作记忆 4±1 Cowan 2001</text>
+<text x="206.0" y="618.5" font-size="8.8" fill="#1D1D1F">待整理清单每屏聚焦 ≤4 项待办</text>
+<text x="440.0" y="618.5" font-size="8.8" fill="#1D1D1F">今日任务卡只给三件事</text>
+<rect x="24.0" y="632.7" width="632.0" height="34.3" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="200.0" y1="632.7" x2="200.0" y2="667.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="434.0" y1="632.7" x2="434.0" y2="667.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="652.8" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">经济性原则</text>
+<text x="206.0" y="652.8" font-size="8.8" fill="#1D1D1F">字幕优先、直传不进 API 进程</text>
+<text x="440.0" y="652.8" font-size="8.8" fill="#1D1D1F">1 GB 文件不占 API 内存（图 4-4）</text>
+<text x="24.0" y="689.0" font-size="10.5" fill="#0071E3" font-weight="bold">D　域级关键数据与验收锚点</text>
+<rect x="24.0" y="695.0" width="205.3" height="76.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,700.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 7 L12 12 L2 7 Z M2 12 L12 17 L22 12 M2 17 L12 22 L22 17"/></g>
+<text x="50.0" y="712.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">入口规模</text>
+<text x="32.0" y="728.0" font-size="8.4" fill="#3A3A3C">4 类提交入口 / 3 条解析链路</text>
+<text x="32.0" y="741.0" font-size="8.4" fill="#3A3A3C">V1.0 必达 F01–F03</text>
+<text x="32.0" y="754.0" font-size="8.4" fill="#3A3A3C">扩展渠道 F04–F06</text>
+<rect x="237.3" y="695.0" width="205.3" height="76.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,700.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 7 L12 12 L16 7 M12 12 L12 18 M8 13 L16 13 M8 16 L16 16"/></g>
+<text x="263.3" y="712.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">成本护栏</text>
+<text x="245.3" y="728.0" font-size="8.4" fill="#3A3A3C">预签名直传 1 GB 文件</text>
+<text x="245.3" y="741.0" font-size="8.4" fill="#3A3A3C">不进 API 进程内存</text>
+<text x="245.3" y="754.0" font-size="8.4" fill="#3A3A3C">字幕优先取材降本</text>
+<rect x="450.7" y="695.0" width="205.3" height="76.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,700.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 12 L11 16 L17 8"/></g>
+<text x="476.7" y="712.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">验收锚点</text>
+<text x="458.7" y="728.0" font-size="8.4" fill="#3A3A3C">每链路 10 个真实样本</text>
+<text x="458.7" y="741.0" font-size="8.4" fill="#3A3A3C">G1 全链路跑通</text>
+<text x="458.7" y="754.0" font-size="8.4" fill="#3A3A3C">task 状态机唯一</text>
+<rect x="24.0" y="781.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,787.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="56.0" y="799.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">依赖关系与版本说明</text>
+<text x="36.0" y="816.0" font-size="9.0" fill="#48484A">F01/F02 为 V1.0 必达入口；F04–F06 属扩展渠道，按第 11 周出口条件决定降 V1.5 或移入规划池。</text>
+<text x="36.0" y="830.0" font-size="9.0" fill="#48484A">所有入口共用同一 task 记录与配额校验，避免「多入口、多套状态机」；详见技术方案 2.6 与图 4-4。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：落点「主线」＝V1.0 必达；V1.5＝二期；规划池＝暂不实现；F 编号与图 3-2 一致。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 3-4　功能域一：素材接入与多源解析</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 3-4 Domain I: collection and multi-source ingestion</text>
+</svg>

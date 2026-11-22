@@ -1,0 +1,140 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">AI 治理与风险管控总纲</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">AI Governance / Four Control Domains / Closed Loop / Auditability</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　AI 治理四域控制矩阵</text>
+<rect x="24.0" y="96.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">治理域</text>
+<text x="118.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">控制点</text>
+<text x="234.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">阈值 / 规则</text>
+<text x="374.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">触发动作</text>
+<text x="518.0" y="113.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">留痕证据</text>
+<line x1="112.0" y1="96.0" x2="112.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="228.0" y1="96.0" x2="228.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="368.0" y1="96.0" x2="368.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="512.0" y1="96.0" x2="512.0" y2="122.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="122.0" width="632.0" height="48.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="122.0" x2="112.0" y2="170.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="228.0" y1="122.0" x2="228.0" y2="170.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="368.0" y1="122.0" x2="368.0" y2="170.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="512.0" y1="122.0" x2="512.0" y2="170.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="149.0" font-size="9.1" fill="#1D1D1F" font-weight="bold">成本</text>
+<text x="118.0" y="149.0" font-size="8.7" fill="#1D1D1F">日成本阈值</text>
+<text x="234.0" y="149.0" font-size="8.7" fill="#1D1D1F">GFLC_DAILY_COST_CNY 可配置</text>
+<text x="374.0" y="149.0" font-size="8.7" fill="#1D1D1F">告警 + 自动降档</text>
+<text x="518.0" y="149.0" font-size="8.7" fill="#1D1D1F">usage 表 / 日账单</text>
+<rect x="24.0" y="170.0" width="632.0" height="48.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="170.0" x2="112.0" y2="218.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="228.0" y1="170.0" x2="228.0" y2="218.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="368.0" y1="170.0" x2="368.0" y2="218.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="512.0" y1="170.0" x2="512.0" y2="218.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="197.0" font-size="9.1" fill="#1D1D1F" font-weight="bold">成本</text>
+<text x="118.0" y="197.0" font-size="8.7" fill="#1D1D1F">单任务配额</text>
+<text x="234.0" y="197.0" font-size="8.7" fill="#1D1D1F">单任务 5 GB / 60 min 硬超时</text>
+<text x="374.0" y="197.0" font-size="8.7" fill="#1D1D1F">置 failed + 保留已完成段</text>
+<text x="518.0" y="197.0" font-size="8.7" fill="#1D1D1F">task 状态机</text>
+<rect x="24.0" y="218.0" width="632.0" height="48.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="218.0" x2="112.0" y2="266.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="228.0" y1="218.0" x2="228.0" y2="266.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="368.0" y1="218.0" x2="368.0" y2="266.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="512.0" y1="218.0" x2="512.0" y2="266.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="245.0" font-size="9.1" fill="#1D1D1F" font-weight="bold">质量</text>
+<text x="118.0" y="245.0" font-size="8.7" fill="#1D1D1F">输出契约</text>
+<text x="234.0" y="245.0" font-size="8.7" fill="#1D1D1F">JSON Schema 必填字段 100%</text>
+<text x="374.0" y="245.0" font-size="8.7" fill="#1D1D1F">校验失败重跑 / 降级</text>
+<text x="518.0" y="245.0" font-size="8.7" fill="#1D1D1F">40 份评测集回归</text>
+<rect x="24.0" y="266.0" width="632.0" height="48.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="266.0" x2="112.0" y2="314.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="228.0" y1="266.0" x2="228.0" y2="314.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="368.0" y1="266.0" x2="368.0" y2="314.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="512.0" y1="266.0" x2="512.0" y2="314.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="293.0" font-size="9.1" fill="#1D1D1F" font-weight="bold">质量</text>
+<text x="118.0" y="293.0" font-size="8.7" fill="#1D1D1F">幻觉与溯源</text>
+<text x="234.0" y="293.0" font-size="8.7" fill="#1D1D1F">每个知识点必带定位</text>
+<text x="374.0" y="293.0" font-size="8.7" fill="#1D1D1F">缺字段不落库</text>
+<text x="518.0" y="293.0" font-size="8.7" fill="#1D1D1F">来源跳转日志</text>
+<rect x="24.0" y="314.0" width="632.0" height="48.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="314.0" x2="112.0" y2="362.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="228.0" y1="314.0" x2="228.0" y2="362.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="368.0" y1="314.0" x2="368.0" y2="362.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="512.0" y1="314.0" x2="512.0" y2="362.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="341.0" font-size="9.1" fill="#1D1D1F" font-weight="bold">安全</text>
+<text x="118.0" y="341.0" font-size="8.7" fill="#1D1D1F">密钥与越权</text>
+<text x="234.0" y="341.0" font-size="8.7" fill="#1D1D1F">密钥不落前端、白名单查询</text>
+<text x="374.0" y="341.0" font-size="8.7" fill="#1D1D1F">越权/空集统一拒答</text>
+<text x="518.0" y="341.0" font-size="8.7" fill="#1D1D1F">审计日志</text>
+<rect x="24.0" y="362.0" width="632.0" height="48.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="112.0" y1="362.0" x2="112.0" y2="410.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="228.0" y1="362.0" x2="228.0" y2="410.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="368.0" y1="362.0" x2="368.0" y2="410.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="512.0" y1="362.0" x2="512.0" y2="410.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="389.0" font-size="9.1" fill="#1D1D1F" font-weight="bold">可观测</text>
+<text x="118.0" y="389.0" font-size="8.7" fill="#1D1D1F">心跳与死信</text>
+<text x="234.0" y="389.0" font-size="8.7" fill="#1D1D1F">超时未心跳回收、重试入死信</text>
+<text x="374.0" y="389.0" font-size="8.7" fill="#1D1D1F">人工排查后清理</text>
+<text x="518.0" y="389.0" font-size="8.7" fill="#1D1D1F">任务态快照</text>
+<rect x="24.0" y="420.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="438.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">① 事前：配额与契约</text>
+<text x="190.0" y="438.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">② 事中：路由与降级</text>
+<text x="348.0" y="438.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">③ 事后：评测与审计</text>
+<text x="506.0" y="438.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">④ 兜底：人工复核</text>
+<text x="24.0" y="468.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　治理闭环与责任边界</text>
+<rect x="24.0" y="474.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="491.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">环节</text>
+<text x="150.0" y="491.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">自动机制</text>
+<text x="406.0" y="491.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">人工介入条件</text>
+<line x1="144.0" y1="474.0" x2="144.0" y2="500.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="400.0" y1="474.0" x2="400.0" y2="500.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="500.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="500.0" x2="144.0" y2="550.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="500.0" x2="400.0" y2="550.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="528.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">预算</text>
+<text x="150.0" y="528.0" font-size="9.0" fill="#1D1D1F">阈值告警 → 降档 → 强档限流</text>
+<text x="406.0" y="528.0" font-size="9.0" fill="#1D1D1F">连续 3 日超阈值需人工调整配置</text>
+<rect x="24.0" y="550.0" width="632.0" height="50.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="550.0" x2="144.0" y2="600.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="550.0" x2="400.0" y2="600.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="578.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">质量</text>
+<text x="150.0" y="578.0" font-size="9.0" fill="#1D1D1F">契约校验 + 评测集回归</text>
+<text x="406.0" y="578.0" font-size="9.0" fill="#1D1D1F">任一指标较上版下降 &gt;3 pp 触发回滚</text>
+<rect x="24.0" y="600.0" width="632.0" height="50.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="144.0" y1="600.0" x2="144.0" y2="650.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="400.0" y1="600.0" x2="400.0" y2="650.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="628.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">异常</text>
+<text x="150.0" y="628.0" font-size="9.0" fill="#1D1D1F">指数退避 + checkpoint + 死信队列</text>
+<text x="406.0" y="628.0" font-size="9.0" fill="#1D1D1F">死信队列条目必须人工归因后清理</text>
+<text x="24.0" y="672.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　三条治理原则</text>
+<rect x="24.0" y="678.0" width="205.3" height="88.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,683.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L21 6 L21 12 C21 17 17 21 12 22 C7 21 3 17 3 12 L3 6 Z"/><path d="M8 12 L11 15 L16 9"/></g>
+<text x="50.0" y="695.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">默认不信任输出</text>
+<text x="32.0" y="711.0" font-size="8.8" fill="#3A3A3C">Schema 强校验</text>
+<text x="32.0" y="724.0" font-size="8.8" fill="#3A3A3C">来源必填</text>
+<text x="32.0" y="737.0" font-size="8.8" fill="#3A3A3C">低置信升级强档</text>
+<rect x="237.3" y="678.0" width="205.3" height="88.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,683.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M20 9 A8 8 0 0 0 5 8 M4 4 L4 9 L9 9 M4 15 A8 8 0 0 0 19 16 M20 20 L20 15 L15 15"/></g>
+<text x="263.3" y="695.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">失败可控可恢复</text>
+<text x="245.3" y="711.0" font-size="8.8" fill="#3A3A3C">断点续传</text>
+<text x="245.3" y="724.0" font-size="8.8" fill="#3A3A3C">死信隔离</text>
+<text x="245.3" y="737.0" font-size="8.8" fill="#3A3A3C">版本快照回滚</text>
+<rect x="450.7" y="678.0" width="205.3" height="88.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,683.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 7 L12 12 L16 7 M12 12 L12 18 M8 13 L16 13 M8 16 L16 16"/></g>
+<text x="476.7" y="695.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">成本可解释</text>
+<text x="458.7" y="711.0" font-size="8.8" fill="#3A3A3C">逐次调用记账</text>
+<text x="458.7" y="724.0" font-size="8.8" fill="#3A3A3C">日成本可视</text>
+<text x="458.7" y="737.0" font-size="8.8" fill="#3A3A3C">阈值可配置可审计</text>
+<rect x="24.0" y="776.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,782.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 9 C9 6 15 6 15 9 C15 12 12 12 12 15"/><circle cx="12" cy="18.5" r="0.8" fill="#0071E3"/></g>
+<text x="56.0" y="794.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">答辩可追问点</text>
+<text x="36.0" y="811.0" font-size="9.0" fill="#48484A">问：模型出错怎么办？—— 输出契约先拦，评测集回归兜底，指标下降 &gt;3 pp 回滚到上一版本（G4）。</text>
+<text x="36.0" y="825.0" font-size="9.0" fill="#48484A">问：账单失控怎么办？—— 日阈值自动降档而非拒绝服务，强档单独配额，超硬超时直接置失败并保留已完成段。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：阈值名沿用技术方案配置常量；G4＝版本可回滚门禁；◆ 架构评审新增＝心跳回收与死信队列。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 5-4　AI 治理与风险管控总纲</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 5-4 AI governance and risk control framework</text>
+</svg>

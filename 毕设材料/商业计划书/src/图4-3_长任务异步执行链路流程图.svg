@@ -1,0 +1,164 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">长任务异步执行链路流程图拆解</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">第二章 · 四泳道 + 标准流程符号 + 阶段带 + 参数矩阵 · 技术方案 2.5</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　四泳道标准流程图：长任务从提交到产物落库（◆ 架构评审拍板）</text>
+<rect x="24.0" y="88.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="88.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="109.0" font-size="9.2" fill="#0071E3" font-weight="bold">① 浏览器</text>
+<text x="30.0" y="125.0" font-size="8.4" fill="#6E6E73">React SPA</text>
+<rect x="24.0" y="176.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="176.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="197.0" font-size="9.2" fill="#0071E3" font-weight="bold">② API</text>
+<text x="30.0" y="213.0" font-size="8.4" fill="#6E6E73">FastAPI</text>
+<rect x="24.0" y="264.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="264.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="285.0" font-size="9.2" fill="#0071E3" font-weight="bold">③ Redis</text>
+<text x="30.0" y="301.0" font-size="8.4" fill="#6E6E73">List / 状态</text>
+<rect x="24.0" y="352.0" width="632.0" height="88.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="352.0" width="78.0" height="88.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="373.0" font-size="9.2" fill="#0071E3" font-weight="bold">④ Worker</text>
+<text x="30.0" y="389.0" font-size="8.4" fill="#6E6E73">独立进程 + PG</text>
+<rect x="110" y="110" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="160.0" y="129.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">提交任务</text>
+<text x="160.0" y="140.6" font-size="8.4" fill="#48484A" text-anchor="middle">POST /tasks</text>
+<rect x="110.0" y="198.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="160.0" y="217.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">鉴权 + 配额</text>
+<text x="160.0" y="228.6" font-size="8.4" fill="#48484A" text-anchor="middle">生成 task_id</text>
+<path d="M 268.0,198 L 318,220.0 L 268.0,242 L 218,220.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="268.0" y="217.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">体积判定</text>
+<text x="268.0" y="228.6" font-size="8.4" fill="#48484A" text-anchor="middle">&gt; 阈值？</text>
+<path d="M 227,286 L 318,286 L 309,330 L 218,330 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="268.0" y="305.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">LPUSH</text>
+<text x="268.0" y="316.6" font-size="8.4" fill="#48484A" text-anchor="middle">载荷 ≤4 KB</text>
+<rect x="326" y="198" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="376.0" y="217.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">返回 202</text>
+<text x="376.0" y="228.6" font-size="8.4" fill="#48484A" text-anchor="middle">task_id / 轮询串</text>
+<rect x="110.0" y="374.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="160.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">BRPOPLPUSH</text>
+<text x="160.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">取任务 + 心跳</text>
+<rect x="218.0" y="374.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="268.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">执行管线</text>
+<text x="268.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">checkpoint 分段</text>
+<path d="M 376.0,374 L 426,396.0 L 376.0,418 L 326,396.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="376.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">段失败？</text>
+<text x="376.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">重试 ≤3</text>
+<path d="M 443,374 L 534,374 L 525,418 L 434,418 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="484.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">产物写 PG</text>
+<text x="484.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">缓存 + 版本</text>
+<path d="M 443,286 L 534,286 L 525,330 L 434,330 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="484.0" y="305.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">状态回写</text>
+<text x="484.0" y="316.6" font-size="8.4" fill="#48484A" text-anchor="middle">done / failed</text>
+<rect x="434" y="110" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="484.0" y="129.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">拿到产物</text>
+<text x="484.0" y="140.6" font-size="8.4" fill="#48484A" text-anchor="middle">渲染 / 导出</text>
+<rect x="542.0" y="110.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="592.0" y="129.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">轮询 GET</text>
+<text x="592.0" y="140.6" font-size="8.4" fill="#48484A" text-anchor="middle">3→15 s 退避</text>
+<path d="M 551,374 L 642,374 L 633,418 L 542,418 Z" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="592.0" y="393.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">死信队列</text>
+<text x="592.0" y="404.6" font-size="8.4" fill="#48484A" text-anchor="middle">人工排查</text>
+<line x1="160.0" y1="154.0" x2="160.0" y2="198.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="210.0" y1="220.0" x2="218.0" y2="220.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="268.0" y1="242.0" x2="268.0" y2="286.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="318.0" y1="220.0" x2="326.0" y2="220.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="268.0" y1="330.0" x2="268.0" y2="374.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="210.0" y1="396.0" x2="218.0" y2="396.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="318.0" y1="396.0" x2="326.0" y2="396.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="426.0" y1="396.0" x2="434.0" y2="396.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="484.0" y1="374.0" x2="484.0" y2="330.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<path d="M 484,286 L 484,154" fill="none" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="534.0" y1="132.0" x2="542.0" y2="132.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<path d="M 592,154 L 592,308 L 534,308" fill="none" stroke="#1D1D1F" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="596.0" y="240.0" font-size="8.4" fill="#6E6E73">状态查询</text>
+<path d="M 376,418 L 376,430 L 592,430 L 592,418" fill="none" stroke="#B4472F" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="386.0" y="426.0" font-size="8.4" fill="#B4472F">重试耗尽 → 死信（不无限重试）</text>
+<text x="332.0" y="278.0" font-size="8.4" fill="#B4472F">K1 大文件走图 4-4</text>
+<text x="438.0" y="278.0" font-size="8.4" fill="#6E6E73">K2 入队 · K3 反馈</text>
+<rect x="24.0" y="446.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">阶段 1　提交与鉴权</text>
+<text x="190.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">阶段 2　入队与返回</text>
+<text x="348.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">阶段 3　异步执行</text>
+<text x="506.0" y="462.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">阶段 4　轮询与交付</text>
+<text x="24.0" y="484.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　关键参数与失败分支（逐项可核验）</text>
+<rect x="24.0" y="492.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">项目</text>
+<text x="126.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">拍板值</text>
+<text x="326.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">理由与落点</text>
+<line x1="120.0" y1="492.0" x2="120.0" y2="518.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="320.0" y1="492.0" x2="320.0" y2="518.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="518.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="518.0" x2="120.0" y2="548.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="518.0" x2="320.0" y2="548.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="536.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">队列原语</text>
+<text x="126.0" y="536.0" font-size="9.0" fill="#1D1D1F">Redis List · BRPOPLPUSH</text>
+<text x="326.0" y="536.0" font-size="9.0" fill="#1D1D1F">取出即进 processing 备份队列，Worker 崩溃可由定时任务回收</text>
+<rect x="24.0" y="548.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="548.0" x2="120.0" y2="578.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="548.0" x2="320.0" y2="578.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="566.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">载荷上限</text>
+<text x="126.0" y="566.0" font-size="9.0" fill="#1D1D1F">≤4 KB（仅 ID / key / 参数）</text>
+<text x="326.0" y="566.0" font-size="9.0" fill="#1D1D1F">大对象一律走 MinIO，不把视频字节塞进 Redis</text>
+<rect x="24.0" y="578.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="578.0" x2="120.0" y2="608.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="578.0" x2="320.0" y2="608.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="596.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">硬超时</text>
+<text x="126.0" y="596.0" font-size="9.0" fill="#1D1D1F">GFLC_TASK_TIMEOUT_MIN = 60 min</text>
+<text x="326.0" y="596.0" font-size="9.0" fill="#1D1D1F">超时置 failed 并保留已完成段，不整单丢弃</text>
+<rect x="24.0" y="608.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="608.0" x2="120.0" y2="638.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="608.0" x2="320.0" y2="638.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="626.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">断点续传</text>
+<text x="126.0" y="626.0" font-size="9.0" fill="#1D1D1F">按段 checkpoint 写 PG</text>
+<text x="326.0" y="626.0" font-size="9.0" fill="#1D1D1F">失败重跑只补未完成段（吸收 BiliNote 模式）</text>
+<rect x="24.0" y="638.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="638.0" x2="120.0" y2="668.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="638.0" x2="320.0" y2="668.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="656.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">并发隔离</text>
+<text x="126.0" y="656.0" font-size="9.0" fill="#1D1D1F">WORKER_CONCURRENCY = 4</text>
+<text x="326.0" y="656.0" font-size="9.0" fill="#1D1D1F">API 进程不跑 CPU 密集管线；超长视频 P1 分片</text>
+<rect x="24.0" y="668.0" width="632.0" height="30.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="668.0" x2="120.0" y2="698.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="668.0" x2="320.0" y2="698.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="686.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">前端轮询</text>
+<text x="126.0" y="686.0" font-size="9.0" fill="#1D1D1F">3 s→15 s 退避，上限 5 min</text>
+<text x="326.0" y="686.0" font-size="9.0" fill="#1D1D1F">不引入 WebSocket 长连接，G2 P95 ≤3 s 不被拖垮</text>
+<rect x="24.0" y="698.0" width="632.0" height="30.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="120.0" y1="698.0" x2="120.0" y2="728.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="320.0" y1="698.0" x2="320.0" y2="728.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="716.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">异常出口</text>
+<text x="126.0" y="716.0" font-size="9.0" fill="#1D1D1F">重试耗尽 → 独立死信 List</text>
+<text x="326.0" y="716.0" font-size="9.0" fill="#1D1D1F">人工排查后清理；不自动无限重试，避免成本失控</text>
+<text x="24.0" y="738.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　设计依据、状态机与跨图锚定</text>
+<rect x="24.0" y="744.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,749.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2 L12 5 M12 19 L12 22 M2 12 L5 12 M19 12 L22 12 M5 5 L7 7 M17 17 L19 19 M19 5 L17 7 M7 17 L5 19"/></g>
+<text x="50.0" y="761.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">进程隔离依据</text>
+<text x="32.0" y="777.0" font-size="8.5" fill="#3A3A3C">40 min 视频 faster-whisper 转写占满 2 核</text>
+<text x="32.0" y="790.0" font-size="8.5" fill="#3A3A3C">十余分钟；与 G2「P95 ≤3 s」天然互斥，</text>
+<text x="32.0" y="803.0" font-size="8.5" fill="#3A3A3C">故 API / Worker 必须分进程部署</text>
+<rect x="237.3" y="744.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,749.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="263.3" y="761.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">任务状态机</text>
+<text x="245.3" y="777.0" font-size="8.5" fill="#3A3A3C">queued → processing → done；异常转 failed</text>
+<text x="245.3" y="790.0" font-size="8.5" fill="#3A3A3C">→ dead_letter；每次迁移双写 PG 与 Redis，</text>
+<text x="245.3" y="803.0" font-size="8.5" fill="#3A3A3C">前端只读状态快照，不订阅长连接</text>
+<rect x="450.7" y="744.0" width="205.3" height="66.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,749.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 7 L12 12 L2 7 Z M2 12 L12 17 L22 12 M2 17 L12 22 L22 17"/></g>
+<text x="476.7" y="761.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">跨图锚定</text>
+<text x="458.7" y="777.0" font-size="8.5" fill="#3A3A3C">K1 大文件直传见图 4-4；K2 入队、</text>
+<text x="458.7" y="790.0" font-size="8.5" fill="#3A3A3C">K3 任务态反馈见本图；与图 4-1、</text>
+<text x="458.7" y="803.0" font-size="8.5" fill="#3A3A3C">图 3-2、图 6-1 的编号一一对应</text>
+<rect x="24.0" y="818.0" width="632.0" height="40.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<text x="36.0" y="836.0" font-size="8.8" fill="#48484A">注 1：本链路为架构评审拍板项——API 只做鉴权与入队，所有 CPU 密集管线在 Worker 独立进程执行。</text>
+<text x="36.0" y="850.0" font-size="8.8" fill="#48484A">注 2：数据源为技术方案 2.5 / 2.7 节与产品报告第五章（六）架构评审修订；◆ 表示 2026-11 评审新增。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">圆角＝起止　矩形＝处理　菱形＝判定　平行四边形＝数据　虚线＝异步　朱红＝异常出口　◆ 评审拍板</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 4-3　长任务异步执行链路流程图拆解</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 4-3　Flowchart decomposition of the long-running asynchronous task pipeline</text>
+</svg>

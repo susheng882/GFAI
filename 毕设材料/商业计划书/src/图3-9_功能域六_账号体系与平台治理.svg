@@ -1,0 +1,145 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">账号体系与平台治理 · 功能域展开</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Account &amp; Platform Governance / Governance Pyramid &amp; Control Matrix / 平台与账号 · 5 项功能 · 主线 3 / V1.5 2</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　四层治理金字塔 + 治理对照矩阵</text>
+<rect x="24.0" y="96.0" width="632.0" height="44.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.5"/>
+<text x="32.0" y="109.0" font-size="8.8" fill="#1D1D1F" font-weight="bold">域定位：以最小权限与可携带数据建立信任</text>
+<text x="32.0" y="123.0" font-size="8.2" fill="#3A3A3C">对应痛点 ⑥ 成本不可控 · 数据主权与上线合规　｜　把成本、密钥、外链风险收进统一治理面</text>
+<text x="32.0" y="136.0" font-size="8.0" fill="#6E6E73">平台与账号 · 5 项功能 · 主线 3 / V1.5 2</text>
+<text x="24.0" y="152.0" font-size="8.6" fill="#48484A" font-weight="bold">左：四层治理金字塔　｜　右：治理对象 × 控制手段 × 验收出处对照矩阵</text>
+<path d="M 120.0,160.0 L 204.0,160.0 L 223.0,193.0 L 101.0,193.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="162.0" y="181.0" font-size="8.8" fill="#0071E3" text-anchor="middle" font-weight="bold">① 身份与会话</text>
+<path d="M 101.0,196.0 L 223.0,196.0 L 248.0,229.0 L 76.0,229.0 Z" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="162.0" y="217.0" font-size="8.8" fill="#0071E3" text-anchor="middle" font-weight="bold">② 配额与成本</text>
+<path d="M 76.0,232.0 L 248.0,232.0 L 275.0,265.0 L 49.0,265.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="162.0" y="253.0" font-size="8.8" fill="#0071E3" text-anchor="middle" font-weight="bold">③ 任务与审计</text>
+<path d="M 49.0,268.0 L 275.0,268.0 L 300.0,301.0 L 24.0,301.0 Z" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.9"/>
+<text x="162.0" y="289.0" font-size="8.8" fill="#0071E3" text-anchor="middle" font-weight="bold">④ 数据可携带</text>
+<text x="312.0" y="166.0" font-size="8.6" fill="#1D1D1F" font-weight="bold">治理对象 × 控制手段 × 验收出处</text>
+<rect x="312.0" y="172.0" width="344.0" height="18.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="317.0" y="185.0" font-size="8.2" fill="#FFFFFF" font-weight="bold">层</text>
+<text x="373.0" y="185.0" font-size="8.2" fill="#FFFFFF" font-weight="bold">控制手段</text>
+<text x="551.0" y="185.0" font-size="8.2" fill="#FFFFFF" font-weight="bold">验收 / 出处</text>
+<rect x="312.0" y="190.0" width="344.0" height="22.0" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="0.5"/>
+<text x="317.0" y="205.0" font-size="8.0" fill="#48484A" font-weight="bold">身份</text>
+<text x="373.0" y="205.0" font-size="8.0" fill="#48484A">Cookie + Argon2id</text>
+<text x="551.0" y="205.0" font-size="8.0" fill="#48484A">G7 安全域</text>
+<line x1="368.0" y1="190.0" x2="368.0" y2="212.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="546.0" y1="190.0" x2="546.0" y2="212.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<rect x="312.0" y="212.0" width="344.0" height="22.0" fill="#EEF5FD" stroke="#D2D2D7" stroke-width="0.5"/>
+<text x="317.0" y="227.0" font-size="8.0" fill="#48484A" font-weight="bold">成本</text>
+<text x="373.0" y="227.0" font-size="8.0" fill="#48484A">日阈值自动降档</text>
+<text x="551.0" y="227.0" font-size="8.0" fill="#48484A">F35 / 图 5-2</text>
+<line x1="368.0" y1="212.0" x2="368.0" y2="234.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="546.0" y1="212.0" x2="546.0" y2="234.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<rect x="312.0" y="234.0" width="344.0" height="22.0" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="0.5"/>
+<text x="317.0" y="249.0" font-size="8.0" fill="#48484A" font-weight="bold">数据</text>
+<text x="373.0" y="249.0" font-size="8.0" fill="#48484A">全量导出 / 版本快照</text>
+<text x="551.0" y="249.0" font-size="8.0" fill="#48484A">G3 / G4</text>
+<line x1="368.0" y1="234.0" x2="368.0" y2="256.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="546.0" y1="234.0" x2="546.0" y2="256.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<rect x="312.0" y="256.0" width="344.0" height="22.0" fill="#EEF5FD" stroke="#D2D2D7" stroke-width="0.5"/>
+<text x="317.0" y="271.0" font-size="8.0" fill="#48484A" font-weight="bold">外链</text>
+<text x="373.0" y="271.0" font-size="8.0" fill="#48484A">截图走本域代理</text>
+<text x="551.0" y="271.0" font-size="8.0" fill="#48484A">F38 / 防盗链</text>
+<line x1="368.0" y1="256.0" x2="368.0" y2="278.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="546.0" y1="256.0" x2="546.0" y2="278.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<rect x="312.0" y="278.0" width="344.0" height="22.0" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="0.5"/>
+<text x="317.0" y="293.0" font-size="8.0" fill="#48484A" font-weight="bold">门禁</text>
+<text x="373.0" y="293.0" font-size="8.0" fill="#48484A">G1–G7 逐项核验</text>
+<text x="551.0" y="293.0" font-size="8.0" fill="#48484A">图 6-2</text>
+<line x1="368.0" y1="278.0" x2="368.0" y2="300.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="546.0" y1="278.0" x2="546.0" y2="300.0" stroke="#EAF3FF" stroke-width="0.5"/>
+<text x="24.0" y="334.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　五项功能与落点（编号 / 说明 / 落点）</text>
+<rect x="24.0" y="340.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="357.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">编号</text>
+<text x="82.0" y="357.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">功能</text>
+<text x="214.0" y="357.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">说明</text>
+<text x="514.0" y="357.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">落点</text>
+<line x1="76.0" y1="340.0" x2="76.0" y2="366.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="208.0" y1="340.0" x2="208.0" y2="366.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="508.0" y1="340.0" x2="508.0" y2="366.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="366.0" width="632.0" height="41.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="76.0" y1="366.0" x2="76.0" y2="407.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="208.0" y1="366.0" x2="208.0" y2="407.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="508.0" y1="366.0" x2="508.0" y2="407.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="389.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">F34</text>
+<text x="82.0" y="389.5" font-size="8.8" fill="#1D1D1F">注册登录与会话</text>
+<text x="214.0" y="389.5" font-size="8.8" fill="#1D1D1F">HttpOnly Cookie 会话，密码 Argon2id 哈希</text>
+<text x="514.0" y="389.5" font-size="8.8" fill="#1D1D1F">主线</text>
+<rect x="24.0" y="407.0" width="632.0" height="41.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="76.0" y1="407.0" x2="76.0" y2="448.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="208.0" y1="407.0" x2="208.0" y2="448.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="508.0" y1="407.0" x2="508.0" y2="448.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="430.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">F35</text>
+<text x="82.0" y="430.5" font-size="8.8" fill="#1D1D1F">配额与成本护栏</text>
+<text x="214.0" y="430.5" font-size="8.8" fill="#1D1D1F">日成本阈值告警并自动降档</text>
+<text x="514.0" y="430.5" font-size="8.8" fill="#1D1D1F">主线</text>
+<rect x="24.0" y="448.0" width="632.0" height="41.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="76.0" y1="448.0" x2="76.0" y2="489.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="208.0" y1="448.0" x2="208.0" y2="489.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="508.0" y1="448.0" x2="508.0" y2="489.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="471.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">F36</text>
+<text x="82.0" y="471.5" font-size="8.8" fill="#1D1D1F">注销与数据导出</text>
+<text x="214.0" y="471.5" font-size="8.8" fill="#1D1D1F">上线标准 G3 要求，全量数据可带走</text>
+<text x="514.0" y="471.5" font-size="8.8" fill="#1D1D1F">主线</text>
+<rect x="24.0" y="489.0" width="632.0" height="41.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="76.0" y1="489.0" x2="76.0" y2="530.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="208.0" y1="489.0" x2="208.0" y2="530.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="508.0" y1="489.0" x2="508.0" y2="530.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="512.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">F37</text>
+<text x="82.0" y="512.5" font-size="8.8" fill="#1D1D1F">模型供应商管理界面</text>
+<text x="214.0" y="512.5" font-size="8.8" fill="#1D1D1F">供应商端点与密钥的界面化增删改查</text>
+<text x="514.0" y="512.5" font-size="8.8" fill="#1D1D1F">V1.5</text>
+<rect x="24.0" y="530.0" width="632.0" height="41.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="76.0" y1="530.0" x2="76.0" y2="571.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="208.0" y1="530.0" x2="208.0" y2="571.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="508.0" y1="530.0" x2="508.0" y2="571.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="553.5" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">F38</text>
+<text x="82.0" y="553.5" font-size="8.8" fill="#1D1D1F">外链图片本域代理</text>
+<text x="214.0" y="553.5" font-size="8.8" fill="#1D1D1F">截图与关键帧走本域，防盗链失效与隐私泄漏</text>
+<text x="514.0" y="553.5" font-size="8.8" fill="#1D1D1F">V1.5</text>
+<text x="24.0" y="593.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　三条治理原则论证（理论 → 落地 → 验收）</text>
+<rect x="24.0" y="599.0" width="632.0" height="40.0" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="599.0" width="34.0" height="40.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="41.0" y="624.0" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="bold">①</text>
+<text x="68.0" y="615.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">纵深防御与最小权限</text>
+<text x="68.0" y="630.0" font-size="8.2" fill="#3A3A3C">落地：HttpOnly Cookie + Argon2id，密钥不落前端</text>
+<text x="424.0" y="615.0" font-size="8.2" fill="#48484A">验收：G7 安全域逐项核验</text>
+<text x="424.0" y="630.0" font-size="7.7" fill="#6E6E73">口径与图 6-2 / 第 5 章一致</text>
+<rect x="24.0" y="644.0" width="632.0" height="40.0" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="644.0" width="34.0" height="40.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="41.0" y="669.0" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="bold">②</text>
+<text x="68.0" y="660.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">可解释 · 可回退原则</text>
+<text x="68.0" y="675.0" font-size="8.2" fill="#3A3A3C">落地：全量数据可带走，版本快照可回滚</text>
+<text x="424.0" y="660.0" font-size="8.2" fill="#48484A">验收：G3 数据可携带、G4 版本可回滚</text>
+<text x="424.0" y="675.0" font-size="7.7" fill="#6E6E73">口径与图 6-2 / 第 5 章一致</text>
+<rect x="24.0" y="689.0" width="632.0" height="40.0" fill="#FAFAFC" stroke="#D2D2D7" stroke-width="0.6"/>
+<rect x="24.0" y="689.0" width="34.0" height="40.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="41.0" y="714.0" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="bold">③</text>
+<text x="68.0" y="705.0" font-size="9.2" fill="#1D1D1F" font-weight="bold">预算约束下的可用性</text>
+<text x="68.0" y="720.0" font-size="8.2" fill="#3A3A3C">落地：触发日阈值自动降档而非直接拒绝</text>
+<text x="424.0" y="705.0" font-size="8.2" fill="#48484A">验收：用户感知「慢一点」而非「用不了」</text>
+<text x="424.0" y="720.0" font-size="7.7" fill="#6E6E73">口径与图 6-2 / 第 5 章一致</text>
+<rect x="24.0" y="745.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">最小权限</text>
+<text x="190.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">可解释 · 可回退</text>
+<text x="348.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">预算约束下的可用性</text>
+<text x="506.0" y="763.0" font-size="8.6" fill="#FFFFFF" font-weight="bold">G1–G7 上线门禁</text>
+<rect x="24.0" y="781.0" width="632.0" height="54.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,787.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="56.0" y="799.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">依赖关系与版本说明</text>
+<text x="36.0" y="816.0" font-size="9.0" fill="#48484A">F35 与第 5 章 AI 治理、第 7 章成本可行性共用同一组阈值常量，保证图文口径一致。</text>
+<text x="36.0" y="830.0" font-size="9.0" fill="#48484A">架构评审新增的鉴权与 Alembic 版本化迁移（◆）见技术方案 2.7；上线门禁 G1–G7 见 图 6-2。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：◆ 架构评审新增＝HttpOnly Cookie / Argon2id / Alembic；G3、G4、G7 为上线标准编号。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 3-9　功能域六：账号体系与平台治理</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 3-9 Domain VI: account system and platform governance</text>
+</svg>

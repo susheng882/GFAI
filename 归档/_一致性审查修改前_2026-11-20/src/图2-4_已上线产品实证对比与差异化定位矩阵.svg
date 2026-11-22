@@ -1,0 +1,247 @@
+<!-- typography-v2 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 960" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0" y="0" width="680" height="960" fill="#FFFFFF"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">已上线产品实证对比与 GFLC 差异化定位矩阵</text>
+<text x="340.0" y="58.0" font-size="9.8" fill="#6E6E73" text-anchor="middle">第一章 · 11 款真实上线产品 × 5 项核心能力 · 2026-11-14 官网实采</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.8" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="9.8" fill="#0071E3" font-weight="bold">A　已上线产品能力矩阵（● 完整支持　○ 部分支持　— 不提供；能力口径以主力使用场景为准）</text>
+<rect x="24.0" y="86.0" width="632.0" height="34.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="101.5" font-size="8.8" fill="#FFFFFF" font-weight="bold">产品（已上线）</text>
+<text x="30.0" y="112.5" font-size="8.8" fill="#FFFFFF" font-weight="bold">厂商 / 状态</text>
+<text x="221.0" y="101.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">多模态</text>
+<text x="221.0" y="112.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">资料解析</text>
+<text x="283.0" y="101.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">结构化</text>
+<text x="283.0" y="112.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">知识产物</text>
+<text x="345.0" y="101.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">时间戳</text>
+<text x="345.0" y="112.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">溯源定位</text>
+<text x="407.0" y="101.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">间隔复习</text>
+<text x="407.0" y="112.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">计划调度</text>
+<text x="469.0" y="101.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">掌握度</text>
+<text x="469.0" y="112.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">错题回炉</text>
+<text x="578.0" y="101.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">公开定价</text>
+<text x="578.0" y="112.5" font-size="8.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">2026-11-14</text>
+<line x1="190.0" y1="86.0" x2="190.0" y2="120.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="252.0" y1="86.0" x2="252.0" y2="120.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="314.0" y1="86.0" x2="314.0" y2="120.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="376.0" y1="86.0" x2="376.0" y2="120.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="438.0" y1="86.0" x2="438.0" y2="120.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="500.0" y1="86.0" x2="500.0" y2="120.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="120.0" width="632.0" height="37.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="120.0" x2="190.0" y2="157.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="120.0" x2="252.0" y2="157.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="120.0" x2="314.0" y2="157.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="120.0" x2="376.0" y2="157.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="120.0" x2="438.0" y2="157.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="120.0" x2="500.0" y2="157.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="136.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">Gemini Notebook</text>
+<text x="30.0" y="146.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">Google · 2023 上线 / 2026 更名</text>
+<text x="221.0" y="141.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="283.0" y="141.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="345.0" y="141.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="407.0" y="141.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="469.0" y="141.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="141.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">Free｜AI Plus $4.99 / Pro $19.99 月</text>
+<rect x="24.0" y="157.0" width="632.0" height="37.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="157.0" x2="190.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="157.0" x2="252.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="157.0" x2="314.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="157.0" x2="376.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="157.0" x2="438.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="157.0" x2="500.0" y2="194.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="173.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">通义听悟</text>
+<text x="30.0" y="183.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">阿里云 · 商用在线</text>
+<text x="221.0" y="178.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="283.0" y="178.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="345.0" y="178.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="407.0" y="178.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="469.0" y="178.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="178.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">每日 2 h 免费｜¥399/年</text>
+<rect x="24.0" y="194.0" width="632.0" height="37.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="194.0" x2="190.0" y2="231.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="194.0" x2="252.0" y2="231.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="194.0" x2="314.0" y2="231.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="194.0" x2="376.0" y2="231.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="194.0" x2="438.0" y2="231.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="194.0" x2="500.0" y2="231.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="210.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">飞书妙记</text>
+<text x="30.0" y="220.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">字节 · 商用在线</text>
+<text x="221.0" y="215.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="283.0" y="215.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="345.0" y="215.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="407.0" y="215.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="469.0" y="215.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="215.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">免费 300 min/月｜¥69/月</text>
+<rect x="24.0" y="231.0" width="632.0" height="37.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="231.0" x2="190.0" y2="268.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="231.0" x2="252.0" y2="268.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="231.0" x2="314.0" y2="268.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="231.0" x2="376.0" y2="268.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="231.0" x2="438.0" y2="268.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="231.0" x2="500.0" y2="268.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="247.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">Recall</text>
+<text x="30.0" y="257.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">海外 · 2026 在线</text>
+<text x="221.0" y="252.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="283.0" y="252.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="345.0" y="252.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="407.0" y="252.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="469.0" y="252.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="252.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">Free 10 次/月｜Plus $10/月</text>
+<rect x="24.0" y="268.0" width="632.0" height="37.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="268.0" x2="190.0" y2="305.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="268.0" x2="252.0" y2="305.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="268.0" x2="314.0" y2="305.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="268.0" x2="376.0" y2="305.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="268.0" x2="438.0" y2="305.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="268.0" x2="500.0" y2="305.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="284.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">NoteGPT</text>
+<text x="30.0" y="294.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">海外 · 商用在线</text>
+<text x="221.0" y="289.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="283.0" y="289.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="345.0" y="289.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="407.0" y="289.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="469.0" y="289.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="289.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">Free 15 额度/月｜Pro $9.99/月</text>
+<rect x="24.0" y="305.0" width="632.0" height="37.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="305.0" x2="190.0" y2="342.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="305.0" x2="252.0" y2="342.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="305.0" x2="314.0" y2="342.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="305.0" x2="376.0" y2="342.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="305.0" x2="438.0" y2="342.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="305.0" x2="500.0" y2="342.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="321.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">Eightify</text>
+<text x="30.0" y="331.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">海外 · 商用在线</text>
+<text x="221.0" y="326.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="283.0" y="326.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="345.0" y="326.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="407.0" y="326.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="469.0" y="326.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="326.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">免费 3 视频/周｜$4.95/月</text>
+<rect x="24.0" y="342.0" width="632.0" height="37.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="342.0" x2="190.0" y2="379.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="342.0" x2="252.0" y2="379.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="342.0" x2="314.0" y2="379.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="342.0" x2="376.0" y2="379.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="342.0" x2="438.0" y2="379.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="342.0" x2="500.0" y2="379.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="358.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">BibiGPT</text>
+<text x="30.0" y="368.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">国内 · 商用在线</text>
+<text x="221.0" y="363.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="283.0" y="363.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="345.0" y="363.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="407.0" y="363.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="469.0" y="363.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="363.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">订阅制（含转录 + 总结）</text>
+<rect x="24.0" y="379.0" width="632.0" height="37.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="379.0" x2="190.0" y2="416.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="379.0" x2="252.0" y2="416.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="379.0" x2="314.0" y2="416.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="379.0" x2="376.0" y2="416.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="379.0" x2="438.0" y2="416.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="379.0" x2="500.0" y2="416.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="395.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">Anki (FSRS-6)</text>
+<text x="30.0" y="405.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">开源 · 2025-07 起默认</text>
+<text x="221.0" y="400.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="283.0" y="400.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="345.0" y="400.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="407.0" y="400.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="469.0" y="400.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="578.0" y="400.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">桌面/Android 免费｜iOS $24.99</text>
+<rect x="24.0" y="416.0" width="632.0" height="37.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="416.0" x2="190.0" y2="453.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="416.0" x2="252.0" y2="453.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="416.0" x2="314.0" y2="453.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="416.0" x2="376.0" y2="453.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="416.0" x2="438.0" y2="453.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="416.0" x2="500.0" y2="453.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="432.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">RemNote</text>
+<text x="30.0" y="442.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">海外 · 商用在线</text>
+<text x="221.0" y="437.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="283.0" y="437.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="345.0" y="437.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="407.0" y="437.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="469.0" y="437.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="578.0" y="437.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">Free 含完整 SRS｜Pro $8/月</text>
+<rect x="24.0" y="453.0" width="632.0" height="37.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="453.0" x2="190.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="453.0" x2="252.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="453.0" x2="314.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="453.0" x2="376.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="453.0" x2="438.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="453.0" x2="500.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="469.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">Quizlet</text>
+<text x="30.0" y="479.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">海外 · 商用在线</text>
+<text x="221.0" y="474.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="283.0" y="474.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="345.0" y="474.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="407.0" y="474.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">○</text>
+<text x="469.0" y="474.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="474.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">Free｜Plus $7.99/月</text>
+<rect x="24.0" y="490.0" width="632.0" height="37.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="490.0" x2="190.0" y2="527.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="490.0" x2="252.0" y2="527.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="490.0" x2="314.0" y2="527.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="490.0" x2="376.0" y2="527.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="490.0" x2="438.0" y2="527.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="490.0" x2="500.0" y2="527.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="506.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">BiliNote v2.4.4</text>
+<text x="30.0" y="516.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">开源 · MIT（参照系）</text>
+<text x="221.0" y="511.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="283.0" y="511.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="345.0" y="511.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="407.0" y="511.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="469.0" y="511.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">—</text>
+<text x="578.0" y="511.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">免费自部署</text>
+<rect x="24.0" y="527.0" width="632.0" height="37.0" fill="#F0F4F8" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="190.0" y1="527.0" x2="190.0" y2="564.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="252.0" y1="527.0" x2="252.0" y2="564.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="314.0" y1="527.0" x2="314.0" y2="564.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="376.0" y1="527.0" x2="376.0" y2="564.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="438.0" y1="527.0" x2="438.0" y2="564.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="500.0" y1="527.0" x2="500.0" y2="564.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="543.3" font-size="9.3" fill="#1D1D1F" font-weight="bold">GFLC（本项目）★</text>
+<text x="30.0" y="553.7" font-size="9.3" fill="#1D1D1F" font-weight="bold">毕业设计 · V1.0 主线</text>
+<text x="221.0" y="548.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="283.0" y="548.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="345.0" y="548.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="407.0" y="548.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="469.0" y="548.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">●</text>
+<text x="578.0" y="548.5" font-size="8.9" fill="#1D1D1F" text-anchor="middle">月付 ¥12｜年付 ¥99</text>
+<text x="24.0" y="576.0" font-size="9.8" fill="#0071E3" font-weight="bold">B　由实证矩阵导出的三条结论</text>
+<rect x="24.0" y="584.0" width="204.0" height="84.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="1"/>
+<g transform="translate(32.0,590.0) scale(0.72)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M10 9 L16 12 L10 15 Z"/></g>
+<text x="51.0" y="601.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">上半场已被验证</text>
+<text x="33.0" y="616.0" font-size="8.8" fill="#3A3A3C">7 款以上在线收费产品把音视频 / PDF</text>
+<text x="33.0" y="628.0" font-size="8.8" fill="#3A3A3C">转为摘要、章节、闪卡；价格带</text>
+<text x="33.0" y="640.0" font-size="8.8" fill="#3A3A3C">$0–20/月 或 ¥399/年 —— 真实付费需求</text>
+<rect x="236.0" y="584.0" width="204.0" height="84.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="1"/>
+<g transform="translate(244.0,590.0) scale(0.72)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6 L12 12 L16 15"/></g>
+<text x="263.0" y="601.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">下半场只做了一半</text>
+<text x="245.0" y="616.0" font-size="8.8" fill="#3A3A3C">Anki / RemNote / Recall 有间隔重复，</text>
+<text x="245.0" y="628.0" font-size="8.8" fill="#3A3A3C">但都不接收「自有资料解析出的</text>
+<text x="245.0" y="640.0" font-size="8.8" fill="#3A3A3C">知识单元」；NotebookLM 出卡不排程</text>
+<rect x="448.0" y="584.0" width="204.0" height="84.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="1"/>
+<g transform="translate(456.0,590.0) scale(0.72)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M20 9 A8 8 0 0 0 5 8 M4 4 L4 9 L9 9 M4 15 A8 8 0 0 0 19 16 M20 20 L20 15 L15 15"/></g>
+<text x="475.0" y="601.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">差异化是数据链</text>
+<text x="457.0" y="616.0" font-size="8.8" fill="#3A3A3C">解析 → 产物 → 溯源 → 调度 →</text>
+<text x="457.0" y="628.0" font-size="8.8" fill="#3A3A3C">掌握度 → 回炉 串成同一条闭环；</text>
+<text x="457.0" y="640.0" font-size="8.8" fill="#3A3A3C">逐跳带时间戳，可现场演示验证</text>
+<rect x="24.0" y="680.0" width="632.0" height="82.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<text x="36.0" y="698.0" font-size="9.2" fill="#48484A">注 1：采集口径为 2026-11-14 厂商官网 / 公开定价页；Gemini Notebook 无独立订阅，价格随 Google AI 套餐；美元档未折算。</text>
+<text x="36.0" y="715.0" font-size="9.2" fill="#48484A">注 2：「○」表示需插件、人工或仅覆盖部分链路，例如 Recall 的间隔重复为通用卡片、飞书妙记为音字同步跳转而非知识点溯源。</text>
+<text x="36.0" y="732.0" font-size="9.2" fill="#48484A">注 3：Anki 自 2025-07 起默认 FSRS-6，基于约 7 亿次复习训练，同等保持率下比 SM-2 减少 20%–30% 复习量。</text>
+<text x="36.0" y="749.0" font-size="9.2" fill="#48484A">注 4：GFLC 的「●」以产品报告 4.8 的 38 项功能全景清单与产品报告第（四）章 4.7 集成核对表为据，溯源跳转为 P0 硬字段。</text>
+<text x="24.0" y="774.0" font-size="9.4" fill="#6E6E73">数据源：产品报告第二章（二）（四）· 技术方案 1.4 节 · 图 2-5 定价对照</text>
+<rect x="24.0" y="784.0" width="632.0" height="62.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(34.0,792.0) scale(0.7)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 12 C5 7 9 5 12 5 C15 5 19 7 22 12 C19 17 15 19 12 19 C9 19 5 17 2 12 Z"/><circle cx="12" cy="12" r="3"/></g>
+<text x="58.0" y="804.0" font-size="9.8" fill="#1D1D1F" font-weight="bold">实证复核方法与数据来源</text>
+<text x="36.0" y="822.0" font-size="9" fill="#1D1D1F">采集路径：厂商官网定价页 / 官方帮助中心 / 2026 年第三方定价复核页；能力判定以产品主力使用场景为准，</text>
+<text x="36.0" y="837.0" font-size="9" fill="#1D1D1F">跨类能力以「是否需插件或人工」为 ○／● 分界；所有条目均标注上线状态，未上线或仅内测的产品不纳入本矩阵。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.4" fill="#3A3A3C">● 完整支持　○ 部分支持　— 不提供　★ 本项目　◆ 2026-11 复核新增　·　逐项报价见技术方案 1.4</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 2-4　已上线产品实证对比与差异化定位矩阵</text>
+<text x="340.0" y="924.0" font-size="9.8" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 2-4　Empirical comparison of launched products and GFLC positioning matrix</text>
+</svg>

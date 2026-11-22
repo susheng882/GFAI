@@ -1,0 +1,141 @@
+<!-- typography-v2 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 960" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0" y="0" width="680" height="960" fill="#FFFFFF"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">盈利模式四层结构与单位经济模型</text>
+<text x="340.0" y="58.0" font-size="9.8" fill="#6E6E73" text-anchor="middle">第九章 · 免费额度 → 个人订阅 → 团体授权 → 增值服务 · 产品报告第九章</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.8" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<g transform="translate(24.00,14.66) scale(0.92941)"><g xmlns="http://www.w3.org/2000/svg" font-size="9.4">
+    <rect x="36" y="74" width="146" height="160" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+    <rect x="36" y="74" width="146" height="24" fill="#A1A1A6"/>
+    <text x="109" y="90" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">第一层　免费额度</text>
+    <text x="46" y="116" font-size="9.2" font-weight="bold" fill="#1D1D1F">职能：获客</text>
+    <text x="46" y="134" font-size="9" fill="#333">注册即赠每月 3 次完整解析</text>
+    <text x="46" y="148" font-size="9" fill="#333">按「次」不按「页」计量</text>
+    <text x="46" y="162" font-size="9" fill="#333">不投广告、不阉割功能</text>
+    <text x="46" y="176" font-size="9" fill="#333">只限用量，避免拆分上传</text>
+    <text x="46" y="196" font-size="8.8" fill="#777">开通条件：注册即用</text>
+    <text x="46" y="210" font-size="8.8" fill="#777">构成单用户变动成本</text>
+    <text x="46" y="226" font-size="8.8" fill="#777">≈0.08–0.12 元/次 × 3</text>
+
+    <rect x="190" y="74" width="146" height="160" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+    <rect x="190" y="74" width="146" height="24" fill="#0071E3"/>
+    <text x="263" y="90" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">第二层　个人订阅 ★</text>
+    <text x="200" y="116" font-size="9.2" font-weight="bold" fill="#1D1D1F">职能：主收入</text>
+    <text x="200" y="134" font-size="9" fill="#333">月付 12 元 / 季付 30 元</text>
+    <text x="200" y="148" font-size="9" fill="#333">年付 99 元（≈8.25 元/月）</text>
+    <text x="200" y="162" font-size="9" fill="#333">含每月 30 次解析 + 全功能</text>
+    <text x="200" y="176" font-size="9" fill="#333">锚定「两杯奶茶」心理区间</text>
+    <text x="200" y="196" font-size="8.8" fill="#777">开通条件：免费层转化数据</text>
+    <text x="200" y="210" font-size="8.8" fill="#777">学生可自主决策、无需家长</text>
+    <text x="200" y="226" font-size="8.8" fill="#777">毛利约七成五（见下）</text>
+
+    <rect x="344" y="74" width="146" height="160" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+    <rect x="344" y="74" width="146" height="24" fill="#3A3A3C"/>
+    <text x="417" y="90" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">第三层　团体授权</text>
+    <text x="354" y="116" font-size="9.2" font-weight="bold" fill="#1D1D1F">职能：规模</text>
+    <text x="354" y="134" font-size="9" fill="#333">班级 / 社团 / 院系</text>
+    <text x="354" y="148" font-size="9" fill="#333">30 人每年 900 元</text>
+    <text x="354" y="162" font-size="9" fill="#333">附管理端：用量与进度概览</text>
+    <text x="354" y="176" font-size="9" fill="#333">集中种子用户 + 真实反馈</text>
+    <text x="354" y="196" font-size="8.8" fill="#777">开通条件：个人订阅留存数据</text>
+    <text x="354" y="210" font-size="8.8" fill="#777">降低单用户获客成本</text>
+    <text x="354" y="226" font-size="8.8" fill="#777">≈30 元/人/年</text>
+
+    <rect x="498" y="74" width="146" height="160" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+    <rect x="498" y="74" width="146" height="24" fill="#6E6E73"/>
+    <text x="571" y="90" font-size="9.8" font-weight="bold" text-anchor="middle" fill="#FFF">第四层　增值服务</text>
+    <text x="508" y="116" font-size="9.2" font-weight="bold" fill="#1D1D1F">职能：延展</text>
+    <text x="508" y="134" font-size="9" fill="#333">精美排版学习报告导出</text>
+    <text x="508" y="148" font-size="9" fill="#333">打印版卡片 · 一对一诊断</text>
+    <text x="508" y="162" font-size="9" fill="#333">不占主链路，按次收费</text>
+    <text x="508" y="176" font-size="9" fill="#333">验证高意愿用户价格上限</text>
+    <text x="508" y="196" font-size="8.8" fill="#777">开通条件：订阅层行为数据</text>
+    <text x="508" y="210" font-size="8.8" fill="#777">为后续定价提供依据</text>
+    <text x="508" y="226" font-size="8.8" fill="#777">边际成本近零</text>
+  </g>
+  <text xmlns="http://www.w3.org/2000/svg" x="36" y="250" font-size="9.2" fill="#777">四层按启动顺序排列，每一层都用前一层的数据作为开通条件；收入来自个人订阅与团体授权两类，不来自内容售卖（规避版权与资质风险）。</text>
+
+  <rect xmlns="http://www.w3.org/2000/svg" x="36" y="264" width="608" height="212" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+  <rect xmlns="http://www.w3.org/2000/svg" x="36" y="264" width="608" height="22" fill="#0071E3"/>
+  <text xmlns="http://www.w3.org/2000/svg" x="48" y="279" font-size="10" font-weight="bold" fill="#FFF">单位经济模型：单活跃用户 / 月（成本口径已用真实报价重算）</text>
+  <g xmlns="http://www.w3.org/2000/svg" font-size="9.4">
+    <!-- 左：成本 -->
+    <text x="50" y="308" font-size="9.8" font-weight="bold" fill="#1D1D1F">成本侧</text>
+    <text x="50" y="328" font-size="9.2" fill="#333">月 8 次解析（3 PDF + 3 题库 + 2 视频）</text>
+    <text x="50" y="344" font-size="9.2" fill="#333">单次任务成本 0.005–0.40 元（见第九章表）</text>
+    <text x="50" y="360" font-size="9.2" fill="#333">变动成本合计 ≈ 1.2–2.0 元/月</text>
+    <text x="50" y="376" font-size="9.2" fill="#333">服务器与存储固定分摊后 ≈ 1.5–2.5 元/月</text>
+    <text x="50" y="398" font-size="9.2" font-weight="bold" fill="#1D1D1F">平台固定支出（20 用户内测整体）</text>
+    <text x="50" y="414" font-size="9.2" fill="#333">按量付费 ≈ 82 元/月（区间 52–192）</text>
+    <text x="50" y="430" font-size="9.2" fill="#333">或 Token Plan 订阅 39–79 元/月（一次付费多模型）</text>
+    <text x="50" y="446" font-size="9.2" fill="#333">服务器 ¥15.7 + 域名 ¥6 + AI 调用 ¥60</text>
+    <text x="50" y="464" font-size="9.2" fill="#B4472F">预算上限 250 元/月，实价有余量（图 7-2）</text>
+
+    <!-- 分隔 -->
+    <line x1="340" y1="292" x2="340" y2="470" stroke="#CCC" stroke-width="0.8"/>
+
+    <!-- 右：收入与盈亏 -->
+    <text x="356" y="308" font-size="9.8" font-weight="bold" fill="#1D1D1F">收入侧与盈亏平衡</text>
+    <text x="356" y="328" font-size="9.2" fill="#333">客单价 10–12 元/月（年付折算 8.25 元）</text>
+    <text x="356" y="344" font-size="9.2" fill="#333">单用户总成本 1.5–2.5 元 → 毛利率七成五左右</text>
+    <text x="356" y="360" font-size="9.2" font-weight="bold" fill="#1D1D1F">单用户边际贡献 8 元/月（客单 10 − 变动 2.0）</text>
+    <rect x="356" y="372" width="268" height="56" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.9"/>
+    <text x="366" y="390" font-size="9.6" font-weight="bold" fill="#1D1D1F">平台整体盈亏平衡点（按量口径 82 元/月）</text>
+    <text x="366" y="406" font-size="9.2" fill="#333">82 ÷（10 − 2.0）= 10.25 → 约 10 人覆盖全部固定支出</text>
+    <text x="366" y="420" font-size="9.2" fill="#333">订阅制口径（39 元/月）≈ 5 个付费用户</text>
+    <text x="356" y="446" font-size="9.2" fill="#333">成本前置规则：每个功能立项先估算单次调用成本与月度用量，</text>
+    <text x="356" y="460" font-size="9.2" fill="#333">超阈值先优化再上线（配额 / 缓存 / 模型分档在 MVP 即落地）。</text>
+  </g>
+
+  <rect xmlns="http://www.w3.org/2000/svg" x="36" y="490" width="608" height="112" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="1"/>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="510" font-size="10" font-weight="bold" fill="#1D1D1F">成本控制四条手段（决定商业模型能否成立）</text>
+  <g xmlns="http://www.w3.org/2000/svg" font-size="9.6">
+    <rect x="50" y="522" width="140" height="62" fill="#FFFFFF" stroke="#999" stroke-width="0.6"/>
+    <text x="60" y="540" font-size="9.6" font-weight="bold" fill="#0071E3">① 用户级日配额</text>
+    <text x="60" y="555" font-size="8.8" fill="#333">把不可控用量变成</text>
+    <text x="60" y="568" font-size="8.8" fill="#333">可预测上限</text>
+    <rect x="196" y="522" width="140" height="62" fill="#FFFFFF" stroke="#999" stroke-width="0.6"/>
+    <text x="206" y="540" font-size="9.6" font-weight="bold" fill="#0071E3">② 文件大小上限</text>
+    <text x="206" y="555" font-size="8.8" fill="#333">避免单次任务吃掉</text>
+    <text x="206" y="568" font-size="8.8" fill="#333">整月成本预算</text>
+    <rect x="342" y="522" width="140" height="62" fill="#FFFFFF" stroke="#999" stroke-width="0.6"/>
+    <text x="352" y="540" font-size="9.6" font-weight="bold" fill="#0071E3">③ 结果入库缓存</text>
+    <text x="352" y="555" font-size="8.8" fill="#333">同一讲义多人上传</text>
+    <text x="352" y="568" font-size="8.8" fill="#333">命中率天然较高</text>
+    <rect x="488" y="522" width="140" height="62" fill="#FFFFFF" stroke="#999" stroke-width="0.6"/>
+    <text x="498" y="540" font-size="9.6" font-weight="bold" fill="#0071E3">④ 按难度分档</text>
+    <text x="498" y="555" font-size="8.8" fill="#333">轻/中/强三档路由</text>
+    <text x="498" y="568" font-size="8.8" fill="#333">触发降档而非失败</text>
+  </g>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="596" font-size="9.2" fill="#777">演进杠杆：标注样本积累到约 5000 条配对后蒸馏专用小模型，边际成本可再降一个数量级——而非靠压缩用户配额。</text>
+
+  <rect xmlns="http://www.w3.org/2000/svg" x="36" y="616" width="608" height="96" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1"/>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="636" font-size="10" font-weight="bold" fill="#1D1D1F">第九章成本表的实价校准对照（本次修订）</text>
+  <g xmlns="http://www.w3.org/2000/svg" font-size="9.4">
+    <text x="50" y="656" font-size="9.4" fill="#333">云服务器：原 60–100 元/月 → <tspan font-weight="bold">15.7 元/月</tspan>（腾讯云轻量 ¥188/年活动价；第 2 年续费约 65 元/月）</text>
+    <text x="50" y="674" font-size="9.4" fill="#333">对象存储与流量：原 5–15 元 → <tspan font-weight="bold">0 元</tspan>（MinIO 自建容器）　·　语音转写：原 0–40 元 → <tspan font-weight="bold">0 元</tspan>（本地 faster-whisper）</text>
+    <text x="50" y="692" font-size="9.4" fill="#333">大模型 API：原 100–150 元（50 人）→ <tspan font-weight="bold">60 元</tspan>（20 人内测，区间 30–120）　·　短信邮件：原 0–20 元 → <tspan font-weight="bold">0 元</tspan>（邮箱免费额度）</text>
+    <text x="50" y="706" font-size="9.4" fill="#333">合计：原 165–325 元 → <tspan font-weight="bold">约 82 元/月</tspan>（区间 52–192）；250 元由「中位估值」改列为预算上限。</text>
+  </g>
+
+  <rect xmlns="http://www.w3.org/2000/svg" x="36" y="728" width="608" height="86" fill="#FAFAFC" stroke="#999" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="746" font-size="9.8" fill="#333">注 1：四层定价与单用户成本模型沿用产品报告第九章原值；本次修订仅校准成本表的厂商报价，不改商业定价。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="764" font-size="9.8" fill="#333">注 2：实价采集于 2026-11-14 官网活动页，限购与时段规则以当期为准；续费跳价风险与对策见图 7-2、技术方案 5.8。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="782" font-size="9.8" fill="#333">注 3：一次付费多模型订阅（Token Plan 39 元/月起）可将浮动账单转为固定支出，毕设八个月总账 560–880 元（图 7-3）。</text>
+  <text xmlns="http://www.w3.org/2000/svg" x="50" y="800" font-size="9.8" fill="#333">注 4：不销售教材、题库与课程，不做内容分发，从机制上规避版权与资质风险（报告第九章）。</text>
+
+  <g xmlns="http://www.w3.org/2000/svg" font-size="9.8" fill="#444">
+    <text x="50" y="838">★ 主收入层　·　金额单位人民币　·　成本口径 20 用户内测 / 8 个月毕设周期　·　数据出处：产品报告第九章、技术方案 5.8</text>
+  </g>
+  </g>
+<text x="24.0" y="854.0" font-size="8.8" fill="#1D1D1F"/>
+<rect x="24.0" y="74.0" width="632.0" height="780.0" fill="none" stroke="#EAF3FF" stroke-width="0.5"/>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.4" fill="#3A3A3C">◆ 2026-11-14 实价校准　·　数据出处：产品报告第九章 · 技术方案 5.8</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 7-1　盈利模式四层结构与单位经济模型</text>
+<text x="340.0" y="924.0" font-size="9.8" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 7-1　Four-layer revenue model and unit economics</text>
+</svg>

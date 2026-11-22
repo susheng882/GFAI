@@ -1,0 +1,187 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">测试体系分层与 G1–G7 上线门禁</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">第四章 · 测试金字塔 + 四指标闸门 + 七域门禁 + 回滚机制 · 技术方案 4.1–4.4</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　测试体系金字塔与四指标闸门（左：分层　右：评测口径）</text>
+<rect x="24.0" y="248.0" width="296.0" height="36.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="172.0" y="264.0" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">探索性测试</text>
+<text x="172.0" y="277.0" font-size="8.4" fill="#6E6E73" text-anchor="middle">人工走查四条主路径</text>
+<rect x="44.0" y="208.0" width="256.0" height="36.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="172.0" y="224.0" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">端到端 E2E</text>
+<text x="172.0" y="237.0" font-size="8.4" fill="#6E6E73" text-anchor="middle">Playwright · 四条主路径 100%</text>
+<rect x="64.0" y="168.0" width="216.0" height="36.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="172.0" y="184.0" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">集成测试</text>
+<text x="172.0" y="197.0" font-size="8.4" fill="#6E6E73" text-anchor="middle">API / Worker / MinIO / PG 联动</text>
+<rect x="84.0" y="128.0" width="176.0" height="36.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="172.0" y="144.0" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">契约测试</text>
+<text x="172.0" y="157.0" font-size="8.4" fill="#6E6E73" text-anchor="middle">JSON Schema 输出契约校验</text>
+<rect x="104.0" y="88.0" width="136.0" height="36.0" fill="#F5F5F7" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="172.0" y="104.0" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">单元测试</text>
+<text x="172.0" y="117.0" font-size="8.4" fill="#6E6E73" text-anchor="middle">解析 / 分块 / 路由纯函数</text>
+<text x="28.0" y="292.0" font-size="8.6" fill="#6E6E73">金字塔原则：底层快而多、顶层慢而少；AI 评测集固定 ≥300 条样本</text>
+<rect x="330.0" y="88.0" width="326.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="336.0" y="105.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">指标</text>
+<text x="416.0" y="105.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">阈值</text>
+<text x="472.0" y="105.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">判定方式</text>
+<line x1="410.0" y1="88.0" x2="410.0" y2="114.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="466.0" y1="88.0" x2="466.0" y2="114.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="330.0" y="114.0" width="326.0" height="34.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="410.0" y1="114.0" x2="410.0" y2="148.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="466.0" y1="114.0" x2="466.0" y2="148.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="336.0" y="134.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">字段完整率</text>
+<text x="416.0" y="134.0" font-size="8.8" fill="#1D1D1F">≥95%</text>
+<text x="472.0" y="134.0" font-size="8.8" fill="#1D1D1F">40 份评测集逐字段核对</text>
+<rect x="330.0" y="148.0" width="326.0" height="34.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="410.0" y1="148.0" x2="410.0" y2="182.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="466.0" y1="148.0" x2="466.0" y2="182.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="336.0" y="168.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">知识点召回率</text>
+<text x="416.0" y="168.0" font-size="8.8" fill="#1D1D1F">≥90%</text>
+<text x="472.0" y="168.0" font-size="8.8" fill="#1D1D1F">人工标注集对照</text>
+<rect x="330.0" y="182.0" width="326.0" height="34.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="410.0" y1="182.0" x2="410.0" y2="216.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="466.0" y1="182.0" x2="466.0" y2="216.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="336.0" y="202.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">幻觉率</text>
+<text x="416.0" y="202.0" font-size="8.8" fill="#1D1D1F">≤3%</text>
+<text x="472.0" y="202.0" font-size="8.8" fill="#1D1D1F">无来源断言即计幻觉</text>
+<rect x="330.0" y="216.0" width="326.0" height="34.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="410.0" y1="216.0" x2="410.0" y2="250.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="466.0" y1="216.0" x2="466.0" y2="250.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="336.0" y="236.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">人工可用率</text>
+<text x="416.0" y="236.0" font-size="8.8" fill="#1D1D1F">≥85%</text>
+<text x="472.0" y="236.0" font-size="8.8" fill="#1D1D1F">双人盲评取均值</text>
+<rect x="330.0" y="264.0" width="326.0" height="34.0" fill="#EEF5FD" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<text x="338.0" y="286.0" font-size="8.6" fill="#3A3A3C">Prompt / 模型变更前后的指标差 &gt;3 pp 即回滚</text>
+<text x="24.0" y="316.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　G1–G7 上线门禁逐域判定表（发布前 48 小时 Go / No-Go 核验）</text>
+<rect x="24.0" y="324.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="341.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">门禁</text>
+<text x="72.0" y="341.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">域</text>
+<text x="160.0" y="341.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">判定条件</text>
+<text x="350.0" y="341.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">证据形式</text>
+<text x="508.0" y="341.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">失败动作</text>
+<line x1="66.0" y1="324.0" x2="66.0" y2="350.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="154.0" y1="324.0" x2="154.0" y2="350.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="344.0" y1="324.0" x2="344.0" y2="350.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="502.0" y1="324.0" x2="502.0" y2="350.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="350.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="66.0" y1="350.0" x2="66.0" y2="382.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="154.0" y1="350.0" x2="154.0" y2="382.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="344.0" y1="350.0" x2="344.0" y2="382.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="350.0" x2="502.0" y2="382.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="369.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">G1</text>
+<text x="72.0" y="369.0" font-size="8.8" fill="#1D1D1F">技术验证</text>
+<text x="160.0" y="369.0" font-size="8.8" fill="#1D1D1F">三条解析链路各跑通 10 个真实样本</text>
+<text x="350.0" y="369.0" font-size="8.8" fill="#1D1D1F">成本基线可测、字段可核</text>
+<text x="508.0" y="369.0" font-size="8.8" fill="#1D1D1F">未达标不得进入 P1</text>
+<rect x="24.0" y="382.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="66.0" y1="382.0" x2="66.0" y2="414.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="154.0" y1="382.0" x2="154.0" y2="414.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="344.0" y1="382.0" x2="344.0" y2="414.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="382.0" x2="502.0" y2="414.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="401.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">G2</text>
+<text x="72.0" y="401.0" font-size="8.8" fill="#1D1D1F">性能</text>
+<text x="160.0" y="401.0" font-size="8.8" fill="#1D1D1F">API 短查询 P95 ≤3 s</text>
+<text x="350.0" y="401.0" font-size="8.8" fill="#1D1D1F">20 并发内测压测通过</text>
+<text x="508.0" y="401.0" font-size="8.8" fill="#1D1D1F">劣化 &gt;3 pp 即回滚</text>
+<rect x="24.0" y="414.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="66.0" y1="414.0" x2="66.0" y2="446.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="154.0" y1="414.0" x2="154.0" y2="446.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="344.0" y1="414.0" x2="344.0" y2="446.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="414.0" x2="502.0" y2="446.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="433.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">G3</text>
+<text x="72.0" y="433.0" font-size="8.8" fill="#1D1D1F">AI 质量</text>
+<text x="160.0" y="433.0" font-size="8.8" fill="#1D1D1F">幻觉率 ≤3%、知识点召回 ≥90%</text>
+<text x="350.0" y="433.0" font-size="8.8" fill="#1D1D1F">固定评测集前后各跑一遍</text>
+<text x="508.0" y="433.0" font-size="8.8" fill="#1D1D1F">冻结模型与 Prompt 版本</text>
+<rect x="24.0" y="446.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="66.0" y1="446.0" x2="66.0" y2="478.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="154.0" y1="446.0" x2="154.0" y2="478.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="344.0" y1="446.0" x2="344.0" y2="478.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="446.0" x2="502.0" y2="478.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="465.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">G4</text>
+<text x="72.0" y="465.0" font-size="8.8" fill="#1D1D1F">数据一致性</text>
+<text x="160.0" y="465.0" font-size="8.8" fill="#1D1D1F">PG / MinIO / Chroma 三态一致</text>
+<text x="350.0" y="465.0" font-size="8.8" fill="#1D1D1F">产物写回与索引同源</text>
+<text x="508.0" y="465.0" font-size="8.8" fill="#1D1D1F">不一致阻断发布</text>
+<rect x="24.0" y="478.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="66.0" y1="478.0" x2="66.0" y2="510.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="154.0" y1="478.0" x2="154.0" y2="510.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="344.0" y1="478.0" x2="344.0" y2="510.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="478.0" x2="502.0" y2="510.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="497.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">G5</text>
+<text x="72.0" y="497.0" font-size="8.8" fill="#1D1D1F">存储治理</text>
+<text x="160.0" y="497.0" font-size="8.8" fill="#1D1D1F">水位 80% 冻结、单任务 5 GB</text>
+<text x="350.0" y="497.0" font-size="8.8" fill="#1D1D1F">临时文件 30 天自动清理</text>
+<text x="508.0" y="497.0" font-size="8.8" fill="#1D1D1F">告警通道可达</text>
+<rect x="24.0" y="510.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="66.0" y1="510.0" x2="66.0" y2="542.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="154.0" y1="510.0" x2="154.0" y2="542.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="344.0" y1="510.0" x2="344.0" y2="542.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="510.0" x2="502.0" y2="542.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="529.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">G6</text>
+<text x="72.0" y="529.0" font-size="8.8" fill="#1D1D1F">可观测性</text>
+<text x="160.0" y="529.0" font-size="8.8" fill="#1D1D1F">结构化日志 + trace_id + 成本看板</text>
+<text x="350.0" y="529.0" font-size="8.8" fill="#1D1D1F">降级与异常事件 100% 留痕</text>
+<text x="508.0" y="529.0" font-size="8.8" fill="#1D1D1F">缺字段即 No-Go</text>
+<rect x="24.0" y="542.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="66.0" y1="542.0" x2="66.0" y2="574.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="154.0" y1="542.0" x2="154.0" y2="574.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="344.0" y1="542.0" x2="344.0" y2="574.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="502.0" y1="542.0" x2="502.0" y2="574.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="561.0" font-size="9.200000000000001" fill="#1D1D1F" font-weight="bold">G7</text>
+<text x="72.0" y="561.0" font-size="8.8" fill="#1D1D1F">合规备案</text>
+<text x="160.0" y="561.0" font-size="8.8" fill="#1D1D1F">ICP 备案 + HTTPS 证书有效</text>
+<text x="350.0" y="561.0" font-size="8.8" fill="#1D1D1F">隐私政策与注销入口齐备</text>
+<text x="508.0" y="561.0" font-size="8.8" fill="#1D1D1F">境内节点硬性要求</text>
+<text x="24.0" y="590.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　Go / No-Go 判定流程与回滚机制</text>
+<rect x="24.0" y="598" width="150" height="46" rx="23.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="99.0" y="618.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">发布候选</text>
+<text x="99.0" y="629.6" font-size="8.4" fill="#48484A" text-anchor="middle">冻结版本号</text>
+<path d="M 259.66999999999996,598 L 334.66999999999996,621.0 L 259.66999999999996,644 L 184.67,621.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="259.7" y="618.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">逐域核验</text>
+<text x="259.7" y="629.6" font-size="8.4" fill="#48484A" text-anchor="middle">G1–G7 全通过？</text>
+<rect x="345.3" y="598.0" width="150.0" height="46.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="420.3" y="618.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">灰度 10%</text>
+<text x="420.3" y="629.6" font-size="8.4" fill="#48484A" text-anchor="middle">48 h 观测窗</text>
+<rect x="506.01" y="598" width="150" height="46" rx="23.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="581.0" y="618.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">全量发布</text>
+<text x="581.0" y="629.6" font-size="8.4" fill="#48484A" text-anchor="middle">或执行回滚</text>
+<line x1="174.0" y1="621.0" x2="184.7" y2="621.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="334.7" y1="621.0" x2="345.3" y2="621.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<line x1="495.3" y1="621.0" x2="506.0" y2="621.0" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<path d="M 245,644 L 245,668 L 580,668 L 580,644" fill="none" stroke="#B4472F" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="270.0" y="662.0" font-size="8.6" fill="#B4472F">任一门禁 No-Go → 回滚至上一版本（≤10 min）并保留现场日志</text>
+<rect x="24.0" y="680.0" width="205.3" height="72.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,685.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L22 21 L2 21 Z"/><path d="M12 9 L12 15"/><circle cx="12" cy="18" r="0.9" fill="#0071E3"/></g>
+<text x="50.0" y="697.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">回滚触发</text>
+<text x="32.0" y="713.0" font-size="8.5" fill="#3A3A3C">指标较上版下降 &gt;3 pp、</text>
+<text x="32.0" y="726.0" font-size="8.5" fill="#3A3A3C">G4 数据不一致或 G6 日志缺失</text>
+<text x="32.0" y="739.0" font-size="8.5" fill="#3A3A3C">任一命中即自动回滚</text>
+<rect x="237.3" y="680.0" width="205.3" height="72.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,685.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M20 9 A8 8 0 0 0 5 8 M4 4 L4 9 L9 9 M4 15 A8 8 0 0 0 19 16 M20 20 L20 15 L15 15"/></g>
+<text x="263.3" y="697.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">回滚动作</text>
+<text x="245.3" y="713.0" font-size="8.5" fill="#3A3A3C">Compose 切回上一镜像标签，</text>
+<text x="245.3" y="726.0" font-size="8.5" fill="#3A3A3C">Alembic downgrade 保持兼容；</text>
+<text x="245.3" y="739.0" font-size="8.5" fill="#3A3A3C">目标恢复时间 ≤10 min</text>
+<rect x="450.7" y="680.0" width="205.3" height="72.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,685.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="476.7" y="697.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">证据留存</text>
+<text x="458.7" y="713.0" font-size="8.5" fill="#3A3A3C">评测集、压测报告、成本快照</text>
+<text x="458.7" y="726.0" font-size="8.5" fill="#3A3A3C">与告警记录一并归档，</text>
+<text x="458.7" y="739.0" font-size="8.5" fill="#3A3A3C">供答辩与复盘核验</text>
+<rect x="24.0" y="760.0" width="632.0" height="58.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,766.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 5 C6 3 9 4 12 6 C15 4 18 3 22 5 L22 19 C18 17 15 18 12 20 C9 18 6 17 2 19 Z"/><path d="M12 6 L12 20"/></g>
+<text x="56.0" y="778.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">设计依据与关键参数（统一补充栏）</text>
+<text x="36.0" y="795.0" font-size="8.8" fill="#48484A">注 1：G1–G7 定义见技术方案 4.3 / 4.4 节与产品报告第八章（十）企业级上线标准；本机已执行验证见 4.4 节。</text>
+<text x="36.0" y="809.0" font-size="8.8" fill="#48484A">注 2：任一指标较上版下降 &gt;3 pp 即回滚；评测集固定 ≥300 条，Prompt 或模型变更前后各跑一遍。</text>
+<text x="36.0" y="823.0" font-size="8.8" fill="#48484A">注 3：本图与图 9-1 的 M5 Go/No-Go 里程碑、图 5-2 的 G3 / G5 / G6 门禁一一对应。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">◆ 企业级上线标准　·　任一指标较上版下降 &gt;3 pp 即回滚　·　数据出处：技术方案 4.3 / 4.4</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 6-2　测试体系分层与 G1–G7 上线门禁</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 6-2　Testing pyramid and G1–G7 release gates</text>
+</svg>

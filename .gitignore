@@ -1,0 +1,58 @@
+# ===== 密钥与配置（绝不提交）=====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+cookies.txt
+
+# ===== 运行时数据 =====
+gflc/backend/data/
+!gflc/backend/data/.gitkeep
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+gflc/backend/logs/
+gflc/backend/*.log
+logs/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ===== 前端 / 构建 =====
+node_modules/
+dist/
+build/
+.next/
+*.tsbuildinfo
+
+# ===== 编辑器与系统 =====
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== 本地工具状态（含个人记忆与缓存）=====
+.workbuddy/*
+!.workbuddy/skills/
+!.workbuddy/skills/**
+
+# ===== 临时产物 =====
+*.tmp
+*.bak
+_tmp/
+tmp/

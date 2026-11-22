@@ -1,0 +1,140 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">NL 问数仪表盘五步链路流程图拆解</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">第三章 · 判定分支 + 双保险约束 + 异常降级 + 理论依据 · 技术方案 3.8 / 3.9（P2）</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="78.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　五步链路标准流程图：NL 问数仪表盘（P2 增强，双保险约束）</text>
+<rect x="24.0" y="88.0" width="632.0" height="86.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="88.0" width="78.0" height="86.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="109.0" font-size="9.2" fill="#0071E3" font-weight="bold">① 交互层</text>
+<text x="30.0" y="125.0" font-size="8.4" fill="#6E6E73">输入 / 渲染</text>
+<rect x="24.0" y="174.0" width="632.0" height="86.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="174.0" width="78.0" height="86.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="195.0" font-size="9.2" fill="#0071E3" font-weight="bold">② 模型层</text>
+<text x="30.0" y="211.0" font-size="8.4" fill="#6E6E73">轻档 LLM</text>
+<rect x="24.0" y="260.0" width="632.0" height="86.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="260.0" width="78.0" height="86.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="281.0" font-size="9.2" fill="#0071E3" font-weight="bold">③ 数据层</text>
+<text x="30.0" y="297.0" font-size="8.4" fill="#6E6E73">白名单模板</text>
+<rect x="24.0" y="346.0" width="632.0" height="86.0" fill="#FFFFFF" stroke="#A8CEF7" stroke-width="0.7"/>
+<rect x="24.0" y="346.0" width="78.0" height="86.0" fill="#F5F5F7" stroke="#A8CEF7" stroke-width="0.7"/>
+<text x="30.0" y="367.0" font-size="9.2" fill="#0071E3" font-weight="bold">④ 契约层</text>
+<text x="30.0" y="383.0" font-size="8.4" fill="#6E6E73">Schema 校验</text>
+<rect x="110" y="109" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="160.0" y="128.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">自然语言提问</text>
+<text x="160.0" y="139.6" font-size="8.4" fill="#48484A" text-anchor="middle">本周掌握度趋势？</text>
+<rect x="110.0" y="195.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="160.0" y="214.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">意图解析</text>
+<text x="160.0" y="225.6" font-size="8.4" fill="#48484A" text-anchor="middle">轻档 · &lt;0.001 元/次</text>
+<path d="M 268.0,195 L 318,217.0 L 268.0,239 L 218,217.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="268.0" y="214.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">命中模板？</text>
+<text x="268.0" y="225.6" font-size="8.4" fill="#48484A" text-anchor="middle">白名单枚举</text>
+<rect x="326.0" y="281.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="376.0" y="300.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">模板 + 参数</text>
+<text x="376.0" y="311.6" font-size="8.4" fill="#48484A" text-anchor="middle">后端生成只读 SQL</text>
+<path d="M 484.0,281 L 534,303.0 L 484.0,325 L 434,303.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="484.0" y="300.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">结果合理？</text>
+<text x="484.0" y="311.6" font-size="8.4" fill="#48484A" text-anchor="middle">空集 / 超阈 / 越权</text>
+<rect x="434.0" y="367.0" width="100.0" height="44.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="484.0" y="386.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">图表契约校验</text>
+<text x="484.0" y="397.6" font-size="8.4" fill="#48484A" text-anchor="middle">JSON Schema</text>
+<path d="M 376.0,367 L 426,389.0 L 376.0,411 L 326,389.0 Z" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.1"/>
+<text x="376.0" y="386.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">通过？</text>
+<text x="376.0" y="397.6" font-size="8.4" fill="#48484A" text-anchor="middle">自修复 ≤2 次</text>
+<rect x="218" y="367" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="268.0" y="386.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">渲染图表</text>
+<text x="268.0" y="397.6" font-size="8.4" fill="#48484A" text-anchor="middle">附口径与时间窗</text>
+<rect x="110" y="367" width="100" height="44" rx="22.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="160.0" y="386.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">拒答 / 改写</text>
+<text x="160.0" y="397.6" font-size="8.4" fill="#48484A" text-anchor="middle">不编造查询</text>
+<rect x="542" y="109" width="100" height="44" rx="22.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.2"/>
+<text x="592.0" y="128.8" font-size="9.2" fill="#1D1D1F" text-anchor="middle" font-weight="bold">图表展示</text>
+<text x="592.0" y="139.6" font-size="8.4" fill="#48484A" text-anchor="middle">ECharts + 口径注释</text>
+<path d="M 268,239 L 268,251 L 376,251 L 376,281" fill="none" stroke="#1D1D1F" stroke-width="1.0" marker-end="url(#ar)"/>
+<path d="M 268,411 L 268,436 L 620,436 L 620,153" fill="none" stroke="#1D1D1F" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="300.0" y="430.0" font-size="8.4" fill="#6E6E73">渲染结果回传交互层展示（附口径与时间窗）</text>
+<line x1="268.0" y1="239.0" x2="268.0" y2="340.0" stroke="#B4472F" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="196.0" y="258.0" font-size="8.4" fill="#B4472F">否 → 拒答</text>
+<path d="M 484,325 L 484,340 L 104,340 L 104,389 L 110,389" fill="none" stroke="#B4472F" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="240.0" y="360.0" font-size="8.4" fill="#B4472F">空集 / 越权 / 契约失败 → 降级提示（不编造数据）</text>
+<rect x="24.0" y="446.0" width="632.0" height="24.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.6"/>
+<text x="32.0" y="462.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">Step 1　提问</text>
+<text x="158.4" y="462.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">Step 2　意图解析</text>
+<text x="284.8" y="462.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">Step 3　白名单查询</text>
+<text x="411.2" y="462.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">Step 4　契约校验</text>
+<text x="537.6" y="462.0" font-size="8.8" fill="#FFFFFF" font-weight="bold">Step 5　渲染</text>
+<text x="24.0" y="484.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　双保险设计与成本 / 边界（收编为 P2 增强）</text>
+<rect x="24.0" y="492.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">约束</text>
+<text x="162.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">设计</text>
+<text x="362.0" y="509.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">原因与验收</text>
+<line x1="156.0" y1="492.0" x2="156.0" y2="518.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="356.0" y1="492.0" x2="356.0" y2="518.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="518.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="518.0" x2="156.0" y2="550.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="356.0" y1="518.0" x2="356.0" y2="550.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="537.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">保险一：查询白名单</text>
+<text x="162.0" y="537.0" font-size="9.0" fill="#1D1D1F">模型只输出模板 ID 与参数</text>
+<text x="362.0" y="537.0" font-size="9.0" fill="#1D1D1F">SQL 由后端白名单生成，杜绝自然语言直转 SQL 的越权与注入</text>
+<rect x="24.0" y="550.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="550.0" x2="156.0" y2="582.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="356.0" y1="550.0" x2="356.0" y2="582.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="569.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">保险二：图表契约</text>
+<text x="162.0" y="569.0" font-size="9.0" fill="#1D1D1F">输出走 JSON Schema 全字段校验</text>
+<text x="362.0" y="569.0" font-size="9.0" fill="#1D1D1F">校验失败触发自修复 ≤2 次，仍失败降级为表格或提示</text>
+<rect x="24.0" y="582.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="582.0" x2="156.0" y2="614.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="356.0" y1="582.0" x2="356.0" y2="614.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="601.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">模型档位</text>
+<text x="162.0" y="601.0" font-size="9.0" fill="#1D1D1F">意图解析走轻档 qwen-flash</text>
+<text x="362.0" y="601.0" font-size="9.0" fill="#1D1D1F">单次成本 &lt;0.001 元量级；聚合步骤零模型成本</text>
+<rect x="24.0" y="614.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="614.0" x2="156.0" y2="646.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="356.0" y1="614.0" x2="356.0" y2="646.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="633.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">复用设施</text>
+<text x="162.0" y="633.0" font-size="9.0" fill="#1D1D1F">与 RAG 问答共用意图解析与校验</text>
+<text x="362.0" y="633.0" font-size="9.0" fill="#1D1D1F">边际开发约 1 周，不新增独立服务</text>
+<rect x="24.0" y="646.0" width="632.0" height="32.0" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="646.0" x2="156.0" y2="678.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="356.0" y1="646.0" x2="356.0" y2="678.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="665.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">明确不做</text>
+<text x="162.0" y="665.0" font-size="9.0" fill="#1D1D1F">自由 SQL / 跨用户聚合 / 自造指标</text>
+<text x="362.0" y="665.0" font-size="9.0" fill="#1D1D1F">口径不可核验的数字不进仪表盘（对齐可解释原则）</text>
+<rect x="24.0" y="678.0" width="632.0" height="32.0" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="156.0" y1="678.0" x2="156.0" y2="710.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="356.0" y1="678.0" x2="356.0" y2="710.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="697.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">验收口径</text>
+<text x="162.0" y="697.0" font-size="9.0" fill="#1D1D1F">模板命中率、拒答正确率、一次通过率</text>
+<text x="362.0" y="697.0" font-size="9.0" fill="#1D1D1F">与 G4 数据一致性门禁、图 6-2 测试体系共用评测集</text>
+<text x="24.0" y="726.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　理论依据与展示规范</text>
+<rect x="24.0" y="732.0" width="205.3" height="70.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,737.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5 C9 2 5 3 4 7 C2 9 3 13 5 14 C4 18 7 21 10 20 L12 21 L14 20 C17 21 20 18 19 14 C21 13 22 9 20 7 C19 3 15 2 12 5 Z"/><path d="M12 5 L12 21 M6 10 L9 10 M15 10 L18 10"/></g>
+<text x="50.0" y="749.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">认知负荷理论</text>
+<text x="32.0" y="765.0" font-size="8.5" fill="#3A3A3C">白名单模板把无限查询空间收敛为</text>
+<text x="32.0" y="778.0" font-size="8.5" fill="#3A3A3C">有限枚举，降低外在负荷（Sweller</text>
+<text x="32.0" y="791.0" font-size="8.5" fill="#3A3A3C">1988）；先判定后生成避免无效推理</text>
+<rect x="237.3" y="732.0" width="205.3" height="70.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,737.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 12 C5 7 9 5 12 5 C15 5 19 7 22 12 C19 17 15 19 12 19 C9 19 5 17 2 12 Z"/><circle cx="12" cy="12" r="3"/></g>
+<text x="263.3" y="749.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">可解释 AI 原则</text>
+<text x="245.3" y="765.0" font-size="8.5" fill="#3A3A3C">每张图强制附数据口径、时间窗与</text>
+<text x="245.3" y="778.0" font-size="8.5" fill="#3A3A3C">样本量；拒答优于编造，保证任何</text>
+<text x="245.3" y="791.0" font-size="8.5" fill="#3A3A3C">数字可回指只读视图</text>
+<rect x="450.7" y="732.0" width="205.3" height="70.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,737.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 7 L12 12 L16 7 M12 12 L12 18 M8 13 L16 13 M8 16 L16 16"/></g>
+<text x="476.7" y="749.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">复用与成本</text>
+<text x="458.7" y="765.0" font-size="8.5" fill="#3A3A3C">与图 5-2 成本护栏共用轻档路由</text>
+<text x="458.7" y="778.0" font-size="8.5" fill="#3A3A3C">与降级设施；与图 3-2 仪表盘模块、</text>
+<text x="458.7" y="791.0" font-size="8.5" fill="#3A3A3C">图 3-3 理论矩阵一一对应</text>
+<rect x="24.0" y="810.0" width="632.0" height="44.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<text x="36.0" y="828.0" font-size="8.8" fill="#48484A">注 1：NL 问数不是「让大模型查数据库」，而是把自然语言收敛到有限模板；展示层必须附数据口径与时间窗。</text>
+<text x="36.0" y="842.0" font-size="8.8" fill="#48484A">注 2：理论映射对应技术方案 3.9 节（认知负荷、元认知反馈、可验证性优先），图 3-3 给出全功能理论矩阵。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">圆角＝起止　矩形＝处理　菱形＝判定　平行四边形＝数据　虚线朱红＝拒答 / 降级出口</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 4-6　NL 问数仪表盘五步链路流程图拆解</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 4-6　Flowchart decomposition of the NL-to-dashboard query pipeline</text>
+</svg>

@@ -1,0 +1,200 @@
+<!-- typography-v2 -->
+<svg viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI','PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+<rect x="0.0" y="0.0" width="680.0" height="960.0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="8.0" y="8.0" width="664.0" height="944.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="648.0" height="928.0" fill="none" stroke="#D2D2D7" stroke-width="0.5"/>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#0071E3"/></marker><marker id="arg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#86868B"/></marker></defs>
+<text x="340.0" y="40.0" font-size="14" fill="#0071E3" text-anchor="middle" font-weight="bold">风险矩阵与分级对策</text>
+<text x="340.0" y="58.0" font-size="9.6" fill="#6E6E73" text-anchor="middle">Risk Matrix / Risk Register / Tiered Response / Linkage to Schedule</text>
+<line x1="24.0" y1="66.0" x2="656.0" y2="66.0" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="656.0" y="40.0" font-size="8.6" fill="#6E6E73" text-anchor="end">GFLC · 2026</text>
+<text x="24.0" y="90.0" font-size="10.5" fill="#0071E3" font-weight="bold">A　风险热力矩阵与分级</text>
+<rect x="24.0" y="96.0" width="340.0" height="168.0" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="0.9"/>
+<rect x="74.0" y="108.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="74.0" y="135.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="74.0" y="162.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="74.0" y="189.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="74.0" y="216.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="128.0" y="108.0" width="51.0" height="24.0" fill="#D2D2D7" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="128.0" y="135.0" width="51.0" height="24.0" fill="#D2D2D7" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="128.0" y="162.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="128.0" y="189.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="128.0" y="216.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="182.0" y="108.0" width="51.0" height="24.0" fill="#A1A1A6" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="182.0" y="135.0" width="51.0" height="24.0" fill="#D2D2D7" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="182.0" y="162.0" width="51.0" height="24.0" fill="#D2D2D7" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="182.0" y="189.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="182.0" y="216.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="236.0" y="108.0" width="51.0" height="24.0" fill="#A1A1A6" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="236.0" y="135.0" width="51.0" height="24.0" fill="#A1A1A6" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="236.0" y="162.0" width="51.0" height="24.0" fill="#D2D2D7" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="236.0" y="189.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="236.0" y="216.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="290.0" y="108.0" width="51.0" height="24.0" fill="#A1A1A6" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="290.0" y="135.0" width="51.0" height="24.0" fill="#A1A1A6" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="290.0" y="162.0" width="51.0" height="24.0" fill="#D2D2D7" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="290.0" y="189.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<rect x="290.0" y="216.0" width="51.0" height="24.0" fill="#F0F4F8" stroke="#FFFFFF" stroke-width="0.6"/>
+<text x="60.0" y="118.0" font-size="8.2" fill="#6E6E73" text-anchor="end">5</text>
+<text x="60.0" y="244.0" font-size="8.2" fill="#6E6E73" text-anchor="end">1</text>
+<text x="74.0" y="258.0" font-size="8.2" fill="#6E6E73">影
+响</text>
+<text x="240.0" y="272.0" font-size="8.6" fill="#6E6E73" text-anchor="middle">发生概率 →</text>
+<text x="98.0" y="234.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R1</text>
+<text x="152.0" y="234.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R3</text>
+<text x="206.0" y="207.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R2</text>
+<text x="152.0" y="180.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R7</text>
+<text x="260.0" y="153.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R10</text>
+<text x="206.0" y="180.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R8</text>
+<text x="98.0" y="153.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R5</text>
+<text x="260.0" y="207.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R4</text>
+<text x="152.0" y="207.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R6</text>
+<text x="260.0" y="180.0" font-size="8.4" fill="#B4472F" text-anchor="middle" font-weight="bold">R9</text>
+<rect x="378.0" y="96.0" width="278.0" height="168.0" fill="#EEF5FD" stroke="#A8CEF7" stroke-width="0.8"/>
+<text x="390.0" y="126.0" font-size="9.6" fill="#B4472F" font-weight="bold">Ⅰ 高危（深灰）</text>
+<text x="390.0" y="142.0" font-size="8.6" fill="#3A3A3C">概率×影响 ≥12：必须前置对策与演练</text>
+<text x="390.0" y="170.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">Ⅱ 中危（中灰）</text>
+<text x="390.0" y="186.0" font-size="8.6" fill="#3A3A3C">6–11：设阈值告警 + 明确触发动作</text>
+<text x="390.0" y="214.0" font-size="9.6" fill="#6E6E73" font-weight="bold">Ⅲ 低危（浅灰）</text>
+<text x="390.0" y="230.0" font-size="8.6" fill="#3A3A3C">&lt;6：记录并季度复核</text>
+<text x="24.0" y="300.0" font-size="10.5" fill="#0071E3" font-weight="bold">B　风险登记册 R1–R10（技术 / 成本 / 合规 / 运维 / 进度 / 质量 / 市场 / 供应 八类）</text>
+<rect x="24.0" y="306.0" width="632.0" height="26.0" fill="#0071E3" stroke="#1D1D1F" stroke-width="0.8"/>
+<text x="30.0" y="323.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">编号</text>
+<text x="84.0" y="323.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">类别</text>
+<text x="172.0" y="323.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">风险描述</text>
+<text x="294.0" y="323.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">对策</text>
+<text x="478.0" y="323.0" font-size="9.0" fill="#FFFFFF" font-weight="bold">触发阈值 / 证据</text>
+<line x1="78.0" y1="306.0" x2="78.0" y2="332.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="166.0" y1="306.0" x2="166.0" y2="332.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="288.0" y1="306.0" x2="288.0" y2="332.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<line x1="472.0" y1="306.0" x2="472.0" y2="332.0" stroke="#FFFFFF" stroke-width="0.4"/>
+<rect x="24.0" y="332.0" width="632.0" height="31.6" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="332.0" x2="78.0" y2="363.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="332.0" x2="166.0" y2="363.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="332.0" x2="288.0" y2="363.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="332.0" x2="472.0" y2="363.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="350.8" font-size="8.9" fill="#1D1D1F" font-weight="bold">R1</text>
+<text x="84.0" y="350.8" font-size="8.5" fill="#1D1D1F">技术</text>
+<text x="172.0" y="350.8" font-size="8.5" fill="#1D1D1F">逆向接口无 SLA</text>
+<text x="294.0" y="350.8" font-size="8.5" fill="#1D1D1F">字幕优先 + 多源兜底 + 异常显式报错</text>
+<text x="478.0" y="350.8" font-size="8.5" fill="#1D1D1F">解析失败率 &gt;5% 即切换通道</text>
+<rect x="24.0" y="363.6" width="632.0" height="31.6" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="363.6" x2="78.0" y2="395.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="363.6" x2="166.0" y2="395.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="363.6" x2="288.0" y2="395.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="363.6" x2="472.0" y2="395.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="382.4" font-size="8.9" fill="#1D1D1F" font-weight="bold">R2</text>
+<text x="84.0" y="382.4" font-size="8.5" fill="#1D1D1F">技术</text>
+<text x="172.0" y="382.4" font-size="8.5" fill="#1D1D1F">长任务拖垮 API 进程</text>
+<text x="294.0" y="382.4" font-size="8.5" fill="#1D1D1F">API/Worker 分进程 + Redis 队列 + 硬超时</text>
+<text x="478.0" y="382.4" font-size="8.5" fill="#1D1D1F">P95 &gt;3 s 触发扩容评估</text>
+<rect x="24.0" y="395.2" width="632.0" height="31.6" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="395.2" x2="78.0" y2="426.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="395.2" x2="166.0" y2="426.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="395.2" x2="288.0" y2="426.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="395.2" x2="472.0" y2="426.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="414.0" font-size="8.9" fill="#1D1D1F" font-weight="bold">R3</text>
+<text x="84.0" y="414.0" font-size="8.5" fill="#1D1D1F">成本</text>
+<text x="172.0" y="414.0" font-size="8.5" fill="#1D1D1F">活动价续费跳涨 ×4.2</text>
+<text x="294.0" y="414.0" font-size="8.5" fill="#1D1D1F">答辩周期用活动价 + 长期重估/迁移</text>
+<text x="478.0" y="414.0" font-size="8.5" fill="#1D1D1F">次年 ¥65/月，见 图 7-2</text>
+<rect x="24.0" y="426.8" width="632.0" height="31.6" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="426.8" x2="78.0" y2="458.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="426.8" x2="166.0" y2="458.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="426.8" x2="288.0" y2="458.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="426.8" x2="472.0" y2="458.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="445.6" font-size="8.9" fill="#1D1D1F" font-weight="bold">R4</text>
+<text x="84.0" y="445.6" font-size="8.5" fill="#1D1D1F">成本</text>
+<text x="172.0" y="445.6" font-size="8.5" fill="#1D1D1F">模型调用超预算</text>
+<text x="294.0" y="445.6" font-size="8.5" fill="#1D1D1F">日阈值告警 + 自动降档 + 强档限流</text>
+<text x="478.0" y="445.6" font-size="8.5" fill="#1D1D1F">GFLC_DAILY_COST_CNY</text>
+<rect x="24.0" y="458.4" width="632.0" height="31.6" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="458.4" x2="78.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="458.4" x2="166.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="458.4" x2="288.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="458.4" x2="472.0" y2="490.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="477.2" font-size="8.9" fill="#1D1D1F" font-weight="bold">R5</text>
+<text x="84.0" y="477.2" font-size="8.5" fill="#1D1D1F">合规</text>
+<text x="172.0" y="477.2" font-size="8.5" fill="#1D1D1F">ICP 备案 / 商用条款</text>
+<text x="294.0" y="477.2" font-size="8.5" fill="#1D1D1F">境内节点 + Token Plan 条款核对 + 回退按量</text>
+<text x="478.0" y="477.2" font-size="8.5" fill="#1D1D1F">G7 安全域逐项核验</text>
+<rect x="24.0" y="490.0" width="632.0" height="31.6" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="490.0" x2="78.0" y2="521.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="490.0" x2="166.0" y2="521.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="490.0" x2="288.0" y2="521.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="490.0" x2="472.0" y2="521.6" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="508.8" font-size="8.9" fill="#1D1D1F" font-weight="bold">R6</text>
+<text x="84.0" y="508.8" font-size="8.5" fill="#1D1D1F">运维</text>
+<text x="172.0" y="508.8" font-size="8.5" fill="#1D1D1F">磁盘爆满 / 数据丢失</text>
+<text x="294.0" y="508.8" font-size="8.5" fill="#1D1D1F">水位 80% 冻结 + 每日备份 + 恢复演练</text>
+<text x="478.0" y="508.8" font-size="8.5" fill="#1D1D1F">cron 退出码非零告警</text>
+<rect x="24.0" y="521.6" width="632.0" height="31.6" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="521.6" x2="78.0" y2="553.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="521.6" x2="166.0" y2="553.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="521.6" x2="288.0" y2="553.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="521.6" x2="472.0" y2="553.2" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="540.4" font-size="8.9" fill="#1D1D1F" font-weight="bold">R7</text>
+<text x="84.0" y="540.4" font-size="8.5" fill="#1D1D1F">进度</text>
+<text x="172.0" y="540.4" font-size="8.5" fill="#1D1D1F">16 周排期延误</text>
+<text x="294.0" y="540.4" font-size="8.5" fill="#1D1D1F">可牺牲项第 11 周未达标即降 V1.5</text>
+<text x="478.0" y="540.4" font-size="8.5" fill="#1D1D1F">W11 出口条件未达标</text>
+<rect x="24.0" y="553.2" width="632.0" height="31.6" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="553.2" x2="78.0" y2="584.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="553.2" x2="166.0" y2="584.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="553.2" x2="288.0" y2="584.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="553.2" x2="472.0" y2="584.8" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="572.0" font-size="8.9" fill="#1D1D1F" font-weight="bold">R8</text>
+<text x="84.0" y="572.0" font-size="8.5" fill="#1D1D1F">质量</text>
+<text x="172.0" y="572.0" font-size="8.5" fill="#1D1D1F">幻觉 / 指标回退</text>
+<text x="294.0" y="572.0" font-size="8.5" fill="#1D1D1F">契约校验 + 40 份评测集 + 版本回滚</text>
+<text x="478.0" y="572.0" font-size="8.5" fill="#1D1D1F">任一指标下降 &gt;3 pp</text>
+<rect x="24.0" y="584.8" width="632.0" height="31.6" fill="#FFFFFF" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="584.8" x2="78.0" y2="616.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="584.8" x2="166.0" y2="616.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="584.8" x2="288.0" y2="616.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="584.8" x2="472.0" y2="616.4" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="603.6" font-size="8.9" fill="#1D1D1F" font-weight="bold">R9</text>
+<text x="84.0" y="603.6" font-size="8.5" fill="#1D1D1F">市场</text>
+<text x="172.0" y="603.6" font-size="8.5" fill="#1D1D1F">用户规模假设失实</text>
+<text x="294.0" y="603.6" font-size="8.5" fill="#1D1D1F">内测 20 人验证 + 全册口径显式声明</text>
+<text x="478.0" y="603.6" font-size="8.5" fill="#1D1D1F">首年目标未达即重估 SOM</text>
+<rect x="24.0" y="616.4" width="632.0" height="31.6" fill="#F5F5F7" stroke="#A1A1A6" stroke-width="0.6"/>
+<line x1="78.0" y1="616.4" x2="78.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="166.0" y1="616.4" x2="166.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="288.0" y1="616.4" x2="288.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<line x1="472.0" y1="616.4" x2="472.0" y2="648.0" stroke="#D2D2D7" stroke-width="0.4"/>
+<text x="30.0" y="635.2" font-size="8.9" fill="#1D1D1F" font-weight="bold">R10</text>
+<text x="84.0" y="635.2" font-size="8.5" fill="#1D1D1F">供应</text>
+<text x="172.0" y="635.2" font-size="8.5" fill="#1D1D1F">供应商锁定与单人单点</text>
+<text x="294.0" y="635.2" font-size="8.5" fill="#1D1D1F">三档可切换 + LOCAL 兜底 + 组件可自建</text>
+<text x="478.0" y="635.2" font-size="8.5" fill="#1D1D1F">连败 &gt;3 次 / 涨价 &gt;30% 迁移</text>
+<text x="24.0" y="670.0" font-size="10.5" fill="#0071E3" font-weight="bold">C　分级对策与责任</text>
+<rect x="24.0" y="676.0" width="205.3" height="80.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(31.0,681.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2 L21 6 L21 12 C21 17 17 21 12 22 C7 21 3 17 3 12 L3 6 Z"/><path d="M8 12 L11 15 L16 9"/></g>
+<text x="50.0" y="693.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">Ⅰ 高危 · 前置</text>
+<text x="32.0" y="709.0" font-size="8.8" fill="#3A3A3C">发布前完成降级演练</text>
+<text x="32.0" y="722.0" font-size="8.8" fill="#3A3A3C">备份恢复季度演练</text>
+<text x="32.0" y="735.0" font-size="8.8" fill="#3A3A3C">Go/No-Go 逐域核验</text>
+<rect x="237.3" y="676.0" width="205.3" height="80.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(244.3,681.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6 L12 12 L16 15"/></g>
+<text x="263.3" y="693.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">Ⅱ 中危 · 阈值</text>
+<text x="245.3" y="709.0" font-size="8.8" fill="#3A3A3C">每条风险绑定可观测指标</text>
+<text x="245.3" y="722.0" font-size="8.8" fill="#3A3A3C">触发动作写入处置手册</text>
+<text x="245.3" y="735.0" font-size="8.8" fill="#3A3A3C">告警必有闭环</text>
+<rect x="450.7" y="676.0" width="205.3" height="80.0" fill="#EEF5FD" stroke="#1D1D1F" stroke-width="0.8"/>
+<g transform="translate(457.7,681.0) scale(0.62)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2 L15 2 L19 6 L19 22 L5 22 Z"/><path d="M15 2 L15 6 L19 6 M8 11 L16 11 M8 15 L16 15 M8 19 L13 19"/></g>
+<text x="476.7" y="693.0" font-size="9.6" fill="#1D1D1F" font-weight="bold">Ⅲ 低危 · 复核</text>
+<text x="458.7" y="709.0" font-size="8.8" fill="#3A3A3C">登记在册不遗忘</text>
+<text x="458.7" y="722.0" font-size="8.8" fill="#3A3A3C">季度复核等级</text>
+<text x="458.7" y="735.0" font-size="8.8" fill="#3A3A3C">变更同步回文档</text>
+<rect x="24.0" y="766.0" width="632.0" height="69.0" fill="#FAFAFC" stroke="#A1A1A6" stroke-width="0.8" stroke-dasharray="5 3"/>
+<g transform="translate(33.0,772.0) scale(0.6)" fill="none" stroke="#1D1D1F" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="15" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M5.5 8 L5.5 12 L12 12 L12 16 M18.5 8 L18.5 12 L12 12"/></g>
+<text x="56.0" y="784.0" font-size="9.4" fill="#1D1D1F" font-weight="bold">风险与排期的联动</text>
+<text x="36.0" y="801.0" font-size="9.0" fill="#48484A">R7 直接挂在 图 9-1 甘特图的第 11 周门禁周；R8 挂在 G1–G7 门禁（图 6-2）；R3/R4 挂在成本细目（图 7-2）。</text>
+<text x="36.0" y="815.0" font-size="9.0" fill="#48484A">R10 与 图 8-2 外部依赖可替换性表逐项对应：模型、存储、转写、云服务器四类均给出切换触发条件。</text>
+<text x="36.0" y="829.0" font-size="9.0" fill="#48484A">风险等级为定性评估（概率 × 影响），用于排序处置优先级，不宣称量化概率；答辩时可逐条对照证据列。</text>
+<line x1="24.0" y1="862.0" x2="656.0" y2="862.0" stroke="#A8CEF7" stroke-width="0.6"/>
+<text x="24.0" y="878.0" font-size="9.2" fill="#3A3A3C">图例：R1–R10 共 10 项风险在 5×5 矩阵中全部落位；深灰＝Ⅰ 高危、中灰＝Ⅱ 中危、浅灰＝Ⅲ 低危；R10 为最高危项。</text>
+<text x="340.0" y="906.0" font-size="12.5" fill="#0071E3" text-anchor="middle" font-weight="bold">图 9-2　风险矩阵与分级对策</text>
+<text x="340.0" y="924.0" font-size="9.5" fill="#48484A" text-anchor="middle" font-style="italic">Fig. 9-2 Risk matrix and tiered mitigation plan</text>
+</svg>

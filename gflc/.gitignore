@@ -1,0 +1,8 @@
+# 密钥与数据不入库
+.env
+.env.dev
+!*.env.example
+data/
+__pycache__/
+*.pyc
+.pytest_cache/

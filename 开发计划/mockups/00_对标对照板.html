@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>对标对照板 · Dashboard</title>
+<style>
+:root{
+  --bg:#f7f4ee; --card:#fdfbf7; --ink:#1f1b16; --ink2:#4a4238; --ink3:#7b7266;
+  --line:rgba(31,27,22,.10); --accent:#1f4d6b; --mark:#f5df87;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei UI",-apple-system,sans-serif;
+  font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased;padding:40px 40px 56px}
+.wrap{max-width:1360px;margin:0 auto}
+h1{font-size:24px;font-weight:500;letter-spacing:-.4px}
+.sub{color:var(--ink3);font-size:13px;margin-top:6px;max-width:760px}
+.note{margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;
+  background:var(--card);font-size:12.5px;color:var(--ink2);max-width:900px}
+.note b{font-weight:500}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:28px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column}
+.shot{position:relative;background:#eee;border-bottom:1px solid var(--line)}
+.shot img{display:block;width:100%;height:auto}
+.badge{position:absolute;left:12px;top:12px;background:rgba(20,17,12,.82);color:#f7f4ee;
+  font-size:10.5px;padding:2px 8px;border-radius:5px;letter-spacing:.2px}
+.meta{padding:16px 18px 18px}
+.meta .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.meta h2{font-size:15px;font-weight:500}
+.meta .lic{font-size:11px;color:var(--ink3);font-family:ui-monospace,Menlo,Consolas,monospace}
+.meta .why{font-size:12.5px;color:var(--ink3);margin-top:4px}
+.take{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.take div{font-size:12.5px;color:var(--ink2);padding-left:14px;position:relative;line-height:1.6}
+.take div::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;
+  border-radius:50%;background:var(--accent)}
+
+table{width:100%;border-collapse:collapse;margin-top:12px;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th{text-align:left;font-size:11.5px;font-weight:500;color:var(--ink3);padding:10px 14px;
+  border-bottom:1px solid var(--line)}
+td{padding:11px 14px;font-size:12.5px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+h3{font-size:14px;font-weight:500;margin-top:36px}
+.y{color:#2f6b4f}.n{color:#a8322c}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Dashboard 对标对照板</h1>
+  <div class="sub">全部来自<strong>开源项目自身的公开演示</strong>，不是商业产品的营销截图。许可证允许借鉴布局与代码，我们取的是可量化的决策，不复制像素、图标与文案。</div>
+  <div class="note"><b>看图时只看三件事</b>：① 一屏有几个数据块 ② 强调色出现几次 ③ KPI 是"一堆卡片"还是"一条指标带"。</div>
+
+  <div class="grid">
+
+    <div class="item">
+      <div class="shot"><img src="refs/01-shadcn-dashboard.png" alt="shadcn dashboard">
+        <span class="badge">01 · 后台型 · 浅色</span></div>
+      <div class="meta">
+        <div class="top"><h2>shadcn/ui Dashboard</h2><span class="lic">MIT</span></div>
+        <div class="why">后台管理最常见的形态：侧栏 + 4 张 KPI + 主图 + 数据表</div>
+        <div class="take">
+          <div>KPI 卡是「标签 + 右上 delta 徽章 + 大数字 + 两行解释」，delta 放右上而不是堆在数字下面</div>
+          <div>时间范围是分段控件「Last 3 months / 30 days / 7 days」，放在图表标题右侧同一行</div>
+          <div>几乎零强调色：全站黑白灰，只有状态点用绿 —— 颜色只表意</div>
+          <div>表格上方是筛选 tab（带计数）与「Customize Columns」，操作不塞进每一行</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="shot"><img src="refs/02-plausible.png" alt="Plausible">
+        <span class="badge">02 · 分析型 · 浅色</span></div>
+      <div class="meta">
+        <div class="top"><h2>Plausible Analytics</h2><span class="lic">AGPL-3.0</span></div>
+        <div class="why">同类产品里最克制的一张看板，6 个指标一屏读完</div>
+        <div class="take">
+          <div><b>6 个指标不是 6 张卡，而是一条指标带</b>，用竖发丝线分隔 —— 这是本轮最想抄的一条</div>
+          <div>主图占满整行，Y 轴有刻度值（60k / 50k / …），网格线极淡，单色折线 + 5% 面积</div>
+          <div>下方两张表是「条形表」：左边名称、条在文字背后、右边数值右对齐</div>
+          <div>整页只有盒子外面一层细边，内部靠发丝线分区，没有一张卡有阴影</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="shot"><img src="refs/03-tremor-blocks.png" alt="Tremor">
+        <span class="badge">03 · 组件库 · 浅色</span></div>
+      <div class="meta">
+        <div class="top"><h2>Tremor Blocks</h2><span class="lic">Apache-2.0</span></div>
+        <div class="why">给仪表盘用的区块库，看它的卡片解剖</div>
+        <div class="take">
+          <div>状态卡：一个状态点 + 一句状态词 + 主体名 + 一条分段条（30 天前 → 今天）</div>
+          <div>数字卡：小标签在上，金额 32px 在中，其余全部省略 —— 和我现在的 hero 一致</div>
+          <div>条形用同一色相的深浅区分状态，不引入第二种颜色</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="shot"><img src="refs/04-grafana-dark.png" alt="Grafana">
+        <span class="badge">04 · 运维型 · 深色</span></div>
+      <div class="meta">
+        <div class="top"><h2>Grafana Play</h2><span class="lic">AGPL-3.0</span></div>
+        <div class="why">看深色下怎么分层，以及标签页/筛选的组织方式</div>
+        <div class="take">
+          <div>深色靠「表面层级 + 发丝线」，不靠阴影：页面 → 面板 → 面板内区块逐级变浅</div>
+          <div>顶部两级：面包屑（Dashboards › ecommerce）+ 标签页（Team coverage / Configuration）</div>
+          <div>筛选器做成可关闭的 chip（All ×），不藏进弹窗</div>
+          <div><b>不抄</b>：它的信息密度是给值班工程师的，我们用会变成噪音</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3>采用 / 不采用</h3>
+  <table>
+    <thead><tr><th style="width:110px">来源</th><th>这一条</th><th style="width:88px">结论</th><th style="width:300px">落到我们哪里</th></tr></thead>
+    <tbody>
+      <tr><td>Plausible</td><td>指标带（一条带 4–6 个指标，竖发丝线分隔）</td><td class="y">采用</td><td>替换现在 3 张独立 KPI 卡 → 一条指标带</td></tr>
+      <tr><td>Plausible</td><td>条形表（名称 + 背景条 + 右对齐数值）</td><td class="y">采用</td><td>「接下来要复习的」队列</td></tr>
+      <tr><td>shadcn</td><td>delta 徽章放 KPI 右上</td><td class="y">采用</td><td>指标带的 delta 位置</td></tr>
+      <tr><td>shadcn</td><td>表格上方筛选 tab + 列设置</td><td class="y">采用</td><td>文档页 / 任务页（本轮先不动）</td></tr>
+      <tr><td>shadcn</td><td>时间范围分段控件在图表标题右侧</td><td class="y">采用</td><td>主图 7 天 / 30 天 / 全部</td></tr>
+      <tr><td>Grafana</td><td>深色三层表面</td><td class="y">采用</td><td>上一轮已做</td></tr>
+      <tr><td>Grafana</td><td>高密度多面板拼贴</td><td class="n">不采用</td><td>我们是学习工具，不是值班台</td></tr>
+      <tr><td>Tremor</td><td>状态卡样式</td><td class="n">暂不</td><td>没有对应业务对象</td></tr>
+      <tr><td>shadcn</td><td>4 张等宽 KPI 卡</td><td class="n">不采用</td><td>等比卡片是我们这次要消灭的形态</td></tr>
+      <tr><td>Plausible</td><td>顶部 6 个指标全平级</td><td class="n">不采用</td><td>我们必须留一个 hero（今天要复习多少），不能全平级</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note" style="margin-top:20px">
+    <b>一句话结论</b>：保留我们的 hero（这是 Plausible 没有的），但把 KPI 从「三张卡」改成「一条带」，把队列改成「条形表」，把强调色从 4 处收到 3 处。
+  </div>
+
+</div>
+</body>
+</html>
