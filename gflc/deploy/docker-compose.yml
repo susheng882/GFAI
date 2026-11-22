@@ -1,52 +1,94 @@
-# GFLC P0 单机编排
-# 逻辑三容器：nginx（网关）/ app（API+Worker 同镜像分进程）/ data（数据库+向量）
-# data 域实际拆为 db(pgvector) + minio(对象存储) + redis(队列/会话) 三个进程，便于独立备份与配额。
+# GFLC 生产单机编排
+# 启动：cd gflc/deploy && docker compose up -d --build
+# 前置：cp .env.example .env 并填写 POSTGRES_PASSWORD / MINIO_ROOT_PASSWORD / LLM_API_KEY / SESSION_SECRET
 name: gflc
+
+x-log: &log
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
 
 services:
   db:
     image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_USER: gflc
-      POSTGRES_PASSWORD: gflc
-      POSTGRES_DB: gflc
+      POSTGRES_USER: ${POSTGRES_USER:-gflc}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?请在 deploy/.env 设置 POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-gflc}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U gflc -d gflc"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gflc} -d ${POSTGRES_DB:-gflc}"]
       interval: 5s
       timeout: 3s
       retries: 20
+    restart: unless-stopped
+    logging: *log
+    # 不暴露端口到公网
 
   redis:
     image: redis:7-alpine
-    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+    logging: *log
+    # 不暴露端口到公网
 
   minio:
-    image: minio/minio:latest
+    image: minio/minio:RELEASE.2024-11-07T00-52-20Z
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-gflcadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?请在 deploy/.env 设置 MINIO_ROOT_PASSWORD}
     volumes:
       - miniodata:/data
     ports:
+      # 浏览器预签名直传必须能访问 9000；9001 管理台不对公网开放
       - "9000:9000"
-      - "9001:9001"
+    restart: unless-stopped
+    logging: *log
 
   app:
-    build: ../backend
+    build:
+      context: ../backend
+      args:
+        WHISPER_MODEL: ${WHISPER_MODEL:-base}
     env_file: .env
+    environment:
+      # 由 compose 变量注入，避免 .env 里数据库/存储密码不一致
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-gflc}:${POSTGRES_PASSWORD:?}@db:5432/${POSTGRES_DB:-gflc}
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-gflcadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:?}
     depends_on:
       db:
         condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
       minio:
         condition: service_started
+    # 严禁 --workers > 1：worker 是进程内内存队列，多进程会导致任务重复消费
     command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
-    ports:
-      - "8000:8000"
+    volumes:
+      - modelcache:/opt/models
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+      retries: 3
+    expose:
+      - "8000"
+    restart: unless-stopped
+    logging: *log
 
   nginx:
     image: nginx:1.27-alpine
@@ -55,8 +97,13 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - app
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+    logging: *log
 
 volumes:
   pgdata:
+  redisdata:
   miniodata:
+  modelcache:

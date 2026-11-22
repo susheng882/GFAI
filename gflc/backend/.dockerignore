@@ -1,0 +1,34 @@
+# 关键：绝不把明文密钥、数据库、上传数据打进镜像
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+cookies.txt
+
+# 数据与缓存（本机 70MB 数据不得进镜像）
+data/
+*.db
+*.db-journal
+*.sqlite
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# 版本控制 / IDE / 文档 / 测试脚本
+.git/
+.gitignore
+.vscode/
+.idea/
+*.md
+tests/
+scripts/
+
+# 临时文件
+tmp/
+temp/
+*.log
+.DS_Store
