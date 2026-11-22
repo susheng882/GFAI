@@ -34,7 +34,11 @@ def upgrade():
     ]:
         if col not in nc:
             op.add_column("notes", ddl)
-    if "folder_id" not in {i["name"] for i in sa.inspect(bind).get_indexes("notes")}:
+    idx = sa.inspect(bind).get_indexes("notes")
+    idx_names = {i["name"] for i in idx}
+    idx_cols = {c for i in idx for c in (i.get("column_names") or [])}
+    # 注意：要比对索引名或索引列，不能拿列名去比索引名（老写法永远为真）
+    if "ix_notes_folder_id" not in idx_names and "folder_id" not in idx_cols:
         op.create_index("ix_notes_folder_id", "notes", ["folder_id"])
 
 

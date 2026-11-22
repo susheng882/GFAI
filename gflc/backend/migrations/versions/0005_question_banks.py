@@ -13,14 +13,24 @@ branch_labels = None
 depends_on = None
 
 
+def _cols(table: str) -> set[str]:
+    return {c["name"] for c in sa.inspect(op.get_bind()).get_columns(table)}
+
+
 def upgrade():
     from app.db.session import Base
     import app.models.models  # noqa: F401
-    Base.metadata.create_all(bind=op.get_bind())  # 建 question_banks
-    op.add_column("questions", sa.Column("bank_id", sa.Integer(), nullable=True))
-    op.add_column("questions", sa.Column("chapter", sa.String(128), nullable=True))
-    op.add_column("questions", sa.Column("section", sa.String(32), nullable=True))
-    op.add_column("questions", sa.Column("no", sa.String(16), nullable=True))
+    Base.metadata.create_all(bind=op.get_bind())  # 建 question_banks（已存在则跳过）
+
+    have = _cols("questions")
+    for name, ddl in [
+        ("bank_id", sa.Column("bank_id", sa.Integer(), nullable=True)),
+        ("chapter", sa.Column("chapter", sa.String(128), nullable=True)),
+        ("section", sa.Column("section", sa.String(32), nullable=True)),
+        ("no", sa.Column("no", sa.String(16), nullable=True)),
+    ]:
+        if name not in have:
+            op.add_column("questions", ddl)
 
 
 def downgrade():

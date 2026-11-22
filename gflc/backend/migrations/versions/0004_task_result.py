@@ -13,8 +13,14 @@ branch_labels = None
 depends_on = None
 
 
+def _cols(table: str) -> set[str]:
+    return {c["name"] for c in sa.inspect(op.get_bind()).get_columns(table)}
+
+
 def upgrade():
-    op.add_column("tasks", sa.Column("result", sa.JSON(), nullable=True))
+    # 0001 用 metadata.create_all 建表，可能已带上 result（新版模型）
+    if "result" not in _cols("tasks"):
+        op.add_column("tasks", sa.Column("result", sa.JSON(), nullable=True))
 
 
 def downgrade():
