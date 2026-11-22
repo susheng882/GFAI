@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # 门禁：不依赖任何外部 API，必须常绿
+  gate:
+    name: 编译与启动自检
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gflc/backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: gflc/backend/requirements.txt
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 语法编译
+        run: python -m compileall -q app scripts
+
+      - name: 建库并迁移
+        env:
+          MOCK_AI: "true"
+          DEV_MODE: "true"
+          STORAGE_BACKEND: local
+          LOCAL_STORAGE_DIR: ./data/uploads
+          DATABASE_URL: sqlite:///./ci.db
+          SESSION_SECRET: ci-only-secret
+        run: |
+          mkdir -p data/uploads
+          alembic upgrade head
+
+      - name: 启动并跑冒烟用例
+        env:
+          MOCK_AI: "true"
+          DEV_MODE: "true"
+          STORAGE_BACKEND: local
+          LOCAL_STORAGE_DIR: ./data/uploads
+          DATABASE_URL: sqlite:///./ci.db
+          SESSION_SECRET: ci-only-secret
+        run: |
+          uvicorn app.main:app --host 127.0.0.1 --port 8010 --log-level warning &
+          for i in $(seq 1 40); do
+            curl -sf http://127.0.0.1:8010/health >/dev/null && break
+            sleep 1
+          done
+          python scripts/ci_smoke.py
+
+  # 全量 95 项验收：需要真实模型，允许失败但不阻塞
+  full-verify:
+    name: 全量接口验收（需真实模型）
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: github.event_name == 'workflow_dispatch'
+    defaults:
+      run:
+        working-directory: gflc/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: gflc/backend/requirements.txt
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: 跑 verify_all（需在仓库 Secrets 配置 LLM_API_KEY）
+        env:
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_LIGHT_MODEL: ${{ secrets.LLM_LIGHT_MODEL }}
+          LLM_MID_MODEL: ${{ secrets.LLM_MID_MODEL }}
+          LLM_STRONG_MODEL: ${{ secrets.LLM_STRONG_MODEL }}
+          STORAGE_BACKEND: local
+          LOCAL_STORAGE_DIR: ./data/uploads
+          DATABASE_URL: sqlite:///./ci.db
+          SESSION_SECRET: ci-only-secret
+        run: |
+          mkdir -p data/uploads
+          alembic upgrade head
+          uvicorn app.main:app --host 127.0.0.1 --port 8010 --log-level warning &
+          for i in $(seq 1 40); do
+            curl -sf http://127.0.0.1:8010/health >/dev/null && break
+            sleep 1
+          done
+          python scripts/verify_all.py
