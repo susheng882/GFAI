@@ -3,6 +3,7 @@
 用法：python scripts/verify_all.py [base_url]
 """
 import json
+import os
 import sys
 import time
 import uuid
@@ -40,7 +41,20 @@ def main():
     check("POST /api/auth/register", r.status_code == 200, email)
     check("GET /api/auth/me", c.get("/api/auth/me").json().get("data", {}).get("user", {}).get("email") == email)
     check("POST /api/auth/login", c.post("/api/auth/login", json={"email": email, "password": "password123"}).status_code == 200)
-    check("未登录受保护接口应 401", httpx.get(f"{BASE}/api/documents").status_code in (401, 403))
+    # 开发期免登录（DEV_AUTH_BYPASS=true）下，未登录请求会被当作 dev 用户放行，
+    # 这条断言改成「要么 401/403，要么明确是 dev 放行」，避免把特性当回归。
+    _anon = httpx.get(f"{BASE}/api/documents")
+    _bypass = False
+    if _anon.status_code == 200:
+        # 不看本地 env（可能是给服务端设的），直接问服务端"我是谁"
+        try:
+            _me = httpx.get(f"{BASE}/api/auth/me").json().get("data", {}).get("user", {}) or {}
+            _bypass = str(_me.get("email") or "").startswith("dev@")
+        except Exception:  # noqa: BLE001
+            _bypass = False
+    check("未登录受保护接口应 401（dev 免登录时允许 200）",
+          _anon.status_code in (401, 403) or _bypass,
+          f"status={_anon.status_code} bypass={_bypass}")
 
     # 文档
     with open("data/sample.pdf", "rb") as f:

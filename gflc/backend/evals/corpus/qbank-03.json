@@ -1,0 +1,11 @@
+{
+  "id": "qbank-03",
+  "source_type": "question_bank",
+  "title": "英语语法选择题",
+  "chunks": [
+    {
+      "chunk_id": "qbank-03-c1",
+      "text": "题目：The new policy ___ our lives significantly. A. affect　B. affects　C. effect　D. effects。解析：主语 policy 是第三人称单数，空格需填及物动词作谓语，故选 affects。答案：B。"
+    }
+  ]
+}

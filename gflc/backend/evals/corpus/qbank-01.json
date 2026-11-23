@@ -1,0 +1,11 @@
+{
+  "id": "qbank-01",
+  "source_type": "question_bank",
+  "title": "函数极值选择题",
+  "chunks": [
+    {
+      "chunk_id": "qbank-01-c1",
+      "text": "题目：函数 f(x)=x³-3x 的极大值点是多少？A. x=-1　B. x=0　C. x=1　D. x=3。解析：求导得 f'(x)=3x²-3，令其为零得 x=±1；x=-1 处导数由正变负，是极大值点，故选 A。答案：A。"
+    }
+  ]
+}

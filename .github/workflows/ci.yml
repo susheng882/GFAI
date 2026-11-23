@@ -98,3 +98,34 @@ jobs:
             sleep 1
           done
           python scripts/verify_all.py
+
+  # 质量评测回归门禁：离线六指标（零外部依赖），在 quality_eval 生成报告后调用 eval_gate。
+  # 仅 workflow_dispatch 触发，不碰上面的 MOCK_AI gate，保证 push/PR 常绿；
+  # 失败即阻塞（非 continue-on-error）。前置：gflc/backend/evals/（offline_eval.py + corpus）已入库。
+  eval-gate:
+    name: 质量评测回归门禁（离线，失败阻塞）
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    defaults:
+      run:
+        working-directory: gflc/backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 写入冻结基线（v1.0 六项指标，避免依赖未入库的报告目录）
+        run: |
+          mkdir -p evals/reports/ci-base
+          cat > evals/reports/ci-base/report.json <<'JSON'
+          {"version":"v1.0","mode":"offline","metrics":{"召回率":85.0,"命中率":100.0,"MRR":95.0,"忠实度":82.5,"拒答准确率":100.0,"卡片可用率":95.0}}
+          JSON
+          python -c "import json,pathlib; json.load(pathlib.Path('evals/reports/ci-base/report.json').open(encoding='utf-8'))"
+
+      - name: quality_eval 生成当前报告（离线模式，无需真实模型/API Key）
+        run: python scripts/quality_eval.py --offline --version ci-head
+
+      - name: eval_gate 回归门禁（下降 >3pp 即失败阻塞）
+        run: python scripts/eval_gate.py --prev evals/reports/ci-base/report.json --curr evals/reports/ci-head/report.json

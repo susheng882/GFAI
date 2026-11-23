@@ -1,0 +1,11 @@
+{
+  "id": "qbank-05",
+  "source_type": "question_bank",
+  "title": "摩尔质量填空题",
+  "chunks": [
+    {
+      "chunk_id": "qbank-05-c1",
+      "text": "题目：18 g 水的物质的量是多少 mol？解析：水的摩尔质量 M=18 g/mol，n=m/M=18/18=1 mol。答案：1 mol。"
+    }
+  ]
+}

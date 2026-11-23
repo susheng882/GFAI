@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-"""多维度质量评测：检索相关性 / 回答完整性 / 引用规范性 / 时延 / 成本。
+"""GFLC 质量评测：默认离线六指标回归；可选在线时延/成本评测。
 
-用法：
-    D:/anaconda3/python.exe scripts/quality_eval.py [--base-url http://127.0.0.1:8010]
-                                                    [--seed-sample] [--keep-going]
+离线模式（默认，零外部依赖、无 API key 可跑通）：
+    python scripts/quality_eval.py --offline [--version v1.0]
+    - 计算召回率 / 命中率 / MRR / 忠实度 / 拒答准确率 / 卡片可用率六项指标；
+    - 报告按版本号归档到 backend/evals/reports/<version>/report.json + report.md；
+    - 不联网、不调用任何 LLM 付费接口，仅用标准库。
 
-脚本自己注册账号（POST /api/auth/register），按 8 道题（3 数学 / 2 英语 / 1 学习方法 /
-2 诱饵）逐题打 /api/qa，再从 cost_ledger 读每题花费，输出表格 + 加权总分（满分 10，≥7.5 达标）。
-不引入任何新依赖：标准库 sqlite3 + 项目已有的 httpx。
+在线模式（需服务与 httpx，保留原有口径）：
+    D:/anaconda3/python.exe scripts/quality_eval.py --online
+                            [--base-url http://127.0.0.1:8010] [--seed-sample]
+    - 8 道题逐题打 /api/qa/stream，从 cost_ledger 读花费，输出加权总分（满分 10，≥7.5 达标）。
 """
 import argparse
 import os
@@ -19,8 +22,6 @@ import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-
-import httpx
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -167,12 +168,52 @@ def _avg(values: list[float]) -> float | None:
     return sum(vals) / len(vals) if vals else None
 
 
+def _read_default_version() -> str:
+    vf = ROOT / "evals" / "VERSION"
+    if vf.exists():
+        return vf.read_text(encoding="utf-8").strip() or "v1.0"
+    return "v1.0"
+
+
+def _run_offline(version: str, top_k: int, threshold: float) -> int:
+    """离线六指标回归：零依赖、无 API key 可跑，报告按版本归档。"""
+    from evals.offline_eval import evaluate, write_report  # 延迟导入，避免在线模式依赖缺失
+
+    if version == "auto":
+        version = _read_default_version()
+    report = evaluate(version=version, top_k=top_k, refusal_threshold=threshold)
+    reports_root = ROOT / "evals" / "reports"
+    jpath, mpath = write_report(report, reports_root / version)
+
+    m, c = report["metrics"], report["corpus"]
+    print(f"离线评测 {version}（llm_called={report['config']['llm_called']}）")
+    print(f"语料：{c['documents']} 份资料 / {c['questions']} 条问题"
+          f"（诱饵 {c['decoys']}、语义问法 {c['semantic']}）")
+    print("-" * 40)
+    for k, v in m.items():
+        print(f"{k:<8} {v:>6.2f}")
+    print("-" * 40)
+    print(f"JSON 报告：{jpath}")
+    print(f"MD  报告：{mpath}")
+    return 0
+
+
 def main() -> int:
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(description="GFLC 质量评测（默认离线六指标回归）")
+    ap.add_argument("--offline", action="store_true", help="离线六指标回归（默认模式）")
+    ap.add_argument("--online", action="store_true", help="在线时延/成本评测（需服务与 httpx）")
+    ap.add_argument("--version", default="auto", help="报告版本号，默认读 evals/VERSION")
+    ap.add_argument("--top-k", type=int, default=5, help="离线检索 top-K，默认 5")
+    ap.add_argument("--threshold", type=float, default=0.12, help="离线拒答阈值，默认 0.12")
     ap.add_argument("--base-url", default="http://127.0.0.1:8010")
     ap.add_argument("--seed-sample", action="store_true", help="先上传 data/sample.pdf，让知识库路径也能被评测")
     ap.add_argument("--timeout", type=float, default=180.0)
     args = ap.parse_args()
+
+    if not args.online:
+        return _run_offline(args.version, args.top_k, args.threshold)
+
+    import httpx  # 仅在线模式需要；离线模式在无 httpx 的 Python 上也能跑通
 
     c = httpx.Client(base_url=args.base_url.rstrip("/"), timeout=args.timeout)
     email = f"qe_{uuid.uuid4().hex[:8]}@t.com"

@@ -1,0 +1,11 @@
+{
+  "id": "qbank-04",
+  "source_type": "question_bank",
+  "title": "牛顿第二定律选择题",
+  "chunks": [
+    {
+      "chunk_id": "qbank-04-c1",
+      "text": "题目：质量 2 kg 的物体受合力 10 N，加速度是多少？A. 2 m/s²　B. 5 m/s²　C. 10 m/s²　D. 20 m/s²。解析：由 F=ma 得 a=F/m=10/2=5 m/s²，故选 B。答案：B。"
+    }
+  ]
+}
