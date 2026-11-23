@@ -51,8 +51,24 @@ def handle_pdf_parse(db, task, payload, update):
     parse_stats: dict = {}
     try:
         download_to(doc.storage_key, tmp)
-        update(40, "解析文档")
-        n = parse_pdf_to_chunks(db, doc, tmp, stats=parse_stats)
+        update(20, "解析文档")
+
+        def _on_parse_progress(done: int, total: int, stage: str = "ocr") -> None:
+            """把解析链路进度映射到任务百分比：OCR 页进度占 20–90，入库 92。
+
+            扫描件 OCR 单页可达 15s，若整段只报一次 40%，用户会以为卡死；
+            逐页回写让进度条持续走动。文字层 PDF 在解析完成/分块各给一次。
+            """
+            if stage == "ocr":
+                pct = 20 + (70 * int(done)) // max(1, int(total))
+                update(min(90, pct), f"识别扫描页 {done}/{total}")
+            elif stage == "text":
+                update(60, "解析文档")
+            else:
+                update(92, "写入知识库")
+
+        n = parse_pdf_to_chunks(db, doc, tmp, stats=parse_stats,
+                                on_progress=_on_parse_progress)
     except Exception:
         doc.status = "failed"
         db.commit()

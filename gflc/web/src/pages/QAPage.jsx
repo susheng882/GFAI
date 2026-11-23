@@ -105,7 +105,10 @@ export default function QAPage() {
   return (
     <div className="qa-wrap">
       <div className={'chat' + (msgs.length ? '' : ' chat-empty')} ref={chatRef}>
-        {msgs.length ? msgs.map((m, i) => <Message key={i} m={m} docs={docs} onFollowup={ask} />)
+        {msgs.length ? msgs.map((m, i) => (
+          <Message key={i} m={m} docs={docs} onFollowup={ask}
+            question={msgs[i - 1] && msgs[i - 1].role === 'user' ? msgs[i - 1].text : ''} />
+        ))
           : <EmptyState title="开始提问" desc="先在你的资料里找依据并标注页码；资料里没有就联网检索，最后还可以只用学科知识回答。" />}
       </div>
       {suggests.length > 0 && (
@@ -134,9 +137,55 @@ export default function QAPage() {
   );
 }
 
-function Message({ m, docs, onFollowup }) {
+function Message({ m, docs, onFollowup, question }) {
+  const { message } = AntdApp.useApp();
   const [traceOpen, setTraceOpen] = useState(false);
+  const [saved, setSaved] = useState({});
+  const [err, setErr] = useState({});
   const busy = !!(m.pending || m.streaming);
+  const canSave = !busy && m.role === 'bot' && !!m.text && !!question;
+
+  /* 四态：idle → loading → success / error；success 后禁用，防重复沉淀。 */
+  const save = async (kind) => {
+    if (!canSave || saved[kind] === 'loading' || saved[kind] === 'ok') return;
+    setSaved((s) => ({ ...s, [kind]: 'loading' }));
+    setErr((s) => ({ ...s, [kind]: '' }));
+    const body = kind === 'note'
+      ? {
+        question,
+        answer: m.text,
+        sources: m.sources || [],
+        title: question.length > 30 ? question.slice(0, 30) : question,
+      }
+      : { question, answer: m.text, tag: m.mode || undefined };
+    try {
+      await api(kind === 'note' ? '/qa/save-note' : '/qa/save-card', {
+        method: 'POST', body: JSON.stringify(body),
+      });
+      setSaved((s) => ({ ...s, [kind]: 'ok' }));
+      message.success(kind === 'note' ? '已存为笔记' : '已生成卡片');
+    } catch (e) {
+      setSaved((s) => ({ ...s, [kind]: 'idle' }));
+      const text = e && e.status === 404 ? '后端未升级，暂不可用' : (e && e.message) || '保存失败';
+      setErr((s) => ({ ...s, [kind]: text }));
+      if (e && e.status === 404) message.warning(text); else message.error(text);
+    }
+  };
+
+  const saveRow = canSave ? (
+    <div className="row" style={{ gap: 4, marginTop: 4 }}>
+      <Button size="small" type="text" disabled={saved.note === 'loading' || saved.note === 'ok'}
+        loading={saved.note === 'loading'} onClick={() => save('note')}>
+        {saved.note === 'ok' ? '已存为笔记' : '存为笔记'}
+      </Button>
+      <Button size="small" type="text" disabled={saved.card === 'loading' || saved.card === 'ok'}
+        loading={saved.card === 'loading'} onClick={() => save('card')}>
+        {saved.card === 'ok' ? '已存为卡片' : '生成卡片'}
+      </Button>
+      {err.note && <span style={{ fontSize: 11.5, color: 'var(--destructive)' }}>{err.note}</span>}
+      {err.card && <span style={{ fontSize: 11.5, color: 'var(--destructive)' }}>{err.card}</span>}
+    </div>
+  ) : null;
   const proc = m.showProc ? (
     <div className="aiproc">
       {STAGES.map((s, i) => (
@@ -168,6 +217,7 @@ function Message({ m, docs, onFollowup }) {
           </div>
         )}
         <SourceChips sources={m.sources || []} mode={m.mode} documents={docs} />
+        {saveRow}
         {!busy && (m.followups || []).length > 0 && (
           <div className="followups">
             {m.followups.map((q, i) => (

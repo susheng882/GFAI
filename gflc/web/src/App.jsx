@@ -32,7 +32,7 @@ const NAV_GROUPS = [
     { key: 'plans', name: '计划', icon: <CalendarOutlined /> },
   ] },
   { title: '资料', items: [
-    { key: 'docs', name: '文档', icon: <FileTextOutlined /> },
+    { key: 'docs', name: '解析记录', icon: <FileTextOutlined /> },
     { key: 'deck', name: '卡包', icon: <CreditCardOutlined /> },
     { key: 'video', name: '视频', icon: <VideoCameraOutlined /> },
   ] },
@@ -47,7 +47,7 @@ const NAV_GROUPS = [
 const TITLES = {
   dash: ['概览', '系统与学习指标；学习任务按需生成'],
   notes: ['笔记', '文件夹管理，AI 协作补写'],
-  docs: ['文档', '上传资料，解析并生成卡片'],
+  docs: ['解析记录', '上传资料，解析并生成卡片'],
   deck: ['卡包', '按大纲章节组织的背诵卡包'],
   study: ['学习', '刷题、背诵、错题一页'],
   review: ['复习', '按遗忘曲线安排复习'],

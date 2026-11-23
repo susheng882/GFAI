@@ -7,7 +7,8 @@ import TodayQueue from '../components/TodayQueue.jsx';
 import LoopStatus from '../components/LoopStatus.jsx';
 import AiBoard from './AiBoard.jsx';
 
-/* 指挥台 v3：默认「概览」（hero + 四指标带 + 最近资料 + 快速上传 + 注意事项 + D10 今日待办），
+/* 指挥台 v3：默认「概览」= 闭环条 + hero + 卡包分布 + 四指标带 + 热力图 + 刷题背诵 + 快速上传（共 7 块）。
+   系统与用量已迁至设置页「监控」tab（那里本就有调用/花费/tokens/队列），此页不再重复。
    二级 tab「AI 看板」保留原 AI 生成/拖拽布局能力。 */
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -115,6 +116,14 @@ export default function DashboardPage() {
             <div className="lab">今天要复习</div>
             <div className="big"><span className="hl">{dueCount}</span><small>张卡片</small></div>
             <div className="delta">
+              {failedDocs.length > 0 && (
+                <>
+                  <span style={{ color: 'var(--destructive)' }}>{failedDocs.length} 份解析失败</span>
+                  <Button size="small" type="link" style={{ padding: '0 0 0 4px' }}
+                    onClick={() => reparse(failedDocs[0].id)}>重试</Button>
+                  {' · '}
+                </>
+              )}
               {reviewed > 0 ? `已复习 ${reviewed} 张 · ` : ''}
               {dueCount > 0 ? '建议现在开始' : '暂无到期卡片，稍后再来'}
             </div>
@@ -151,9 +160,12 @@ export default function DashboardPage() {
             <Metric k="正确率" v={acc} unit="%" d={acc >= 80 ? '状态很好' : acc > 0 ? '继续练习' : '暂无数据'} />
           </section>
 
-          <section className="v3-card v3-c12">
-            <Heatmap heat={heat} onGo={() => navigate('/review')} />
-          </section>
+          {/* 热力图：活跃天数 <7 时整块不渲染（否则一个大面积灰块反而显脏） */}
+          {(heat && (heat.summary?.active_days || 0) >= 7) && (
+            <section className="v3-card v3-c12">
+              <Heatmap heat={heat} onGo={() => navigate('/review')} />
+            </section>
+          )}
 
           <section className="v3-card v3-c6">
             <div className="v3-sh">刷题背诵<span className="meta">{dueCount} 张到期</span></div>
@@ -175,64 +187,6 @@ export default function DashboardPage() {
                 <Button size="small" type="link" onClick={() => navigate('/review')}>复习</Button>
               </div>
             ))}
-          </section>
-
-          <section className="v3-card v3-c6">
-            <div className="v3-sh">系统与用量<span className="meta">近 24h</span></div>
-            {(() => {
-              const ready = docs.filter((d) => d.status === 'ready').length;
-              const failed = docs.filter((d) => d.status === 'failed').length;
-              const rate = ready + failed > 0 ? Math.round((ready / (ready + failed)) * 100) : 100;
-              const calls = mon?.today?.calls ?? 0;
-              const cost = mon?.today?.cost ?? 0;
-              const tokens = mon?.today?.tokens ?? 0;
-              const rows = [
-                { k: '解析成功率', v: `${rate}%`, d: `就绪 ${ready} · 失败 ${failed}` },
-                { k: '模型调用', v: calls, d: `${(tokens / 1000).toFixed(1)}k tokens` },
-                { k: '今日花费', v: `¥${Number(cost).toFixed(3)}`, d: '按调用记录累计' },
-                { k: '任务队列', v: (mon?.worker?.queue_size ?? 0), d: `视频并发 ${mon?.worker?.video_workers ?? 0}` },
-              ];
-              return rows.map((r) => (
-                <div className="v3-resume" key={r.k}>
-                  <div className="v3-rt"><div className="a">{r.k}</div><div className="b">{r.d}</div></div>
-                  <div style={{ fontSize: 15, fontVariantNumeric: 'tabular-nums' }}>{r.v}</div>
-                </div>
-              ));
-            })()}
-          </section>
-
-          <section className="v3-card v3-c6">
-            <div className="v3-sh">最近资料<span className="meta">{docs.length} 份</span></div>
-            {docs.length ? docs.slice(0, 4).map((d) => (
-              <div className="v3-resume" key={d.id}>
-                <div className="v3-rt">
-                  <div className="a">{esc(d.title || '未命名')}</div>
-                  <div className="b">{d.source_type === 'video' ? '视频' : d.source_type === 'note' ? '笔记' : '文档'} · {fmtTime(d.updated_at || d.created_at)}</div>
-                </div>
-                <Tag color={d.status === 'ready' ? 'success' : d.status === 'failed' ? 'error' : 'processing'}>
-                  {{ pending: '待解析', parsing: '解析中', ready: '就绪', failed: '失败' }[d.status] || d.status}
-                </Tag>
-              </div>
-            )) : <div className="muted" style={{ fontSize: 12.5, padding: '20px 0' }}>还没有资料，上传一份 PDF 开始。</div>}
-          </section>
-
-          <section className="v3-card v3-c6">
-            <div className="v3-sh">需要注意</div>
-            {failedDocs.slice(0, 3).map((d) => (
-              <div className="v3-resume" key={d.id}>
-                <div className="v3-rt"><div className="a">{esc(d.title || '未命名')} 解析失败</div><div className="b">点击可重新解析</div></div>
-                <Button size="small" type="text" onClick={() => reparse(d.id)}>重试</Button>
-              </div>
-            ))}
-            {dueCount > 0 && (
-              <div className="v3-resume">
-                <div className="v3-rt"><div className="a">{dueCount} 张卡片到期</div><div className="b">间隔重复到期，建议今天补上</div></div>
-                <Button size="small" type="link" onClick={() => navigate('/review')}>去复习</Button>
-              </div>
-            )}
-            {!failedDocs.length && dueCount === 0 && !planTasks.length && (
-              <div className="muted" style={{ fontSize: 12.5, padding: '20px 0' }}>一切正常，没有待处理事项。</div>
-            )}
           </section>
 
           <section className="v3-card v3-c6">
@@ -330,9 +284,9 @@ function WeekChart({ week }) {
   }
   return (
     <div className="v3-chart">
-      <div className="t">近 {week.length || 7} 天作答</div>
       {week.some((x) => +x.value > 0) ? (
         <>
+          <div className="t">近 {week.length || 7} 天作答</div>
           <svg viewBox="0 0 640 120" width="100%" height="112" preserveAspectRatio="none">
             {[0, .5, 1].map((t) => (
               <line key={t} x1="0" y1={(8 + 96 * t).toFixed(1)} x2="640" y2={(8 + 96 * t).toFixed(1)}
@@ -346,7 +300,12 @@ function WeekChart({ week }) {
           </svg>
           <div className="v3-axis">{week.map((x, i) => <span key={i}>{esc(x.label)}</span>)}</div>
         </>
-      ) : <div className="muted" style={{ fontSize: 12.5, padding: '24px 0' }}>还没有作答记录，去「刷题」或「复习」开始吧。</div>}
+      ) : (
+        /* 空态只占一行：避免整块图表高度形成大片空白 */
+        <div className="muted" style={{ fontSize: 12.5, marginTop: 12 }}>
+          近 {week.length || 7} 天还没有作答记录，去「刷题」或「复习」开始吧。
+        </div>
+      )}
     </div>
   );
 }

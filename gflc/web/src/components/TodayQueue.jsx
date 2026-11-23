@@ -43,7 +43,15 @@ export default function TodayQueue({ dueCards = [], planTasks = [], onChanged })
     <div>
       {items.slice(0, 10).map((it) => (
         <div className="v3-resume" key={it.key}>
-          <Tag color={it.kind === 'review' ? 'blue' : 'green'} style={{ flex: '0 0 auto', margin: 0 }}>
+          <Tag
+            style={{
+              flex: '0 0 auto', margin: 0,
+              // 用设计 token 而非 Antd 预设色板，避免游离于墨蓝体系之外
+              color: it.kind === 'review' ? 'var(--primary)' : 'var(--success)',
+              background: 'transparent',
+              borderColor: it.kind === 'review' ? 'var(--primary)' : 'var(--success)',
+            }}
+          >
             {it.kind === 'review' ? <ClockCircleOutlined /> : <CalendarOutlined />}
             {' '}{it.kind === 'review' ? '复习' : '计划'}
           </Tag>

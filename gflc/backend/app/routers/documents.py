@@ -2,25 +2,30 @@
 """文档：上传（直传或预签名）→ 建档 → 解析切块 → 生成卡片 → 列表/详情。
 P0 解析同步；P1 改 Redis 队列 + Worker（接口不变）。"""
 import hashlib
+import logging
 import os
 import tempfile
 import uuid
 
 from fastapi import APIRouter, Depends, File, UploadFile
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.ai.router import generate_json
+from app.core.budget import budget
 from app.core.config import settings
 from app.core.errors import APIError, ErrCode
 from app.crud import crud
 from app.db.session import get_db
 from app.models.models import Card, CardDeck, Chunk, Document, Note
 from app.routers.deps import get_current_user
-from app.schemas.schemas import DocumentOut, NoteIn, NoteOut, PresignIn
+from app.schemas.schemas import DocumentOut, NoteIn, PresignIn
 from app.services.storage import get_storage, presign_put, stat_size
 from app.worker import runner
 
 router = APIRouter(prefix="/documents", tags=["documents"])
+log = logging.getLogger(__name__)
 
 _ALLOWED = {".pdf", ".docx", ".md", ".markdown", ".txt"}
 
@@ -88,8 +93,13 @@ async def create_document(body: dict, user=Depends(get_current_user), db: Sessio
 
 @router.get("")
 async def list_documents(user=Depends(get_current_user), db: Session = Depends(get_db)):
-    # 题库文件在「题库」页管理，不在资料列表里重复出现
-    docs = [d for d in crud.list_documents(db, user.id) if d.source_type != "question_bank"]
+    # 题库文件在「题库」页管理，不在资料列表里重复出现；
+    # 问答沉淀用的容器资料（content_hash=qa-collection-*）是内部占位，同样不展示
+    docs = [
+        d for d in crud.list_documents(db, user.id)
+        if d.source_type != "question_bank"
+        and not str(d.content_hash or "").startswith("qa-collection-")
+    ]
     return {"ok": True, "data": [DocumentOut.model_validate(d).model_dump() for d in docs]}
 
 
@@ -165,24 +175,161 @@ async def delete_document(doc_id: int, user=Depends(get_current_user), db: Sessi
 
 
 # ---------- 笔记 CRUD ----------
+# 资料 → 笔记：同步生成（前端显示 loading）。取前 N 段避免超长，N 可用运行时配置覆盖。
+_NOTE_MAX_CHUNKS = 40       # 单次生成读取的最大块数
+_NOTE_CHUNK_CHARS = 1200    # 单块截断长度：长块只取开头，保证总 prompt 可控
+_NOTE_MAX_TOKENS = 4000     # mid 档默认 3000 会把长笔记截成半截 JSON，这里放宽
+
+NOTE_GEN_SYSTEM = (
+    "你是学习笔记整理助手。把给定的资料片段整理成一份能直接背诵的笔记：\n"
+    "1) 先用 150 字以内概括核心内容（summary）；\n"
+    "2) 正文用 Markdown 分节（## / ###）与列表组织，公式用 LaTeX（$...$）；\n"
+    "3) 只能依据给定片段，不编造片段里没有的内容；片段未涉及的部分直说「资料未涉及」；\n"
+    "4) 最后给 3–6 条要点或易错点（points，每条一句话）；\n"
+    "5) 全文中文。只输出 JSON。"
+)
+
+
+class _NoteGenOut(BaseModel):
+    """模型输出的结构化笔记契约（title/summary/points/content）。"""
+    title: str = ""
+    summary: str = ""
+    points: list[str] = []
+    content: str = ""
+
+
+def _note_user(title: str, blocks: list[str]) -> str:
+    return ('输出 JSON：{"title":"","summary":"","points":[""],"content":""}。\n'
+            f"资料标题：{title}\n资料片段：\n" + "\n\n".join(blocks))
+
+
+def _note_max_chunks(db: Session) -> int:
+    """块数可配：运行时配置 doc_note_max_chunks 覆盖默认值（不改静态配置文件）。"""
+    try:
+        from app.services import settings_store
+        raw = settings_store.get_runtime(db, "doc_note_max_chunks", str(_NOTE_MAX_CHUNKS))
+        n = int(raw or _NOTE_MAX_CHUNKS)
+        return n if 1 <= n <= 200 else _NOTE_MAX_CHUNKS
+    except Exception:
+        return _NOTE_MAX_CHUNKS
+
+
+def _note_out(n: Note) -> dict:
+    """按 NoteOut 契约出参。
+
+    updated_at 在 schema 里是字符串，直接 model_validate(ORM) 会把 datetime 塞进 str 字段
+    而校验失败（老 list_notes 就这么挂的），这里统一转 ISO 字符串。
+    """
+    return {
+        "id": n.id,
+        "document_id": n.document_id,
+        "folder_id": n.folder_id,
+        "title": n.title or "",
+        "summary": n.summary or "",
+        "content": n.content,
+        "points": n.points,
+        "source": n.source or "manual",
+        "kind": n.kind or "note",
+        "updated_at": n.updated_at.isoformat() if n.updated_at else None,
+    }
+
+
 @router.get("/{doc_id}/notes")
 async def list_notes(doc_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
     doc = crud.get_document(db, doc_id, user.id)
     if not doc:
         raise APIError(ErrCode.AUTH_403, "无权访问该文档", 403)
     rows = list(db.scalars(select(Note).where(Note.document_id == doc.id).order_by(Note.id.desc())))
-    return {"ok": True, "data": [NoteOut.model_validate(n).model_dump() for n in rows]}
+    return {"ok": True, "data": [_note_out(n) for n in rows]}
 
 
 @router.post("/{doc_id}/notes")
 async def create_note(doc_id: int, body: NoteIn, user=Depends(get_current_user),
                       db: Session = Depends(get_db)):
+    """资料 → 笔记。两种语义：
+
+    1) body.content 非空：旧语义，按用户显式给的内容直接落库（兼容历史前端）；
+    2) body.content 为空：AI 生成 —— 读取该文档 chunks（按 chunk_index 排序取前 N 段）
+       → mid 档模型生成结构化笔记 → 写入 Note（source='ai'）。
+       失败一律抛中文可读错误，绝不静默返回空笔记。
+    """
     doc = crud.get_document(db, doc_id, user.id)
     if not doc:
         raise APIError(ErrCode.AUTH_403, "无权访问该文档", 403)
-    n = Note(user_id=user.id, document_id=doc.id, title=body.title or doc.title,
-             summary=body.summary, points=body.points)
-    db.add(n)
+
+    explicit = (body.content or "").strip()
+    if explicit:
+        n = Note(user_id=user.id, document_id=doc.id,
+                 title=(body.title or doc.title)[:256], summary=body.summary,
+                 content=explicit, points=body.points,
+                 source=body.source or "manual", kind=body.kind or "note")
+        db.add(n)
+        db.commit()
+        db.refresh(n)
+        return {"ok": True, "data": _note_out(n)}
+
+    # ---- AI 生成路径 ----
+    chunks = list(db.scalars(
+        select(Chunk).where(Chunk.document_id == doc.id)
+        .order_by(Chunk.chunk_index, Chunk.id).limit(_note_max_chunks(db))))
+    if not chunks:
+        raise APIError(ErrCode.COMMON_400, "该资料还未解析，请先解析后再生成笔记")
+
+    blocks: list[str] = []
+    for c in chunks:
+        text = (c.content or "").strip()
+        if not text:
+            continue
+        page = f"（第 {c.page} 页）" if c.page else ""
+        blocks.append(f"片段 {c.chunk_index + 1}{page}：{text[:_NOTE_CHUNK_CHARS]}")
+    if not blocks:
+        raise APIError(ErrCode.COMMON_400, "该资料没有可用文本，请重新解析后再生成笔记")
+
+    title = (body.title or "").strip() or doc.title
+    try:
+        obj, res = await generate_json("mid", NOTE_GEN_SYSTEM, _note_user(title, blocks),
+                                       _NoteGenOut, max_tokens=_NOTE_MAX_TOKENS,
+                                       user_id=user.id, task_type="doc_note")
+    except APIError as e:
+        # 配额类错误原样抛出（用户需要看到具体限额），其余转成可读中文
+        if e.code in (ErrCode.QUOTA_001, ErrCode.QUOTA_002):
+            raise
+        log.warning("资料生成笔记失败 doc=%s err=%s", doc.id, e)
+        raise APIError(ErrCode.AI_003, f"笔记生成失败：{e.message}，请稍后重试") from e
+    except Exception as e:  # 网络等非契约异常同样不静默
+        log.warning("资料生成笔记异常 doc=%s err=%s", doc.id, e)
+        raise APIError(ErrCode.AI_003, "笔记生成失败：模型调用异常，请稍后重试") from e
+
+    content = (obj.content or "").strip()
+    if not content:
+        raise APIError(ErrCode.AI_003, "笔记生成失败：模型未返回正文，请重试")
+
+    # 成本账本：generate_json 只做预算拦截，记账由业务层补一笔（与其它 AI 路径一致）
+    try:
+        budget.record(user.id, "doc_note", res.prompt_tokens, res.completion_tokens,
+                      settings.LLM_MID_MODEL)
+    except Exception as e:
+        log.warning("笔记成本记账失败 doc=%s err=%s", doc.id, e)
+
+    # 同一资料的 AI 笔记只保留一份：重复点「生成笔记」原地更新（note id 稳定、不堆同名条目），
+    # 只动 source='ai' 的行，手工笔记一律不碰（与视频笔记只清 AI 产物的策略一致）。
+    new_title = ((obj.title or "").strip() or f"{title} · AI 笔记")[:256]
+    new_points = [p.strip() for p in (obj.points or []) if (p or "").strip()]
+    old = db.scalar(select(Note).where(Note.document_id == doc.id, Note.source == "ai",
+                                       Note.kind == "note").order_by(Note.id.desc()))
+    if old is not None:
+        old.title, old.summary = new_title, (obj.summary or "")[:1000]
+        old.content, old.points = content, new_points
+        n = old
+        db.query(Note).filter(Note.document_id == doc.id, Note.source == "ai",
+                              Note.kind == "note", Note.id != n.id).delete(
+            synchronize_session=False)  # 历史重复行一并清掉
+    else:
+        n = Note(user_id=user.id, document_id=doc.id, title=new_title,
+                 summary=(obj.summary or "")[:1000], content=content, points=new_points,
+                 source="ai", kind="note")
+        db.add(n)
     db.commit()
     db.refresh(n)
-    return {"ok": True, "data": NoteOut.model_validate(n).model_dump()}
+    return {"ok": True,
+            "data": {**_note_out(n), "chunks_used": len(blocks)}}

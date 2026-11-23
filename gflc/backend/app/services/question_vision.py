@@ -310,6 +310,9 @@ async def ocr_pdf_to_pages(path: str, *, document_id=None, dpi: int | None = Non
     先对失败页串行纯文本重试 1 次（提高 max_tokens），仍失败才跳过；其余照常入库。
     全部失败 / 空 PDF / 渲染失败：抛 APIError，由上层写入 task.error_message，禁止静默。
     stats 为可选出参，把失败页码与每页观测指标带回 task.result（不新增 API 契约字段）。
+    on_progress(done, total) 为可选的页级进度回调：每完成一页（无论成功/失败/命中缓存）
+    调用一次，并发下由计数器+锁保证不重不漏、done 单调递增，末次必为 (total, total)；
+    回调异常只记日志，不影响 OCR 主链路。
     """
     dpi = int(dpi or os.getenv("OCR_DPI", "140") or 140)
     profile = _ocr_profile()
@@ -340,7 +343,24 @@ async def ocr_pdf_to_pages(path: str, *, document_id=None, dpi: int | None = Non
         content_hash = ""
     cache_hits = 0
 
-    async def _one(idx: int, png: bytes):
+    # 分页进度：并发下用「计数器 + 锁」保证 on_progress 不重不漏、done 单调递增；
+    # 回调在锁外执行，避免慢回调（如写库）阻塞其他页。
+    done_pages = 0
+    progress_lock = asyncio.Lock()
+
+    async def _bump() -> None:
+        nonlocal done_pages
+        async with progress_lock:
+            done_pages += 1
+            current = done_pages
+        if on_progress:
+            try:
+                on_progress(current, total)
+            except Exception as e:  # noqa: BLE001 进度回调失败不能影响 OCR 主链路
+                _log.warning("扫描件 OCR 进度回调失败（%s，page=%s/%s）：%s",
+                             ctx, current, total, e)
+
+    async def _one_page(idx: int, png: bytes):
         nonlocal cache_hits
         page_no = idx + 1
         t0 = time.perf_counter()
@@ -385,6 +405,13 @@ async def ocr_pdf_to_pages(path: str, *, document_id=None, dpi: int | None = Non
             "formula_suspect": suspect, "cached": False,
         }
 
+    async def _one(idx: int, png: bytes):
+        """单页任务包装：无论成功、失败还是命中缓存，完成即记一次页级进度。"""
+        try:
+            return await _one_page(idx, png)
+        finally:
+            await _bump()
+
     # 并发全部提交，由 _ocr_sem 把同时在途的请求压到上限（默认 2），避免 429。
     results = await asyncio.gather(*[_one(i, png) for i, png in enumerate(pages_bytes)])
     pages: list[tuple[int, str]] = []
@@ -407,8 +434,6 @@ async def ocr_pdf_to_pages(path: str, *, document_id=None, dpi: int | None = Non
             json_retry_pages.append(page_no)
         if info.get("formula_suspect"):
             formula_suspect_pages.append(page_no)
-        if on_progress:
-            on_progress(int(40 + 55 * len(pages) / total))
 
     if stats is not None:
         stats.update({

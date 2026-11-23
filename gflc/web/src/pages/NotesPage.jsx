@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { App as AntdApp, Button, Input, Segmented, Select, Tabs } from 'antd';
+import { App as AntdApp, Button, Drawer, Dropdown, Input, Segmented, Select } from 'antd';
 import {
   DownOutlined, EditOutlined, FileAddOutlined, FileTextOutlined, FolderOutlined,
   FolderOpenOutlined, MenuFoldOutlined, MenuUnfoldOutlined, PlusOutlined,
@@ -12,13 +12,31 @@ import { useSearchParams } from 'react-router-dom';
 import Markdown from '../components/Markdown.jsx';
 import EmptyState from '../components/EmptyState.jsx';
 import {
-  AnchorBar, AiQuickView, NOTE_TEMPLATES, TemplatePicker, VaultStatusBar, parseAnchorLines,
+  AI_MODES, AnchorBar, AiQuickView, NOTE_TEMPLATES, NoteAside, TemplatePicker, VaultStatusBar,
+  parseAnchorLines,
 } from '../components/NotesBlocks.jsx';
 
-const AI_MODES = [
-  { label: '润色', value: 'improve' }, { label: '扩展', value: 'expand' },
-  { label: '提炼', value: 'summarize' }, { label: '出题', value: 'quiz' },
-];
+/* 三栏断点：≥1440 并排三栏；760–1439 右栏进抽屉；<760 单列堆叠。
+   取 1440 而非 1280，是因为左导航 240 + 页边 56 会先吃掉视口：
+   1280 视口只剩 984px，放不下 240 + 560 + 280 + 24，必然横向滚动。 */
+const useLayoutMode = () => {
+  const read = () => {
+    if (typeof window === 'undefined') return 'wide';
+    if (window.matchMedia('(max-width: 760px)').matches) return 'mobile';
+    if (window.matchMedia('(max-width: 1439px)').matches) return 'mid';
+    return 'wide';
+  };
+  const [mode, setMode] = useState(read);
+  useEffect(() => {
+    const mqs = [window.matchMedia('(max-width: 760px)'), window.matchMedia('(max-width: 1439px)')];
+    const sync = () => setMode(read());
+    mqs.forEach((mq) => mq.addEventListener('change', sync));
+    return () => {
+      mqs.forEach((mq) => mq.removeEventListener('change', sync));
+    };
+  }, []);
+  return mode;
+};
 
 /* 笔记：文件夹树 + 笔记列表（分页）+ Markdown 编辑/预览 + AI 协作补写 + AI 整理。 */
 export default function NotesPage() {
@@ -42,6 +60,18 @@ export default function NotesPage() {
   // 笔记左右栏折叠：状态记忆到 localStorage，刷新后保持
   const [leftCollapsed, toggleLeft] = useCollapsible('gflc_notes_left', false);
   const [rightCollapsed, toggleRight] = useCollapsible('gflc_notes_right', false);
+  // 窄屏（<1440）右栏不进网格，改由抽屉承载
+  const mode = useLayoutMode();
+  const drawerRight = mode !== 'wide';
+  const [rightOpen, setRightOpen] = useState(false);
+  /* 三栏宽度：目录 240 / 正文 min 560 / 侧栏 280；折叠项直接不占列 */
+  const gridCols = mode === 'mobile'
+    ? '1fr'
+    : [
+      ...(leftCollapsed ? [] : ['240px']),
+      mode === 'wide' ? 'minmax(560px, 1fr)' : 'minmax(0, 1fr)',
+      ...(mode === 'wide' && !rightCollapsed ? ['280px'] : []),
+    ].join(' ');
   const [openFolders, setOpenFolders] = useState(new Set());
   const toggleFolder = (id) => setOpenFolders((cur) => {
     const next = new Set(cur); next.has(id) ? next.delete(id) : next.add(id); return next;
@@ -259,8 +289,9 @@ export default function NotesPage() {
       const text = r?.suggestion || r?.text || '';
       setThread((t) => [...t, { role: 'me', text: '润色本篇' }, { role: 'ai', text }]);
       setRightTab('ai');
-      // 窄屏右栏默认隐藏，确保预览可见
-      if (rightCollapsed) toggleRight();
+      // 窄屏右栏在抽屉里，先打开抽屉再切到 AI；宽屏保证侧栏没被折叠
+      if (drawerRight) setRightOpen(true);
+      else if (rightCollapsed) toggleRight();
       if (!text) message.info('这次没有给出修改建议');
     } catch (e) { message.error(e.message); }
   };
@@ -403,34 +434,50 @@ export default function NotesPage() {
     return notes.filter((n) => ids.has(n.folder_id)).length;
   };
 
-  const renderFolder = (node, depth = 0) => (
-    <React.Fragment key={node.id}>
-      <div className="fnode" style={{ '--d': depth, ...(folderId === node.id ? { background: 'var(--accent)', color: 'var(--primary)' } : {}) }}
-        onClick={() => { setFolderId(node.id); setPage(1); }}>
-        <span>{node.name}</span><span className="cnt">{node.count ?? ''}</span>
-      </div>
-      {(node.children || []).map((c) => renderFolder(c, depth + 1))}
-    </React.Fragment>
-  );
-
   const anchors = parseAnchorLines(current?.content);
+  /* 顶部工具条：只留左右栏开关 + 一个 AI 入口（三件套收进下拉） */
+  const aiMenu = {
+    items: [
+      { key: 'quick', label: quickBusy ? 'AI 速览（生成中）' : 'AI 速览', icon: <FileTextOutlined /> },
+      { key: 'tidy', label: 'AI 整理文件夹', icon: <FolderOpenOutlined /> },
+      { key: 'polish', label: 'AI 润色本篇', icon: <EditOutlined /> },
+    ],
+    onClick: ({ key }) => {
+      if (key === 'quick') runQuickView();
+      if (key === 'tidy') runTidy();
+      if (key === 'polish') polishCurrent();
+    },
+  };
+  const aside = (
+    <NoteAside note={current} links={links} tab={rightTab} onTabChange={setRightTab}
+      thread={thread} onInsert={insert} onDiscard={(i) => setThread(thread.filter((_, j) => j !== i))}
+      onSelectNote={(n) => {
+        if (!n?.id) { message.warning('同名笔记不存在'); return; }
+        setCurrent(n); setThread([]);
+      }}
+      aiMode={aiMode} onAiModeChange={setAiMode}
+      aiText={aiText} onAiTextChange={setAiText} onAiSuggest={aiSuggest} />
+  );
   return (
     <div className="notes-page">
-      {/* 顶部工具条：左右栏一键折叠 + AI 入口显性化（结果均可预览再应用） */}
       <div className="notes-toolbar">
         <div className="row" style={{ gap: 4 }}>
           <Button size="small" type="text" icon={leftCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={toggleLeft}>{leftCollapsed ? '展开目录' : '收起目录'}</Button>
-          <Button size="small" type="text" icon={rightCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={toggleRight}>{rightCollapsed ? '展开侧栏' : '收起侧栏'}</Button>
+          <Button size="small" type="text"
+            icon={drawerRight || rightCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => { if (drawerRight) setRightOpen(true); else toggleRight(); }}>
+            {drawerRight ? '侧栏' : rightCollapsed ? '展开侧栏' : '收起侧栏'}
+          </Button>
         </div>
-        <div className="row" style={{ gap: 8 }}>
-          <Button size="small" icon={<RobotOutlined />} onClick={runQuickView} loading={quickBusy}>AI 速览</Button>
-          <Button size="small" icon={<RobotOutlined />} onClick={runTidy}>AI 整理文件夹</Button>
-          <Button size="small" icon={<EditOutlined />} onClick={polishCurrent}>AI 润色本篇</Button>
-        </div>
+        <Dropdown menu={aiMenu} trigger={['click']} placement="bottomRight">
+          <Button size="small" icon={<RobotOutlined />}>
+            AI<DownOutlined style={{ fontSize: 10, marginLeft: 4 }} />
+          </Button>
+        </Dropdown>
       </div>
-      <div className={'notebar' + (leftCollapsed ? ' no-left' : '') + (rightCollapsed ? ' no-right' : '')}>
+      <div className={'notebar' + (leftCollapsed ? ' no-left' : '') + (rightCollapsed ? ' no-right' : '')}
+        style={{ gridTemplateColumns: gridCols }}>
         {!leftCollapsed && (
         <div className="pane folder-pane tree-pane">
         <VaultStatusBar
@@ -458,7 +505,7 @@ export default function NotesPage() {
           </div>
           {renderTree(folders, 0)}
           {!folders.length && !notes.length && (
-            <div className="muted" style={{ fontSize: 12, padding: 14 }}>还没有内容，先新建文件夹或笔记。</div>
+            <div className="muted" style={{ fontSize: 11.5, padding: '4px 8px' }}>还没有笔记</div>
           )}
         </div>
       </div>
@@ -502,74 +549,23 @@ export default function NotesPage() {
             <AnchorBar anchors={anchors} syncedHashes={anchorAck}
               onSync={syncAnchors} onInsert={insertAnchorExample} busy={anchorBusy} />
           </div>
-        ) : <EmptyState title="选一篇笔记开始" desc="从左侧挑一篇，或在列表上方点 ＋ 新建。" />}
+        ) : (
+          <EmptyState title="还没有打开笔记"
+            desc="笔记用来记概念、错题与摘录，写完可以转成卡片。"
+            action="新建笔记" onAction={() => setTemplateOpen(true)} />
+        )}
       </div>
 
-      {!rightCollapsed && (
-      <div className="pane ai-panel">
-        <div className="pane-head"><span>{current ? (current.title || '').slice(0, 12) : '未选笔记'}</span>
-          <Tabs size="small" activeKey={rightTab} onChange={setRightTab} tabBarStyle={{ margin: 0 }}
-            items={[
-              { key: 'links', label: `反链 ${links.backlinks.length}` },
-              { key: 'outline', label: '大纲' },
-              { key: 'ai', label: 'AI' },
-            ]} />
-        </div>
-        {rightTab === 'links' && (
-          <div className="pane-body" style={{ padding: 12 }}>
-            <div className="vmuted2" style={{ marginBottom: 6 }}>反向链接（谁提到了本文）</div>
-            {links.backlinks.length ? links.backlinks.map((b) => (
-              <div className="nitem" key={b.id} onClick={() => { setCurrent({ id: b.id, title: b.title, content: b.snippet }); }}>
-                <div className="nt">{esc(b.title)}</div><div className="ns">{esc(b.snippet)}</div>
-              </div>
-            )) : <div className="vmuted2">还没有笔记引用本文。写 [[{esc((current?.title || '').slice(0, 10))}]] 即可建立引用。</div>}
-            <div className="vmuted2" style={{ margin: '12px 0 6px' }}>出链（本文提到的笔记）</div>
-            {links.outgoing.length ? links.outgoing.map((o, i) => (
-              <div className="vkp" key={i} onClick={() => { if (o.note_id) setCurrent({ id: o.note_id, title: o.title }); else message.warning('同名笔记不存在'); }}>
-                <span className="vkp-l">{esc(o.title)}</span>
-                {!o.note_id && <span className="vmuted2">未创建</span>}
-              </div>
-            )) : <div className="vmuted2">在正文里输入 [[笔记标题]] 就会出现在这里。</div>}
-          </div>
-        )}
-        {rightTab === 'outline' && (
-          <div className="pane-body" style={{ padding: 12 }}>
-            {(() => {
-              const hs = [...String(current?.content || '').matchAll(/^(#{1,3})\s+(.+)$/gm)]
-                .map((m) => ({ level: m[1].length, text: m[2].trim() }));
-              return hs.length ? hs.map((h, i) => (
-                <div key={i} className="vkp" style={{ paddingLeft: (h.level - 1) * 12 }}>
-                  <span className="vkp-l">{esc(h.text)}</span>
-                </div>
-              )) : <div className="vmuted2">正文用 # 标题写，这里会生成大纲。</div>;
-            })()}
-            <div className="vmuted2" style={{ marginTop: 12 }}>双链总数：{links.outgoing.length + links.backlinks.length}</div>
-          </div>
-        )}
-        {rightTab === 'ai' && (<>
-        <div className="pane-head" style={{ display: 'none' }}><span>AI 协作</span></div>
-        <div className="ai-thread">
-          {thread.length ? thread.map((m, i) => (
-            <div className={'ai-msg' + (m.role === 'me' ? ' me' : '')} key={i}>
-              <div className="mdview" style={{ fontSize: 12.5 }}>{m.text}</div>
-              {m.role === 'ai' && (
-                <div className="row" style={{ marginTop: 6 }}>
-                  <Button size="small" onClick={() => insert(i, 'append')}>插入到末尾</Button>
-                  <Button size="small" onClick={() => insert(i, 'replace')}>替换全文</Button>
-                  <Button size="small" type="text" onClick={() => setThread(thread.filter((_, j) => j !== i))}>放弃</Button>
-                </div>
-              )}
-            </div>
-          )) : <div className="muted" style={{ fontSize: 12.5, lineHeight: 1.8, padding: 4 }}>
-            可以润色、扩展、提炼要点、出题。生成的内容先给你看，点「插入」才写进笔记。</div>}
-        </div>
-        <div className="ai-input">
-          <Segmented size="small" value={aiMode} onChange={setAiMode} options={AI_MODES} />
-          <textarea value={aiText} onChange={(e) => setAiText(e.target.value)} placeholder="补充指令（可空），例如：补上三个易错点" />
-          <Button size="small" type="primary" disabled={!current} onClick={aiSuggest}>生成建议</Button>
-        </div>
-        </>)}
-      </div>
+      {mode === 'wide' && !rightCollapsed && (
+        <div className="pane">{aside}</div>
+      )}
+
+      {drawerRight && (
+        <Drawer open={rightOpen} onClose={() => setRightOpen(false)} placement="right"
+          width={mode === 'mobile' ? 300 : 320} title={null}
+          styles={{ header: { padding: '8px 12px', minHeight: 0, borderBottom: '1px solid var(--border)' }, body: { padding: 0, display: 'flex' } }}>
+          <div className="pane" style={{ flex: 1, border: 0, borderRadius: 0 }}>{aside}</div>
+        </Drawer>
       )}
 
       {tidy && (

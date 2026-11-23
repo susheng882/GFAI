@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Segmented, Tabs } from 'antd';
 import { DatabaseOutlined, LinkOutlined, ReloadOutlined } from '@ant-design/icons';
+import { esc } from '../utils.js';
 
-/* 笔记模块的可复用小块：模板库 / vault 状态条 / 成卡行 / AI 速览。
+/* 笔记模块的可复用小块：模板库 / vault 状态条 / 成卡行 / AI 速览 / 右侧栏。
    放在独立文件是为了让 NotesPage 保持单文件不超 600 行。 */
+
+export const AI_MODES = [
+  { label: '润色', value: 'improve' }, { label: '扩展', value: 'expand' },
+  { label: '提炼', value: 'summarize' }, { label: '出题', value: 'quiz' },
+];
 
 /* 模板内容全部走 GFLC 自定结构，不使用任何竞品专有符号 */
 export const NOTE_TEMPLATES = [
@@ -144,5 +150,98 @@ export function TemplatePicker({ open, onCancel, onCreate }) {
         ))}
       </div>
     </Modal>
+  );
+}
+
+/* tab 文案：11.5px；计数用等宽数字，0 值走次要色而不是最浅色 */
+function tabText(text, count) {
+  return (
+    <span style={{ fontSize: 11.5 }}>
+      {text}
+      {count !== undefined && (
+        <span style={{
+          marginLeft: 4, fontVariantNumeric: 'tabular-nums',
+          color: count ? 'var(--foreground)' : 'var(--muted-foreground)',
+        }}>{count}</span>
+      )}
+    </span>
+  );
+}
+
+/* 右侧栏：反链 / 大纲 / AI 协作。宽屏并排，窄屏由 NotesPage 装进抽屉，内容只有这一份。 */
+export function NoteAside({
+  note, links, tab, onTabChange, thread, onInsert, onDiscard, onSelectNote,
+  aiMode, onAiModeChange, aiText, onAiTextChange, onAiSuggest,
+}) {
+  const backlinks = links?.backlinks || [];
+  const outgoing = links?.outgoing || [];
+  const headings = [...String(note?.content || '').matchAll(/^(#{1,3})\s+(.+)$/gm)]
+    .map((m) => ({ level: m[1].length, text: m[2].trim() }));
+  return (
+    <>
+      <div className="pane-head" style={{ gap: 8 }}>
+        <span title={note?.title || ''} style={{
+          minWidth: 0, maxWidth: 92, overflow: 'hidden',
+          textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+        }}>{note ? (note.title || '未命名') : '未选笔记'}</span>
+        <Tabs size="small" activeKey={tab} onChange={onTabChange} tabBarStyle={{ margin: 0 }}
+          items={[
+            { key: 'links', label: tabText('反链', backlinks.length) },
+            { key: 'outline', label: tabText('大纲') },
+            { key: 'ai', label: tabText('AI') },
+          ]} />
+      </div>
+      {tab === 'links' && (
+        <div className="pane-body" style={{ padding: 12 }}>
+          <div className="vmuted2" style={{ marginBottom: 6 }}>反向链接（谁提到了本文）</div>
+          {backlinks.length ? backlinks.map((b) => (
+            <div className="nitem" key={b.id} onClick={() => onSelectNote({ id: b.id, title: b.title, content: b.snippet })}>
+              <div className="nt">{esc(b.title)}</div><div className="ns">{esc(b.snippet)}</div>
+            </div>
+          )) : <div className="vmuted2">暂无引用</div>}
+          <div className="vmuted2" style={{ margin: '12px 0 6px' }}>出链（本文提到的笔记）</div>
+          {outgoing.length ? outgoing.map((o, i) => (
+            <div className="vkp" key={i} onClick={() => onSelectNote({ id: o.note_id, title: o.title })}>
+              <span className="vkp-l">{esc(o.title)}</span>
+              {!o.note_id && <span className="vmuted2">未创建</span>}
+            </div>
+          )) : <div className="vmuted2">暂无出链</div>}
+        </div>
+      )}
+      {tab === 'outline' && (
+        <div className="pane-body" style={{ padding: 12 }}>
+          {headings.length ? headings.map((h, i) => (
+            <div key={i} className="vkp" style={{ paddingLeft: (h.level - 1) * 12 }}>
+              <span className="vkp-l">{esc(h.text)}</span>
+            </div>
+          )) : <div className="vmuted2">暂无大纲</div>}
+          <div className="vmuted2" style={{ marginTop: 12, fontVariantNumeric: 'tabular-nums' }}>
+            双链总数：{outgoing.length + backlinks.length}
+          </div>
+        </div>
+      )}
+      {tab === 'ai' && (<>
+        <div className="ai-thread">
+          {thread.length ? thread.map((m, i) => (
+            <div className={'ai-msg' + (m.role === 'me' ? ' me' : '')} key={i}>
+              <div className="mdview" style={{ fontSize: 12.5 }}>{m.text}</div>
+              {m.role === 'ai' && (
+                <div className="row" style={{ marginTop: 6 }}>
+                  <Button size="small" onClick={() => onInsert(i, 'append')}>插入到末尾</Button>
+                  <Button size="small" onClick={() => onInsert(i, 'replace')}>替换全文</Button>
+                  <Button size="small" type="text" onClick={() => onDiscard(i)}>放弃</Button>
+                </div>
+              )}
+            </div>
+          )) : <div className="muted" style={{ fontSize: 12.5, lineHeight: 1.8, padding: 4 }}>
+            润色、扩展、提炼要点与出题</div>}
+        </div>
+        <div className="ai-input">
+          <Segmented size="small" value={aiMode} onChange={onAiModeChange} options={AI_MODES} />
+          <textarea value={aiText} onChange={(e) => onAiTextChange(e.target.value)} placeholder="补充指令（可空），例如：补上三个易错点" />
+          <Button size="small" type="primary" disabled={!note} onClick={onAiSuggest}>生成建议</Button>
+        </div>
+      </>)}
+    </>
   );
 }

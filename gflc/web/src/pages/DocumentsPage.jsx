@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { App as AntdApp, Button, Input, Modal, Table, Tag, Upload } from 'antd';
+import { App as AntdApp, Button, Input, Modal, Table, Tag, Tooltip, Upload } from 'antd';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api, runTask } from '../api.js';
 import { esc, fmtTime } from '../utils.js';
@@ -13,6 +13,9 @@ export default function DocumentsPage() {
   const [docs, setDocs] = useState([]);
   const [notes, setNotes] = useState([]);
   const [busy, setBusy] = useState(false);
+  const [noteBusy, setNoteBusy] = useState({});
+  const [noteDone, setNoteDone] = useState({});
+  const [noteErr, setNoteErr] = useState({});
   const fileRef = useRef(null);
 
   const load = useCallback(async () => {
@@ -49,6 +52,26 @@ export default function DocumentsPage() {
       if (kind === 'cards') await runTask(`/documents/${doc.id}/cards`, { method: 'POST' }, '生成卡片');
       await load();
     } catch (e) { message.error(e.message); }
+  };
+
+  /* 资料 → 笔记：同步生成，可能较慢；四态 idle / loading / success / error。 */
+  const genNote = async (doc) => {
+    if (doc.status !== 'ready' || noteBusy[doc.id]) return;
+    setNoteBusy((s) => ({ ...s, [doc.id]: true }));
+    setNoteErr((s) => ({ ...s, [doc.id]: '' }));
+    message.info('正在生成笔记，约需 10–20 秒');
+    try {
+      const r = await api(`/documents/${doc.id}/notes`, { method: 'POST', body: JSON.stringify({}) });
+      setNoteDone((s) => ({ ...s, [doc.id]: (r && r.id) || '' }));
+      message.success('笔记已生成');
+      await load();
+    } catch (e) {
+      const text = e && e.status === 404 ? '后端未升级，暂不可用' : (e && e.message) || '生成失败';
+      setNoteErr((s) => ({ ...s, [doc.id]: text }));
+      message.error(text);
+    } finally {
+      setNoteBusy((s) => ({ ...s, [doc.id]: false }));
+    }
   };
 
   const rename = (doc) => {
@@ -90,15 +113,36 @@ export default function DocumentsPage() {
       </Tag>
     ) },
     { title: '切片', dataIndex: 'chunks', key: 'chunks', width: 80, render: (v) => v ?? '—' },
-    { title: '操作', key: 'op', width: 280, render: (_, d) => (
-      <div className="row" style={{ gap: 4, flexWrap: 'nowrap' }}>
-        <Button size="small" type="link" onClick={() => setParams({ doc: d.id, page: 1 })}>定位</Button>
-        <Button size="small" type="link" onClick={() => act(d, 'parse')}>解析</Button>
-        <Button size="small" type="link" onClick={() => act(d, 'cards')}>生成卡片</Button>
-        <Button size="small" type="link" onClick={() => rename(d)}>改名</Button>
-        <Button size="small" type="link" danger onClick={() => del(d)}>删除</Button>
-      </div>
-    ) },
+    { title: '操作', key: 'op', width: 380, render: (_, d) => {
+      const done = noteDone[d.id];
+      const loading = !!noteBusy[d.id];
+      return (
+        <div>
+          <div className="row" style={{ gap: 4, flexWrap: 'nowrap' }}>
+            <Button size="small" type="link" onClick={() => setParams({ doc: d.id, page: 1 })}>定位</Button>
+            <Button size="small" type="link" onClick={() => act(d, 'parse')}>解析</Button>
+            <Button size="small" type="link" onClick={() => act(d, 'cards')}>生成卡片</Button>
+            {done ? (
+              <Button size="small" type="text" onClick={() => navigate(`/notes?note=${done}`)}>已生成，去查看</Button>
+            ) : (
+              <Tooltip title={d.status === 'ready' ? '约需 10–20 秒' : '请先解析'}>
+                <span style={{ display: 'inline-flex' }}>
+                  <Button size="small" type="text" loading={loading} disabled={d.status !== 'ready' || loading}
+                    onClick={() => genNote(d)}>
+                    {loading ? '生成中…' : '生成笔记'}
+                  </Button>
+                </span>
+              </Tooltip>
+            )}
+            <Button size="small" type="link" onClick={() => rename(d)}>改名</Button>
+            <Button size="small" type="link" danger onClick={() => del(d)}>删除</Button>
+          </div>
+          {noteErr[d.id] && (
+            <div style={{ fontSize: 11.5, color: 'var(--destructive)', marginTop: 4 }}>{noteErr[d.id]}</div>
+          )}
+        </div>
+      );
+    } },
   ];
 
   return (
@@ -114,6 +158,7 @@ export default function DocumentsPage() {
       </div>
       <div className="card" style={{ padding: '6px 14px' }}>
         <Table rowKey="id" columns={columns} dataSource={docs} size="small" pagination={false}
+          scroll={{ x: 'max-content' }}
           locale={{ emptyText: '还没有资料，上传一份 PDF 开始。' }} />
       </div>
       {notes.length > 0 && (
@@ -123,7 +168,7 @@ export default function DocumentsPage() {
             {notes.slice(0, 8).map((n) => (
               <div className="row between" key={n.id} style={{ padding: '9px 0', borderBottom: '1px solid var(--border)' }}>
                 <span>{esc(n.title || '未命名')}</span>
-                <Button size="small" type="link" onClick={() => navigate('/notes')}>去笔记</Button>
+                <Button size="small" type="link" onClick={() => navigate(`/notes?note=${n.id}`)}>去笔记</Button>
               </div>
             ))}
           </div>

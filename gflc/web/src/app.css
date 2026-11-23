@@ -424,4 +424,130 @@
 .hm-cell:hover { outline: 1px solid var(--border); outline-offset: 1px; }
 .hm-zero { margin-top: 8px; font-size: 12.5px; color: var(--muted-foreground); }
 
+/* ---------- 学习页空态与模式说明（C-1 ~ C-5） ---------- */
+.study-mode-desc { font-size: 11.5px; color: var(--muted-foreground); margin: 0 0 14px; }
+.study-empty { min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; }
+.study-empty .se-ic { width: 40px; height: 40px; border-radius: var(--r-md); background: var(--secondary);
+  color: var(--muted-foreground); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; }
+.study-empty .se-t { font-size: 14.5px; font-weight: 500; }
+.study-empty .se-d { font-size: 12.5px; color: var(--muted-foreground); }
+.se-steps { list-style: none; margin: 16px 0 0; padding: 16px 0 0; border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.se-steps li { font-size: 11.5px; line-height: 1.6; color: var(--muted-foreground); min-width: 0; }
+.se-steps b { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px;
+  margin-right: 6px; border: 1px solid var(--border); border-radius: 50%; font-size: 10.5px; font-weight: 500; color: var(--fg-2); }
 
+/* ---------- 做题 / 模考顶条与底部操作 ---------- */
+.test-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.test-top-l { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted-foreground); }
+.test-top-r { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.test-clock { font-family: var(--mono); font-size: 13.5px; color: var(--fg-2); }
+.test-flag.on { color: var(--warning); }
+.test-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.test-nav .ant-btn { min-width: 80px; }
+.test-setup-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- 答题卡浮层：四态题号 ---------- */
+.sheet-modal .ant-modal-content { border-radius: var(--r-xl); padding: 20px; background: var(--card); }
+.sheet-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.sheet-head .sheet-t { font-size: 14.5px; font-weight: 500; }
+.sheet-head .sheet-meta { font-family: var(--mono); font-size: 11.5px; color: var(--muted-foreground); }
+.sheet-legend { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 12px 0;
+  font-size: 11.5px; color: var(--muted-foreground); }
+.sheet-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px;
+  vertical-align: -1px; border: 1px solid var(--border); }
+.sheet-legend .lg-blank { background: transparent; }
+.sheet-legend .lg-on { background: var(--secondary); border-color: transparent; }
+.sheet-legend .lg-flag { background: var(--warning-soft); border-color: var(--warning); }
+.sheet-legend .lg-cur { background: var(--primary); border-color: var(--primary); }
+.sheet-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; max-height: 46vh; overflow: auto; }
+.sheet-cell { position: relative; height: 40px; border: 1px solid var(--border); border-radius: var(--r-md);
+  background: transparent; color: var(--muted-foreground); font-family: var(--mono); font-size: 12.5px; cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
+.sheet-cell:hover { border-color: var(--primary); color: var(--foreground); }
+.sheet-cell.on { background: var(--secondary); border-color: transparent; color: var(--foreground); }
+.sheet-cell.flag { border-color: var(--warning); color: var(--warning); }
+.sheet-cell.flag::after { content: ''; position: absolute; top: 5px; right: 5px; width: 4px; height: 4px;
+  border-radius: 50%; background: var(--warning); }
+.sheet-cell.cur { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.sheet-cell.cur::after { background: var(--mark); }
+.sheet-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+/* ---------- 练习报告：得分带 / 知识点分布 / 题号索引 ---------- */
+.score-strip { display: flex; align-items: flex-start; justify-content: center; gap: 32px; margin-top: 12px; flex-wrap: wrap; }
+.score-strip .m { text-align: center; }
+.score-strip .k { font-size: 11.5px; color: var(--muted-foreground); }
+.score-strip .v { font-size: 20px; font-weight: 500; letter-spacing: -.4px; margin-top: 2px; }
+.kp-list { display: flex; flex-direction: column; gap: 12px; }
+.kp-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 12.5px; }
+.kp-n { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kp-v { flex: 0 0 auto; font-family: var(--mono); font-size: 11.5px; color: var(--muted-foreground); }
+.kp-bar { height: 6px; border-radius: 99px; background: var(--secondary); overflow: hidden; margin-top: 6px; }
+.kp-bar i { display: block; height: 100%; border-radius: 99px; background: var(--primary);
+  transition: width var(--t-mid) var(--ease); }
+.qidx { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+.qi { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: var(--r-sm); background: transparent;
+  color: var(--muted-foreground); font-family: var(--mono); font-size: 11.5px; cursor: pointer;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease); }
+.qi:hover { border-color: var(--primary); color: var(--foreground); }
+.qi.ok { color: var(--success); border-color: color-mix(in srgb, var(--success) 40%, transparent); }
+.qi.bad { color: var(--destructive); border-color: color-mix(in srgb, var(--destructive) 40%, transparent); }
+.qi.on { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.q-meta { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+
+/* ---------- 错题本：筛选 / 列表 / 分页 / 导出 ---------- */
+.wrong-filter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid var(--border); }
+.wrong-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.wrong-item:last-child { border-bottom: 0; }
+.wrong-main { flex: 1; min-width: 0; }
+.wrong-stem { font-size: 12.5px; line-height: 1.6; overflow-wrap: anywhere; }
+.wrong-meta { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.wrong-meta .ant-tag { margin-inline-end: 0; }
+.wrong-ans { font-size: 11.5px; color: var(--muted-foreground); font-variant-numeric: tabular-nums; }
+.wrong-act { flex: 0 0 auto; }
+.wrong-pager { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  margin-top: 12px; font-size: 11.5px; color: var(--muted-foreground); }
+.print-only { display: none; }
+.print-title { font-size: 17px; font-weight: 500; }
+.print-sub { font-size: 11.5px; color: var(--muted-foreground); margin: 4px 0 12px; }
+
+/* ---------- 打印：只留报告正文，隐藏导航、筛选与按钮 ---------- */
+@media print {
+  .gflc-sider, .gflc-topbar, .gflc-scrim, .taskdock, .no-print { display: none !important; }
+  .gflc-main { margin-left: 0 !important; }
+  .gflc-content { padding: 0 !important; max-width: none; }
+  body, .gflc-app, .gflc-main { background: #fff !important; }
+  .screen-only { display: none !important; }
+  .print-only { display: block !important; }
+  .v3-card { border: 0 !important; padding: 0 !important; margin: 0 !important; }
+  .wrong-item { break-inside: avoid; padding: 8px 0; }
+  .ant-tag { border: 1px solid #999 !important; background: transparent !important; color: #000 !important; }
+}
+
+@media (max-width: 560px) {
+  .se-steps { grid-template-columns: 1fr; gap: 8px; }
+  .score-strip { gap: 20px; }
+  .sheet-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .test-nav .ant-btn { min-width: 0; }
+  .wrong-item { flex-direction: column; gap: 8px; }
+  .wrong-act { width: 100%; }
+  .wrong-act .ant-btn { width: 100%; }
+}
+
+
+
+
+/* ---------- 来源徽标：SourceChips 的 .badge（此前只有类名无样式，渲染为裸文字） ---------- */
+.src .badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: var(--r-xs);
+  border: 1px solid var(--border); background: var(--secondary);
+  font-size: 11.5px; line-height: 1.5; color: var(--fg-2);
+  white-space: nowrap;
+}
+/* 知识库 / 资料+联网 / 我的笔记：用墨蓝，不用 Antd 预设蓝 */
+.src .badge.blue { border-color: var(--primary); color: var(--primary); }
+/* 联网检索：警告色，提示这条依据来自站外 */
+.src .badge.warn { border-color: var(--warning); color: var(--warning); }

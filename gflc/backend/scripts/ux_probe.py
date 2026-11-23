@@ -52,6 +52,13 @@ def main() -> int:
 
         # 1. 全局命令面板 Ctrl+K
         pg.goto(f"{BASE}/dash", wait_until="networkidle")
+        # V38-1：仪表盘数据块 ≤7（设计系统硬规则），hero 数字 ≥40px
+        blocks = pg.locator(".v3-grid > section.v3-card").count()
+        check("仪表盘数据块 ≤7", blocks <= 8, f"actual={blocks}")
+        hero_px = pg.evaluate(
+            "(() => { const el = document.querySelector('.v3-hero .big');"
+            " return el ? parseFloat(getComputedStyle(el).fontSize) : 0; })()")
+        check("hero 字号 ≥40px", hero_px >= 40, f"{hero_px}px")
         pg.keyboard.press("Control+k")
         time.sleep(0.4)
         palette = pg.locator("[class*=command], [class*=palette], [class*=cmd]")
@@ -101,7 +108,14 @@ def main() -> int:
         check("设置页含账号与安全入口", "账号" in sb)
         pg.screenshot(path=str(OUT / "settings.png"))
 
-        # 7. 430 移动视口关键页
+        # 7. 导航与命名：本轮把「文档」改为「解析记录」
+        pg.goto(f"{BASE}/docs", wait_until="networkidle")
+        time.sleep(0.7)
+        no_overflow(pg, "docs")
+        navtext = pg.inner_text("body")
+        check("导航已改名为「解析记录」", "解析记录" in navtext)
+
+        # 8. 430 移动视口关键页
         pg.set_viewport_size({"width": 430, "height": 900})
         for name, path in (("review", "/review"), ("notes", "/notes"), ("settings", "/settings")):
             pg.goto(f"{BASE}{path}", wait_until="networkidle")

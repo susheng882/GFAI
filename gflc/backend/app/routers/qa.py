@@ -10,11 +10,13 @@
 """
 import json
 import logging
+from datetime import datetime, timezone
 from types import SimpleNamespace
 import re
 
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -24,7 +26,7 @@ from app.core.budget import budget, estimate_tokens
 from app.core.config import settings
 from app.core.errors import APIError, ErrCode
 from app.db.session import get_db
-from app.models.models import Document, Note, QuestionBank
+from app.models.models import Card, CardDeck, Document, Note, QuestionBank
 from app.routers.deps import get_current_user
 from app.schemas.schemas import QaIn
 from app.services import answer_cache, entity_check, query_opt, websearch
@@ -857,6 +859,133 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
 
     return StreamingResponse(gen(), media_type="application/x-ndjson",
                              headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+# ---------- 问答沉淀：存为笔记 / 生成卡片（I-2） ----------
+class SaveNoteIn(BaseModel):
+    question: str = ""
+    answer: str = ""
+    sources: list[dict] = []   # 来源引用：[{title, page?, url?, kind?}]
+    title: str = ""
+
+
+class SaveCardIn(BaseModel):
+    question: str = ""
+    answer: str = ""
+    tag: str = ""
+    deck_id: int | None = None
+
+
+_QA_DOC_TITLE = "问答收藏"
+_QA_DECK_NAME = "问答收藏"
+
+
+def _qa_doc(db: Session, user_id: int) -> Document:
+    """问答沉淀的挂靠文档。
+
+    notes.document_id / cards.document_id 都是 NOT NULL，问答本身不依附资料，
+    所以给每个用户建一个「问答收藏」容器资料长期复用（与 vault 导入的
+    _ensure_import_doc 同一思路），避免每次沉淀都新建一条资料。
+    """
+    h = f"qa-collection-{user_id}"
+    doc = db.scalar(select(Document).where(Document.user_id == user_id,
+                                           Document.content_hash == h))
+    if doc is None:
+        doc = Document(user_id=user_id, title=_QA_DOC_TITLE, source_type="note",
+                       content_hash=h, storage_key="", size=0,
+                       mime="text/markdown", status="ready")
+        db.add(doc)
+        db.commit()
+        db.refresh(doc)
+    return doc
+
+
+def _source_line(i: int, s: dict) -> str:
+    """一条来源渲染成一行：有网址给网址，否则给页码，便于回原处核对。"""
+    title = (s.get("title") or "").strip() or "未命名来源"
+    url = (s.get("url") or "").strip()
+    page = int(s.get("page") or 0)
+    if url:
+        return f"{i}. {title}（{url}）"
+    if page:
+        return f"{i}. {title} 第 {page} 页"
+    return f"{i}. {title}"
+
+
+def _qa_note_content(question: str, answer: str, sources: list[dict]) -> str:
+    """笔记正文：问题 + 答案 + 来源列表，保留可追溯性。"""
+    lines = ["## 问题", question, "", "## 答案", answer]
+    if sources:
+        lines += ["", "## 来源"]
+        lines += [_source_line(i, dict(s or {})) for i, s in enumerate(sources[:8], 1)]
+    return "\n".join(lines)
+
+
+@router.post("/save-note")
+async def save_note(body: SaveNoteIn, user=Depends(get_current_user),
+                    db: Session = Depends(get_db)):
+    """把一轮问答存成笔记（source='qa'，正文含问题、答案与来源引用）。"""
+    question = (body.question or "").strip()
+    answer = (body.answer or "").strip()
+    if not question:
+        raise APIError(ErrCode.COMMON_400, "问题为空，无法保存为笔记")
+    if not answer:
+        raise APIError(ErrCode.COMMON_400, "答案为空，无法保存为笔记")
+
+    doc = _qa_doc(db, user.id)
+    title = (body.title or "").strip()[:256] or f"{question[:40]} · 问答"
+    n = Note(user_id=user.id, document_id=doc.id, title=title,
+             summary=answer[:180], content=_qa_note_content(question, answer, body.sources),
+             points=[], source="qa", kind="qa")
+    db.add(n)
+    db.commit()
+    db.refresh(n)
+    return {"ok": True, "data": {"id": n.id, "title": n.title}}
+
+
+def _qa_deck(db: Session, user_id: int) -> CardDeck:
+    """问答卡片的落点：复用「问答收藏」卡包，没有就自动建一个（用户隔离）。"""
+    deck = db.scalar(select(CardDeck).where(CardDeck.user_id == user_id,
+                                            CardDeck.name == _QA_DECK_NAME))
+    if deck is not None:
+        return deck
+    doc = _qa_doc(db, user_id)
+    deck = CardDeck(user_id=user_id, document_id=doc.id, parent_id=None,
+                    name=_QA_DECK_NAME, kind="root", sort=0)
+    db.add(deck)
+    db.commit()
+    db.refresh(deck)
+    return deck
+
+
+@router.post("/save-card")
+async def save_card(body: SaveCardIn, user=Depends(get_current_user),
+                    db: Session = Depends(get_db)):
+    """把一轮问答存成一张背诵卡；未指定卡包时落到「问答收藏」卡包，创建即可复习。"""
+    question = (body.question or "").strip()
+    answer = (body.answer or "").strip()
+    if not question:
+        raise APIError(ErrCode.COMMON_400, "问题为空，无法生成卡片")
+    if not answer:
+        raise APIError(ErrCode.COMMON_400, "答案为空，无法生成卡片")
+
+    if body.deck_id is not None:
+        deck = db.get(CardDeck, body.deck_id)
+        if deck is None or deck.user_id != user.id:
+            raise APIError(ErrCode.AUTH_403, "无权使用该卡包", 403)
+    else:
+        deck = _qa_deck(db, user.id)
+    doc_id = deck.document_id or _qa_doc(db, user.id).id
+
+    card = Card(user_id=user.id, document_id=doc_id, deck_id=deck.id,
+                question=question, answer=answer,
+                tag=(body.tag or "问答").strip()[:128] or "问答",
+                difficulty="mid", page=0, due_at=datetime.now(timezone.utc),
+                reps=0, lapses=0)
+    db.add(card)
+    db.commit()
+    db.refresh(card)
+    return {"ok": True, "data": {"id": card.id, "deck_id": deck.id}}
 
 
 @router.get("/suggest")
