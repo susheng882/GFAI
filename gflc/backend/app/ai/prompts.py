@@ -114,18 +114,70 @@ _VIDEO_BASE = (
 
 VIDEO_NOTE_SYSTEMS: dict[str, str] = {
     "summary": _VIDEO_BASE + (
-        "\n本次为【摘要模式】：输出 summary（250–400 字，讲清主题、核心结论、为什么重要、怎么用）"
-        "与 points（**至少 8 条**，每条 15–40 字，必须含具体概念/数字/结论，可带时间戳）。"
+        "\n本次为【摘要模式】，要求**重写而不是复述**：\n"
+        "summary（200–300 字）必须按「讲了什么问题 → 用了什么方法 → 得到什么结论」三段写完，"
+        "用你自己的话组织，**严禁**照抄口语原句、严禁出现「我们来看」「对吧」「这个视频」这类口水话。\n"
+        "points（8–12 条，每条 12–30 字）写**可背诵的结论**：定义 / 公式 / 步骤 / 数字 / 易错点，"
+        "不要写「讲了 XX 概念」这种空话，不要按时间顺序流水账。"
     ),
     "outline": _VIDEO_BASE + (
-        "\n本次为【大纲模式】：输出 summary（100 字内）与 outline（**3–5 个一级**，每个一级下 2–4 个二级，"
-        "二级下可有 1–3 条三级细节；每级标题要是**信息性短语**，不要「第一部分」这类空标题）。"
+        "\n本次为【知识框架模式】，产出物要能直接画成思维导图、能当复习提纲用：\n"
+        "- 一级 3–6 个，是**知识模块**（如「全概率公式」「泊松过程」），不是「第一题/第二题」；\n"
+        "- 每个一级下 2–5 个二级，写**结论/公式/判据/步骤**（如「T~E(λ) 由 F_T(t)=1-e^(-λt) 推出」）；\n"
+        "- 三级只在确有细分时给 1–3 条，不要为了凑层级硬拆；\n"
+        "- 节点标题 6–20 字，用「概念 → 结论」式短语，**禁止**写口语、禁止写时间戳、禁止整句搬运；\n"
+        "- 结构必须覆盖全片考点，宁可多给模块，也不要留半截。"
     ),
     "qa": _VIDEO_BASE + (
         "\n本次为【问答模式】：输出 summary（100 字内）与 qas（**8–12 组**）。"
         "问题要像考试/复习会问的（是什么/为什么/怎么做/区别/易错），答案 30–80 字、准确、可背诵，附时间戳。"
     ),
 }
+
+
+def _fit_transcript(text: str, limit: int = 14000) -> str:
+    """长视频转写超长时按「头 55% + 均匀采样中段 30% + 尾 15%」压缩。
+
+    直接 `[:12000]` 只能看到视频前 1/3，大纲/问答会漏掉后半程考点（实测 60 分钟
+    概率论刷题视频只有前 20 分钟进了提示词）。这里保留开头（引入/定义）与结尾
+    （总结/易错点），中段按行等距采样，控制在 limit 字符内。
+    """
+    if len(text) <= limit:
+        return text
+    lines = text.splitlines() or [text]
+    head_budget, mid_budget, tail_budget = int(limit * .55), int(limit * .30), int(limit * .15)
+
+    head, used = [], 0
+    i = 0
+    for i, ln in enumerate(lines):
+        if used + len(ln) + 1 > head_budget:
+            break
+        head.append(ln)
+        used += len(ln) + 1
+
+    tail, used_t = [], 0
+    j = len(lines) - 1
+    while j > i:
+        if used_t + len(lines[j]) + 1 > tail_budget:
+            break
+        tail.append(lines[j])
+        used_t += len(lines[j]) + 1
+        j -= 1
+
+    mid = lines[i:j + 1]
+    if mid:
+        step = max(1, int(len(mid) * 40 / max(1, mid_budget)))
+        sampled, used_m = [], 0
+        for k in range(0, len(mid), step):
+            ln = mid[k]
+            if used_m + len(ln) + 1 > mid_budget:
+                break
+            sampled.append(ln)
+            used_m += len(ln) + 1
+        mid_txt = sampled
+    else:
+        mid_txt = []
+    return "\n".join(head + mid_txt + list(reversed(tail)))
 
 
 def video_note_user_tpl(transcript: str, template: str = "summary") -> str:
@@ -135,7 +187,7 @@ def video_note_user_tpl(transcript: str, template: str = "summary") -> str:
         body = ('输出 JSON：{"summary":"","qas":[{"question":"","answer":"","ts":""}]}。\n')
     else:
         body = ('输出 JSON：{"summary":"","points":[""]}。\n')
-    return body + f"转写文本：\n{transcript[:12000]}"
+    return body + f"转写文本（按时间顺序，行首 [mm:ss] 为时间戳）：\n{_fit_transcript(transcript)}"
 
 
 # ---------- 笔记 AI 协作 ----------
@@ -206,7 +258,9 @@ FRAME_NOTE_SYSTEM = (
     "你是图文笔记助手。给你一段视频的若干关键帧转写（含时间戳），请整理成**图文结合**的笔记：\n"
     "- 按时间顺序组织，每个关键帧一个小节，标题用该帧的核心内容命名；\n"
     "- 合并重复内容，突出**图里出现的定义、公式、流程、结论**；\n"
-    "- 输出 summary（150 字内）+ sections（每节含 ts、title、content，content 可含列表/公式）。只输出 JSON。"
+    "- 输出 summary（150 字内）+ sections（每节含 ts、title、content，content 可含列表/公式）。只输出 JSON。\n"
+    "- JSON 硬约束：字符串内的换行必须写成 \\n，不要输出未转义的英文双引号（引用术语请用「」或中文引号），"
+    "公式用 $...$ 包裹但不含双引号。违反会直接解析失败。"
 )
 
 

@@ -6,8 +6,8 @@ import re
 import tempfile
 import uuid
 
-from fastapi import APIRouter, Depends, File, Form, UploadFile
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, Depends, File, Form, Request, UploadFile
+from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -201,9 +201,14 @@ async def delete_video(document_id: int, user=Depends(get_current_user), db: Ses
                                 "cards": n_cards, "decks": n_decks}}
 
 @router.get("/{document_id}/stream")
-async def stream_video(document_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
-    """本地存储的视频直接流式返回（支持 Range，浏览器可拖进度）。"""
-    from fastapi.responses import FileResponse
+async def stream_video(document_id: int, request: Request,
+                       user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """本地存储的视频流式返回，**支持 Range**（浏览器才能拖进度/秒开）。
+
+    Starlette 0.37 的 FileResponse 不带 Range 支持（实测请求 bytes=0-1023 返回 200 + 全量
+    55MB），所以这里自己实现 206 分段响应。
+    """
+    from fastapi.responses import StreamingResponse
     from app.models.models import Document
     from app.services.storage import LocalStorage, get_storage
 
@@ -213,9 +218,55 @@ async def stream_video(document_id: int, user=Depends(get_current_user), db: Ses
     if not doc.storage_key:
         raise APIError(ErrCode.COMMON_404, "该记录没有关联的视频文件", 404)
     st = get_storage()
-    if isinstance(st, LocalStorage):
-        path = st._path(doc.storage_key)
-        if not os.path.exists(path):
-            raise APIError(ErrCode.COMMON_404, "视频文件已不存在", 404)
-        return FileResponse(path, media_type=doc.mime or "video/mp4", filename=doc.title)
-    raise APIError(ErrCode.COMMON_400, "当前存储后端不支持在线播放", 400)
+    if not isinstance(st, LocalStorage):
+        raise APIError(ErrCode.COMMON_400, "当前存储后端不支持在线播放", 400)
+    path = st._path(doc.storage_key)
+    if not os.path.exists(path):
+        raise APIError(ErrCode.COMMON_404, "视频文件已不存在", 404)
+
+    # 历史数据里 mime 被写成 "video/*"（非法通配），浏览器会直接拒绝播放 → 按真实后缀兜底
+    media = (doc.mime or "").strip()
+    if not media or "*" in media:
+        import mimetypes
+        media = mimetypes.guess_type(path)[0] or (
+            "audio/mpeg" if path.endswith(".mp3") else "video/mp4")
+
+    size = os.path.getsize(path)
+    range_header = request.headers.get("range") or ""
+    m = re.match(r"bytes=(\d*)-(\d*)", range_header.strip())
+    if not m or (not m.group(1) and not m.group(2)):
+        return StreamingResponse(_file_iter(path, 0, size - 1), media_type=media,
+                                 headers={"Accept-Ranges": "bytes", "Content-Length": str(size),
+                                          "Content-Disposition": _disposition(doc.title)})
+
+    if m.group(1):
+        start = int(m.group(1))
+        end = int(m.group(2)) if m.group(2) else size - 1
+    else:  # bytes=-N 表示末尾 N 字节
+        start = max(0, size - int(m.group(2)))
+        end = size - 1
+    if start >= size:
+        return Response(status_code=416, headers={"Content-Range": f"bytes */{size}"})
+    end = min(end, size - 1)
+    return StreamingResponse(_file_iter(path, start, end), status_code=206, media_type=media,
+                             headers={"Accept-Ranges": "bytes",
+                                      "Content-Range": f"bytes {start}-{end}/{size}",
+                                      "Content-Length": str(end - start + 1),
+                                      "Content-Disposition": _disposition(doc.title)})
+
+
+def _file_iter(path: str, start: int, end: int, chunk: int = 256 * 1024):
+    with open(path, "rb") as f:
+        f.seek(start)
+        remain = end - start + 1
+        while remain > 0:
+            block = f.read(min(chunk, remain))
+            if not block:
+                break
+            remain -= len(block)
+            yield block
+
+
+def _disposition(title: str) -> str:
+    from urllib.parse import quote
+    return f"inline; filename*=UTF-8''{quote(title or 'video')}"

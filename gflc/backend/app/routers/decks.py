@@ -3,6 +3,7 @@
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel, Field
 from sqlalchemy import case, delete, func, or_, select, update
 from sqlalchemy.orm import Session
 
@@ -47,11 +48,34 @@ def _deck_base(d: CardDeck) -> dict:
 
 
 def _card_out(c: Card) -> dict:
+    # 当前排期间隔天数：优先 FSRS 的 scheduled_days，退回 due_at 与今天的天数差
+    interval = None
+    try:
+        st = c.fsrs_state or {}
+        sd = st.get("scheduled_days") if isinstance(st, dict) else None
+        if isinstance(sd, (int, float)) and sd > 0:
+            interval = int(round(sd))
+    except Exception:  # noqa: BLE001 解析失败不影响主字段
+        interval = None
+    if interval is None and c.due_at:
+        from datetime import datetime, timezone
+        due = c.due_at
+        if due.tzinfo is None:
+            due = due.replace(tzinfo=timezone.utc)
+        delta = (due - datetime.now(timezone.utc)).total_seconds()
+        interval = max(0, int(round(delta / 86400)))
     return {"id": c.id, "deck_id": c.deck_id, "document_id": c.document_id,
             "question": c.question, "answer": c.answer, "tag": c.tag or "",
             "difficulty": c.difficulty or "mid", "page": c.page or 0,
             "due_at": c.due_at.isoformat() if c.due_at else None,
-            "reps": c.reps or 0, "lapses": c.lapses or 0}
+            "reps": c.reps or 0, "lapses": c.lapses or 0,
+            # 掌握度真值（0–1），供卡片浏览器按真实熟练度筛选；旧字段 difficulty 保留兼容
+            "mastery": round(float(c.mastery or 0.0), 4),
+            # 排期间隔天数，供卡片浏览器「间隔」列展示；未知为 None（前端显示 —）
+            "interval": interval,
+            # 来源笔记（同源成卡的卡才有），供复习页显示上下文
+            "source_note_id": c.source_note_id,
+            "anchor_id": c.anchor_id}
 
 
 def _stats(db: Session, user_id: int, deck_ids: list[int], now: datetime) -> dict[int, tuple[int, int, int]]:
@@ -170,6 +194,51 @@ async def deck_cards(deck_id: int, limit: int = 200, offset: int = 0,
 
 
 # ---------- 卡片 ----------
+class BatchIdsIn(BaseModel):
+    ids: list[int] = Field(default_factory=list)
+
+
+def _batch_scope(db: Session, ids: list[int], user_id: int) -> tuple[list[int], list[int]]:
+    """去重并做越权过滤：只返回本人名下的 id，其余计入 denied（不区分越权/不存在）。"""
+    unique = sorted(set(ids))
+    if not unique:
+        return [], []
+    owned = set(db.scalars(select(Card.id).where(Card.id.in_(unique), Card.user_id == user_id)))
+    return [i for i in unique if i in owned], [i for i in unique if i not in owned]
+
+
+@router.post("/cards/batch-delete")
+async def batch_delete_cards(body: BatchIdsIn, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """B18：批量删除卡片，替换前端逐张 DELETE 的 N+1 串行调用。"""
+    owned_ids, denied_ids = _batch_scope(db, body.ids, user.id)
+    deleted = 0
+    if owned_ids:
+        deleted = db.execute(delete(Card).where(Card.id.in_(owned_ids), Card.user_id == user.id)).rowcount or 0
+        db.commit()
+    return {"ok": True, "data": {
+        "requested": len(set(body.ids)), "succeeded": int(deleted),
+        "failed": len(denied_ids), "denied_ids": denied_ids,
+    }}
+
+
+@router.post("/cards/batch-reset")
+async def batch_reset_cards(body: BatchIdsIn, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """B18：批量重置卡片复习进度，口径与单卡 reset 一致。"""
+    owned_ids, denied_ids = _batch_scope(db, body.ids, user.id)
+    reset = 0
+    if owned_ids:
+        reset = db.execute(
+            update(Card)
+            .where(Card.id.in_(owned_ids), Card.user_id == user.id)
+            .values(mastery=0.0, reps=0, lapses=0, due_at=None, fsrs_state=None)
+        ).rowcount or 0
+        db.commit()
+    return {"ok": True, "data": {
+        "requested": len(set(body.ids)), "succeeded": int(reset),
+        "failed": len(denied_ids), "denied_ids": denied_ids,
+    }}
+
+
 @router.get("/cards")
 async def list_cards(q: str = "", deck_id: int | None = None, limit: int = 200,
                      offset: int = 0, user=Depends(get_current_user),
@@ -223,6 +292,20 @@ async def patch_card(card_id: int, body: CardPatchIn, user=Depends(get_current_u
         val = getattr(body, field)
         if val is not None:
             setattr(card, field, val)
+    db.commit()
+    db.refresh(card)
+    return {"ok": True, "data": _card_out(card)}
+
+
+@router.post("/cards/{card_id}/reset")
+async def reset_card_progress(card_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """把卡片复习进度归零（Anki 式重置）：掌握度/重复次数/失误数/排期/FSRS 状态全部清空。"""
+    card = _card_or_403(db, card_id, user.id)
+    card.mastery = 0.0
+    card.reps = 0
+    card.lapses = 0
+    card.due_at = None
+    card.fsrs_state = None
     db.commit()
     db.refresh(card)
     return {"ok": True, "data": _card_out(card)}

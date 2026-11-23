@@ -2,8 +2,9 @@
 """成本预算护栏：事前拦截（超限抛 QUOTA-001/002）+ 事后记账 + 进程内缓存。
 
 设计要点
-- 限额从环境变量读，带默认值（不改 config.py）：DAILY_USER_TOKENS / DAILY_USER_COST_CNY /
-  SINGLE_TASK_TOKENS / BUDGET_ENABLED。每次调用现读，便于压测进程用 env 覆盖。
+- 限额单一真源在 config.py（Settings）：DAILY_USER_TOKENS / DAILY_USER_COST_CNY /
+  SINGLE_TASK_TOKENS / BUDGET_ENABLED。每次调用先读同名环境变量，未设置才回落 Settings，
+  既避免 config.py 与 budget.py 两处默认值漂移，又保留压测进程用 env 覆盖的能力。
 - 用量数据源是 CostLedger（按 user_id + created_at 当日/本月聚合），独立 SessionLocal 会话，
   不参与业务事务，读不到就退化为 0，绝不影响主流程。
 - 线程安全：缓存用 RLock + 有界 OrderedDict；DB 会话每次新建，不跨线程共享。
@@ -22,16 +23,14 @@ from typing import Any
 
 from sqlalchemy import func, select
 
+from app.core.config import settings
 from app.core.errors import APIError, ErrCode
 from app.db.session import SessionLocal
 from app.models.models import CostLedger
 
 log = logging.getLogger(__name__)
 
-# 默认限额（env 可覆盖）
-_DEF_DAILY_TOKENS = 300_000
-_DEF_DAILY_COST_CNY = 2.0
-_DEF_SINGLE_TASK_TOKENS = 60_000
+# 默认限额来自 config.py 单一真源（env 同名变量优先覆盖）
 
 _CACHE_MAX = 512
 _usage_cache: "OrderedDict[str, tuple[float, Any]]" = OrderedDict()
@@ -46,28 +45,37 @@ _current_user_id: contextvars.ContextVar[int | None] = contextvars.ContextVar(
 
 # ---------------------------------------------------------------- env 读取
 def _env_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None or not str(raw).strip():
+        return default
     try:
-        return int(str(os.getenv(name, "")).strip() or default)
+        return int(str(raw).strip())
     except (TypeError, ValueError):
         return default
 
 
 def _env_float(name: str, default: float) -> float:
+    raw = os.getenv(name)
+    if raw is None or not str(raw).strip():
+        return default
     try:
-        return float(str(os.getenv(name, "")).strip() or default)
+        return float(str(raw).strip())
     except (TypeError, ValueError):
         return default
 
 
 def enabled() -> bool:
-    return str(os.getenv("BUDGET_ENABLED", "true")).strip().lower() not in ("0", "false", "no", "off")
+    raw = os.getenv("BUDGET_ENABLED")
+    if raw is None or not str(raw).strip():
+        return bool(settings.BUDGET_ENABLED)
+    return str(raw).strip().lower() not in ("0", "false", "no", "off")
 
 
 def limits() -> dict:
     return {
-        "daily_user_tokens": _env_int("DAILY_USER_TOKENS", _DEF_DAILY_TOKENS),
-        "daily_user_cost_cny": _env_float("DAILY_USER_COST_CNY", _DEF_DAILY_COST_CNY),
-        "single_task_tokens": _env_int("SINGLE_TASK_TOKENS", _DEF_SINGLE_TASK_TOKENS),
+        "daily_user_tokens": _env_int("DAILY_USER_TOKENS", settings.DAILY_USER_TOKENS),
+        "daily_user_cost_cny": _env_float("DAILY_USER_COST_CNY", settings.DAILY_USER_COST_CNY),
+        "single_task_tokens": _env_int("SINGLE_TASK_TOKENS", settings.SINGLE_TASK_TOKENS),
         "enabled": enabled(),
     }
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""仪表盘：真实统计 / AI 生成（月周日粒度）/ 自由布局缩放 / 单卡编辑。"""
-from datetime import datetime, timedelta, timezone
+"""仪表盘：真实统计 / AI 生成（月周日粒度）/ 自由布局缩放 / 单卡编辑 / 今日待办。"""
+import os
+from datetime import date, datetime, timedelta, timezone
 
 from fastapi import APIRouter, Depends
 from sqlalchemy import func, or_, select
@@ -8,12 +9,67 @@ from sqlalchemy.orm import Session
 
 from app.core.errors import APIError, ErrCode
 from app.db.session import get_db
-from app.models.models import Attempt, Card, CardDeck, Chunk, DashboardLayout, Document, Question
+from app.models.models import (
+    Attempt, Card, CardDeck, Chunk, DashboardLayout, Document, Plan, PlanTask, Question,
+    ReviewLog,
+)
 from app.routers.deps import get_current_user
+from app.routers.plans import plan_task_due
 from app.schemas.schemas import DashCardPatchIn, DashGenIn, DashOrderIn
+from app.services import mastery
 from app.worker import runner
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
+
+# 新增环境变量：今日待办默认条数（前端可传 limit 覆盖）
+TODAY_LIMIT = int(os.getenv("GFLC_TODAY_LIMIT", "50"))
+
+
+def _day_key(value) -> str:
+    """SQLite 的 func.date 返回值是字符串，PostgreSQL 返回 date 对象，统一成 ISO 字符串。"""
+    return value.isoformat() if hasattr(value, "isoformat") else str(value)
+
+
+def build_heatmap(days: int, review_rows, quiz_rows, today: date | None = None) -> dict:
+    """纯函数：把按天聚合的复习/刷题结果合并成连续日期序列 + 连续打卡。
+
+    review_rows / quiz_rows 形如 [(日期, 次数), ...]，只做内存合并，不再查库。
+    total>0 视为当天活跃；current 从今天往前数，中断即停。
+    """
+    today = today or datetime.now(timezone.utc).date()
+    days = max(7, min(int(days), 365))
+    start = today - timedelta(days=days - 1)
+    review_map = {_day_key(d): int(n) for d, n in review_rows}
+    quiz_map = {_day_key(d): int(n) for d, n in quiz_rows}
+
+    series: list[dict] = []
+    cursor = start
+    while cursor <= today:
+        key = cursor.isoformat()
+        review = review_map.get(key, 0)
+        quiz = quiz_map.get(key, 0)
+        series.append({"date": key, "review": review, "quiz": quiz, "total": review + quiz})
+        cursor += timedelta(days=1)
+
+    current = 0
+    for item in reversed(series):
+        if item["total"] <= 0:
+            break
+        current += 1
+    longest = run = 0
+    for item in series:
+        run = run + 1 if item["total"] > 0 else 0
+        longest = max(longest, run)
+
+    return {
+        "days": series,
+        "streak": {"current": current, "longest": longest},
+        "summary": {
+            "active_days": sum(1 for i in series if i["total"] > 0),
+            "total_reviews": sum(i["review"] for i in series),
+            "total_quiz": sum(i["quiz"] for i in series),
+        },
+    }
 
 
 def _own_layout(db: Session, layout_id: int, user_id: int) -> DashboardLayout:
@@ -40,13 +96,19 @@ async def stats(user=Depends(get_current_user), db: Session = Depends(get_db)):
     correct = db.scalar(select(func.count()).select_from(Attempt).where(
         Attempt.user_id == uid, Attempt.correct == 1)) or 0
 
-    # 最近 7 天作答量（真实数据，前端折线用）
+    # 最近 7 天作答量：一条 group by 聚合 + Python 补 0，替代原先 7 次逐日查询
+    week_start = (now - timedelta(days=6)).date()
+    week_rows = db.execute(
+        select(func.date(Attempt.created_at), func.count())
+        .where(Attempt.user_id == uid,
+               func.date(Attempt.created_at).between(week_start.isoformat(), now.date().isoformat()))
+        .group_by(func.date(Attempt.created_at))
+    ).all()
+    week_map = {_day_key(d): int(n) for d, n in week_rows}
     week = []
     for i in range(6, -1, -1):
         day = (now - timedelta(days=i)).date()
-        n = db.scalar(select(func.count()).select_from(Attempt).where(
-            Attempt.user_id == uid, func.date(Attempt.created_at) == day.isoformat())) or 0
-        week.append({"label": day.strftime("%m-%d"), "value": int(n)})
+        week.append({"label": day.strftime("%m-%d"), "value": week_map.get(day.isoformat(), 0)})
 
     decks = db.execute(
         select(CardDeck.name, func.count(Card.id))
@@ -62,6 +124,101 @@ async def stats(user=Depends(get_current_user), db: Session = Depends(get_db)):
         "week": week,
         "chapters": [{"name": n, "cards": int(c)} for n, c in decks],
     }}
+
+
+@router.get("/heatmap")
+async def heatmap(days: int = 365, user=Depends(get_current_user),
+                  db: Session = Depends(get_db)):
+    """B14：学习热力图 + 连续打卡。
+
+    两条 group by 聚合（复习日志 / 刷题作答），日期补齐在 Python 里做，
+    不逐日查库。defer 记的 rating=-1 只留痕，不计入复习量与活跃天数。
+    """
+    span = max(7, min(int(days or 365), 365))
+    today = datetime.now(timezone.utc).date()
+    start = (today - timedelta(days=span - 1)).isoformat()
+    end = today.isoformat()
+
+    review_rows = db.execute(
+        select(func.date(ReviewLog.created_at), func.count())
+        .where(ReviewLog.user_id == user.id, ReviewLog.rating >= 0,
+               func.date(ReviewLog.created_at).between(start, end))
+        .group_by(func.date(ReviewLog.created_at))
+    ).all()
+    quiz_rows = db.execute(
+        select(func.date(Attempt.created_at), func.count())
+        .where(Attempt.user_id == user.id,
+               func.date(Attempt.created_at).between(start, end))
+        .group_by(func.date(Attempt.created_at))
+    ).all()
+    return {"ok": True, "data": build_heatmap(span, review_rows, quiz_rows, today=today)}
+
+
+@router.get("/today")
+async def today(limit: int | None = None, user=Depends(get_current_user),
+                db: Session = Depends(get_db)):
+    """D10：把复习 due 与 PlanTask.due 合并成统一「今日待办」队列。
+
+    字段：type(review/plan) / title / due / source_id；返回按到期时间升序。
+    前端 React Agent 可直接消费 data.items。
+    """
+    cap = max(1, min(limit or TODAY_LIMIT, 200))
+
+    # 复习 due 从掌握度派生（物化低掌握度卡片为立即到期，不改动只读的 review.py）
+    mastery.refresh_due_from_mastery(db, user.id)
+    cards = mastery.due_cards_for_user(db, user.id, cap)
+    items: list[dict] = []
+    for c in cards:
+        due = c.due_at
+        if due is not None and due.tzinfo is None:
+            due = due.replace(tzinfo=timezone.utc)
+        items.append({
+            "type": "review",
+            "title": "复习卡片：{}".format((c.question or "")[:60]),
+            "due": due.isoformat() if due else None,
+            "source_id": c.id,
+            "mastery": round(c.mastery or 0.0, 4),
+            "reps": int(c.reps or 0),
+        })
+
+    # 计划任务 due：显式 due 优先，否则按 plan 创建日 + day_index 派生
+    plans = list(db.scalars(select(Plan).where(Plan.user_id == user.id)))
+    plan_map = {p.id: p for p in plans}
+    if plans:
+        tasks = list(db.scalars(select(PlanTask).where(
+            PlanTask.plan_id.in_([p.id for p in plans]), PlanTask.done == 0)))
+        for t in tasks:
+            due = plan_task_due(plan_map[t.plan_id], t)
+            items.append({
+                "type": "plan",
+                "title": t.title,
+                "due": due.isoformat() if due else None,
+                "source_id": t.id,
+                "plan_id": t.plan_id,
+                "day": int(t.day_index or 0),
+                "done": False,
+            })
+
+    # 无 due 的排末位；同时按 source_id 保证顺序稳定
+    items.sort(key=lambda x: (x["due"] is None, x["due"] or "", x["source_id"]))
+    counts = {
+        "review": sum(1 for i in items if i["type"] == "review"),
+        "plan": sum(1 for i in items if i["type"] == "plan"),
+    }
+    return {"ok": True, "data": {
+        "date": datetime.now(timezone.utc).date().isoformat(),
+        "total": len(items), "counts": counts, "items": items[:cap],
+    }}
+
+
+@router.get("/loop")
+async def loop_status(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """闭环状态条：资料 → 笔记 → 卡片 → 刷题 → 复习，五步进度 + 卡点原因 + 今日待办。
+
+    数据全部来自现有表的只读聚合（见 services/mastery.py::build_loop_status），
+    不返回用户原文与凭据；空账号 / 无资料 / 无题库均返回安全默认值（count=0、done=false）。
+    """
+    return {"ok": True, "data": mastery.build_loop_status(db, user.id)}
 
 
 @router.post("/generate")

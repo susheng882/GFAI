@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """笔记：文件夹树 + 笔记 CRUD（含面包屑）+ AI 协作（建议 / 插入 / 转卡片）。"""
+import logging
+import re
 import uuid
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy import delete, func, or_, select, update
 from sqlalchemy.orm import Session
 
@@ -13,14 +15,16 @@ from app.ai.router import generate_json
 from app.core.errors import APIError, ErrCode
 from app.crud import crud
 from app.db.session import get_db
-from app.models.models import Note, NoteFolder
+from app.models.models import Card, CardAnchor, Note, NoteFolder
 from app.routers.deps import get_current_user
 from app.schemas.schemas import (FolderIn, FolderPatchIn, FolderOut, NoteAiIn,
                                  NoteIn, NoteInsertIn, NotePatchIn)
 from app.services import note_ai
+from app.services.cards import apply_note_anchors, collect_note_anchors, sync_note_anchors
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 
+LOG = logging.getLogger(__name__)
 _MAX_LIMIT = 500
 _MAX_PAGE_SIZE = 100
 
@@ -334,8 +338,10 @@ async def insert_text(body: NoteInsertIn, user=Depends(get_current_user),
         n.content = text + ("\n\n" + cur if cur else "")
     else:
         n.content = cur + ("\n\n" + text if cur else text)
+    sync_note_anchors(db, n, user.id)  # B12：正文变化即增量解析成卡行
     db.commit()
     db.refresh(n)
+    _vault_sync_one(db, user, n)
     return {"ok": True, "data": _note_out(n, _folder_path(_folder_map(db, user.id), n.folder_id))}
 
 
@@ -348,10 +354,98 @@ async def note_to_cards(note_id: int, user=Depends(get_current_user),
 
 
 # ---------- 笔记 CRUD ----------
+# ---------- 本地 vault（方案二：笔记落成 .md 文件）----------
+class VaultIn(BaseModel):
+    dir: str = ""
+    auto: bool = True
+
+
+def _vault_dir(db: Session) -> str:
+    from app.services import settings_store as _ss
+    return (_ss.get_runtime(db, "vault_dir", "") or "").strip()
+
+
+def _vault_sync_one(db: Session, user, note) -> None:
+    """保存后增量写文件；vault 未配置或关闭自动同步时静默跳过。"""
+    from app.services import settings_store as _ss
+    from app.services import vault as vault_svc
+    d = _vault_dir(db)
+    if not d or _ss.get_runtime(db, "vault_auto", "1") != "1":
+        return
+    try:
+        vault_svc.export_notes(db, user.id, d, only_id=note.id)
+    except Exception as e:  # noqa: BLE001  同步失败不影响保存
+        import logging
+        logging.getLogger(__name__).warning("vault 增量同步失败：%s", e)
+
+
+@router.get("/vault")
+def vault_status(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    import os
+    d = _vault_dir(db)
+    exists = bool(d) and os.path.isdir(d)
+    count = db.scalar(select(func.count()).select_from(Note)
+                      .where(Note.user_id == user.id, Note.kind == "note")) or 0
+    return {"ok": True, "data": {"dir": d, "exists": exists,
+                                 "writable": os.access(d, os.W_OK) if exists else False,
+                                 "notes": int(count)}}
+
+
+@router.put("/vault")
+def vault_set(body: VaultIn, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    import os
+    from app.services import settings_store as _ss
+    d = (body.dir or "").strip()
+    if d:
+        try:
+            os.makedirs(d, exist_ok=True)
+        except OSError as e:
+            raise APIError(ErrCode.COMMON_400, f"目录不可用：{e}", 400) from e
+        if not os.access(d, os.W_OK):
+            raise APIError(ErrCode.COMMON_400, "目录没有写权限", 400)
+    _ss.set_runtime(db, "vault_dir", d)
+    _ss.set_runtime(db, "vault_auto", "1" if body.auto else "0")
+    return {"ok": True, "data": {"dir": d, "auto": body.auto}}
+
+
+@router.post("/vault/export")
+def vault_export(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    from app.services import vault as vault_svc
+    d = _vault_dir(db)
+    if not d:
+        raise APIError(ErrCode.COMMON_400, "还没设置本地文件夹", 400)
+    return {"ok": True, "data": vault_svc.export_notes(db, user.id, d)}
+
+
+@router.post("/vault/import")
+def vault_import(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    from app.services import vault as vault_svc
+    d = _vault_dir(db)
+    if not d:
+        raise APIError(ErrCode.COMMON_400, "还没设置本地文件夹", 400)
+    return {"ok": True, "data": vault_svc.import_notes(db, user.id, d)}
+
+
 @router.get("/{note_id}")
 async def get_note(note_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
     n = _own_note(db, note_id, user.id)
     return {"ok": True, "data": _note_out(n, _folder_path(_folder_map(db, user.id), n.folder_id))}
+
+
+# ---------- B12：同源成卡行 ----------
+@router.get("/{note_id}/anchors")
+def note_anchors(note_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """成卡行列表 + 同步状态（已同步 / 待同步 / 源已改）+ 来源笔记标题。"""
+    n = _own_note(db, note_id, user.id)
+    return {"ok": True, "data": collect_note_anchors(db, n, user.id)}
+
+
+@router.post("/{note_id}/anchors/apply")
+def note_anchors_apply(note_id: int, user=Depends(get_current_user),
+                       db: Session = Depends(get_db)):
+    """用户显式点「同步卡片」：生成/更新卡片，返回更新 N / 新增 M / 跳过 K。"""
+    n = _own_note(db, note_id, user.id)
+    return {"ok": True, "data": apply_note_anchors(db, n, user.id)}
 
 
 @router.post("")
@@ -367,8 +461,11 @@ async def create_note(body: NoteIn, user=Depends(get_current_user), db: Session 
              summary=body.summary or "", content=body.content, points=body.points or [],
              source=body.source or "manual", kind=body.kind or "note")
     db.add(n)
+    db.flush()
+    sync_note_anchors(db, n, user.id)  # B12：新建即解析「正面 :: 背面」行，原文不动
     db.commit()
     db.refresh(n)
+    _vault_sync_one(db, user, n)
     return {"ok": True, "data": _note_out(n, _folder_path(_folder_map(db, user.id), n.folder_id))}
 
 
@@ -388,14 +485,76 @@ async def patch_note(note_id: int, body: NotePatchIn, user=Depends(get_current_u
         if body.folder_id is not None:
             _own_folder(db, body.folder_id, user.id)
         n.folder_id = body.folder_id
+    if body.content is not None:
+        sync_note_anchors(db, n, user.id)  # B12：改正文后锚点 hash 更新，卡片待用户显式同步
     db.commit()
     db.refresh(n)
+    _vault_sync_one(db, user, n)
     return {"ok": True, "data": _note_out(n, _folder_path(_folder_map(db, user.id), n.folder_id))}
 
 
 @router.delete("/{note_id}")
 async def delete_note(note_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
     n = _own_note(db, note_id, user.id)
+    # B12：笔记删除时锚点级联删除；派生卡片不删除，只清空来源字段使其退化为独立卡
+    anchor_cnt = db.execute(delete(CardAnchor).where(CardAnchor.note_id == note_id,
+                                                     CardAnchor.user_id == user.id)).rowcount or 0
+    card_cnt = db.execute(
+        update(Card).where(Card.user_id == user.id, Card.source_note_id == note_id)
+        .values(source_note_id=None, anchor_id=None, source_hash=None)).rowcount or 0
     db.delete(n)
     db.commit()
-    return {"ok": True, "data": {"deleted": 1}}
+    LOG.info("删除笔记：note_id=%s 级联删除锚点=%s 解绑派生卡片=%s（卡片保留）",
+             note_id, anchor_cnt, card_cnt)
+    return {"ok": True, "data": {"deleted": 1, "anchors_removed": int(anchor_cnt),
+                                 "cards_detached": int(card_cnt)}}
+
+# ---------- 双链 / 文件操作（W2）----------
+_WIKI = re.compile(r"\[\[([^\]\n]{1,80})\]\]")
+
+
+@router.get("/{note_id}/links")
+def note_links(note_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """出链（本文 [[X]]）+ 反链（哪些笔记引用了本文）。对标 Obsidian 的双链面板。"""
+    n = _own_note(db, note_id, user.id)
+    outgoing, seen = [], set()
+    for m in _WIKI.finditer(n.content or ""):
+        title = m.group(1).strip()
+        if not title or title in seen:
+            continue
+        seen.add(title)
+        tgt = db.scalar(select(Note).where(Note.user_id == user.id, Note.title == title).limit(1))
+        outgoing.append({"title": title, "note_id": tgt.id if tgt else None})
+    backlinks = []
+    if (n.title or "").strip():
+        rows = db.scalars(select(Note).where(Note.user_id == user.id, Note.id != n.id,
+                                             Note.content.ilike(f"%[[{n.title}]]%")).limit(50)).all()
+        backlinks = [{"id": b.id, "title": b.title, "snippet": (b.content or "").replace("\n", " ")[:80]}
+                     for b in rows]
+    return {"ok": True, "data": {"outgoing": outgoing, "backlinks": backlinks}}
+
+
+@router.post("/{note_id}/duplicate")
+def duplicate_note(note_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    n = _own_note(db, note_id, user.id)
+    dup = Note(user_id=user.id, document_id=n.document_id, folder_id=n.folder_id,
+               title=f"{n.title} (副本)"[:256],
+               summary=n.summary or "", content=n.content or "", points=n.points or [],
+               source="manual", kind=n.kind or "note")
+    db.add(dup)
+    db.commit()
+    db.refresh(dup)
+    return {"ok": True, "data": _note_out(dup, _folder_path(_folder_map(db, user.id), dup.folder_id))}
+
+
+@router.get("/{note_id}/export")
+def export_note(note_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """导出 Markdown（frontmatter 带标题与时间，可直接进 Obsidian）。"""
+    n = _own_note(db, note_id, user.id)
+    body = (n.content or "").strip()
+    head = f"# {n.title or '未命名'}\n\n"
+    md = head + body if not body.startswith("#") else body
+    from urllib.parse import quote
+    filename = quote(f"{n.title or 'note'}.md")
+    return Response(content=md, media_type="text/markdown; charset=utf-8",
+                    headers={"Content-Disposition": f"attachment; filename*=UTF-8''{filename}"})

@@ -12,6 +12,7 @@ from app.db.session import get_db
 from app.models.models import Attempt, Question, QuestionBank
 from app.routers.deps import get_current_user
 from app.schemas.schemas import QuestionOut, QuizSubmitIn
+from app.services.mastery import update_question_mastery
 from app.services.recommend import attempt_agg, chapter_stat, chapter_stats, pick_next
 
 router = APIRouter(prefix="/quiz", tags=["quiz"])
@@ -25,6 +26,11 @@ class QuizGenBody(BaseModel):
     chapter: str | None = None
     only_wrong: bool = False
     mode: str | None = None  # recommend / new / wrong
+    qtype: str | None = None  # B11：题型精确筛选 single / multiple / fill / short
+
+
+# 题型白名单与中文名：只用于入参校验与「无匹配」提示文案
+QTYPE_LABELS = {"single": "单选题", "multiple": "多选题", "fill": "填空题", "short": "简答题"}
 
 
 def _norm(s: str) -> str:
@@ -148,6 +154,10 @@ async def generate(body: QuizGenBody, user=Depends(get_current_user),
                    db: Session = Depends(get_db)):
     count = max(1, min(body.count, 50))
     mode = (body.mode or ("wrong" if body.only_wrong else "new")).lower()
+    # B11：题型筛选在 SQL 侧完成（Question.qtype），不在应用层捞全表再过滤
+    qtype = (body.qtype or "").strip().lower() or None
+    if qtype is not None and qtype not in QTYPE_LABELS:
+        raise APIError(ErrCode.COMMON_400, "qtype 只支持 single / multiple / fill / short")
     bank_id, chapter = body.bank_id, body.chapter
     pinned_chapter = None
 
@@ -168,6 +178,8 @@ async def generate(body: QuizGenBody, user=Depends(get_current_user),
         conds.append(Question.chapter == chapter.strip())
     if pinned_chapter is not None:
         conds.append(func.coalesce(Question.chapter, "") == pinned_chapter)
+    if qtype is not None:
+        conds.append(Question.qtype == qtype)  # B11：下推到 WHERE，走 SQL 过滤
 
     agg = attempt_agg(user.id)
     stmt = select(Question).outerjoin(agg, agg.c.qid == Question.id).where(*conds)
@@ -186,6 +198,10 @@ async def generate(body: QuizGenBody, user=Depends(get_current_user),
     ).limit(count)
     picked = list(db.scalars(stmt))
     if not picked:
+        # B11：已指定题型却无匹配时返回空列表 + 中文提示，不抛错（前端可提示换题型）
+        if qtype is not None:
+            return {"ok": True, "data": [], "qtype": qtype,
+                    "message": f"当前范围内没有{QTYPE_LABELS[qtype]}，换一种题型或调整章节后再试"}
         msg = "本题库暂无错题，换个章节练练吧" if (mode == "wrong" or body.only_wrong) \
             else "题库为空，请先在「题库」导入题目"
         raise APIError(ErrCode.COMMON_400, msg)
@@ -205,12 +221,15 @@ async def submit(body: QuizSubmitIn, user=Depends(get_current_user), db: Session
         raise APIError(ErrCode.AUTH_403, "无权访问该题", 403)
     ua, ca = body.user_answer, q.answer
     correct = _judge(q.qtype, ua, ca, q.options)
+    # S6：答题结果联动掌握度（答对上升、答错下降），与 attempt 同一事务提交
+    new_mastery = update_question_mastery(db, q, correct)
     db.add(Attempt(user_id=user.id, question_id=q.id, user_answer=body.user_answer,
                    correct=1 if correct else 0))
     db.commit()
     stats = chapter_stat(db, user.id, q.bank_id, q.chapter or "")
     return {"ok": True, "data": {
         "correct": correct, "answer": q.answer, "analysis": q.analysis,
+        "mastery": round(new_mastery, 4),
         "stats": {
             "bank_id": q.bank_id, "chapter": q.chapter,
             "chapter_label": stats["chapter_label"],
@@ -243,7 +262,8 @@ async def wrong(bank_id: int | None = None, user=Depends(get_current_user),
         .join(last_a, last_a.id == agg.c.last_wrong_id)
         .join(la, la.c.lid == agg.c.last_wrong_id)  # 只有「最近一次仍错」才在错题本
         .where(Question.user_id == user.id)
-        .order_by(agg.c.wrong_count.desc(), agg.c.last_wrong_id.desc())
+        # S6：错题本由 attempts（错次）与 mastery（薄弱度）联动排序
+        .order_by(agg.c.wrong_count.desc(), Question.mastery.asc(), agg.c.last_wrong_id.desc())
         .limit(200)
     )
     if bank_id is not None:
@@ -252,7 +272,8 @@ async def wrong(bank_id: int | None = None, user=Depends(get_current_user),
     out = []
     for q, wrong_count, last_answer in db.execute(stmt).all():
         out.append({**QuestionOut.model_validate(q).model_dump(),
-                    "last_answer": last_answer or "", "wrong_count": int(wrong_count)})
+                    "last_answer": last_answer or "", "wrong_count": int(wrong_count),
+                    "mastery": round(q.mastery or 0.0, 4)})
     return {"ok": True, "data": out}
 
 

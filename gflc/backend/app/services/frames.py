@@ -276,7 +276,8 @@ async def ocr_frames(frames: list[dict], max_ocr: int = 12, on_progress=None) ->
                 text = await _ocr_one(frame)
                 if text:
                     results[id(frame)] = {
-                        "ts": frame.get("ts"), "ts_label": frame.get("ts_label"),
+                        "ts": frame.get("ts"), "ts_start": frame.get("ts"),
+                        "ts_label": frame.get("ts_label"),
                         "path": frame.get("name") or os.path.basename(frame.get("path", "")),
                         "text": text, "is_doc": bool(frame.get("is_doc")),
                     }
@@ -295,14 +296,17 @@ async def build_frame_note(ocr_items: list[dict]) -> dict:
     """多关键帧 → 图文笔记；失败返回空结构。"""
     if not ocr_items:
         return {"summary": "", "sections": []}
-    try:
-        obj, _ = await generate_json("light", FRAME_NOTE_SYSTEM,
-                                     frame_note_user([{"ts_label": it.get("ts_label", ""),
-                                                       "text": it.get("text", "")}
-                                                      for it in ocr_items]),
-                                     _FrameNote)
-    except Exception as e:
-        _log.warning("图文笔记生成失败：%s", e)
+    texts = [{"ts_label": it.get("ts_label", ""), "text": it.get("text", "")} for it in ocr_items]
+    obj = None
+    # light 档 1500 token 装不下多节图文，且 JSON 严格度不够；先 mid 再 strong 兜底
+    for tier, mt in (("mid", 4000), ("strong", 6000)):
+        try:
+            obj, _ = await generate_json(tier, FRAME_NOTE_SYSTEM, frame_note_user(texts),
+                                         _FrameNote, max_tokens=mt)
+            break
+        except Exception as e:  # noqa: BLE001  换档重试，最后仍失败返回空结构
+            _log.warning("图文笔记生成失败（tier=%s）：%s", tier, e)
+    if obj is None:
         return {"summary": "", "sections": []}
     return {"summary": (obj.summary or "").strip(),
             "sections": [{"ts": s.ts.strip(), "title": s.title.strip(), "content": s.content.strip()}
@@ -337,3 +341,174 @@ def render_frame_note_md(note: dict, ocr_items: list[dict]) -> str:
                          + ("（文档）" if it.get("is_doc") else ""))
         lines.append("")
     return "\n".join(lines).strip() + "\n"
+
+
+# ---------------------------------------------------------------------------
+# A3 / D8：网格拼图（一次解码抽多帧 + 拼图，视觉 OCR 调用压到 ≤2 次/视频）
+# ---------------------------------------------------------------------------
+_GRID_OCR_SYSTEM = (
+    "你是文档图像识别助手。输入是一张由多张视频截图按「从左到右、从上到下」拼成的网格。"
+    "请逐格提取图中可见的文字与公式：\n"
+    "- 每行输出一条：`序号|转写文本`，序号从 1 开始，与格子顺序一一对应；\n"
+    "- 没有文字的格子输出 `序号|`；\n"
+    "- 公式用 LaTeX，表格用 Markdown；只输出逐格结果，不要描述图片外观，不要编造。"
+)
+_GRID_LINE_RE = re.compile(r"^\s*(\d{1,2})\s*[|｜:：]\s*(.*)$")
+
+
+def build_grid_vf(step: float, cols: int, rows: int, cell_w: int = 320) -> str:
+    """构造 ffmpeg filter：等间隔取帧 → 缩放 → showinfo(取时间轴锚点) → tile 拼图。"""
+    return (f"fps=1/{step:.6f},scale={cell_w}:-2,showinfo,"
+            f"tile={cols}x{rows}:padding=4:margin=4:color=white")
+
+
+def extract_grid_frames(video_path: str, outdir: str, max_frames: int = 24,
+                        cols: int = 4, rows: int = 3,
+                        cell_w: int = 320) -> list[dict]:
+    """一次解码生成网格拼图；返回 ≤2 张网格，每张带 cell 时间轴锚点 times/ts_start（D8）。
+
+    与逐帧抽图相比：ffmpeg 只解码一次，视觉模型只调用 ≤2 次（每网格一次）。
+    失败返回 [] 并打 WARNING，由调用方回退到 extract_frames + ocr_frames。
+    """
+    if not video_path or not os.path.isfile(video_path):
+        return []
+    try:
+        os.makedirs(outdir, exist_ok=True)
+    except OSError as e:
+        _log.warning("网格拼图目录创建失败：%s", e)
+        return []
+    duration = _probe_duration(video_path)
+    total = max(1, min(int(max_frames or 24), cols * rows * 2))
+    step = (duration / total) if duration > 0 else 1.0
+    if step <= 0:
+        step = 1.0
+    uid = uuid.uuid4().hex[:8]
+    prefix = f"grid{uid}_"
+    pattern = os.path.join(outdir, f"{prefix}%02d.jpg")
+    # -skip_frame nokey：只解码关键帧，27 分钟视频抽帧 63s → 10s 级（B 站编码 2-10s 一个关键帧）
+    cmd = ["ffmpeg", "-y", "-hide_banner", "-skip_frame", "nokey", "-an", "-i", video_path,
+           "-vf", build_grid_vf(step, cols, rows, cell_w),
+           "-fps_mode", "vfr", "-q:v", "3", pattern]
+    try:
+        res = subprocess.run(cmd, capture_output=True, timeout=300)
+    except (OSError, subprocess.SubprocessError) as e:
+        _log.warning("网格拼图 ffmpeg 执行失败，回退逐帧 OCR：%s", e)
+        return []
+    if res.returncode != 0:
+        msg = (res.stderr or b"")[-200:].decode("utf-8", "ignore")
+        _log.warning("网格拼图 ffmpeg 返回 %s：%s，回退逐帧 OCR", res.returncode, msg)
+        return []
+    times = [float(x) for x in _TS_RE.findall((res.stderr or b"").decode("utf-8", "ignore"))]
+    files = sorted(f for f in os.listdir(outdir) if f.startswith(prefix) and f.endswith(".jpg"))
+    grids: list[dict] = []
+    per = cols * rows
+    for i, name in enumerate(files[:2]):  # 至多 2 张 → 至多 2 次视觉调用
+        cell_ts = times[i * per:(i + 1) * per]
+        grids.append({
+            "path": os.path.join(outdir, name), "name": name, "index": i,
+            "times": cell_ts, "ts_start": round(cell_ts[0], 2) if cell_ts else 0.0,
+            "cols": cols, "rows": rows, "source": "grid",
+        })
+    if not grids:
+        _log.warning("网格拼图未产出图片（video=%s），回退逐帧 OCR", os.path.basename(video_path))
+    return grids
+
+
+def parse_grid_ocr(text: str, grid: dict, cols: int = 4, rows: int = 3) -> list[dict]:
+    """把 `序号|文本` 行解析成带 ts_start 的逐格 OCR 项（纯函数，便于单测）。"""
+    times = grid.get("times") or []
+    out: list[dict] = []
+    matched = 0
+    for line in (text or "").splitlines():
+        m = _GRID_LINE_RE.match(line)
+        if not m:
+            continue
+        idx = int(m.group(1))
+        if idx < 1 or idx > cols * rows:
+            continue
+        matched += 1
+        body = (m.group(2) or "").strip()
+        if not body:
+            continue
+        t = times[idx - 1] if idx - 1 < len(times) else float(grid.get("ts_start") or 0)
+        out.append({
+            "ts": round(float(t), 2), "ts_start": round(float(t), 2),
+            "ts_label": _ts_label(t), "path": grid.get("name") or os.path.basename(grid.get("path", "")),
+            "text": body, "is_doc": True, "source": "grid", "cell": idx,
+        })
+    if not matched and (text or "").strip():
+        # 不静默失败：模型没按格式输出时，保留整段文本并打 WARNING，按网格首帧锚点定位。
+        _log.warning("网格 OCR 返回格式无法逐格解析，退化为整段文本（grid=%s）", grid.get("name"))
+        t = float(grid.get("ts_start") or 0)
+        out = [{
+            "ts": round(t, 2), "ts_start": round(t, 2), "ts_label": _ts_label(t),
+            "path": grid.get("name") or os.path.basename(grid.get("path", "")),
+            "text": (text or "").strip(), "is_doc": True, "source": "grid", "cell": 0,
+        }]
+    out.sort(key=lambda x: (x.get("ts_start") or 0, x.get("cell") or 0))
+    return out
+
+
+async def ocr_grid_one(grid: dict, on_progress=None) -> list[dict]:
+    """对一张网格图调用一次视觉模型。失败 WARNING 并返回 []。"""
+    try:
+        with open(grid["path"], "rb") as f:
+            b64 = base64.b64encode(f.read()).decode()
+    except OSError as e:
+        _log.warning("网格图读取失败（%s）：%s", grid.get("name"), e)
+        return []
+    cols, rows = int(grid.get("cols") or 4), int(grid.get("rows") or 3)
+    times = grid.get("times") or []
+    hint = "；".join(f"{i + 1}={_ts_label(t)}" for i, t in enumerate(times[:cols * rows]))
+    messages = [{"role": "user", "content": [
+        {"type": "text", "text": f"{_GRID_OCR_SYSTEM}\n格子对应视频时间点：{hint}\n共 {cols * rows} 格。"},
+        {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + b64}},
+    ]}]
+    try:
+        # 视觉通道：方舟 deepseek-v4-1-flash 实测 13.2s/张（现有 DeepSeek light 档 100s+）
+        from app.ai import ark
+        from app.services.settings_store import cached
+        if ark.available():
+            _v = cached("vision")
+            res = await ark.chat(
+                _v[2] if _v else settings.ARK_VISION_MODEL,
+                [{"role": "user", "content": [
+                    {"type": "text", "text": f"{_GRID_OCR_SYSTEM}\n格子对应视频时间点：{hint}\n共 {cols * rows} 格。"},
+                    {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + b64}},
+                ]}],
+                temperature=0, max_tokens=2000,
+            )
+        else:
+            res = await chat(settings.LLM_LIGHT_MODEL, messages, temperature=0,
+                             max_tokens=3500, json_mode=False, effort="low")
+        return parse_grid_ocr(res.text or "", grid, cols, rows)
+    except Exception as e:
+        _log.warning("网格 %s 视觉识别失败：%s", grid.get("name"), e)
+        return []
+    finally:
+        if on_progress:
+            on_progress(1, 1)
+
+
+async def ocr_grids(grids: list[dict], max_calls: int = 2, on_progress=None) -> tuple[list[dict], int]:
+    """A3：逐网格 OCR，硬上限 max_calls 次视觉调用（默认 2）。返回 (逐格 OCR 项, 实际调用次数)。
+
+    两张网格是独立 IO，串行要跑两次 60s 级视觉调用；并发后总耗时≈一次（实测 120s → 60s）。
+    """
+    import asyncio
+
+    picked = grids[:max(0, int(max_calls))]
+    if not picked:
+        _log.warning("网格 OCR 未执行（grids=%s）；视频没有可识别的视觉流", len(grids or []))
+        return [], 0
+    results = await asyncio.gather(*[ocr_grid_one(g, on_progress) for g in picked],
+                                   return_exceptions=True)
+    items: list[dict] = []
+    calls = 0
+    for res in results:
+        calls += 1
+        if isinstance(res, BaseException):
+            _log.warning("网格 OCR 单张失败：%s", res)
+            continue
+        items.extend(res)
+    return items, calls

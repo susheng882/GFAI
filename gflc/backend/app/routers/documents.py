@@ -22,7 +22,7 @@ from app.worker import runner
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
-_ALLOWED = {".pdf"}
+_ALLOWED = {".pdf", ".docx", ".md", ".markdown", ".txt"}
 
 
 def _check_name(filename: str):
@@ -46,7 +46,7 @@ async def upload_direct(file: UploadFile = File(...), user=Depends(get_current_u
         return {"ok": True, "data": {"document": DocumentOut.model_validate(exist).model_dump(), "dedup": True}}
     key = f"{user.id}/{h[:16]}_{file.filename}"
     get_storage().save(key, data)
-    doc = crud.create_document(db, user_id=user.id, title=file.filename, source_type="pdf",
+    doc = crud.create_document(db, user_id=user.id, title=file.filename, source_type="doc",
                                content_hash=h, storage_key=key, size=len(data),
                                mime=file.content_type or "application/pdf")
     return {"ok": True, "data": {"document": DocumentOut.model_validate(doc).model_dump(), "dedup": False}}
@@ -81,7 +81,7 @@ async def create_document(body: dict, user=Depends(get_current_user), db: Sessio
     exist = crud.find_by_hash(db, user.id, h)
     if exist:
         return {"ok": True, "data": {"document": DocumentOut.model_validate(exist).model_dump(), "dedup": True}}
-    doc = crud.create_document(db, user_id=user.id, title=title, source_type="pdf", content_hash=h,
+    doc = crud.create_document(db, user_id=user.id, title=title, source_type="doc", content_hash=h,
                                storage_key=key, size=real_size, mime=body.get("mime", "application/pdf"))
     return {"ok": True, "data": {"document": DocumentOut.model_validate(doc).model_dump(), "dedup": False}}
 

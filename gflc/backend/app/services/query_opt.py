@@ -18,7 +18,9 @@ from app.core.config import settings
 
 log = logging.getLogger(__name__)
 
-RELEVANT_SCORE = 3.0      # 重排得分 >= 3 视为相关
+# 统一量纲（2026-11-22 D3）：0~1 置信度是唯一口径，配置在 config.QA_MIN_CONFIDENCE。
+# 重排模型输出 0~5 分，故通过线 = 0.6 × 5 = 3.0，与旧硬编码值一致（行为不变）。
+RELEVANT_SCORE = settings.QA_MIN_CONFIDENCE * 5.0
 _REWRITE_TIMEOUT = 8.0    # 改写超过 8s 直接放弃
 _RERANK_TIMEOUT = 6.5    # 重排超时放弃（返回全 0）
 _TTL = 600                # 改写结果 10 分钟内复用

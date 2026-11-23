@@ -27,7 +27,8 @@ from app.db.session import get_db
 from app.models.models import Document, Note, QuestionBank
 from app.routers.deps import get_current_user
 from app.schemas.schemas import QaIn
-from app.services import query_opt, websearch
+from app.services import answer_cache, entity_check, query_opt, websearch
+from app.services import rag as rag_svc
 from app.services.rag import retrieve_multi, tokenize
 
 router = APIRouter(prefix="/qa", tags=["qa"])
@@ -35,13 +36,25 @@ log = logging.getLogger(__name__)
 
 _MIN_CTX_CHARS = 80      # 拼接片段太短视为未命中
 _MAX_CTX_CHARS = 3500    # 送入模型的片段上限
-_MIN_COVERAGE = 0.34     # 重排不可用时的关键词覆盖率下限（兜底老路径）
+# D3：阈值收敛到 config.py 单一真源（默认 0.34，行为不变）
+_MIN_COVERAGE = settings.QA_COVERAGE_FLOOR
 _TOP_K = 8               # 单查询召回数
 _MAX_SNIPPETS = 5        # 重排后最多保留片段数
 _MAX_ANSWER_TOKENS = 3200   # 强档模型含 reasoning token，2000 会被思辨吃光导致空回答
 _MODEL_NOTE = "（以下为模型知识，未经资料佐证）"
 _REFUSAL = ("未在资料中找到依据", "资料中没有", "资料未提及", "无法依据", "没有提供相关",
             "与问题领域不符", "领域不符", "检索结果与问题领域")
+
+
+def _is_refusal(answer: str | None) -> bool:
+    """统一的"模型判定无依据"识别入口（D11）。
+
+    现状仍是关键词匹配，但集中到一处：未来替换为模型返回的拒答标志或结构化
+    confidence 字段时，只改这里，不必改 4 个调用点。任何调用都要同时保留
+    refused/confidence 字段作为可观测信号。
+    """
+    text = answer or ""
+    return any(k in text for k in _REFUSAL)
 # 短问题更容易歧义（如「泰勒」→ 歌手），才值得花一次改写
 _REWRITE_MAX_LEN = 10
 # 模型爱在开头复述「领域判断」，属于内部思考泄漏，直接去掉
@@ -156,9 +169,34 @@ def _kb_contexts(hits: list, prefix: list[tuple[int, str]] | None = None) -> lis
 
 
 def _kb_sources(db: Session, user_id: int, hits: list) -> list[dict]:
-    titles = _doc_titles(db, user_id, {c.document_id for c in hits})
-    return [{"chunk_id": c.id, "page": c.page or 0, "ts_start": c.ts_start,
-             "kind": "knowledge", "title": titles.get(c.document_id, "")} for c in hits]
+    """Q6：来源芯片携带 chunk_id/page/ts_start/source_type，供前端跳页 / seek。"""
+    titles = _doc_titles(db, user_id, {c.document_id for c in hits
+                                       if getattr(c, "document_id", None)})
+    out: list[dict] = []
+    for c in hits:
+        source_type = getattr(c, "source_type", "document") or "document"
+        note_title = getattr(c, "note_title", "") or ""
+        out.append({
+            "chunk_id": getattr(c, "chunk_id", c.id),
+            "page": getattr(c, "page", 0) or 0,
+            "ts_start": getattr(c, "ts_start", None),
+            "source_type": source_type,
+            "kind": "note" if source_type == "note" else "knowledge",
+            "title": note_title or titles.get(c.document_id, ""),
+        })
+    return out
+
+
+def _apply_entity(data: dict, hits: list, question: str, user_id: int | None) -> dict:
+    """S3/Q2：把实体一致性结果并入回答响应（只增字段，不改既有字段）。"""
+    answer = data.get("answer", "")
+    new_answer, suspects, refused = entity_check.apply(answer, hits, question, user_id)
+    if suspects:
+        data = {**data, "answer": new_answer, "suspect_entities": suspects,
+                "suspect": True}
+        if refused:
+            data = {**data, "refused": True}
+    return data
 
 
 async def _answer_knowledge(db: Session, user_id: int, hits: list, question: str,
@@ -403,51 +441,72 @@ async def _build_queries(db: Session, user_id: int, question: str) -> list[str]:
     return queries or [question]
 
 
+class KBResult:
+    """D11：结构化召回结果（confidence/strategy/need_web），保留 (hits, confidence) 解包兼容。"""
+
+    def __init__(self, hits: list, confidence: float, strategy: str,
+                 need_web: bool, refused: bool = False):
+        self.hits = hits
+        self.confidence = round(float(confidence), 2)
+        self.strategy = strategy
+        self.need_web = bool(need_web)
+        self.refused = bool(refused)
+
+    def __iter__(self):
+        yield self.hits
+        yield self.confidence
+
+    def __getitem__(self, key):
+        return getattr(self, key)
+
+    def get(self, key, default=None):
+        return getattr(self, key, default)
+
+
 async def _kb_relevant(db: Session, user_id: int, question: str, queries: list[str],
-                       document_id: int | None) -> tuple[list, float]:
-    """召回 + 语义重排，只返回真正相关的片段；任何异常都当作"没命中"。"""
+                       document_id: int | None) -> KBResult:
+    """召回 + 语义重排，返回 KBResult（结构化 confidence/strategy/need_web）。
+
+    笔记已由 rag.retrieve_multi 统一进同一份语料（D7），这里不再单独合并。
+    任何异常都当作"没命中"，并给出 need_web=True 让上层决定降级。
+    """
     try:
         hits = await _recall(db, user_id, queries, document_id)
     except Exception as e:
         log.warning("recall failed: %s", e)
-        return [], 0.5
-    # 笔记也属于「我的资料」，与 PDF/视频片段一起参与判定
-    note_hits = []
-    if not document_id:
-        try:
-            for i, n in enumerate(_recall_notes(db, user_id, queries)):
-                note_hits.append(SimpleNamespace(id=-(i + 1), content=n["content"], page=0,
-                                                 document_id=None, ts_start=None,
-                                                 note_title=n.get("note_title", "")))
-        except Exception as e:
-            log.warning("note recall failed: %s", e)
-    # 片段优先（PDF/视频上下文更完整），笔记补充在后，避免笔记挤掉长片段
-    if note_hits:
-        hits = list(hits) + note_hits
+        return KBResult([], 0.0, "none", True, True)
 
     if not hits:
-        return [], 0.5
+        return KBResult([], 0.0, "none", True, True)
 
-    cand = hits[:_TOP_K + len(note_hits)]
+    cand = hits[:_TOP_K + 2]
     try:
         scores = await _rerank(question, [(c.content or "")[:400] for c in cand])
     except Exception as e:
         log.warning("kb rerank failed: %s", e)
         scores = []
 
+    ctx_text = "\n".join((c.content or "") for c in cand)
+    coverage = _coverage(question, ctx_text)
+
     if scores and len(scores) == len(cand):
-        confidence = round(min(1.0, sum(scores) / len(scores) / 5), 2)
         relevant = [h for h, s in sorted(zip(cand, scores), key=lambda x: -x[1])
                     if query_opt.is_relevant(s)][:_MAX_SNIPPETS]
         if relevant:
-            return relevant, confidence
+            # D3/Q3：BM25 归一化 + 向量相似度 + 覆盖率融合为唯一 0~1 置信度
+            conf = rag_svc.fused_confidence(relevant, question)
+            # D11：用结构化置信度决定是否转联网，不再靠答案里的 _REFUSAL 字符串
+            need_web = (conf < settings.QA_MIN_CONFIDENCE
+                        and coverage < settings.QA_COVERAGE_FLOOR)
+            return KBResult(relevant, conf, "knowledge", need_web, False)
         # 全 0 分多半是重排超时/失败（与"确实不相关"不可区分）→ 继续走覆盖率兜底
 
     # 重排不可用 → 老路径：关键词覆盖率判定
-    ctx_text = "\n".join((c.content or "") for c in cand)
-    if len(ctx_text.strip()) >= _MIN_CTX_CHARS and _coverage(question, ctx_text) >= _MIN_COVERAGE:
-        return cand[:3], max(confidence, 0.5)
-    return [], confidence
+    if len(ctx_text.strip()) >= _MIN_CTX_CHARS and coverage >= _MIN_COVERAGE:
+        conf = max(rag_svc.fused_confidence(cand[:3], question), 0.5)
+        return KBResult(cand[:3], conf, "knowledge", False, False)
+    conf = rag_svc.fused_confidence(cand[:3], question)
+    return KBResult([], conf, "none", True, True)
 
 
 async def _web_keep(question: str, queries: list[str], limit: int = 4) -> tuple[list[dict], float]:
@@ -483,6 +542,78 @@ def _none_text(strategy: str) -> str:
     return _NONE_TEXT.get(strategy, _NONE_TEXT["auto"])
 
 
+async def _ask_core(body: QaIn, request: Request, user, db: Session,
+                    strategy: str, question: str) -> dict:
+    """真正的问答编排（缓存未命中路径，行为保持原样，仅新增可选字段）。"""
+    # 模型知识：不检索、不联网，开头标注未经佐证
+    if strategy == "model":
+        data = await _answer_model(question, user.id)
+        return {**data, "strategy": "model"}
+
+    queries = await _build_queries(db, user.id, question)
+
+    kb_hits: list = []
+    confidence = 0.5
+    kb: KBResult | None = None
+    if strategy in ("auto", "knowledge", "hybrid"):
+        kb = await _kb_relevant(db, user.id, question, queries, body.document_id)
+        kb_hits, confidence = kb.hits, kb.confidence
+
+    # 只查知识库：没命中就直说，绝不外扩联网
+    if strategy == "knowledge":
+        if not kb_hits:
+            return {**_no_answer("knowledge"), "strategy": "knowledge"}
+        data = await _answer_knowledge(db, user.id, kb_hits, question, confidence)
+        data = _apply_entity(data, kb_hits, question, user.id)
+        if _is_refusal(data["answer"]):
+            data = {**_no_answer("knowledge"), "sources": data["sources"],
+                    **({"suspect_entities": data["suspect_entities"]}
+                       if "suspect_entities" in data else {})}
+        return {**data, "strategy": "knowledge"}
+
+    # 只联网：跳过知识库，结果经重排过滤
+    if strategy == "web":
+        results, wconf = await _web_keep(question, queries)
+        if not results:
+            return {**_no_answer("web"), "strategy": "web"}
+        data = await _answer_web(question, results, wconf, user.id)
+        return {**data, "strategy": "web"}
+
+    # 混合：两边都当上下文，sources 合并
+    if strategy == "hybrid":
+        results, wconf = await _web_keep(question, queries)
+        if kb_hits and results:
+            data = await _answer_hybrid(db, user.id, kb_hits, results, question, confidence)
+            data = _apply_entity(data, kb_hits, question, user.id)
+        elif kb_hits:
+            data = await _answer_knowledge(db, user.id, kb_hits, question, confidence)
+            data = _apply_entity(data, kb_hits, question, user.id)
+            if _is_refusal(data["answer"]):
+                data = {**_no_answer("hybrid"), "sources": data["sources"],
+                        **({"suspect_entities": data["suspect_entities"]}
+                           if "suspect_entities" in data else {})}
+        elif results:
+            data = await _answer_web(question, results, wconf, user.id)
+        else:
+            data = _no_answer("hybrid")
+        return {**data, "strategy": "hybrid"}
+
+    # ---- auto：保持原有三级降级；转联网改为读结构化 need_web（D11）----
+    if kb_hits:
+        data = await _answer_knowledge(db, user.id, kb_hits, question, confidence)
+        data = _apply_entity(data, kb_hits, question, user.id)
+        if not body.document_id and kb is not None and kb.need_web:
+            data = await _web_or_model(question, queries, user.id)
+            return {**data, "strategy": f"auto→{data.get('mode')}"}
+        return {**data, "strategy": "auto→knowledge"}
+
+    if body.document_id:  # 限定文档内检索时不外扩
+        return {**_no_answer("auto"), "strategy": "auto→none"}
+
+    data = await _web_or_model(question, queries, user.id)
+    return {**data, "strategy": f"auto→{data.get('mode')}"}
+
+
 @router.post("")
 async def ask(body: QaIn, request: Request, user=Depends(get_current_user),
               db: Session = Depends(get_db)):
@@ -491,63 +622,17 @@ async def ask(body: QaIn, request: Request, user=Depends(get_current_user),
     if not question:
         raise APIError(ErrCode.COMMON_400, "问题不能为空")
 
-    # 模型知识：不检索、不联网，开头标注未经佐证
-    if strategy == "model":
-        data = await _answer_model(question, user.id)
-        return {"ok": True, "data": {**data, "strategy": "model"}}
+    # Q7：归一化问题 hash 命中缓存直接返回；未命中路径完全不变。
+    key = answer_cache.make_key(user.id, question, strategy, body.document_id)
+    if answer_cache.enabled():
+        cached = answer_cache.get(key)
+        if cached is not None:
+            return {"ok": True, "data": {**cached, "cache_hit": True}}
 
-    queries = await _build_queries(db, user.id, question)
-
-    kb_hits, confidence = [], 0.5
-    if strategy in ("auto", "knowledge", "hybrid"):
-        kb_hits, confidence = await _kb_relevant(db, user.id, question, queries, body.document_id)
-
-    # 只查知识库：没命中就直说，绝不外扩联网
-    if strategy == "knowledge":
-        if not kb_hits:
-            return {"ok": True, "data": {**_no_answer("knowledge"), "strategy": "knowledge"}}
-        data = await _answer_knowledge(db, user.id, kb_hits, question, confidence)
-        if any(k in data["answer"] for k in _REFUSAL):
-            data = {**_no_answer("knowledge"), "sources": data["sources"]}
-        return {"ok": True, "data": {**data, "strategy": "knowledge"}}
-
-    # 只联网：跳过知识库，结果经重排过滤
-    if strategy == "web":
-        results, wconf = await _web_keep(question, queries)
-        if not results:
-            return {"ok": True, "data": {**_no_answer("web"), "strategy": "web"}}
-        data = await _answer_web(question, results, wconf, user.id)
-        return {"ok": True, "data": {**data, "strategy": "web"}}
-
-    # 混合：两边都当上下文，sources 合并
-    if strategy == "hybrid":
-        results, wconf = await _web_keep(question, queries)
-        if kb_hits and results:
-            data = await _answer_hybrid(db, user.id, kb_hits, results, question, confidence)
-        elif kb_hits:
-            data = await _answer_knowledge(db, user.id, kb_hits, question, confidence)
-            if any(k in data["answer"] for k in _REFUSAL):
-                data = {**_no_answer("hybrid"), "sources": data["sources"]}
-        elif results:
-            data = await _answer_web(question, results, wconf, user.id)
-        else:
-            data = _no_answer("hybrid")
-        return {"ok": True, "data": {**data, "strategy": "hybrid"}}
-
-    # ---- auto：保持原有三级降级 ----
-    if kb_hits:
-        data = await _answer_knowledge(db, user.id, kb_hits, question, confidence)
-        # 模型判定"资料领域不符/无依据"时，未限定文档才外扩到网络
-        if not body.document_id and any(k in data["answer"] for k in _REFUSAL):
-            data = await _web_or_model(question, queries, user.id)
-            return {"ok": True, "data": {**data, "strategy": f"auto→{data.get('mode')}"}}
-        return {"ok": True, "data": {**data, "strategy": "auto→knowledge"}}
-
-    if body.document_id:  # 限定文档内检索时不外扩
-        return {"ok": True, "data": {**_no_answer("auto"), "strategy": "auto→none"}}
-
-    data = await _web_or_model(question, queries, user.id)
-    return {"ok": True, "data": {**data, "strategy": f"auto→{data.get('mode')}"}}
+    data = await _ask_core(body, request, user, db, strategy, question)
+    if answer_cache.enabled():
+        answer_cache.put(key, data)
+    return {"ok": True, "data": data}
 
 
 @router.post("/stream")
@@ -572,6 +657,7 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
         from app.db.session import SessionLocal
         system, user_text, mode, sources, confidence = "", "", "none", [], 0.0
         lead = ""  # 需要强制置顶的前缀（模型知识标注）
+        kb_hits: list = []  # 结构化召回结果，供实体一致性校验使用
         sdb = SessionLocal()
         try:
             queries = await _build_queries(sdb, user_id, question)
@@ -581,28 +667,22 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
                 mode, lead = "model", _MODEL_NOTE + "\n"
             else:
                 need_kb = strategy in ("auto", "knowledge", "hybrid")
-                kb_hits, confidence = ([], 0.5)
+                kb = KBResult([], 0.0, "none", True, True)
                 if need_kb:
-                    kb_hits, confidence = await _kb_relevant(
-                        sdb, user_id, question, queries, document_id)
-                notes_hit = _recall_notes(sdb, user_id, queries) if need_kb else []
+                    kb = await _kb_relevant(sdb, user_id, question, queries, document_id)
+                kb_hits, confidence = kb.hits, kb.confidence
+                # D7：笔记已在 retrieve_multi 的统一语料里，不再单独召回
                 need_web = strategy in ("web", "hybrid") or (
-                    strategy == "auto" and not kb_hits and not notes_hit and not document_id)
+                    strategy == "auto" and not kb_hits and not document_id)
                 web_results, wconf = ([], 0.0)
                 if need_web:
                     web_results, wconf = await _web_keep(question, queries)
 
-                note_prefix, note_sources = [], []
-                for n in notes_hit:
-                    note_prefix.append((0, n["content"]))
-                    note_sources.append({"kind": "note", "title": n["note_title"], "page": 0})
-
                 if strategy == "knowledge":
                     if kb_hits:
-                        contexts = _kb_contexts(kb_hits, note_prefix)
-                        sources = note_sources + _kb_sources(sdb, user_id, kb_hits)
+                        contexts = _kb_contexts(kb_hits)
+                        sources = _kb_sources(sdb, user_id, kb_hits)
                         system, user_text, mode = QA_SYSTEM, qa_user(question, contexts), "knowledge"
-                        confidence = max(confidence, 0.7 if note_sources else 0.0)
                 elif strategy == "web":
                     if web_results:
                         sources = _web_sources(web_results)
@@ -610,27 +690,24 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
                         mode, confidence = "web", wconf
                 elif strategy == "hybrid":
                     if kb_hits and web_results:
-                        contexts = _kb_contexts(kb_hits, note_prefix)
-                        sources = (note_sources + _kb_sources(sdb, user_id, kb_hits)
-                                   + _web_sources(web_results))
+                        contexts = _kb_contexts(kb_hits)
+                        sources = _kb_sources(sdb, user_id, kb_hits) + _web_sources(web_results)
                         system = _HYBRID_SYSTEM
                         user_text = _hybrid_user(question, contexts, web_results)
-                        mode, confidence = "hybrid", max(confidence, 0.7)
+                        mode, confidence = "hybrid", max(confidence, 0.5)
                     elif kb_hits:
-                        contexts = _kb_contexts(kb_hits, note_prefix)
-                        sources = note_sources + _kb_sources(sdb, user_id, kb_hits)
+                        contexts = _kb_contexts(kb_hits)
+                        sources = _kb_sources(sdb, user_id, kb_hits)
                         system, user_text, mode = QA_SYSTEM, qa_user(question, contexts), "knowledge"
-                        confidence = max(confidence, 0.7 if note_sources else 0.0)
                     elif web_results:
                         sources = _web_sources(web_results)
                         system, user_text = QA_WEB_SYSTEM, qa_web_user(question, web_results)
                         mode, confidence = "web", wconf
                 else:  # auto：保持原有三级降级
-                    if kb_hits or note_prefix:
-                        contexts = _kb_contexts(kb_hits, note_prefix)
-                        sources = note_sources + _kb_sources(sdb, user_id, kb_hits)
+                    if kb_hits:
+                        contexts = _kb_contexts(kb_hits)
+                        sources = _kb_sources(sdb, user_id, kb_hits)
                         system, user_text, mode = QA_SYSTEM, qa_user(question, contexts), "knowledge"
-                        confidence = max(confidence, 0.7 if note_sources else 0.0)
                     elif web_results:
                         sources = _web_sources(web_results)
                         system, user_text = QA_WEB_SYSTEM, qa_web_user(question, web_results)
@@ -713,7 +790,7 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
                     yield _emit(head)
             # 资料命中了但内容不对路 → 仅 auto 用学科知识补答（显式 knowledge 不外扩）
             now_text = "".join(buf)
-            if strategy == "auto" and mode == "knowledge" and any(k in now_text for k in _REFUSAL):
+            if strategy == "auto" and mode == "knowledge" and _is_refusal(now_text):
                 yield json.dumps({"type": "notice",
                                   "text": "\n\n_（检索到的资料与问题不符，下面用学科知识补充）_\n\n"},
                                  ensure_ascii=False) + "\n"
@@ -758,7 +835,24 @@ async def ask_stream(body: QaIn, request: Request, user=Depends(get_current_user
         except Exception as e:
             log.warning("qa stream cost record failed: %s", e)
 
-        yield json.dumps({"type": "done", "full": "".join(out), "strategy": label},
+        # S3/Q2：流式路径同样做实体一致性校验，命中则在 done 里带 suspect_entities
+        suspects = []
+        if kb_hits:
+            try:
+                suspects = entity_check.check("".join(out),
+                                              [getattr(h, "content", "") for h in kb_hits],
+                                              question)
+            except Exception as e:
+                log.warning("stream entity check failed: %s", e)
+            if suspects:
+                log.warning("不一致实体: user=%s count=%s values=%s", user_id, len(suspects),
+                            entity_check.describe(suspects)[:200])
+                yield json.dumps({"type": "notice",
+                                  "text": "\n\n_（部分数值/专名未在引用资料中找到，内容标记为存疑）_\n\n"},
+                                 ensure_ascii=False) + "\n"
+
+        yield json.dumps({"type": "done", "full": "".join(out), "strategy": label,
+                          "suspect_entities": suspects},
                          ensure_ascii=False) + "\n"
 
     return StreamingResponse(gen(), media_type="application/x-ndjson",
