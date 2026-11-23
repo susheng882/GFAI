@@ -1,0 +1,228 @@
+/* ============================================================
+   GFLC · 纸墨设计系统（从旧版 index.html 原样 token 化）
+   方向：纸、墨、荧光笔 —— 温和、精确、像学习记录本
+   所有尺寸走 4px 栅格；字重只用 400/500；一个强调色（墨蓝）
+   ============================================================ */
+:root {
+  /* 圆角：--radius 单一事实源，其余派生 */
+  --radius: 8px;
+  --r-xs: calc(var(--radius) * .5);
+  --r-sm: calc(var(--radius) * .75);
+  --r-md: var(--radius);
+  --r-lg: calc(var(--radius) * 1.5);
+  --r-xl: calc(var(--radius) * 1.75);
+
+  /* 纸墨中性阶（暖纸） */
+  --background: #f7f4ee;
+  --foreground: #1f1b16;
+  --fg-2: #4a4238;
+  --card: #fdfbf7;
+  --card-foreground: #1f1b16;
+  --secondary: #efe9df;
+  --secondary-foreground: #2b251e;
+  --muted: #efe9df;
+  --muted-foreground: #7b7266;
+  --accent: #f0e9dc;
+  --accent-foreground: #241f19;
+  --sidebar: #f2ede4;
+  --border: rgba(31, 27, 22, .10);
+  --input: rgba(31, 27, 22, .15);
+
+  /* 唯一强调色：墨蓝；主按钮用墨 */
+  --primary: #1f4d6b;
+  --primary-foreground: #fbf8f2;
+  --ring: #1f4d6b;
+  --btn: #26211b;
+  --btn-fg: #fbf8f2;
+  --mark: #f5df87;
+
+  /* 语义色：只表意，压低饱和 */
+  --destructive: #a8322c;
+  --danger-soft: #f8e7e4;
+  --success: #2f6b4f;
+  --success-soft: #e7efe8;
+  --warning: #8a6220;
+  --warning-soft: #f7edda;
+  --info: #1f4d6b;
+  --info-soft: #e8eef2;
+
+  /* 动效 token：进慢出快，语义命名 */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --t-fast: 140ms;
+  --t-mid: 180ms;
+  --t-slow: 320ms;
+  --dur-quick: 150ms;
+  --dur-fast: 250ms;
+  --dur-medium: 350ms;
+  --blur-sm: 2px;
+
+  /* 等宽：只给数字、时间戳、代码 */
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+.gflc-dark {
+  --background: #0f0e0c;
+  --foreground: #ece5d8;
+  --fg-2: #bcb3a3;
+  --card: #1c1915;
+  --card-foreground: #ece5d8;
+  --secondary: #272219;
+  --secondary-foreground: #ece5d8;
+  --muted: #272219;
+  --muted-foreground: #978d7c;
+  --accent: #2e281e;
+  --accent-foreground: #ece5d8;
+  --sidebar: #0a0908;
+  --border: rgba(236, 229, 216, .13);
+  --input: rgba(236, 229, 216, .18);
+  --primary: #8ab4d0;
+  --primary-foreground: #12100d;
+  --ring: #8ab4d0;
+  --btn: #ece5d8;
+  --btn-fg: #1a1713;
+  --mark: #6d5c22;
+  --destructive: #e0776d;
+  --danger-soft: #2a1c1a;
+  --success: #6fb08c;
+  --success-soft: #1a2420;
+  --warning: #d8ab63;
+  --warning-soft: #241f16;
+  --info: #8ab4d0;
+  --info-soft: #1a2026;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC",
+    -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--mark); color: #241f19; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: var(--r-sm); }
+button { font-family: inherit; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- 骨架布局 ---------- */
+.gflc-app { display: flex; min-height: 100vh; background: var(--sidebar); width: 100%; overflow-x: hidden; }
+/* 侧栏固定：原来用 sticky，但父级 .gflc-app 有 overflow-x:hidden（会成为滚动容器），
+   sticky 失效 → 点导航/滚动内容时整条侧栏跟着跑。改成 fixed + main 让位。 */
+.gflc-sider {
+  width: 240px; background: var(--sidebar);
+  border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  padding: 16px 12px; position: fixed; left: 0; top: 0; bottom: 0; height: 100vh; z-index: 20;
+  overflow-y: auto; overscroll-behavior: contain;
+  transition: width var(--t-slow) var(--ease);
+}
+.gflc-sider.collapsed { width: 64px; padding-left: 8px; padding-right: 8px; }
+.gflc-brand {
+  display: flex; align-items: center; gap: 8px; padding: 4px 8px 20px;
+  font-size: 15px; font-weight: 500; white-space: nowrap;
+}
+.gflc-brand .logo {
+  width: 24px; height: 24px; border-radius: var(--r-sm); background: var(--foreground);
+  color: var(--background); display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500; flex: 0 0 24px;
+}
+.gflc-sider.collapsed .gflc-brand .bt,
+.gflc-sider.collapsed .nav-t,
+.gflc-sider.collapsed .gflc-nav-label { display: none; }
+.gflc-nav { display: flex; flex-direction: column; gap: 2px; }
+.gflc-nav-group { margin-bottom: 12px; }
+.gflc-nav-title { font-size: 11px; color: var(--muted-foreground); padding: 8px 10px 4px; }
+.gflc-nav-item {
+  display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px;
+  border-radius: var(--r-md); color: var(--fg-2); font-size: 14px; cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.gflc-nav-item:hover { background: var(--secondary); color: var(--foreground); }
+.gflc-nav-item.active { background: var(--accent); color: var(--foreground); font-weight: 500; }
+.gflc-nav-item .ic { display: inline-flex; width: 18px; height: 18px; flex: 0 0 18px; color: var(--muted-foreground); }
+.gflc-nav-item.active .ic { color: var(--primary); }
+.gflc-sider-foot { margin-top: auto; padding: 12px 4px 0; border-top: 1px solid var(--border); }
+.gflc-main { flex: 1; min-width: 0; margin-left: 240px; display: flex; flex-direction: column; background: var(--background); transition: margin-left var(--t-slow) var(--ease); }
+.gflc-app.sider-collapsed .gflc-main { margin-left: 64px; }
+.gflc-topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 28px; border-bottom: 1px solid var(--border);
+  background: var(--background); position: sticky; top: 0; z-index: 10;
+}
+.gflc-topbar h1 { font-size: 17px; font-weight: 500; margin: 0; }
+.gflc-topbar .sub { color: var(--muted-foreground); font-size: 12.5px; margin-top: 2px; }
+.gflc-content { padding: 24px 28px 56px; max-width: 1440px; width: 100%; margin: 0 auto; min-width: 0; }
+.gflc-menu-btn { display: none !important; }
+.gflc-scrim { display: none; }
+
+/* ---------- 通用工具类 ---------- */
+.hl { color: var(--primary); font-weight: 500; }
+.mono { font-family: var(--mono); }
+.muted { color: var(--muted-foreground); }
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.between { justify-content: space-between; }
+.grid { display: grid; gap: 16px; }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g2 { grid-template-columns: repeat(2, 1fr); }
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+.prog { height: 5px; border-radius: 99px; background: var(--secondary); overflow: hidden; }
+.prog i { display: block; height: 100%; background: var(--primary); border-radius: 99px; transition: width var(--t-mid) var(--ease); }
+.stat-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 14px; }
+.stat-box .k { font-size: 11.5px; color: var(--muted-foreground); }
+.stat-box .v { font-size: 22px; font-weight: 500; letter-spacing: -.5px; }
+@keyframes numPop { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes pageIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.page-in { animation: pageIn var(--t-slow) var(--ease); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin {
+  display: inline-block; width: 13px; height: 13px; border: 2px solid var(--border);
+  border-top-color: var(--primary); border-radius: 50%; animation: spin .7s linear infinite;
+  vertical-align: -2px; margin-right: 5px;
+}
+
+/* ---------- antd 主题微调（其余由 ConfigProvider token 接管） ---------- */
+.gflc-app .ant-layout, .gflc-app .ant-card { background: transparent; }
+.gflc-app .ant-btn { border-radius: var(--r-md); font-weight: 500; }
+.gflc-app .ant-input, .gflc-app .ant-input-number, .gflc-app .ant-select-selector { border-radius: var(--r-md) !important; }
+.gflc-app .ant-tabs-tab { font-size: 13px; }
+.gflc-app .ant-table { font-size: 13px; }
+.gflc-app .ant-table-thead > tr > th { font-size: 11.5px !important; font-weight: 400 !important; color: var(--muted-foreground) !important; }
+.gflc-app .ant-menu { background: transparent !important; border-inline-end: none !important; }
+
+/* ---------- 三档断点：1440 / 768 / 430，无横向滚动 ---------- */
+@media (max-width: 1100px) {
+  .g4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 860px) {
+  .gflc-sider {
+    position: fixed; left: 0; top: 0; transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, .12); transition: transform var(--t-slow) var(--ease);
+  }
+  .gflc-sider.open { transform: translateX(0); }
+  .gflc-main, .gflc-app.sider-collapsed .gflc-main { margin-left: 0; }
+  .gflc-scrim { display: block; position: fixed; inset: 0; background: rgba(0, 0, 0, .35); z-index: 19; opacity: 0; pointer-events: none; transition: opacity var(--t-fast) var(--ease); }
+  .gflc-scrim.on { opacity: 1; pointer-events: auto; }
+  .gflc-menu-btn { display: inline-flex !important; }
+  .gflc-topbar { padding: 12px 16px; }
+  .gflc-content { padding: 16px 16px 48px; }
+  .g3, .g2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .gflc-content { padding: 12px 12px 40px; }
+  .gflc-topbar { padding: 10px 12px; }
+  .gflc-topbar h1 { font-size: 15px; }
+  .g4 { grid-template-columns: repeat(2, 1fr); }
+  .row > * { min-width: 0; }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "gflc-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "GFLC 成长向前 · React 19 + Ant Design 5 + Vite 前端重构",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5173"
+  },
+  "dependencies": {
+    "@ant-design/icons": "6.3.4",
+    "antd": "5.29.3",
+    "katex": "0.19.1",
+    "markmap-lib": "^0.18.13",
+    "markmap-view": "^0.18.13",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-markdown": "10.1.0",
+    "react-router-dom": "6.30.6",
+    "rehype-katex": "7.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-math": "6.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "5.2.0",
+    "vite": "7.3.8"
+  }
+}
