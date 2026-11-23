@@ -1,25 +1,45 @@
+# GFLC HTTPS 网关模板
+# 用法：cp nginx-ssl.conf.example nginx-ssl.conf && sed -i 's/your.domain.com/你的真实域名/g' nginx-ssl.conf
+#
+# ===== 证书挂载路径（自文档化）=====
+# 宿主机目录：gflc/deploy/certs/fullchain.pem  （证书链，含中间证书）
+# 宿主机目录：gflc/deploy/certs/privkey.pem    （私钥，权限 600，绝不进 git/镜像）
+# 容器内路径：/etc/nginx/certs/fullchain.pem、/etc/nginx/certs/privkey.pem
+# 挂载方式：docker-compose.ssl.yml 中 ./certs:/etc/nginx/certs:ro（只读）
+# 注意：未放入真实证书前，本配置启动会失败；此时 G3（全站 HTTPS）不算完成。
+#
+# ===== 安全响应头 =====
+# HSTS：max-age=31536000（1 年）+ includeSubDomains；确认域名与全部子域均可 HTTPS 后再加 preload。
+# Cookie Secure 由 app 容器环境变量 COOKIE_SECURE=true 控制（见 docker-compose.ssl.yml），
+# 并在下发 Set-Cookie 时带 Secure; HttpOnly; SameSite=Lax。
 server {
     listen 80;
     server_name your.domain.com;
+    # HTTP 全量 301 到 HTTPS（ACME challenge 如需走 80，请在此 locaton 前单独放行 /.well-known/acme-challenge/）
     return 301 https://$host$request_uri;
 }
 
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
+    http2 on;
     server_name your.domain.com;
 
     ssl_certificate     /etc/nginx/certs/fullchain.pem;
     ssl_certificate_key /etc/nginx/certs/privkey.pem;
     ssl_protocols       TLSv1.2 TLSv1.3;
     ssl_ciphers         HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
     ssl_session_cache   shared:SSL:10m;
     ssl_session_timeout 10m;
 
     client_max_body_size 20m;
+
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header Strict-Transport-Security "max-age=31536000" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
+    # 流式问答 / 任务进度：关闭缓冲，允许长连接
     location /api/qa/stream {
         proxy_pass http://app:8000;
         proxy_http_version 1.1;
@@ -27,10 +47,11 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto https;
         proxy_buffering off;
         proxy_cache off;
         proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
     }
 
     location /api/ {
@@ -39,7 +60,7 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto https;
         proxy_read_timeout 300s;
     }
 
@@ -48,11 +69,12 @@ server {
     location /openapi.json { deny all; }
     location /redoc { deny all; }
 
+    # 前端静态页由 app 的 StaticFiles 提供
     location / {
         proxy_pass http://app:8000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto https;
     }
 }

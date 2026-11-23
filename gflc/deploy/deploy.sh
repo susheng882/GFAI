@@ -18,6 +18,16 @@ if grep -q "CHANGE_ME" .env; then
   exit 1
 fi
 
+echo ">>> 构建 React 前端并落进镜像上下文"
+(
+  cd ../web
+  if [ ! -d node_modules ]; then npm install; fi
+  npm run build
+)
+rm -rf ../backend/frontend/dist
+cp -r ../web/dist ../backend/frontend/dist
+echo "[OK] 前端产物 -> backend/frontend/dist"
+
 echo ">>> 构建并启动"
 docker compose build
 docker compose up -d

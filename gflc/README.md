@@ -2,8 +2,9 @@
 
 面向备考/自学人群的 AI 学习伴侣。把视频、PDF、题库加工成可复习、可追溯的学习物料，并用「计划—执行—复盘」闭环让学习持续。
 
-> 当前进度：**P0 骨架**（鉴权 + 预签名上传 + PDF 解析切块 + 卡片生成）。
-> 规格与约束见 `../开发提示词/01_系统提示词.md`，计划见 `../开发计划/00_开发总计划.md`。
+> 当前进度：**学习闭环 MVP 完成**（86 接口 / 95 项接口验收 + 5 条端到端全通过 / React 19 唯一前端）。
+> 规格与约束见 `../开发提示词/01_系统提示词.md`，计划见 `../开发计划/00_开发总计划.md`，
+> 最近一次阶段评审见 `../开发计划/25_功能完成度阶段评审_2026-11-23.md`。
 
 ## 目录
 
@@ -11,21 +12,27 @@
 gflc/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py          # FastAPI 入口
-│   │   ├── core/            # 配置 / 安全 / 错误码
-│   │   ├── db/              # 连接与会话
+│   │   ├── main.py          # FastAPI 入口（含启动结构自检 / SPA 静态托管）
+│   │   ├── core/            # 配置 / 预算护栏 / 安全 / 错误码
+│   │   ├── db/              # 连接、会话、幂等迁移(migrations.py)
 │   │   ├── models/          # 数据模型
 │   │   ├── schemas/         # 请求响应 + AI 契约
-│   │   ├── crud/            # 数据访问
-│   │   ├── services/        # 切块 / 解析 / 存储 / 卡片 / 管线
-│   │   ├── ai/              # DeepSeek 客户端 / 三档路由 / Prompt
-│   │   └── routers/         # auth / documents
-│   ├── migrations/          # Alembic
-│   ├── tests/               # 单测
+│   │   ├── services/        # 解析/切块/卡片/RAG/向量/视频/掌握度/导出
+│   │   ├── ai/              # 方舟视觉 / DeepSeek 客户端 / 三档路由 / Prompt
+│   │   ├── worker/          # 单线程队列 + 视频并发池(5) + Redis 适配 + 任务处理器
+│   │   └── routers/         # 13 个路由模块，86 个接口
+│   ├── evals/               # 32 份标注语料 + 24 条问答 + 离线评测引擎
+│   ├── migrations/          # Alembic（0001–0009）
+│   ├── scripts/             # verify_all / e2e_paths / quality_eval / perf_probe / ui_shots / eval_gate
 │   └── requirements.txt
-├── deploy/                  # docker-compose / nginx / .env.example
-└── docs/                    # 设计决策留痕
+├── web/                     # React 19 + Ant Design 5 + Vite（唯一生产前端）
+├── scripts/                 # backup_restore.py / drill.sh（备份与回滚演练）
+├── deploy/                  # docker-compose / nginx / HTTPS_SETUP / build.ps1 / deploy.sh
+└── docs/                    # 截图（react_baseline/、wave1_final/）、QA 报告
 ```
+
+> 前端统一走 `web/`（构建产物 `web/dist`）；`backend/frontend/` 仅作 Docker 部署暂存目录，构建时复制产物进去。旧原生单页与本地 KaTeX 已清理。
+
 
 ## 功能一览（9 个页面）
 
@@ -58,7 +65,7 @@ gflc/
 
 | 平台 | 状态 | 说明 |
 |---|---|---|
-| **B站** | ✅ 已实测 | 链接 → 下载 → 转写 → 笔记 全链路通过（198s 科普视频约 200s，含首模型加载） |
+| **B站** | ✅ 已实测 | 必剪云转写主路径 + Whisper 降级；27min 视频端到端 88.6s（下载 14.6s / 转写 13.7s / 三模板 20.1s / Markdown+9 图 16.3s） |
 | YouTube | ⚠️ 受网络限制 | 本机 SSL EOF；代码支持，配置代理即可 |
 | 抖音 | ⚠️ 需分享短链 | 域名可达；建议用 `v.douyin.com/…` 短链，失败请本地上传 |
 | 快手 | ⚠️ 受网络限制 | 本机不可达；代码支持 |
@@ -141,13 +148,13 @@ curl -b c.txt -X POST http://localhost:8000/api/documents/1/cards
 curl -b c.txt http://localhost:8000/api/documents/1/cards
 ```
 
-## P0 已知边界（P1 补齐）
+## 已知边界（截至 2026-11-23）
 
-- 解析为**同步**执行（P1 改 Redis 队列 + Worker 异步，接口不变）
-- 去重键暂用 `storage_key+size`（P1 改流式内容哈希）
-- 仅支持 PDF（视频/题库进 P1/P3）
-- 无 pgvector 向量列（P1 加 `embedding` + HNSW）
-- 前端未接入（先看 `/docs` 调试）
+- 扫描件 OCR 9.1MB / 13 页约 96s，超出 90s 目标；瓶颈是方舟视觉单页耗时与账号 2 并发上限
+- 笔记↔卡片同源（RemNote 式行内成卡）未做；全局命令面板 Ctrl+K 未做
+- 整季 16P 视频一键批量入口、监控告警与 CI 评测门禁未做
+- Docker 联调实跑、20 并发压测未执行；备案/证书等外部事项未办
+- 详见 `../开发计划/25_功能完成度阶段评审_2026-11-23.md`
 
 ## 安全与合规底线
 - 密码 Argon2id，会话 HttpOnly Cookie，越权按 `user_id` 过滤

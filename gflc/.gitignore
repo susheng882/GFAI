@@ -6,3 +6,11 @@ data/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# 前端构建产物（由 npm run build 生成，不入库；部署脚本会重新落盘）
+web/dist/
+web/node_modules/
+backend/frontend/dist/
+
+# 评测报告是运行产物，不入库（CI 的冻结基线内嵌在 .github/workflows/ci.yml）
+backend/evals/reports/

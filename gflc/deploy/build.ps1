@@ -26,6 +26,17 @@ if ($cfg -match "CHANGE_ME") {
 }
 Write-Host "[OK] .env configured" -ForegroundColor Green
 
+# Frontend: build React app and stage it into the image context (backend/frontend/dist).
+Write-Host ">>> build React frontend" -ForegroundColor Cyan
+Push-Location ../web
+if (-not (Test-Path node_modules)) { npm install; if ($LASTEXITCODE -ne 0) { Pop-Location; exit 1 } }
+npm run build
+if ($LASTEXITCODE -ne 0) { Pop-Location; exit 1 }
+Pop-Location
+if (Test-Path ../backend/frontend/dist) { Remove-Item -Recurse -Force ../backend/frontend/dist }
+Copy-Item -Recurse ../web/dist ../backend/frontend/dist
+Write-Host "[OK] frontend staged -> backend/frontend/dist" -ForegroundColor Green
+
 Write-Host ">>> docker compose build" -ForegroundColor Cyan
 docker compose build
 if ($LASTEXITCODE -ne 0) { exit 1 }

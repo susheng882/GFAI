@@ -2,7 +2,7 @@
 
 面向考研 / 自学人群的 AI 学习工作台：把 **PDF、视频、试卷**变成可背诵的卡片与题库，并用仪表盘盯着进度。
 
-> 毕设项目 · 单体架构（FastAPI + SQLite/SQLite→PostgreSQL + 原生前端单页）
+> 毕设项目 · 单体架构（FastAPI + SQLite/PostgreSQL + React 前端）
 
 ---
 
@@ -25,13 +25,15 @@
 ```
 .
 ├── gflc/                     # 应用主体
-│   ├── backend/
-│   │   ├── app/              # FastAPI：core / db / models / schemas / crud / services / ai / routers / worker
-│   │   ├── migrations/       # Alembic（0001–0007）
-│   │   ├── frontend/         # 单页前端 index.html + 本地 KaTeX
-│   │   ├── scripts/          # verify_all.py（95 项接口验收）/ quality_eval.py（质量评分）
+│   ├── backend/              # FastAPI：core / db / models / services / ai / routers / worker
+│   │   ├── evals/            # 32 份标注语料 + 24 条问题 + 离线评测
+│   │   ├── migrations/       # Alembic（0001–0009）
+│   │   ├── frontend/         # 部署暂存目录：构建时把 web/dist 复制进来（占位 .gitkeep）
+│   │   ├── scripts/          # verify_all / e2e_paths / quality_eval / perf_probe / ui_shots / eval_gate
 │   │   └── requirements.txt
-│   ├── deploy/               # docker-compose / nginx / .env.example
+│   ├── web/                  # React 19 + AntD 5 + Vite（唯一生产前端，产物 web/dist）
+│   ├── scripts/              # backup_restore.py / drill.sh
+│   ├── deploy/               # docker-compose / nginx / HTTPS_SETUP / build.ps1
 │   └── docs/                 # 截图、QA 报告
 ├── 开发计划/                  # 需求、验收标准、迭代报告、设计提案
 ├── 开发提示词/                # 系统提示词与协作规范
@@ -89,17 +91,23 @@ python scripts/quality_eval.py    # 问答质量五维打分（相关性/完整�
 | 关键帧 | ffmpeg 场景检测抽帧（<6 张退化为等间隔）→ 感知哈希去重 → 文档帧判定 → 视觉 OCR → 图文笔记 |
 | 试卷识别 | PDF 页渲染成图 → 视觉模型直读 → LaTeX 保真 → 按章节归并 |
 | 成本 | 事前预算拦截（日 token / 日成本 / 单任务）+ 事后 `cost_ledger` 记账，流式也记账 |
-| 前端 | 原生单页（无框架）；设计系统见 `.workbuddy/skills/gflc-design/`；KaTeX 本地托管（CDN 不可用） |
+| 前端 | React 19 + AntD 5 + Vite（`web/`），KaTeX 由 npm 依赖打包；设计系统见 `.workbuddy/skills/gflc-design/` |
+| 扫描件 OCR | 无文字层 PDF 自动切方舟视觉逐页转录（JPEG q72 + 2 并发 + 失败重试），DeepSeek 回落；13 页约 96s |
+| 学习闭环 | `GET /api/dashboard/loop` 五步进度 + 阻塞原因；Anki 式卡片浏览器与四档复习；侧栏折叠记忆 |
 
 ---
 
 ## 状态
 
-- 接口验收：`95/95`
-- 问答质量：`8.84 / 10`（五维加权，达标线 7.5）
-- 未做：Docker 联调实跑、压测、CI、题目识别跨页漏题
+> 最后复验：2026-11-23（临时实例 :8012，SQLite + 真实方舟/DeepSeek）
 
-详细迭代记录见 `开发计划/05_阶段性报告.md` 与 `开发计划/07_unslop改造报告.md`。
+- 接口验收：`95/95`（86 个接口）；端到端路径 `5/5`；三档视口截图无横向滚动
+- 问答质量（离线，32 份语料 / 24 条问题）：召回 85 · 命中 100 · MRR 95 · 忠实度 82.5 · 拒答 100 · 卡片可用率 95
+- 前端：React 19 + AntD 5 唯一前端；旧版原生单页与本地 KaTeX 已清理，仅保留 `web/`
+- 时延：27min 视频端到端 88.6s；有文字层 PDF 5.2MB 解析 0.98–2.9s / 429 块、卡片 27 张 76s；扫描件 9.1MB / 13 页 OCR 96.14s
+- 未做：Tauri 桌面壳、整季 16P 批量入口、笔记↔卡片同源行内成卡、全局命令面板、监控告警与 CI 评测门禁、外部备案/证书
+
+进度与差距详见 `开发计划/25_功能完成度阶段评审_2026-11-23.md`；Wave 1 实测数据见 `开发计划/24_Wave1集成验收报告_2026-11-23.md`。
 
 ---
 
