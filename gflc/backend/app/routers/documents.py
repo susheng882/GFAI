@@ -6,10 +6,11 @@ import logging
 import os
 import tempfile
 import uuid
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, File, UploadFile
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import and_, case, func, select, union_all
 from sqlalchemy.orm import Session
 
 from app.ai.router import generate_json
@@ -18,7 +19,7 @@ from app.core.config import settings
 from app.core.errors import APIError, ErrCode
 from app.crud import crud
 from app.db.session import get_db
-from app.models.models import Card, CardDeck, Chunk, Document, Note
+from app.models.models import Attempt, Card, CardDeck, Chunk, Document, Note, Question
 from app.routers.deps import get_current_user
 from app.schemas.schemas import DocumentOut, NoteIn, PresignIn
 from app.services.storage import get_storage, presign_put, stat_size
@@ -109,6 +110,136 @@ async def get_document(doc_id: int, user=Depends(get_current_user), db: Session 
     if not doc:
         raise APIError(ErrCode.AUTH_403, "无权访问该文档", 403)
     return {"ok": True, "data": DocumentOut.model_validate(doc).model_dump()}
+
+
+@router.get("/{doc_id}/overview")
+async def document_overview(doc_id: int, user=Depends(get_current_user),
+                            db: Session = Depends(get_db)):
+    """资料二级枢纽：一屏看清这份资料学到哪了。
+
+    契约（只增接口，不改既有接口行为）：
+      document / chunks / notes / cards / questions / mastery 六块。
+    全部指标在 SQL 层聚合（count / sum(case) / avg），不把明细捞进 Python 再过滤。
+
+    掌握度口径（S2 统一口径，卡片与题目各算一次观测）：
+      score < 0.35 → 未开始；0.35 ≤ score ≤ 0.7 → 学习中；score > 0.7 → 已掌握。
+      score = 该资料全部卡片与题目 mastery 的均值；无观测时为 0。
+    """
+    doc = db.scalar(select(Document).where(Document.id == doc_id))
+    if doc is None:
+        raise APIError(ErrCode.COMMON_404, "资料不存在", 404)
+    if doc.user_id != user.id:
+        raise APIError(ErrCode.AUTH_403, "无权访问该资料", 403)
+
+    # SQLite 的时间列不带时区（CURRENT_TIMESTAMP 为 naive UTC），比较时要去掉 tzinfo；
+    # PostgreSQL 的 timestamptz 保留 aware UTC，交给驱动转换。
+    now = datetime.now(timezone.utc)
+    if db.get_bind().dialect.name == "sqlite":
+        now = now.replace(tzinfo=None)
+
+    n_chunks = db.scalar(
+        select(func.count()).select_from(Chunk).where(Chunk.document_id == doc.id)) or 0
+
+    note_rows = db.execute(
+        select(Note.id, Note.title, Note.source, Note.updated_at)
+        .where(Note.document_id == doc.id)
+        .order_by(Note.updated_at.desc(), Note.id.desc()).limit(5)
+    ).all()
+
+    cards_total, cards_mastered, cards_due, cards_avg = db.execute(
+        select(
+            func.count(Card.id),
+            func.coalesce(func.sum(case((Card.mastery > 0.7, 1), else_=0)), 0),
+            func.coalesce(func.sum(case(
+                (and_(Card.due_at.is_not(None), Card.due_at <= now), 1), else_=0)), 0),
+            func.coalesce(func.avg(Card.mastery), 0.0),
+        ).where(Card.document_id == doc.id, Card.user_id == user.id)
+    ).one()
+
+    recent_cards = db.execute(
+        select(Card.id, Card.question, Card.mastery, Card.due_at)
+        .where(Card.document_id == doc.id, Card.user_id == user.id)
+        .order_by(Card.id.desc()).limit(4)
+    ).all()
+
+    # 一次 JOIN 聚合出题目总数 / 已答数 / 作答次数 / 答对次数；
+    # answered = 有过 attempt 的不同题目数（同一题刷多次不重复计）。
+    q_total, q_answered, q_attempts, q_correct = db.execute(
+        select(
+            func.count(func.distinct(Question.id)),
+            func.count(func.distinct(Attempt.question_id)),
+            func.count(Attempt.id),
+            func.coalesce(func.sum(case((Attempt.correct == 1, 1), else_=0)), 0),
+        ).select_from(Question)
+        .outerjoin(Attempt, and_(Attempt.question_id == Question.id,
+                                 Attempt.user_id == user.id))
+        .where(Question.document_id == doc.id, Question.user_id == user.id)
+    ).one()
+
+    # 卡片与题目的 mastery 合并为一张观测表，再一次聚合出均值与三档分布
+    obs = union_all(
+        select(Card.mastery.label("m")).where(
+            Card.document_id == doc.id, Card.user_id == user.id),
+        select(Question.mastery.label("m")).where(
+            Question.document_id == doc.id, Question.user_id == user.id),
+    ).subquery()
+    m_score, m_new, m_learning, m_mastered = db.execute(
+        select(
+            func.coalesce(func.avg(obs.c.m), 0.0),
+            func.coalesce(func.sum(case((obs.c.m < 0.35, 1), else_=0)), 0),
+            func.coalesce(func.sum(case(
+                (and_(obs.c.m >= 0.35, obs.c.m <= 0.7), 1), else_=0)), 0),
+            func.coalesce(func.sum(case((obs.c.m > 0.7, 1), else_=0)), 0),
+        )
+    ).one()
+
+    score = round(float(m_score or 0.0), 3)
+    level = "not_started" if score < 0.35 else ("learning" if score <= 0.7 else "mastered")
+
+    return {"ok": True, "data": {
+        "document": {
+            "id": doc.id,
+            "title": doc.title,
+            "source_type": doc.source_type,
+            "status": doc.status,
+            "size": doc.size,
+            "created_at": doc.created_at.isoformat() if doc.created_at else None,
+            "updated_at": doc.updated_at.isoformat() if doc.updated_at else None,
+        },
+        "chunks": int(n_chunks),
+        "notes": [{
+            "id": n.id,
+            "title": n.title or "",
+            "source": n.source or "manual",
+            "updated_at": n.updated_at.isoformat() if n.updated_at else None,
+        } for n in note_rows],
+        "cards": {
+            "total": int(cards_total or 0),
+            "mastered": int(cards_mastered or 0),
+            "due": int(cards_due or 0),
+            "avg_mastery": round(float(cards_avg or 0.0), 3),
+            "recent": [{
+                "id": c.id,
+                "question": c.question,
+                "mastery": round(float(c.mastery or 0.0), 3),
+                "due_at": c.due_at.isoformat() if c.due_at else None,
+            } for c in recent_cards],
+        },
+        "questions": {
+            "total": int(q_total or 0),
+            "answered": int(q_answered or 0),
+            "accuracy": round(q_correct / q_attempts * 100, 1) if q_attempts else 0.0,
+        },
+        "mastery": {
+            "level": level,
+            "score": score,
+            "breakdown": {
+                "未开始": int(m_new or 0),
+                "学习中": int(m_learning or 0),
+                "已掌握": int(m_mastered or 0),
+            },
+        },
+    }}
 
 
 @router.post("/{doc_id}/parse")

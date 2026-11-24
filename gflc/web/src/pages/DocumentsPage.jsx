@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { App as AntdApp, Button, Input, Modal, Table, Tag, Tooltip, Upload } from 'antd';
+import { App as AntdApp, Button, Input, InputNumber, Modal, Table, Tag, Tooltip, Upload } from 'antd';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api, runTask } from '../api.js';
 import { esc, fmtTime } from '../utils.js';
@@ -16,6 +16,9 @@ export default function DocumentsPage() {
   const [noteBusy, setNoteBusy] = useState({});
   const [noteDone, setNoteDone] = useState({});
   const [noteErr, setNoteErr] = useState({});
+  const [paperDoc, setPaperDoc] = useState(null);
+  const [paperCount, setPaperCount] = useState(10);
+  const [paperBusy, setPaperBusy] = useState(false);
   const fileRef = useRef(null);
 
   const load = useCallback(async () => {
@@ -74,6 +77,24 @@ export default function DocumentsPage() {
     }
   };
 
+  /* S3 用我的资料出模拟卷：读已解析内容 → 模型命题 → 落库成题库，成功后进刷题页。 */
+  const genPaper = async () => {
+    if (!paperDoc) return;
+    setPaperBusy(true);
+    try {
+      const r = await api('/ai/mock-paper', {
+        method: 'POST', body: JSON.stringify({ document_id: paperDoc.id, count: paperCount }),
+      });
+      setPaperDoc(null);
+      message.success(`已生成 ${r?.count || 0} 题模拟卷${r?.note ? `（${r.note}）` : ''}`);
+      navigate('/study');
+    } catch (e) {
+      message.error(e.message || '模拟卷生成失败');
+    } finally {
+      setPaperBusy(false);
+    }
+  };
+
   const rename = (doc) => {
     let value = doc.title || '';
     Modal.confirm({
@@ -101,7 +122,11 @@ export default function DocumentsPage() {
   const columns = [
     { title: '标题', dataIndex: 'title', key: 'title', render: (v, d) => (
       <div>
-        <div style={{ fontWeight: 500 }}>{esc(v || '未命名')}</div>
+        <Button type="link" size="small" title="查看资料详情"
+          style={{ padding: 0, height: 'auto', fontWeight: 500, color: 'var(--foreground)', textAlign: 'left' }}
+          onClick={() => navigate(`/docs/${d.id}`)}>
+          {esc(v || '未命名')}
+        </Button>
         <div className="muted" style={{ fontSize: 11.5 }}>
           {d.source_type === 'video' ? '视频' : d.source_type === 'note' ? '笔记' : '文档'} · {fmtTime(d.updated_at || d.created_at)}
         </div>
@@ -113,7 +138,7 @@ export default function DocumentsPage() {
       </Tag>
     ) },
     { title: '切片', dataIndex: 'chunks', key: 'chunks', width: 80, render: (v) => v ?? '—' },
-    { title: '操作', key: 'op', width: 380, render: (_, d) => {
+    { title: '操作', key: 'op', width: 480, render: (_, d) => {
       const done = noteDone[d.id];
       const loading = !!noteBusy[d.id];
       return (
@@ -122,6 +147,12 @@ export default function DocumentsPage() {
             <Button size="small" type="link" onClick={() => setParams({ doc: d.id, page: 1 })}>定位</Button>
             <Button size="small" type="link" onClick={() => act(d, 'parse')}>解析</Button>
             <Button size="small" type="link" onClick={() => act(d, 'cards')}>生成卡片</Button>
+            <Tooltip title={d.status === 'ready' ? '按这份资料的内容出题' : '请先解析'}>
+              <span style={{ display: 'inline-flex' }}>
+                <Button size="small" type="link" disabled={d.status !== 'ready'}
+                  onClick={() => { setPaperCount(10); setPaperDoc(d); }}>出模拟卷</Button>
+              </span>
+            </Tooltip>
             {done ? (
               <Button size="small" type="text" onClick={() => navigate(`/notes?note=${done}`)}>已生成，去查看</Button>
             ) : (
@@ -136,6 +167,7 @@ export default function DocumentsPage() {
             )}
             <Button size="small" type="link" onClick={() => rename(d)}>改名</Button>
             <Button size="small" type="link" danger onClick={() => del(d)}>删除</Button>
+            <Button size="small" type="link" onClick={() => navigate(`/docs/${d.id}`)}>详情</Button>
           </div>
           {noteErr[d.id] && (
             <div style={{ fontSize: 11.5, color: 'var(--destructive)', marginTop: 4 }}>{noteErr[d.id]}</div>
@@ -175,6 +207,25 @@ export default function DocumentsPage() {
         </>
       )}
       <DocumentJumpModal open={!!jumpDoc} docId={jumpDoc} page={jumpPage} documents={docs} onClose={closeJump} />
+      <Modal
+        title="出一份模拟卷"
+        open={!!paperDoc}
+        onCancel={() => { if (!paperBusy) setPaperDoc(null); }}
+        onOk={genPaper}
+        okText="生成"
+        cancelText="取消"
+        confirmLoading={paperBusy}
+        destroyOnClose
+      >
+        <div className="muted" style={{ fontSize: 12.5, marginBottom: 12 }}>
+          《{paperDoc?.title || ''}》已解析的内容会用来命题
+        </div>
+        <div className="row" style={{ gap: 8 }}>
+          <span className="muted" style={{ fontSize: 12.5 }}>题量</span>
+          <InputNumber min={3} max={20} value={paperCount}
+            onChange={(v) => setPaperCount(v || 10)} style={{ width: 80 }} />
+        </div>
+      </Modal>
     </div>
   );
 }

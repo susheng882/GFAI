@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { App as AntdApp, Button, Checkbox, Empty, Input, Modal, Progress, Tag, Upload } from 'antd';
 import { InboxOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
-import { api, runTask, shortErr } from '../api.js';
+import { api, downloadText, runTask, shortErr } from '../api.js';
 import { esc, fmtTs, noteKindCn } from '../utils.js';
 import { useCollapsible } from '../hooks.js';
 import Markdown from '../components/Markdown.jsx';
@@ -46,6 +46,13 @@ function parseVideoUrls(text) {
   return { ok, bad };
 }
 
+/* 文稿命中的片段用 `**` 标出关键词，这里按标记切成普通/加粗两段渲染 */
+function hitParts(text) {
+  return String(text || '').split('**').map((seg, i) => (i % 2
+    ? <b key={i} style={{ fontWeight: 500, color: 'var(--primary)' }}>{seg}</b>
+    : <React.Fragment key={i}>{seg}</React.Fragment>));
+}
+
 /* 视频模块 · 三段式（对标 BiliNote）：
    左：上传/链接 + 历史 ｜ 中：播放器 + 关键点时间轴 ｜ 右：笔记（单篇 Markdown / 三模板 / 思维导图）
    关键帧与笔记里的图都能点，直接 seek 到对应秒数。 */
@@ -64,6 +71,12 @@ export default function VideoPage() {
   const [url, setUrl] = useState('');
   const [stage, setStage] = useState('');
   const [busy, setBusy] = useState(false);
+  // 文稿检索：hits=null 表示未检索（不显示结果区），[] 表示检索过但没有命中
+  const [q, setQ] = useState('');
+  const [hits, setHits] = useState(null);
+  const [hitTotal, setHitTotal] = useState(0);
+  const [searching, setSearching] = useState(false);
+  const [exporting, setExporting] = useState(false);
   // 批量导入：清单存在页面状态里，刷新即回到 /videos 历史视图（不承诺断点续传）
   const [batchOpen, setBatchOpen] = useState(false);
   const [batchText, setBatchText] = useState('');
@@ -92,6 +105,8 @@ export default function VideoPage() {
       setDocId(Number(id)); setTitle(d.title || '');
       setNotes(d.notes || []);
       setTranscript(d.transcript || []);
+      // 换视频后旧检索结果失效，清空但保留输入框内容
+      setHits(null); setHitTotal(0);
       setFrames((d.frames || []).map((f) => ({ ...f, name: String(f.name || f.path || '').split(/[\\/]/).pop() })));
       const hasMd = (d.notes || []).some((n) => n.kind === 'markdown');
       setActive(hasMd ? 'markdown' : ((d.notes || [])[0]?.kind || 'summary'));
@@ -155,6 +170,42 @@ export default function VideoPage() {
     const next = cur.includes(k) ? cur.filter((x) => x !== k) : [...cur, k];
     return next.length ? next : ['summary'];
   });
+
+  /* 导出整段视频的 Markdown（标题 + 摘要/大纲/问答/图文）。接口返回附件流，这里取文本再落盘。 */
+  const exportMd = async () => {
+    if (!docId) { message.info('先选择一个视频'); return; }
+    setExporting(true);
+    try {
+      const res = await fetch(`/api/videos/${docId}/export`, { credentials: 'include' });
+      if (!res.ok) {
+        let msg = `导出失败（${res.status}）`;
+        try { const j = await res.json(); msg = j?.error?.message || j?.detail || msg; } catch { /* 非 JSON 错误体 */ }
+        throw new Error(msg);
+      }
+      const name = String(title || '视频笔记').replace(/[\\/:*?"<>|\r\n]+/g, '_').trim().slice(0, 60) || '视频笔记';
+      downloadText(`${name}.md`, await res.text());
+      message.success('已导出 Markdown');
+    } catch (e) { message.error(e.message || '导出失败'); } finally { setExporting(false); }
+  };
+
+  /* 文稿检索：回车触发，结果命中后端 LIKE 过滤后的片段（含起点秒数） */
+  const runSearch = async (value) => {
+    const term = String(value ?? q).trim();
+    if (!docId) { message.info('先选择一个视频'); return; }
+    if (!term) { setHits(null); setHitTotal(0); return; }
+    setSearching(true);
+    try {
+      const r = await api(`/videos/${docId}/search?q=${encodeURIComponent(term)}&limit=20`);
+      setHits(r?.hits || []); setHitTotal(r?.total || 0);
+    } catch (e) {
+      setHits(null); setHitTotal(0); message.error(e.message);
+    } finally { setSearching(false); }
+  };
+  const onSearchChange = (e) => {
+    const v = e.target.value;
+    setQ(v);
+    if (!v.trim()) { setHits(null); setHitTotal(0); }
+  };
 
   /* ---------- 批量导入：清单 → 串行提交 → 轮询进度 ---------- */
   const patchBatch = (id, patch) => setBatchQueue((q) => q.map((x) => (x.id === id ? { ...x, ...patch } : x)));
@@ -371,14 +422,16 @@ export default function VideoPage() {
 
   return (
     <div className="vpage">
-      <div className="vsteps">
+      <div className="vsteps" style={{ flexWrap: 'wrap' }}>
         {steps.map((s, i) => (
           <div key={s.k} className={'vstep' + (s.done ? ' on' : '')}>
             <span className="vstep-dot">{s.done ? '✓' : i + 1}</span><span>{s.label}</span>
           </div>
         ))}
         {busy && <Progress percent={99} size="small" showInfo={false} status="active" style={{ width: 120, marginLeft: 'auto' }} />}
-        <span className="row" style={{ gap: 2, marginLeft: 'auto' }}>
+        <span className="row" style={{ gap: 4, marginLeft: 'auto' }}>
+          <Button size="small" type="default" loading={exporting} disabled={!docId || exporting}
+            onClick={exportMd}>导出 Markdown</Button>
           <Button size="small" type="text" icon={leftCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={toggleLeft} title={leftCollapsed ? '展开左侧列表' : '收起左侧列表'} />
           <Button size="small" type="text" icon={rightCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -491,12 +544,35 @@ export default function VideoPage() {
             {active === 'qa' && (qaNote ? <Markdown text={qaNote.content} className="vnote" /> : <Empty description="没有问答" />)}
             {active === 'frames' && (frames.length ? <FrameStrip big /> : <Empty description="没有关键帧（音频源或已关闭网格 OCR）" />)}
             {active === 'transcript' && (
-              <div className="vtl">
-                {transcript.map((x, i) => (
-                  <div className="vseg" key={i} onClick={() => seek(Number(x.start) || 0)}>
-                    <span className="vt">{fmtTs(x.start)}</span><span>{esc(x.text)}</span>
+              <div>
+                <Input.Search size="small" allowClear value={q} loading={searching}
+                  placeholder="在文稿里找一句话" onChange={onSearchChange}
+                  onSearch={runSearch} style={{ marginBottom: 8 }} />
+                {hits?.length ? (
+                  <>
+                    <div className="vmuted2" style={{ marginBottom: 4, fontVariantNumeric: 'tabular-nums' }}>
+                      命中 {hitTotal} 处{hitTotal > hits.length ? `，显示前 ${hits.length} 条` : ''}
+                    </div>
+                    <div className="vtl">
+                      {hits.map((h) => (
+                        <div className="vseg" key={h.chunk_index} onClick={() => seek(Number(h.start_sec) || 0)}>
+                          <span className="vt">{h.start_sec == null ? '—' : fmtTs(h.start_sec)}</span>
+                          <span>{hitParts(h.snippet)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : hits ? (
+                  <div className="vmuted2">没有找到匹配内容</div>
+                ) : (
+                  <div className="vtl">
+                    {transcript.map((x, i) => (
+                      <div className="vseg" key={i} onClick={() => seek(Number(x.start) || 0)}>
+                        <span className="vt">{fmtTs(x.start)}</span><span>{esc(x.text)}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
             )}
           </div>

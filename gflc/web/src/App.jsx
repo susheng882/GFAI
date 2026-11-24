@@ -12,6 +12,7 @@ import { api } from './api.js';
 import AuthPage from './pages/AuthPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import DocumentsPage from './pages/DocumentsPage.jsx';
+import DocumentDetailPage from './pages/DocumentDetailPage.jsx';
 import NotesPage from './pages/NotesPage.jsx';
 import DecksPage from './pages/DecksPage.jsx';
 import StudyPage from './pages/StudyPage.jsx';
@@ -201,6 +202,7 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
             <Route path="/" element={<Navigate to="/dash" replace />} />
             <Route path="/dash" element={<DashboardPage />} />
             <Route path="/docs" element={<DocumentsPage />} />
+            <Route path="/docs/:id" element={<DocumentDetailPage />} />
             <Route path="/notes" element={<NotesPage />} />
             <Route path="/deck" element={<DecksPage />} />
             <Route path="/study" element={<StudyPage />} />

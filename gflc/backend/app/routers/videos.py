@@ -24,6 +24,11 @@ from app.worker import runner
 router = APIRouter(prefix="/videos", tags=["videos"])
 _ALLOWED = {".mp4", ".mkv", ".mov", ".webm", ".m4a", ".mp3", ".wav", ".flac", ".aac", ".m4v"}
 _TEMPLATES = ("summary", "outline", "qa")
+# 导出 Markdown 的区块顺序：四类产物按「读一遍」的顺序排，时间戳原样保留
+# 导出区块顺序：完整笔记（kind=markdown，内容最全）→ 摘要 → 大纲 → 问答 → 图文。
+# 主笔记放最前，让「带走」的产物以完整叙述为主体，四类模板作为补充视角。
+_EXPORT_BLOCKS = (("markdown", "完整笔记"), ("summary", "摘要"), ("outline", "大纲"),
+                  ("qa", "问答"), ("frames", "图文"))
 
 
 def _frame_dir() -> str:
@@ -59,6 +64,85 @@ def _parse_templates(raw) -> list[str]:
         if t not in out:
             out.append(t)
     return out or ["summary"]
+
+
+_FRAME_MD_RE = re.compile(r"!\[([^\]]*)\]\((/api/videos/frames/[^)\s]+)\)")
+
+
+def _inline_frame_images(md: str) -> str:
+    """把关键帧的相对 URL 内嵌为 base64，让导出的 md 脱离本服务也能显示图。
+
+    找不到文件的关键帧保持原样（不丢图床链接，也不因缺文件让整篇导出失败）。
+    """
+    import base64
+    import mimetypes
+
+    def repl(m: re.Match) -> str:
+        alt, url = m.group(1), m.group(2)
+        name = os.path.basename(url.split("?")[0])
+        path = os.path.join(_frame_dir(), name)
+        if not os.path.isfile(path):
+            return m.group(0)
+        try:
+            if os.path.getsize(path) > 4 * 1024 * 1024:   # 单图超过 4MB 不内嵌，避免 md 过大
+                return m.group(0)
+            mime = mimetypes.guess_type(path)[0] or "image/jpeg"
+            b64 = base64.b64encode(open(path, "rb").read()).decode("ascii")
+            return f"![{alt}](data:{mime};base64,{b64})"
+        except Exception:  # noqa: BLE001  单图失败不影响整篇导出
+            return m.group(0)
+
+    return _FRAME_MD_RE.sub(repl, md)
+
+
+def _demote_headings(md: str, by: int = 2) -> str:
+    """正文标题整体降级，避免模板自带的 `##` 与导出文件的 `#`/`##` 撞层级。"""
+    def _repl(m):
+        return "#" * min(6, len(m.group(1)) + by) + " " + m.group(2)
+
+    return re.sub(r"(?m)^(#{1,6})\s+(.*)$", _repl, md or "")
+
+
+def _like_pattern(term: str) -> str:
+    """关键词 → LIKE 模式；转义用户输入里的 % _ \\，避免被当成通配符。"""
+    escaped = re.sub(r"([\\%_])", r"\\\1", term)
+    return f"%{escaped}%"
+
+
+def _snippet(text: str, term: str, span: int = 60) -> str:
+    """命中词前后各取 span 字，命中的那一段用 ** 包住。"""
+    body = text or ""
+    pos = body.lower().find(term.lower())
+    if pos < 0:  # 极端情况（大小写折叠差异）退化为开头一段
+        return body[:span * 2].strip()
+    start = max(0, pos - span)
+    end = min(len(body), pos + len(term) + span)
+    head = ("…" if start > 0 else "") + body[start:pos]
+    tail = body[pos + len(term):end] + ("…" if end < len(body) else "")
+    return f"{head}**{body[pos:pos + len(term)]}**{tail}".strip()
+
+
+_TS_RE = re.compile(r"\[(?:(\d{1,2}):)?(\d{1,2}):(\d{2})\]")
+
+
+def _chunk_start_sec(chunk: Chunk) -> float | None:
+    """起点秒数：优先转写元数据 ts_start，其次从内容开头的 [mm:ss] 解析。"""
+    if chunk.ts_start is not None:
+        return round(float(chunk.ts_start), 1)
+    m = _TS_RE.search((chunk.content or "")[:40])
+    if not m:
+        return None
+    return float(int(m.group(1) or 0) * 3600 + int(m.group(2)) * 60 + int(m.group(3)))
+
+
+def _video_doc(db: Session, document_id: int, user_id: int) -> Document:
+    """取自己的视频文档；不存在 404、类型不符 400，都带中文原因。"""
+    doc = crud.get_document(db, document_id, user_id)
+    if not doc:
+        raise APIError(ErrCode.COMMON_404, "视频不存在或已被删除", 404)
+    if doc.source_type != "video":
+        raise APIError(ErrCode.COMMON_400, "该记录不是视频，没有可用的视频笔记", 400)
+    return doc
 
 
 class VideoUrlIn(BaseModel):
@@ -184,6 +268,64 @@ async def video_notes(document_id: int, user=Depends(get_current_user), db: Sess
         "frames": frames,
         "frame_note": frame_note,
     }}
+
+
+@router.get("/{document_id}/export")
+async def export_video_markdown(document_id: int, inline_images: int = 0,
+                                user=Depends(get_current_user),
+                                db: Session = Depends(get_db)):
+    """导出整段视频的 Markdown：完整笔记 + 摘要/大纲/问答/图文，`[mm:ss]` 原样保留。
+
+    inline_images=1 时把关键帧相对路径转成 base64 data URI，导出的 md 拿到别的机器
+    也能看到图（代价是文件变大）；默认 0 保持轻量，图片走 /api/videos/frames 相对路径。
+    """
+    doc = _video_doc(db, document_id, user.id)
+    rows = list(db.scalars(select(Note).where(Note.document_id == doc.id).order_by(Note.id)))
+    by_kind: dict[str, Note] = {}
+    for n in rows:
+        by_kind.setdefault(n.kind, n)
+    blocks = [(label, by_kind[kind]) for kind, label in _EXPORT_BLOCKS if by_kind.get(kind)]
+    if not blocks:
+        raise APIError(ErrCode.COMMON_404, "该视频还没有生成笔记，暂无可导出内容", 404)
+
+    parts = [f"# {doc.title or '视频笔记'}", ""]
+    for label, note in blocks:
+        parts += [f"## {label}", ""]
+        lines = (note.content or "").strip().split("\n")
+        # 模板常以同名标题开头（摘要模板是 `## 摘要`），去掉它与区块标题重复
+        if lines and re.fullmatch(r"#{1,6}\s*" + re.escape(label), lines[0].strip()):
+            lines = lines[1:]
+        body = _demote_headings("\n".join(lines).strip()).strip()
+        parts += [body, ""] if body else ["（暂无内容）", ""]
+    md = "\n".join(parts).strip() + "\n"
+    if inline_images:
+        md = _inline_frame_images(md)
+
+    from urllib.parse import quote
+    name = re.sub(r'[\\/:*?"<>|\r\n]+', "_", doc.title or "视频笔记").strip(" ._")[:80] or "视频笔记"
+    return Response(content=md, media_type="text/markdown; charset=utf-8",
+                    headers={"Content-Disposition": f"attachment; filename*=UTF-8''{quote(name + '.md')}"})
+
+
+@router.get("/{document_id}/search")
+async def search_video_transcript(document_id: int, q: str = "", limit: int = 20,
+                                  user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """文稿检索：LIKE 过滤下推到 SQL，只回命中切块（含前后各 60 字片段与起点秒数）。"""
+    doc = _video_doc(db, document_id, user.id)
+    term = (q or "").strip()[:50]
+    if not term:
+        raise APIError(ErrCode.COMMON_400, "请输入要检索的关键词")
+    lim = max(1, min(int(limit or 20), 50))
+    where = (Chunk.document_id == doc.id, Chunk.content.like(_like_pattern(term), escape="\\"))
+    total = int(db.scalar(select(func.count(Chunk.id)).where(*where)) or 0)
+    rows = list(db.scalars(select(Chunk).where(*where)
+                           .order_by(Chunk.chunk_index).limit(lim)))
+    hits = [{
+        "chunk_index": int(c.chunk_index or 0),
+        "snippet": _snippet(c.content or "", term),
+        "start_sec": _chunk_start_sec(c),
+    } for c in rows]
+    return {"ok": True, "data": {"q": term, "total": total, "hits": hits}}
 
 
 @router.delete("/{document_id}")

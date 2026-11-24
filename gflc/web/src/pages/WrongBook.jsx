@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Button, Select, Tag, Tooltip } from 'antd';
 import { ArrowRightOutlined, PrinterOutlined, RedoOutlined } from '@ant-design/icons';
 import { esc } from '../utils.js';
+import { AiExplainButton } from '../components/AiExplainDrawer.jsx';
 
 const TYPE_CN = { single: '单选题', multiple: '多选题', fill: '填空题', short: '简答题' };
 const PAGE_SIZE = 20;
@@ -112,6 +113,7 @@ export default function WrongBook({ wrong, onRedo, onRetryChapter }) {
                 {meta(q)}
               </div>
               <div className="wrong-act">
+                <AiExplainButton questionId={q.id} />
                 <Button size="small" icon={<RedoOutlined />} onClick={() => onRedo(q)}>重做</Button>
               </div>
             </div>

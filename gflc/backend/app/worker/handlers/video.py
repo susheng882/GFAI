@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-"""后台任务处理逻辑。所有重活在此执行，进度通过 update 回写。"""
+"""视频/音频取材与笔记生成任务处理（原 handlers.py 原样迁出）。
+
+logger 名保持 "app.worker.handlers"，拆分后日志来源不变。
+"""
 import asyncio
 import hashlib
 import logging
@@ -8,237 +11,25 @@ import os
 import re
 import subprocess
 import tempfile
-import uuid
 
 from pydantic import BaseModel
 
-from app.ai.prompts import (DASHBOARD_SYSTEM, PLAN_SYSTEM, VIDEO_NOTE_SYSTEMS,
-                            dashboard_user, plan_user, video_note_user_tpl)
+from app.ai.prompts import VIDEO_NOTE_SYSTEMS, video_note_user_tpl
 from app.ai.router import generate_json
 from app.core.config import settings
 from app.core.errors import APIError
 from app.crud import crud
-from app.models.models import (Chunk, DashboardLayout, Document, Note, Plan, PlanTask,
-                               Question, QuestionBank, Task)
-from app.schemas.schemas import DashConfig, PlanGenResult
-from app.services.cards import generate_cards
+from app.models.models import Chunk, Document, Note, Task
 from app.services.frames import (build_frame_note, dedupe_frames, extract_frames,
                                  extract_grid_frames, frame_dir, has_video_stream,
                                  is_doc_frame, ocr_frames, ocr_grids, public_path,
                                  render_frame_note_md)
-from app.services.pipeline import parse_pdf_to_chunks
-from app.services.question_parse import extract_text, parse_questions
-from app.services.question_vision import parse_paper
 from app.services.storage import download_to, get_storage
 from app.services.video import (download_media, extract_audio, load_subtitle_segments,
                                 quality, segments_to_chunks, transcribe)
-from app.worker import runner
+from app.worker.handlers.common import _cp_get, _cp_save, _ts_mmss
 
-_log = logging.getLogger(__name__)
-
-
-def handle_pdf_parse(db, task, payload, update):
-    doc = db.get(Document, payload["document_id"])
-    if not doc:
-        raise RuntimeError("文档不存在")
-    doc.status = "parsing"
-    db.commit()
-    update(15, "下载文件")
-    _ext = os.path.splitext(doc.title or "")[1].lower() or ".pdf"
-    if _ext not in (".pdf", ".docx", ".md", ".markdown", ".txt"):
-        _ext = ".pdf"
-    tmp = os.path.join(tempfile.gettempdir(), f"gflc_{doc.id}_{uuid.uuid4().hex}{_ext}")
-    parse_stats: dict = {}
-    try:
-        download_to(doc.storage_key, tmp)
-        update(20, "解析文档")
-
-        def _on_parse_progress(done: int, total: int, stage: str = "ocr") -> None:
-            """把解析链路进度映射到任务百分比：OCR 页进度占 20–90，入库 92。
-
-            扫描件 OCR 单页可达 15s，若整段只报一次 40%，用户会以为卡死；
-            逐页回写让进度条持续走动。文字层 PDF 在解析完成/分块各给一次。
-            """
-            if stage == "ocr":
-                pct = 20 + (70 * int(done)) // max(1, int(total))
-                update(min(90, pct), f"识别扫描页 {done}/{total}")
-            elif stage == "text":
-                update(60, "解析文档")
-            else:
-                update(92, "写入知识库")
-
-        n = parse_pdf_to_chunks(db, doc, tmp, stats=parse_stats,
-                                on_progress=_on_parse_progress)
-    except Exception:
-        doc.status = "failed"
-        db.commit()
-        raise
-    finally:
-        if os.path.exists(tmp):
-            os.remove(tmp)
-    # 扫描件 OCR 的页数/失败页作为可选字段回传，便于前端如实展示部分失败
-    return {"document_id": doc.id, "chunks": n, **parse_stats}
-
-
-def handle_card_generate(db, task, payload, update):
-    update(5, "准备生成")
-    n = asyncio.run(generate_cards(db, task.user_id, payload["document_id"],
-                                   on_progress=lambda p: update(p)))
-    return {"document_id": payload["document_id"], "cards": n}
-
-
-_SUBJECT_KEYS = (("线性代数", ("线性代数", "线代")),
-                 ("概率论与数理统计", ("概率", "统计")),
-                 ("高等数学", ("高等数学", "高数", "微积分")))
-
-
-def _infer_subject(chapters: dict[str, int], fallback: str = "") -> str:
-    """按章节分布推断科目：单一科目占一半以上就取该科目，三科均衡则归「数学综合」。"""
-    hits = {}
-    for label, keys in _SUBJECT_KEYS:
-        n = sum(c for ch, c in chapters.items() if any(k in (ch or "") for k in keys))
-        if n:
-            hits[label] = n
-    if not hits:
-        return fallback or "综合"
-    top = max(hits, key=hits.get)
-    return top if hits[top] / sum(hits.values()) >= 0.5 else "数学综合"
-
-
-def _file_hash(path: str) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for blk in iter(lambda: f.read(1024 * 1024), b""):
-            h.update(blk)
-    return h.hexdigest()
-
-
-def _import_document(db, task, payload, filename: str, content_hash: str):
-    """两步上传的文档直接复用；一步到位的重试按内容哈希去重；都没有才新建。"""
-    doc_id = payload.get("document_id")
-    if doc_id:
-        try:
-            doc = db.get(Document, int(doc_id))
-        except (TypeError, ValueError):
-            doc = None
-        if doc is not None and doc.user_id == task.user_id and doc.source_type == "question_bank":
-            if not doc.storage_key and payload.get("storage_key"):
-                doc.storage_key = payload["storage_key"]
-            return doc
-    old = crud.find_by_hash(db, task.user_id, content_hash)
-    if old is not None and old.source_type == "question_bank":
-        return old
-    return crud.create_document(db, user_id=task.user_id, title=filename,
-                                source_type="question_bank", content_hash=content_hash,
-                                storage_key=payload.get("storage_key", ""),
-                                size=payload.get("size", 0), mime=payload.get("mime", ""))
-
-
-def handle_question_import(db, task, payload, update):
-    """题库生成，两种 payload：
-    - 老路径 {"path", "filename"}：直接读临时文件
-    - 新路径 {"document_id", "storage_key", "filename"}：从 storage 读并复用已建文档
-    """
-    filename = payload.get("filename") or "题库"
-    ext = os.path.splitext(filename)[1].lower()
-    path = payload.get("path") or ""
-    meta: dict = {}
-    items: list[dict] = []
-    pages = int(payload.get("pages") or 0)
-    update(8, "读取文件")
-    if not (path and os.path.exists(path)):
-        key = payload.get("storage_key")
-        if not key:
-            raise APIError("PARSE-001", "题库文件已清理，请重新上传")
-        path = os.path.join(tempfile.gettempdir(), f"gflc_qb_{uuid.uuid4().hex}{ext or '.pdf'}")
-        download_to(key, path)
-    try:
-        if ext == ".pdf":
-            # 试卷/合集：逐页视觉识别（公式保真）
-            update(12, "逐页视觉识别")
-            res = asyncio.run(parse_paper(path, on_progress=lambda p: update(p)))
-            meta = res.get("meta") or {}
-            pages = int(res.get("pages") or pages or 0)
-            for q in res.get("questions", []):
-                sec = q.get("section") or ""
-                items.append({
-                    "no": str(q.get("no") or ""), "section": sec, "chapter": q.get("chapter") or "",
-                    "stem": q.get("stem") or "", "options": q.get("options") or [],
-                    "answer": q.get("answer") or "", "analysis": None, "page": q.get("page") or 0,
-                })
-        else:
-            text = extract_text(path)
-            update(35, "识别题目")
-            objs = asyncio.run(parse_questions(text, max_questions=20, on_progress=lambda p: update(p)))
-            for o in objs:
-                items.append({"no": "", "section": "", "chapter": "", "stem": o.stem,
-                              "options": o.options or [], "answer": o.answer or "",
-                              "analysis": o.analysis.model_dump(), "page": 0})
-        h = _file_hash(path)
-    finally:
-        if os.path.exists(path):
-            os.remove(path)
-
-    # 去重（同题号+题干前缀）
-    seen, uniq = set(), []
-    for q in items:
-        k = (q["no"], (q["stem"] or "")[:30])
-        if k in seen:
-            continue
-        seen.add(k)
-        uniq.append(q)
-    if not uniq:
-        raise APIError("PARSE-003", "未识别到题目：请确认是试卷/题库 PDF（而非纯图片或空白页）")
-
-    update(92, "写入题库")
-    doc = _import_document(db, task, payload, filename, h)
-    chapters: dict[str, int] = {}
-    for q in uniq:
-        ch = q["chapter"] or "未分类"
-        chapters[ch] = chapters.get(ch, 0) + 1
-    subject = _infer_subject(chapters, meta.get("subject") or "")
-    chapters_out = [{"chapter": k, "count": v}
-                    for k, v in sorted(chapters.items(), key=lambda kv: -kv[1])]
-
-    # 幂等：同一文档重复生成先清空旧题目与旧题库集，避免题目翻倍
-    db.query(Question).filter(Question.document_id == doc.id,
-                              Question.user_id == task.user_id).delete(synchronize_session=False)
-    db.query(QuestionBank).filter(QuestionBank.document_id == doc.id,
-                                  QuestionBank.user_id == task.user_id).delete(synchronize_session=False)
-    db.flush()
-
-    bank = QuestionBank(user_id=task.user_id, document_id=doc.id,
-                        name=(os.path.splitext(filename)[0] or filename), subject=subject,
-                        meta={"pages": pages, "subject_raw": meta.get("subject") or "",
-                              "title": meta.get("title") or "", "chapters": chapters_out})
-    db.add(bank)
-    db.flush()
-    for q in uniq:
-        sec = q["section"]
-        qtype = "single" if "选择" in sec else ("fill" if "填空" in sec else ("short" if sec else "single"))
-        db.add(Question(user_id=task.user_id, document_id=doc.id, bank_id=bank.id,
-                        chapter=q["chapter"], section=sec, no=q["no"], stem=q["stem"],
-                        options=q["options"], answer=q["answer"], analysis=q["analysis"],
-                        qtype=qtype, page=q["page"]))
-    doc.status = "ready"
-    db.commit()
-    return {"bank_id": bank.id, "document_id": doc.id, "questions": len(uniq),
-            "chapters": chapters_out, "subject": subject, "pages": pages}
-
-
-def handle_plan_generate(db, task, payload, update):
-    days = max(1, min(payload.get("days", 7), 60))
-    update(20, "拆解任务")
-    obj, _ = asyncio.run(generate_json("mid", PLAN_SYSTEM, plan_user(payload["goal"], days), PlanGenResult))
-    update(85, "写入计划")
-    plan = Plan(user_id=task.user_id, goal=payload["goal"], days=days)
-    db.add(plan)
-    db.flush()
-    for t in obj.tasks:
-        db.add(PlanTask(plan_id=plan.id, day_index=max(1, min(t.day, days)),
-                        title=t.title, detail=t.detail))
-    db.commit()
-    return {"plan_id": plan.id, "days": days, "tasks": len(obj.tasks)}
+_log = logging.getLogger("app.worker.handlers")
 
 
 class _VSummary(BaseModel):
@@ -273,7 +64,11 @@ class _VQa(BaseModel):
 
 
 _TPL_NAME = {"summary": "摘要", "outline": "大纲", "qa": "问答"}
+
+
 _TPL_SCHEMA: dict[str, type[BaseModel]] = {"summary": _VSummary, "outline": _VOutline, "qa": _VQa}
+
+
 _VIDEO_SUFFIX = {".mp4", ".mkv", ".mov", ".webm", ".m4v", ".avi", ".flv", ".wmv", ".ts"}
 
 
@@ -324,31 +119,6 @@ def _note_points(obj, tpl: str) -> list[str]:
     return [p.strip() for p in obj.points if (p or "").strip()]
 
 
-# ---------------------------------------------------------------------------
-# A5：阶段化 checkpoint / 真断点续传（只写 task.checkpoint，不改状态机枚举）
-# ---------------------------------------------------------------------------
-def _cp_get(task) -> dict:
-    cp = getattr(task, "checkpoint", None)
-    return dict(cp) if isinstance(cp, dict) else {}
-
-
-def _cp_save(db, task, **stages):
-    """把已完成阶段写入 task.checkpoint；写失败 WARNING，不影响主流程。"""
-    try:
-        cp = _cp_get(task)
-        data = dict(cp.get("video_stages") or {})
-        data.update(stages)
-        cp["video_stages"] = data
-        task.checkpoint = cp
-        db.commit()
-    except Exception as e:
-        try:
-            db.rollback()
-        except Exception:
-            pass
-        _log.warning("视频任务 checkpoint 写入失败（task=%s）：%s", getattr(task, "id", "?"), e)
-
-
 def _replace_old_note(db, doc_id: int, kind: str) -> None:
     """同一资料的同类 AI 笔记只保留最新一份。
 
@@ -365,11 +135,6 @@ def _replace_old_note(db, doc_id: int, kind: str) -> None:
             db.rollback()
         except Exception:
             pass
-
-
-def _ts_mmss(sec: float) -> str:
-    s = max(0, int(round(float(sec or 0))))
-    return f"{s // 60:02d}:{s % 60:02d}"
 
 
 def _reuse_material_by_url(db, task) -> dict | None:
@@ -949,74 +714,3 @@ def handle_video_url(db, task, payload, update):
     update(10, "下载完成")
     return _video_pipeline(db, task, audio_path, payload.get("title") or "B站视频", update,
                            templates=payload.get("templates"))
-
-
-def _dash_facts(db, user_id: int) -> dict:
-    """收集用户真实学习数据，喂给 AI，避免编造进度。"""
-    from datetime import datetime, timedelta, timezone
-
-    from sqlalchemy import func, or_, select
-
-    from app.models.models import Attempt, Card, CardDeck, Document, Question
-
-    now = datetime.now(timezone.utc)
-    cards = db.scalar(select(func.count()).select_from(Card).where(Card.user_id == user_id)) or 0
-    due = db.scalar(select(func.count()).select_from(Card).where(
-        Card.user_id == user_id, or_(Card.reps == 0, Card.due_at.is_(None), Card.due_at <= now))) or 0
-    reviewed = db.scalar(select(func.count()).select_from(Card).where(
-        Card.user_id == user_id, Card.reps > 0)) or 0
-    docs = db.scalar(select(func.count()).select_from(Document).where(Document.user_id == user_id)) or 0
-    questions = db.scalar(select(func.count()).select_from(Question).where(Question.user_id == user_id)) or 0
-    attempts = db.scalar(select(func.count()).select_from(Attempt).where(Attempt.user_id == user_id)) or 0
-    correct = db.scalar(select(func.count()).select_from(Attempt).where(
-        Attempt.user_id == user_id, Attempt.correct == 1)) or 0
-
-    decks = db.execute(
-        select(CardDeck.name, func.count(Card.id))
-        .join(Card, Card.deck_id == CardDeck.id)
-        .where(CardDeck.user_id == user_id, CardDeck.kind == "chapter")
-        .group_by(CardDeck.name).order_by(func.count(Card.id).desc()).limit(6)
-    ).all()
-
-    week = []
-    for i in range(6, -1, -1):
-        day = (now - timedelta(days=i)).date()
-        n = db.scalar(select(func.count()).select_from(Attempt).where(
-            Attempt.user_id == user_id, func.date(Attempt.created_at) == day.isoformat())) or 0
-        week.append({"label": day.strftime("%m-%d"), "value": int(n)})
-
-    return {
-        "文档数": docs, "卡片数": cards, "已复习卡片": reviewed, "待复习": due,
-        "题库题目数": questions, "已作答次数": attempts,
-        "正确率": round(correct / attempts * 100, 1) if attempts else 0,
-        "章节卡包": [{"name": n, "cards": int(c)} for n, c in decks],
-        "最近7天作答": week,
-    }
-
-
-def handle_dashboard_generate(db, task, payload, update):
-    theme = payload["theme"]
-    scope = payload.get("scope", "week")
-    update(15, "读取真实数据")
-    facts = _dash_facts(db, task.user_id)
-    update(30, "设计布局")
-    obj, _ = asyncio.run(generate_json("mid", DASHBOARD_SYSTEM,
-                                       dashboard_user(theme, scope, facts), DashConfig))
-    update(88, "保存布局")
-    db.query(DashboardLayout).filter(DashboardLayout.user_id == task.user_id).update(
-        {"is_default": 0}, synchronize_session=False)
-    row = DashboardLayout(user_id=task.user_id, theme=theme, config=obj.model_dump(),
-                          order=[c.id for c in obj.cards], positions={}, scope=scope, is_default=1)
-    db.add(row)
-    db.commit()
-    return {"layout_id": row.id, "theme": theme, "cards": len(obj.cards), "scope": scope}
-
-
-def register_all():
-    runner.register("pdf_parse", handle_pdf_parse)
-    runner.register("card_generate", handle_card_generate)
-    runner.register("question_import", handle_question_import)
-    runner.register("plan_generate", handle_plan_generate)
-    runner.register("video_upload", handle_video_upload)
-    runner.register("video_url", handle_video_url)
-    runner.register("dashboard_generate", handle_dashboard_generate)

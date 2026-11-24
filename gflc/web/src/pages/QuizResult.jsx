@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Button, Tag } from 'antd';
 import { esc, fmtTs, pct } from '../utils.js';
+import { AiExplainButton } from '../components/AiExplainDrawer.jsx';
 
 const TYPE_CN = { single: '单选', multiple: '多选', fill: '填空', short: '简答' };
 
@@ -123,6 +124,7 @@ export default function QuizResult({ test, score, elapsed, onJump, onRetest, onB
         )}
         <div className="row between" style={{ marginTop: 16 }}>
           <Button disabled={test.idx <= 0} onClick={() => onJump(test.idx - 1)}>上一题</Button>
+          {cur.q?.id ? <AiExplainButton questionId={cur.q.id} label="AI 讲解" /> : <span />}
           <Button disabled={test.idx >= results.length - 1} onClick={() => onJump(test.idx + 1)}>下一题</Button>
         </div>
       </div>

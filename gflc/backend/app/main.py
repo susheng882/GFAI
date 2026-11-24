@@ -13,7 +13,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
 from app.core.errors import APIError, api_error_handler, unhandled_handler
-from app.routers import (auth, dashboard, decks, documents, notes, plans, qa,
+from app.routers import (ai_study, auth, dashboard, decks, documents, notes, plans, qa,
                          questions, quiz, review, settings as settings_router,
                          tasks, videos)
 from app.services.storage import ensure_bucket
@@ -145,6 +145,7 @@ app.include_router(review.router, prefix=settings.API_PREFIX)
 app.include_router(dashboard.router, prefix=settings.API_PREFIX)
 app.include_router(questions.router, prefix=settings.API_PREFIX)
 app.include_router(quiz.router, prefix=settings.API_PREFIX)
+app.include_router(ai_study.router, prefix=settings.API_PREFIX)
 app.include_router(plans.router, prefix=settings.API_PREFIX)
 app.include_router(qa.router, prefix=settings.API_PREFIX)
 app.include_router(videos.router, prefix=settings.API_PREFIX)

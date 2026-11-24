@@ -7,6 +7,7 @@ import { esc, fmtTs, pct } from '../utils.js';
 import { isTypingTarget, useTodayQueue } from '../hooks.js';
 import EmptyState from '../components/EmptyState.jsx';
 import Markdown from '../components/Markdown.jsx';
+import { AiExplainButton } from '../components/AiExplainDrawer.jsx';
 import QuizAnswerSheet from './QuizAnswerSheet.jsx';
 import QuizResult from './QuizResult.jsx';
 import WrongBook, { WrongPreview } from './WrongBook.jsx';
@@ -128,6 +129,21 @@ export default function StudyPage() {
   };
 
   const exitQuiz = () => { setQuiz(null); setTimerStart(0); setElapsed(0); load(); };
+
+  /* S3 针对薄弱点：后端按掌握度 / 错次用 SQL 挑题（不调模型），题目自带 reason。 */
+  const startWeak = async () => {
+    if (bankEmpty) { message.info('请先导入题库，再去资料页上传题目'); goImport(); return; }
+    try {
+      const qs = await api('/ai/weak-quiz', {
+        method: 'POST', body: JSON.stringify({ count: Math.min(count, 20) }),
+      });
+      if (!qs?.length) { message.info('当前没有明显薄弱的题目，先去刷一轮'); return; }
+      setTest(null); setQuiz(qs); setIdx(0); setAnswer(null); setSelected(null); setFill('');
+      setMode('quiz'); setElapsed(0); setTimerStart(Date.now());
+    } catch (e) {
+      message.info(e.message || '暂时无法生成薄弱练习');
+    }
+  };
 
   const submit = async () => {
     const q = quiz[idx];
@@ -318,7 +334,10 @@ export default function StudyPage() {
           <Button size="small" type="text" onClick={exitQuiz}>结束练习</Button>
         </div>
         <div className="v3-card">
-          <div style={{ fontSize: 15, fontWeight: 500, lineHeight: 1.7, marginBottom: 14 }}>{esc(q.stem)}</div>
+          <div style={{ fontSize: 15, fontWeight: 500, lineHeight: 1.7, marginBottom: 8 }}>{esc(q.stem)}</div>
+          {q.reason && (
+            <div className="muted" style={{ fontSize: 11.5, marginBottom: 12 }}>{esc(q.reason)}</div>
+          )}
           {(q.options || []).map((o, i) => (
             <div key={i} onClick={() => !answer && setSelected(i)}
               style={{
@@ -350,7 +369,8 @@ export default function StudyPage() {
                   <div><b>易错点：</b>{(answer.analysis.pitfalls || []).map(esc).join('；') || '-'}</div>
                 </div>
               )}
-              <div className="row" style={{ justifyContent: 'flex-end', marginTop: 14 }}>
+              <div className="row" style={{ justifyContent: 'flex-end', marginTop: 14, gap: 8 }}>
+                <AiExplainButton questionId={q.id} label="AI 讲解" />
                 <Button type="primary" onClick={nextPractice}>下一题</Button>
               </div>
             </div>
@@ -475,7 +495,10 @@ export default function StudyPage() {
                 <div className="v3-sh">今日推荐<span className="meta">{recommend.chapter || ''}</span></div>
                 <div className="muted" style={{ fontSize: 12.5 }}>{esc(recommend.reason || '导入题库后，系统会按章节正确率推荐今天该练什么')}</div>
                 {recommend.total ? <Progress percent={pct(recommend.progress)} size="small" /> : null}
-                <Button style={{ marginTop: 10 }} type="primary" onClick={() => startQuiz({ mode: 'recommend' })}>开始这一章</Button>
+                <div className="row" style={{ marginTop: 10, gap: 8, flexWrap: 'wrap' }}>
+                  <Button type="primary" onClick={() => startQuiz({ mode: 'recommend' })}>开始这一章</Button>
+                  <Button onClick={startWeak}>针对薄弱点</Button>
+                </div>
               </div>
             )}
             <div className="v3-card">

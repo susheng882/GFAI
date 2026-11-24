@@ -31,6 +31,9 @@ jobs:
       - name: 语法编译
         run: python -m compileall -q app scripts
 
+      - name: 开发计划索引校验（漏号/死链）
+        run: python scripts/check_docs_index.py
+
       - name: 建库并迁移
         env:
           MOCK_AI: "true"
