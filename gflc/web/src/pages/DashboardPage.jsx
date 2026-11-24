@@ -83,6 +83,7 @@ export default function DashboardPage() {
 
   const s = stats || {};
   const dueCount = +s.due || 0;
+  const newCount = +s.new_cards || 0;
   const reviewed = +s.reviewed || 0;
   const acc = +s.accuracy || 0;
   const chapters = (s.chapters || []).slice().sort((a, b) => b.cards - a.cards);
@@ -114,8 +115,9 @@ export default function DashboardPage() {
           <LoopStatus />
           <section className="v3-card v3-hero v3-c8">
             <div className="lab">今天要复习</div>
-            <div className="big"><span className="hl">{dueCount}</span><small>张卡片</small></div>
+            <div className="big"><span className="hl">{dueCount}</span><small>张到期</small></div>
             <div className="delta">
+              {newCount > 0 && <>{newCount} 张新卡待学{reviewed > 0 || dueCount > 0 ? ' · ' : ''}</>}
               {failedDocs.length > 0 && (
                 <>
                   <span style={{ color: 'var(--destructive)' }}>{failedDocs.length} 份解析失败</span>
@@ -125,10 +127,10 @@ export default function DashboardPage() {
                 </>
               )}
               {reviewed > 0 ? `已复习 ${reviewed} 张 · ` : ''}
-              {dueCount > 0 ? '建议现在开始' : '暂无到期卡片，稍后再来'}
+              {dueCount > 0 ? '建议现在开始' : (newCount > 0 ? '新卡待学，开始吧' : '暂无到期卡片，稍后再来')}
             </div>
             <div className="v3-acts">
-              <Button type="primary" disabled={dueCount === 0} onClick={() => navigate('/review')}>开始复习</Button>
+              <Button type="primary" disabled={dueCount === 0 && newCount === 0} onClick={() => navigate('/review')}>开始复习</Button>
               <Button onClick={() => fileRef.current?.click()}>上传资料</Button>
             </div>
             <WeekChart week={week} />
@@ -168,7 +170,7 @@ export default function DashboardPage() {
           )}
 
           <section className="v3-card v3-c6">
-            <div className="v3-sh">刷题背诵<span className="meta">{dueCount} 张到期</span></div>
+            <div className="v3-sh">刷题背诵<span className="meta">{dueCount} 张到期 · {newCount} 张新卡</span></div>
             <div className="row" style={{ gap: 8, marginBottom: 10 }}>
               <Button type="primary" onClick={() => navigate('/study')}>去刷题</Button>
               <Button onClick={() => navigate('/review')}>去背诵</Button>
@@ -176,7 +178,7 @@ export default function DashboardPage() {
             <div className="vmuted2" style={{ lineHeight: 1.9 }}>
               {dueCount > 0
                 ? `间隔重复到期 ${dueCount} 张，先背诵再刷题效果最好。`
-                : '今天没有到期卡片，可直接刷题巩固。'}
+                : (newCount > 0 ? `有 ${newCount} 张新卡待学，去背诵开始第一轮。` : '今天没有到期卡片，可直接刷题巩固。')}
             </div>
             {due.slice(0, 3).map((c, i) => (
               <div className="v3-resume" key={i}>

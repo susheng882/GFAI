@@ -73,6 +73,25 @@ def _chapter_name(ch_heading: str, item_chapter: str) -> str:
     return _UNSORTED
 
 
+def _heading_hint(content: str, heading_path: str) -> str:
+    """给成卡模型一个「章节线索」。
+
+    OCR 教材的 chunk 没有 heading_path（大纲未解析），但正文开头往往就是章节标题
+    （如「计算机系统概述」「计算机的发展历程」）。这里从正文前两行提取一行疑似标题
+    作为线索，让模型据此填 chapter，避免 58 张卡都归「未分章」。
+    """
+    h = (heading_path or "").strip()
+    if h:
+        return h
+    lines = [l.strip() for l in (content or "").split("\n") if l.strip()]
+    # 标题特征：短（≤20 字）、不含标点结尾、非公式
+    for l in lines[:3]:
+        if len(l) <= 20 and not l.endswith(("。", "，", "；", "：", ".", ",", ";")):
+            if "$" not in l:
+                return l
+    return ""
+
+
 def _resolve_max_chunks(db: Session, document_id: int, requested: int | None) -> int:
     """决定本次最多处理多少个切片。
 
@@ -129,7 +148,7 @@ async def generate_cards(db: Session, user_id: int, document_id: int,
             async with sem:
                 try:
                     obj, res = await generate_json(
-                        "light", CARD_SYSTEM, card_user(ch.content, 3, ch.page, ch.heading_path),
+                        "light", CARD_SYSTEM, card_user(ch.content, 3, ch.page, _heading_hint(ch.content, ch.heading_path)),
                         CardGenResult)
                     return ch, obj.cards, res
                 except APIError as e:
@@ -166,7 +185,7 @@ async def generate_cards(db: Session, user_id: int, document_id: int,
         else:
             try:
                 obj, res = await generate_json(
-                    "light", CARD_SYSTEM, card_user(ch.content, 3, ch.page, ch.heading_path), CardGenResult)
+                    "light", CARD_SYSTEM, card_user(ch.content, 3, ch.page, _heading_hint(ch.content, ch.heading_path)), CardGenResult)
             except APIError:
                 continue  # 单块失败跳过
             items = obj.cards

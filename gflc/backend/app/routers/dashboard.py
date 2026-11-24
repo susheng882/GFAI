@@ -88,8 +88,13 @@ async def stats(user=Depends(get_current_user), db: Session = Depends(get_db)):
     chunks = db.scalar(select(func.count()).select_from(Chunk).join(
         Document, Chunk.document_id == Document.id).where(Document.user_id == uid)) or 0
     cards = db.scalar(select(func.count()).select_from(Card).where(Card.user_id == uid)) or 0
+    # 复习口径拆分：due = 真·到期（已学过且到期），new = 尚未学的新卡。
+    # 原来把 reps==0（新卡）也算进「到期」，导致「今天要复习 120 张」混入了新学量，语义不清。
     due = db.scalar(select(func.count()).select_from(Card).where(
-        Card.user_id == uid, or_(Card.reps == 0, Card.due_at.is_(None), Card.due_at <= now))) or 0
+        Card.user_id == uid, Card.reps > 0,
+        or_(Card.due_at.is_(None), Card.due_at <= now))) or 0
+    new_cards = db.scalar(select(func.count()).select_from(Card).where(
+        Card.user_id == uid, Card.reps == 0)) or 0
     reviewed = db.scalar(select(func.count()).select_from(Card).where(Card.user_id == uid, Card.reps > 0)) or 0
     questions = db.scalar(select(func.count()).select_from(Question).where(Question.user_id == uid)) or 0
     attempts = db.scalar(select(func.count()).select_from(Attempt).where(Attempt.user_id == uid)) or 0
@@ -118,7 +123,8 @@ async def stats(user=Depends(get_current_user), db: Session = Depends(get_db)):
     ).all()
 
     return {"ok": True, "data": {
-        "documents": docs, "chunks": chunks, "cards": cards, "due": due, "reviewed": reviewed,
+        "documents": docs, "chunks": chunks, "cards": cards,
+        "due": due, "new_cards": new_cards, "reviewed": reviewed,
         "questions": questions, "attempts": attempts,
         "accuracy": round(correct / attempts * 100, 1) if attempts else 0,
         "week": week,
