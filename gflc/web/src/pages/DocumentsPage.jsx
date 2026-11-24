@@ -179,6 +179,9 @@ export default function DocumentsPage() {
 
   return (
     <div>
+      <div className="vmuted2" style={{ marginBottom: 10 }}>
+        这里是「教材/讲义」解析 → 生成笔记与背诵卡片；要导入真题试卷练题，请去 <a onClick={() => navigate('/banks')} style={{ color: 'var(--primary)', cursor: 'pointer' }}>题库页</a>
+      </div>
       <div className="row between" style={{ marginBottom: 14 }}>
         <div className="drop" style={{ padding: '12px 20px', flex: 1, maxWidth: 520 }} onClick={() => fileRef.current?.click()}
           onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); upload(e.dataTransfer.files[0]); }}>

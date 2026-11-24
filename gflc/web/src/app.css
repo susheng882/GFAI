@@ -551,3 +551,10 @@
 .src .badge.blue { border-color: var(--primary); color: var(--primary); }
 /* 联网检索：警告色，提示这条依据来自站外 */
 .src .badge.warn { border-color: var(--warning); color: var(--warning); }
+
+/* 分组背诵：重点词挖空 */
+.gblank { display: inline-block; min-width: 48px; padding: 0 8px; margin: 0 2px;
+  border-bottom: 2px solid var(--primary); color: transparent; cursor: pointer;
+  border-radius: 3px; text-align: center; font-weight: 500; }
+.gblank-on { color: var(--primary); background: var(--primary-soft, #eaf1f5); }
+.grec:last-child { border-bottom: none !important; }

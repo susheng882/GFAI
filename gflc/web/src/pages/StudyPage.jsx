@@ -43,6 +43,31 @@ function QueueBar() {
   );
 }
 
+/* 挖空：把答案里的「重点词」转成可点击的填空。
+   识别三类重点：① **加粗** ② （括号）内术语 ③ $公式$（数学式）。
+   返回片段数组，每段 { t: 'text'|'blank', v, key }，blank 点击揭示。 */
+function clozeAnswer(answer, shown) {
+  const src = String(answer || '');
+  const parts = [];
+  const re = /(\*\*[^*]+\*\*|（[^）]*）|\([^)]*\)|\$[^$]+\$)/g;
+  let last = 0, m, k = 0;
+  while ((m = re.exec(src)) !== null) {
+    if (m.index > last) parts.push({ t: 'text', v: src.slice(last, m.index), key: k++ });
+    const raw = m[0];
+    const inner = raw.replace(/^\*\*/, '').replace(/\*\*$/, '');
+    const isMath = raw.startsWith('$');
+    parts.push({ t: 'blank', v: inner, key: k++, isMath });
+    last = m.index + raw.length;
+  }
+  if (last < src.length) parts.push({ t: 'text', v: src.slice(last), key: k++ });
+  if (!parts.some((p) => p.t === 'blank')) {
+    // 没有可挖空的重点，整段原样显示
+    return [{ t: 'text', v: src, key: 0 }];
+  }
+  return parts;
+}
+
+
 /* 题库为空：160px 主空态 + 三步说明，动作只在空态内（C-1 / C-2）。 */
 function EmptyBank({ title, onImport }) {
   return (
@@ -54,7 +79,7 @@ function EmptyBank({ title, onImport }) {
         <Button type="primary" onClick={onImport}>导入题库</Button>
       </div>
       <ol className="se-steps">
-        <li><b>1</b>导入题库 · 资料页上传题目 PDF</li>
+        <li><b>1</b>导入题库 · 题库页上传试卷 PDF</li>
         <li><b>2</b>选题量 · 每轮 1 到 50 题</li>
         <li><b>3</b>开始 · 刷题逐题判分，模考统一交卷</li>
       </ol>
@@ -79,6 +104,8 @@ export default function StudyPage() {
   const [reciteCards, setReciteCards] = useState([]);
   const [reciteIdx, setReciteIdx] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const [reciteGroups, setReciteGroups] = useState([]);  // 分组背诵：{ name, cards }[]
+  const [blanksShown, setBlanksShown] = useState({});     // 挖空显隐：{ cardId: true/false }
   const [count, setCount] = useState(5);
   const [decks, setDecks] = useState([]);
   const [stage, setStage] = useState('');
@@ -114,10 +141,10 @@ export default function StudyPage() {
   }, [timerStart]);
 
   const bankEmpty = overview != null && +overview.total === 0 && !chapters.length;
-  const goImport = () => navigate('/docs');
+  const goImport = () => navigate('/banks');
 
   const startQuiz = async (payload) => {
-    if (bankEmpty) { message.info('请先导入题库，再去资料页上传题目'); goImport(); return; }
+    if (bankEmpty) { message.info('请先导入题库，再去题库页上传试卷'); goImport(); return; }
     try {
       const qs = await api('/quiz/generate', { method: 'POST', body: JSON.stringify({ count, ...payload }) });
       if (!qs?.length) { message.info('没有符合条件的题目'); return; }
@@ -132,7 +159,7 @@ export default function StudyPage() {
 
   /* S3 针对薄弱点：后端按掌握度 / 错次用 SQL 挑题（不调模型），题目自带 reason。 */
   const startWeak = async () => {
-    if (bankEmpty) { message.info('请先导入题库，再去资料页上传题目'); goImport(); return; }
+    if (bankEmpty) { message.info('请先导入题库，再去题库页上传试卷'); goImport(); return; }
     try {
       const qs = await api('/ai/weak-quiz', {
         method: 'POST', body: JSON.stringify({ count: Math.min(count, 20) }),
@@ -165,6 +192,23 @@ export default function StudyPage() {
       const cards = await api(`/decks/${id}/cards`) || [];
       if (!cards.length) { message.info('这个卡包还没有卡片'); return; }
       setReciteCards(cards); setReciteIdx(0); setRevealed(false); setMode('recite');
+    } catch (e) { message.info(e.message || '暂时无法读取卡包'); }
+  };
+
+  /* 分组背诵：点根卡包 → 拉取它下面所有章节卡包 → 按章节分组一屏展示 */
+  const openDeckGroup = async (root) => {
+    try {
+      const kids = (root.children || []).filter((c) => +c.total > 0);
+      if (!kids.length) { message.info('这个卡包下还没有章节卡片'); return; }
+      const all = [];
+      for (const k of kids) {
+        const cards = await api(`/decks/${k.id}/cards`) || [];
+        if (cards.length) all.push({ name: k.name, cards });
+      }
+      if (!all.length) { message.info('没有可背诵的卡片'); return; }
+      setReciteGroups(all);
+      setBlanksShown({});
+      setMode('recite');
     } catch (e) { message.info(e.message || '暂时无法读取卡包'); }
   };
 
@@ -539,9 +583,16 @@ export default function StudyPage() {
       )}
 
       {mode === 'recite' && (
-        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <QueueBar />
-          {reciteCards.length ? (
+          {reciteGroups.length ? (
+            <GroupRecite groups={reciteGroups} blanksShown={blanksShown}
+              onToggleBlank={(id) => setBlanksShown((s) => ({ ...s, [id]: !s[id] }))}
+              onRate={(id, rating) => api(`/review/${id}`, { method: 'POST', body: JSON.stringify({ rating }) })
+                .then(() => message.success(rating === 3 ? '已记住' : '已记录'))
+                .catch(() => message.info('评分暂未保存'))}
+              onExit={() => { setReciteGroups([]); setMode('quiz'); }} />
+          ) : reciteCards.length ? (
             <>
               <div className="row between" style={{ marginBottom: 10 }}>
                 <span className="muted">第 {reciteIdx + 1} / {reciteCards.length} 张</span>
@@ -568,11 +619,15 @@ export default function StudyPage() {
             </>
           ) : (
             <>
-              <EmptyState title="选择卡包开始背诵" desc="点击下面的卡包，逐张翻面记忆。" />
-              <div className="row" style={{ justifyContent: 'center' }}>
-                {decks.flatMap((r) => (r.children || []).map((c) => (
-                  <Button key={c.id} onClick={() => openDeck(c.id)}>{esc(r.name)} / {esc(c.name)} · {c.total}</Button>
-                )))}
+              <EmptyState title="选择卡包开始背诵" desc="点一个卡包，按章节分组背诵；重点词默认挖空，点击查看。" />
+              <div className="row" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
+                {decks.map((r) => (
+                  <Button key={r.id} type={(r.children || []).some((c) => +c.total > 0) ? 'default' : 'default'}
+                    onClick={() => openDeckGroup(r)}
+                    style={{ margin: 4 }}>
+                    {esc(r.name)} · {r.total} 张
+                  </Button>
+                ))}
               </div>
             </>
           )}
@@ -608,3 +663,51 @@ export default function StudyPage() {
 }
 
 function rAnswer(r) { return r?.answer; }
+
+
+/* 分组背诵：同一章节/知识点的卡片一屏展示，重点词挖空可点。
+   摆脱「一句话翻一张卡」的反人类设计，改为「背一节知识点」。 */
+function GroupRecite({ groups, blanksShown, onToggleBlank, onRate, onExit }) {
+  return (
+    <div>
+      <div className="row between" style={{ marginBottom: 12 }}>
+        <span className="muted">共 {groups.length} 个章节 · {groups.reduce((n, g) => n + g.cards.length, 0)} 张卡</span>
+        <Button size="small" onClick={onExit}>退出背诵</Button>
+      </div>
+      {groups.map((g, gi) => (
+        <div key={gi} className="v3-card" style={{ padding: 16, marginBottom: 14 }}>
+          <div className="v3-sh" style={{ marginBottom: 10 }}>{esc(g.name)}<span className="meta">{g.cards.length} 个知识点</span></div>
+          {g.cards.map((c) => {
+            const shown = !!blanksShown[c.id];
+            const parts = clozeAnswer(c.answer, shown);
+            const hasBlank = parts.some((p) => p.t === 'blank');
+            return (
+              <div key={c.id} className="grec" style={{ padding: '10px 0', borderBottom: '1px solid var(--border)' }}>
+                <div className="q" style={{ fontWeight: 500, marginBottom: 6 }}>{esc(c.question)}</div>
+                <div className="a" style={{ lineHeight: 1.8 }}>
+                  {parts.map((p) => p.t === 'text' ? (
+                    <span key={p.key}>{esc(p.v)}</span>
+                  ) : shown ? (
+                    <span key={p.key} className="gblank gblank-on">{esc(p.v)}</span>
+                  ) : (
+                    <span key={p.key} className="gblank" onClick={() => onToggleBlank(c.id)}
+                      title="点击查看">▢▢▢</span>
+                  ))}
+                </div>
+                <div className="row" style={{ gap: 6, marginTop: 8 }}>
+                  {hasBlank && (
+                    <Button size="small" type="link" onClick={() => onToggleBlank(c.id)}>
+                      {shown ? '隐藏重点' : '显示全部重点'}
+                    </Button>
+                  )}
+                  <Button size="small" onClick={() => onRate(c.id, 3)}>记住了</Button>
+                  <Button size="small" type="text" onClick={() => onRate(c.id, 1)}>再练一次</Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+}

@@ -410,6 +410,21 @@ def monitor(user=Depends(get_current_user), db: Session = Depends(get_db)):
     by_type = dict(db.execute(
         select(Task.type, func.count(Task.id)).group_by(Task.type)
     ).all())
+    # 近 7 天每日用量序列（趋势图用）：按日聚合，Python 补 0 保证连续
+    series_rows = db.execute(
+        select(func.date(CostLedger.created_at), func.count(CostLedger.id),
+               func.sum(CostLedger.cost_cny),
+               func.sum(CostLedger.prompt_tokens + CostLedger.completion_tokens))
+        .where(CostLedger.created_at >= today - _td(days=6))
+        .group_by(func.date(CostLedger.created_at))
+    ).all()
+    series_map = {d: (c, cost, tok) for d, c, cost, tok in series_rows}
+    cost_series = []
+    for i in range(6, -1, -1):
+        d = (_dt.now(_tz.utc) - _td(days=i)).date().isoformat()
+        c, cost, tok = series_map.get(d, (0, 0.0, 0))
+        cost_series.append({"day": d, "calls": int(c or 0),
+                            "cost": round(float(cost or 0), 4), "tokens": int(tok or 0)})
     from app.worker import runner as w
     return {"ok": True, "data": {
         "tasks_by_status": by_status,
@@ -424,4 +439,5 @@ def monitor(user=Depends(get_current_user), db: Session = Depends(get_db)):
         "today": {"calls": int(day_row[0] or 0) if day_row else 0,
                   "cost": round(float(day_row[1] or 0), 4) if day_row else 0,
                   "tokens": int(day_row[2] or 0) if day_row else 0},
+        "cost_series": cost_series,
     }}

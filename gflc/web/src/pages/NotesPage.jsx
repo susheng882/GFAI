@@ -366,6 +366,14 @@ export default function NotesPage() {
       .catch(() => { /* 笔记不存在或已删除：保持当前视图，不报错 */ });
     return () => { alive = false; };
   }, [searchParams]);
+  // /notes?open=<title>[#anchor] 直达：跨页双链跳转（问答/复习/视频等页点 [[笔记]] 后跳到这里）
+  useEffect(() => {
+    const raw = searchParams.get('open');
+    if (!raw) return;
+    const anchor = searchParams.get('anchor') || undefined;
+    openNoteByTitle(raw, anchor);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
   useEffect(() => {
     if (!current?.id) { setAnchorAck({}); return; }
     try { setAnchorAck(JSON.parse(localStorage.getItem(`gflc_anchor_ack_${current.id}`) || '{}')); }

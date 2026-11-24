@@ -6,7 +6,7 @@ import tempfile
 import uuid
 
 from fastapi import APIRouter, Depends, File, UploadFile
-from sqlalchemy import func, select
+from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -157,6 +157,28 @@ async def list_banks(user=Depends(get_current_user), db: Session = Depends(get_d
                     "total": sum(c["count"] for c in chapters), "chapters": chapters,
                     "created_at": None})
     return {"ok": True, "data": out}
+
+
+@router.delete("/banks/{bank_id}")
+async def delete_bank(bank_id: int, user=Depends(get_current_user),
+                      db: Session = Depends(get_db)):
+    """删除题库集及其全部题目（独立题库页用）。
+
+    幂等：不存在或不属于当前用户，返回 0 个删除，不报错。
+    删除顺序：先清 attempts（引用题目）、再清题目、再清题库集本身。
+    """
+    bank = db.scalar(select(QuestionBank).where(
+        QuestionBank.id == bank_id, QuestionBank.user_id == user.id))
+    if not bank:
+        return {"ok": True, "data": {"deleted": 0}}
+    # attempts 通过 question_id 外键引用题目，先删
+    db.execute(text(
+        "DELETE FROM attempts WHERE question_id IN "
+        "(SELECT id FROM questions WHERE bank_id = :b)"), {"b": bank_id})
+    n_q = db.execute(text("DELETE FROM questions WHERE bank_id = :b"), {"b": bank_id}).rowcount
+    db.execute(text("DELETE FROM question_banks WHERE id = :b"), {"b": bank_id})
+    db.commit()
+    return {"ok": True, "data": {"deleted": n_q or 0}}
 
 
 @router.get("")

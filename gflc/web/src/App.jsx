@@ -16,6 +16,7 @@ import DocumentDetailPage from './pages/DocumentDetailPage.jsx';
 import NotesPage from './pages/NotesPage.jsx';
 import DecksPage from './pages/DecksPage.jsx';
 import StudyPage from './pages/StudyPage.jsx';
+import QuestionBanksPage from './pages/QuestionBanksPage.jsx';
 import ReviewPage from './pages/ReviewPage.jsx';
 import QAPage from './pages/QAPage.jsx';
 import VideoPage from './pages/VideoPage.jsx';
@@ -33,7 +34,8 @@ const NAV_GROUPS = [
     { key: 'plans', name: '计划', icon: <CalendarOutlined /> },
   ] },
   { title: '资料', items: [
-    { key: 'docs', name: '解析记录', icon: <FileTextOutlined /> },
+    { key: 'docs', name: '资料', icon: <FileTextOutlined /> },
+    { key: 'banks', name: '题库', icon: <BookOutlined /> },
     { key: 'deck', name: '卡包', icon: <CreditCardOutlined /> },
     { key: 'video', name: '视频', icon: <VideoCameraOutlined /> },
   ] },
@@ -48,7 +50,8 @@ const NAV_GROUPS = [
 const TITLES = {
   dash: ['概览', '系统与学习指标；学习任务按需生成'],
   notes: ['笔记', '文件夹管理，AI 协作补写'],
-  docs: ['解析记录', '上传资料，解析并生成卡片'],
+  docs: ['资料', '上传教材/讲义，解析并生成卡片'],
+  banks: ['题库', '上传试卷 PDF，自动抽题成题库'],
   deck: ['卡包', '按大纲章节组织的背诵卡包'],
   study: ['学习', '刷题、背诵、错题一页'],
   review: ['复习', '按遗忘曲线安排复习'],
@@ -142,6 +145,23 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
   const current = location.pathname.split('/')[1] || 'dash';
   const title = TITLES[current] || TITLES.dash;
   const go = (key) => { navigate('/' + key); setDrawer(false); };
+
+  // 全局双链跳转：[[笔记]] 在任意页面点击都要能跳到笔记页。
+  // 之前监听只挂在 NotesPage 里，导致问答/复习/视频等页点链接无反应。
+  // 这里统一收口：收到跳转事件 → 导航到 /notes 并带上 open 参数，NotesPage 挂载后自行打开。
+  useEffect(() => {
+    const onJump = (e) => {
+      const title = e.detail?.title;
+      if (!title) return;
+      const q = encodeURIComponent(title);
+      const anchor = e.detail?.anchor ? `&anchor=${encodeURIComponent(e.detail.anchor)}` : '';
+      // 已在本页则交给 NotesPage 自己的监听处理，避免重复 navigate 打断状态
+      if (location.pathname === '/notes') return;
+      navigate(`/notes?open=${q}${anchor}`);
+    };
+    window.addEventListener('gflc:note-jump', onJump);
+    return () => window.removeEventListener('gflc:note-jump', onJump);
+  }, [location.pathname, navigate]);
   return (
     <div className={'gflc-app' + (dark ? ' gflc-dark' : '') + (collapsed ? ' sider-collapsed' : '')}>
       <aside className={'gflc-sider' + (collapsed ? ' collapsed' : '') + (drawer ? ' open' : '')}>
@@ -206,6 +226,7 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
             <Route path="/notes" element={<NotesPage />} />
             <Route path="/deck" element={<DecksPage />} />
             <Route path="/study" element={<StudyPage />} />
+            <Route path="/banks" element={<QuestionBanksPage />} />
             <Route path="/review" element={<ReviewPage />} />
             <Route path="/qa" element={<QAPage />} />
             <Route path="/video" element={<VideoPage />} />
