@@ -17,6 +17,8 @@ from app.core.errors import APIError
 from app.models.models import Card, CardAnchor, CardDeck, Chunk, CostLedger, Document, Note
 from app.schemas.schemas import CardGenResult
 
+log = logging.getLogger(__name__)
+
 LOG = logging.getLogger(__name__)
 
 _UNSORTED = "未分章"
@@ -94,7 +96,10 @@ async def generate_cards(db: Session, user_id: int, document_id: int, max_chunks
                         "light", CARD_SYSTEM, card_user(ch.content, 3, ch.page, ch.heading_path),
                         CardGenResult)
                     return ch, obj.cards, res
-                except APIError:
+                except APIError as e:
+                    # 静默跳过会让「卡片数=0」无从排查，这里至少留一条可定位的日志
+                    log.warning("成卡失败（chunk=%s）：%s %s", getattr(ch, "id", "?"),
+                                getattr(e, "code", ""), getattr(e, "message", str(e)))
                     return ch, [], None
 
         results = await asyncio.gather(*[_one(ch) for ch in chunks])

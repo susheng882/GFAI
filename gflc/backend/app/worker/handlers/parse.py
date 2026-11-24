@@ -135,7 +135,8 @@ def handle_question_import(db, task, payload, update):
         if ext == ".pdf":
             # 试卷/合集：逐页视觉识别（公式保真）
             update(12, "逐页视觉识别")
-            res = asyncio.run(parse_paper(path, on_progress=lambda p: update(p)))
+            res = asyncio.run(parse_paper(path, on_progress=lambda p: update(p),
+                                          user_id=task.user_id))
             meta = res.get("meta") or {}
             pages = int(res.get("pages") or pages or 0)
             for q in res.get("questions", []):

@@ -1,0 +1,79 @@
+{
+  "mode": "question",
+  "generated_at": "2026-11-24 13:01:01",
+  "items": [
+    {
+      "file": "F:/math/A4数一模拟卷精选20套.pdf",
+      "name": "A4数一模拟卷精选20套.pdf",
+      "size": 694854,
+      "kind": "question",
+      "status": "succeeded",
+      "upload_s": 2.1,
+      "parse_s": 598.0,
+      "total_s": 600.1,
+      "speed_mb_s": 0.0011,
+      "progress_seq": [],
+      "cpu_peak": 45.0,
+      "mem_peak": 91.0,
+      "tokens_delta": 0,
+      "calls_delta": 0,
+      "cost_delta": 0.0,
+      "result": {
+        "bank_id": 36,
+        "questions": 435,
+        "subject": "高等数学"
+      },
+      "error": "",
+      "_note": "tokens 未采集（首次运行时账本记账刚上线），耗时取任务 created→updated 实际值"
+    },
+    {
+      "file": "F:\\math\\凯哥冲刺讲义_数学一模拟卷_题目.pdf",
+      "name": "凯哥冲刺讲义_数学一模拟卷_题目.pdf",
+      "size": 565132,
+      "kind": "question",
+      "status": "succeeded",
+      "upload_s": 0.07,
+      "parse_s": 158.09,
+      "total_s": 158.16,
+      "speed_mb_s": 0.003,
+      "progress_seq": [
+        8,
+        12,
+        19,
+        33,
+        47,
+        61,
+        75,
+        100
+      ],
+      "cpu_peak": 40.0,
+      "mem_peak": 90.6,
+      "tokens_delta": 73117,
+      "calls_delta": 7,
+      "cost_delta": 0.5328,
+      "result": {
+        "bank_id": 37,
+        "document_id": 142,
+        "questions": 21,
+        "chapters": [
+          {
+            "chapter": "高等数学",
+            "count": 13
+          },
+          {
+            "chapter": "线性代数",
+            "count": 4
+          },
+          {
+            "chapter": "概率论与数理统计",
+            "count": 4
+          }
+        ],
+        "subject": "高等数学",
+        "pages": 6
+      },
+      "error": "",
+      "wall_s": 158.19
+    }
+  ]
+}

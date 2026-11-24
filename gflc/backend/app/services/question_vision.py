@@ -22,6 +22,24 @@ from app.core.errors import APIError, ErrCode
 
 _log = logging.getLogger(__name__)
 
+
+def _record_vision_usage(user_id: int | None, task_type: str, res, model: str) -> None:
+    """视觉调用记账。
+
+    视觉识别是单次成本最高的调用（一页几千 prompt tokens），此前完全不写 cost_ledger，
+    导致「今日 tokens / 花费」严重失真。这里不改变任何控制流：记账失败只记日志。
+    """
+    if not user_id:
+        return
+    try:
+        tin = int(getattr(res, "prompt_tokens", 0) or 0)
+        tout = int(getattr(res, "completion_tokens", 0) or 0)
+        if tin or tout:
+            from app.core.budget import budget
+            budget.record(user_id, task_type, tin, tout, model)
+    except Exception as e:  # noqa: BLE001  记账失败不能影响识别
+        _log.warning("视觉调用记账失败：%s", e)
+
 PROMPT = """这是考研试卷的一页。识别其中所有题目，数学公式用 LaTeX（$...$）。
 输出 JSON：
 {"paper_meta":{"subject":"考研数学/英语/政治/专业课等","title":""},
@@ -36,10 +54,28 @@ PROMPT = """这是考研试卷的一页。识别其中所有题目，数学公�
 
 
 def _render_one(path: str, index: int, dpi: int, jpeg_quality: int) -> bytes:
-    """渲染单页。每页独立 open，避免 PyMuPDF 文档对象跨线程共享（非线程安全）。"""
+    """渲染单页。每页独立 open，避免 PyMuPDF 文档对象跨线程共享（非线程安全）。
+
+    像素保护：视觉模型单图上限 8192×8192（约 6710 万像素），高分辨率扫描件
+    （实测某教材 31 页、70MB，140 DPI 渲染直接超限被拒）会在 400 报错后整页丢失。
+    这里按页面积自动下调 DPI，保证最长边不超限，宁可降清晰度也不丢页。
+    """
     doc = pymupdf.open(path)
     try:
-        return doc[index].get_pixmap(dpi=dpi).tobytes("jpeg", jpg_quality=jpeg_quality)
+        page = doc[index]
+        # 两个硬约束：① 单边 ≤8192px（模型按边长逐一校验）② 总像素 ≤67108864
+        max_side = int(os.getenv("OCR_MAX_SIDE", "8150"))      # 留一点余量
+        limit = int(os.getenv("OCR_MAX_PIXELS", "60000000"))
+        w_pt, h_pt = max(1.0, page.rect.width), max(1.0, page.rect.height)
+        # 由两个约束分别反推允许的 DPI，取更严的那个
+        dpi_side = max_side * 72.0 / max(w_pt, h_pt)
+        dpi_area = (limit / (w_pt * h_pt)) ** 0.5 * 72.0
+        eff_dpi = min(float(dpi), dpi_side, dpi_area)
+        if eff_dpi < dpi:
+            dpi = max(72, int(eff_dpi))
+            _log.info("页面过大，渲染 DPI 自动下调至 %d（page=%d，原页 %.0f×%.0f pt）",
+                      dpi, index + 1, w_pt, h_pt)
+        return page.get_pixmap(dpi=dpi).tobytes("jpeg", jpg_quality=jpeg_quality)
     finally:
         doc.close()
 
@@ -65,7 +101,8 @@ def render_pages(path: str, dpi: int = 140, jpeg_quality: int = 72,
         return list(ex.map(lambda i: _render_one(path, i, dpi, jpeg_quality), range(n)))
 
 
-async def extract_page(png: bytes) -> dict:
+async def extract_page(png: bytes, user_id: int | None = None,
+                       task_type: str = "question_vision") -> dict:
     b64 = base64.b64encode(png).decode()
     messages = [{"role": "user", "content": [
         {"type": "text", "text": PROMPT},
@@ -73,23 +110,52 @@ async def extract_page(png: bytes) -> dict:
     ]}]
     res = await chat(settings.LLM_LIGHT_MODEL, messages, temperature=0,
                      max_tokens=16000, json_mode=False, effort="low")
+    _record_vision_usage(user_id, task_type, res, settings.LLM_LIGHT_MODEL)
     return extract_json(res.text)
 
 
-async def parse_paper(path: str, on_progress=None) -> dict:
+async def parse_paper(path: str, on_progress=None, user_id: int | None = None) -> dict:
+    """逐页视觉识别试卷 → 题目列表。
+
+    并发版：同一份试卷的多页之间互相独立，串行会把 20+ 页 × ~20s 拖到 8 分钟。
+    这里按页并发（默认 4，`PAPER_VISION_CONCURRENCY` 可调），并发度低于 OCR 通道，
+    避免与 OCR 抢方舟配额；结果按页序重排，进度按完成页数单调递增。
+    """
     pages = render_pages(path)
+    total = max(1, len(pages))
+    concurrency = max(1, min(int(os.getenv("PAPER_VISION_CONCURRENCY", "4")), 8))
+    sem = asyncio.Semaphore(concurrency)
+    lock = asyncio.Lock()
+    done = 0
+
+    async def one(idx: int, png):
+        nonlocal done
+        data: dict = {}
+        async with sem:
+            # 失败页重试一次：并发下偶发限流不应让整页题目丢失
+            for attempt in (1, 2):
+                try:
+                    data = await extract_page(png, user_id=user_id)
+                    break
+                except Exception:  # noqa: BLE001
+                    if attempt == 2:
+                        data = {}
+                    else:
+                        await asyncio.sleep(1.5)
+        async with lock:
+            done += 1
+            if on_progress:
+                on_progress(int(5 + 85 * done / total))
+        return idx, data
+
+    results = await asyncio.gather(*[one(i, png) for i, png in enumerate(pages)])
+
     questions: list[dict] = []
     meta: dict = {}
-    for i, png in enumerate(pages):
-        if on_progress:
-            on_progress(int(5 + 85 * (i + 1) / max(1, len(pages))))
-        try:
-            data = await extract_page(png)
-        except Exception:
-            continue
-        if not meta and data.get("paper_meta"):
+    for i, data in sorted(results, key=lambda x: x[0]):   # 按页序还原，题目顺序稳定
+        if not meta and (data or {}).get("paper_meta"):
             meta = data.get("paper_meta") or {}
-        for q in data.get("questions", []) or []:
+        for q in (data or {}).get("questions", []) or []:
             q["page"] = i + 1
             questions.append(q)
     return {"meta": meta, "questions": questions, "pages": len(pages)}
@@ -239,7 +305,8 @@ def _ocr_sem() -> "asyncio.Semaphore":
     return sem
 
 
-async def _vision_chat(prompt: str, png: bytes, max_tokens: int):
+async def _vision_chat(prompt: str, png: bytes, max_tokens: int,
+                       user_id: int | None = None):
     """方舟视觉优先，失败回落 DeepSeek；两次调用都受 _ocr_sem 限流。"""
     b64 = base64.b64encode(png).decode()
     messages = [{"role": "user", "content": [
@@ -251,17 +318,22 @@ async def _vision_chat(prompt: str, png: bytes, max_tokens: int):
             try:
                 from app.ai import ark
                 if ark.available():
-                    return await ark.chat(settings.ARK_VISION_MODEL, messages, temperature=0,
-                                          max_tokens=max_tokens, effort="low")
+                    res = await ark.chat(settings.ARK_VISION_MODEL, messages, temperature=0,
+                                         max_tokens=max_tokens, effort="low")
+                    _record_vision_usage(user_id, "ocr", res, settings.ARK_VISION_MODEL)
+                    return res
             except APIError as e:
                 _log.warning("方舟视觉 OCR 失败，回落 DeepSeek：%s", e)
-        return await chat(settings.LLM_LIGHT_MODEL, messages, temperature=0,
-                          max_tokens=max_tokens, json_mode=False, effort="low")
+        res = await chat(settings.LLM_LIGHT_MODEL, messages, temperature=0,
+                         max_tokens=max_tokens, json_mode=False, effort="low")
+        _record_vision_usage(user_id, "ocr", res, settings.LLM_LIGHT_MODEL)
+        return res
 
 
 async def ocr_page_text(png: bytes, *, max_tokens: int | None = None,
                         output_format: str | None = None,
-                        meta: dict | None = None) -> str:
+                        meta: dict | None = None,
+                        user_id: int | None = None) -> str:
     """识别单页扫描图并转录为文字；并发受 _ocr_sem 限制，失败向上抛由调用方统计。
 
     默认纯文本直出（实测 15.41s/页）；output_format='json' 时恢复旧的
@@ -276,14 +348,14 @@ async def ocr_page_text(png: bytes, *, max_tokens: int | None = None,
         meta["json_retry"] = False
 
     if fmt != "json":
-        res = await _vision_chat(_build_ocr_prompt(fmt, profile), png, tokens)
+        res = await _vision_chat(_build_ocr_prompt(fmt, profile), png, tokens, user_id=user_id)
         text = (res.text or "").strip()
         if not text:
             raise APIError(ErrCode.AI_003, "视觉 OCR 本页未返回文字")
         return text
 
     # 兼容旧行为：强制 JSON，解析失败时用纯文本提示重试一次（语义覆盖与 JSON 版一致）。
-    res = await _vision_chat(OCR_TEXT_PROMPT, png, tokens)
+    res = await _vision_chat(OCR_TEXT_PROMPT, png, tokens, user_id=user_id)
     try:
         data = extract_json(res.text)
         text = (data.get("text") or "").strip() if isinstance(data, dict) else ""
@@ -294,7 +366,7 @@ async def ocr_page_text(png: bytes, *, max_tokens: int | None = None,
     if meta is not None:
         meta["json_retry"] = True
     _log.warning("扫描页 OCR 的 JSON 输出不可用，改用纯文本转录重试")
-    res2 = await _vision_chat(OCR_RAW_PROMPT, png, tokens)
+    res2 = await _vision_chat(OCR_RAW_PROMPT, png, tokens, user_id=user_id)
     text = (res2.text or "").strip()
     if not text:
         raise APIError(ErrCode.AI_003, "视觉 OCR 本页未返回文字")
@@ -302,7 +374,8 @@ async def ocr_page_text(png: bytes, *, max_tokens: int | None = None,
 
 
 async def ocr_pdf_to_pages(path: str, *, document_id=None, dpi: int | None = None,
-                           on_progress=None, stats: dict | None = None) -> list[tuple[int, str]]:
+                           on_progress=None, stats: dict | None = None,
+                           user_id: int | None = None) -> list[tuple[int, str]]:
     """扫描件兜底：逐页渲染 → 并发视觉 OCR → 返回 [(页码, 文本)]。
 
     与文字层 PDF 返回同构，直接复用 chunk_pages 分块链路。
@@ -375,7 +448,7 @@ async def ocr_pdf_to_pages(path: str, *, document_id=None, dpi: int | None = Non
 
         text = None
         try:
-            text = await ocr_page_text(png, output_format=fmt, meta=meta)
+            text = await ocr_page_text(png, output_format=fmt, meta=meta, user_id=user_id)
         except Exception as e:  # noqa: BLE001 单页失败不能拖垮整份资料
             _log.warning("扫描件 OCR 单页失败（%s，page=%s/%s）：%s", ctx, page_no, total, e)
             if retry_enabled:
