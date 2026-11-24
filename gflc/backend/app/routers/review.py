@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends
 from fsrs import Card as FSRSCard
 from fsrs import Rating, Scheduler
 from pydantic import BaseModel
-from sqlalchemy import or_, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
 from app.core.errors import APIError, ErrCode
@@ -51,13 +51,48 @@ def _out(c: Card, note_title: str | None = None) -> dict:
 
 
 @router.get("/due")
-async def due(limit: int = 20, user=Depends(get_current_user), db: Session = Depends(get_db)):
+async def due(limit: int = 20, new_limit: int | None = None,
+              user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """待复习队列：到期卡优先占名额，新卡按「复习压力」自动压缩。
+
+    分区口径（两段 SQL 分别取，不捞全表）：
+    - 到期卡：reps > 0 且（due_at 为空或已到期），最多 limit 张
+    - 新卡：reps == 0，最多 min(new_limit 或自动配额, limit - 到期数) 张
+    自动配额：到期 ≥ limit×0.8 → 新卡压到 1；到期 ≤ limit×0.5 → 新卡填满剩余；
+    中间区间只给一半。返回结构只增不改（多一个 quota）。
+    """
+    limit = max(1, min(limit, 100))
     now = datetime.now(timezone.utc)
+    due_cond = (Card.user_id == user.id, Card.reps > 0,
+                or_(Card.due_at.is_(None), Card.due_at <= now))
+    new_cond = (Card.user_id == user.id, Card.reps == 0)
+    # 真实总数（不受 limit 影响）：前端队列条要显示「今天还有多少张」，不能被 limit 封顶
+    total_due = int(db.scalar(select(func.count(Card.id)).where(*due_cond)) or 0)
+    total_new = int(db.scalar(select(func.count(Card.id)).where(*new_cond)) or 0)
+
     rows = list(db.scalars(
-        select(Card).where(Card.user_id == user.id,
-                           or_(Card.reps == 0, Card.due_at.is_(None), Card.due_at <= now))
-        .order_by(Card.due_at, Card.id).limit(limit)
+        select(Card).where(*due_cond).order_by(Card.due_at, Card.id).limit(limit)
     ))
+    due_count = len(rows)
+    room = max(0, limit - due_count)
+
+    if new_limit is None:
+        if due_count * 5 >= limit * 4:        # 到期 ≥ 80%
+            cap, rule = min(1, room), "heavy"
+        elif due_count * 2 <= limit:          # 到期 ≤ 50%
+            cap, rule = room, "light"
+        else:                                  # 50%–80%
+            cap, rule = room // 2, "balanced"
+    else:
+        cap, rule = max(0, min(new_limit, room)), "manual"
+
+    if cap > 0:
+        rows.extend(db.scalars(
+            select(Card).where(Card.user_id == user.id, Card.reps == 0)
+            .order_by(Card.due_at, Card.id).limit(cap)
+        ))
+    new_count = len(rows) - due_count
+
     # 来源笔记标题：只有存在 source_note_id 的卡片才查，且一次 in_ 批量取，避免逐卡 N+1
     note_ids = {c.source_note_id for c in rows if c.source_note_id}
     titles: dict[int, str] = {}
@@ -66,8 +101,15 @@ async def due(limit: int = 20, user=Depends(get_current_user), db: Session = Dep
             select(Note.id, Note.title).where(Note.id.in_(note_ids),
                                               or_(Note.user_id == user.id, Note.user_id.is_(None)))
         ).all())
-    return {"ok": True, "data": {"count": len(rows),
-                                 "cards": [_out(c, titles.get(c.source_note_id)) for c in rows]}}
+    return {"ok": True, "data": {
+        "count": len(rows),
+        "cards": [_out(c, titles.get(c.source_note_id)) for c in rows],
+        # 只增字段：旧调用方只读 cards/count，不受影响。
+        # total_* 是不受 limit 影响的真实总数，供队列条显示「今天还有多少」，避免被 limit 封顶。
+        "quota": {"due_count": due_count, "new_count": new_count,
+                  "new_limit": cap, "rule": rule,
+                  "total_due": total_due, "total_new": total_new},
+    }}
 
 
 @router.post("/preview")

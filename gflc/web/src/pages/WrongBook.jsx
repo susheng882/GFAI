@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Select, Tag, Tooltip } from 'antd';
+import { App as AntdApp, Button, Select, Tag, Tooltip } from 'antd';
 import { ArrowRightOutlined, PrinterOutlined, RedoOutlined } from '@ant-design/icons';
+import { api } from '../api.js';
 import { esc } from '../utils.js';
 import { AiExplainButton } from '../components/AiExplainDrawer.jsx';
 
@@ -43,11 +44,31 @@ export function WrongPreview({ wrong, onMore }) {
   );
 }
 
-/* 错题本：章节 + 题型筛选、单题重做、分页、导出打印。 */
+/* 错题本：章节 + 题型筛选、单题重做、加入卡片、分页、导出打印。 */
 export default function WrongBook({ wrong, onRedo, onRetryChapter }) {
+  const { message } = AntdApp.useApp();
   const [chapter, setChapter] = useState('');
   const [qtype, setQtype] = useState('');
   const [page, setPage] = useState(1);
+  // qid → 已生成的卡片 id：本会话加入成功后按钮转「已在卡片」
+  const [added, setAdded] = useState({});
+  const [adding, setAdding] = useState(0);
+
+  /* 错题 → 卡片（POST /quiz/questions/{id}/to-card）：重复调用返回已有卡片，不重复建。 */
+  const addCard = async (q) => {
+    if (adding) return;
+    setAdding(q.id);
+    try {
+      const d = await api(`/quiz/questions/${q.id}/to-card`, { method: 'POST' });
+      setAdded((m) => ({ ...m, [q.id]: (d && d.id) || 0 }));
+      if (d && d.existed) message.info('该题已在卡片中');
+      else message.success('已加入复习卡片');
+    } catch (e) {
+      message.info(e.message || '加入卡片失败');
+    } finally {
+      setAdding(0);
+    }
+  };
 
   const chapters = useMemo(() => {
     const seen = new Set();
@@ -112,8 +133,12 @@ export default function WrongBook({ wrong, onRedo, onRetryChapter }) {
                 <div className="wrong-stem">{esc(q.stem || '')}</div>
                 {meta(q)}
               </div>
-              <div className="wrong-act">
+              <div className="wrong-act" style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
                 <AiExplainButton questionId={q.id} />
+                <Button size="small" type="text" disabled={!!added[q.id]}
+                  loading={adding === q.id} onClick={() => addCard(q)}>
+                  {added[q.id] ? '已在卡片' : '加入卡片'}
+                </Button>
                 <Button size="small" icon={<RedoOutlined />} onClick={() => onRedo(q)}>重做</Button>
               </div>
             </div>

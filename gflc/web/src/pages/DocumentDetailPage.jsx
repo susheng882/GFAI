@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { App as AntdApp, Button, Skeleton, Tag, Tooltip } from 'antd';
+import { App as AntdApp, Button, Drawer, Skeleton, Tag, Tooltip } from 'antd';
 import {
   ArrowLeftOutlined, FileTextOutlined, FormOutlined, CreditCardOutlined,
 } from '@ant-design/icons';
@@ -15,6 +15,8 @@ const STATUS_CN = { pending: '待解析', parsing: '解析中', ready: '就绪',
 const STATUS_COLOR = { ready: 'success', failed: 'error', pending: 'processing', parsing: 'processing' };
 const LEVEL_CN = { not_started: '未开始', learning: '学习中', mastered: '已掌握' };
 const SOURCE_CN = { manual: '手记', ai: 'AI', video: '视频', import: '导入' };
+const SIDE_CN = { card: '卡片', question: '题目' };
+const DIRECTION_CN = { card_from_question: '以题目为准', question_from_card: '以卡片为准' };
 
 function dueLabel(ts) {
   if (!ts) return '未排期';
@@ -33,12 +35,27 @@ export default function DocumentDetailPage() {
   const [error, setError] = useState('');
   const [noteBusy, setNoteBusy] = useState(false);
   const [cardBusy, setCardBusy] = useState(false);
+  // 掌握度画像：章节分布 + 两套掌握度的差异（全部来自只读聚合接口）
+  const [chapterRows, setChapterRows] = useState([]);
+  const [divergence, setDivergence] = useState([]);
+  const [divTotal, setDivTotal] = useState(0);
+  const [alignOpen, setAlignOpen] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [alignBusy, setAlignBusy] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      setData(await api(`/documents/${id}/overview`));
+      const [overview, insight] = await Promise.all([
+        api(`/documents/${id}/overview`),
+        // 画像失败不影响主页面：章节分布与差异榜降级为隐藏
+        api(`/mastery/insight?document_id=${id}`).catch(() => null),
+      ]);
+      setData(overview);
+      setChapterRows(insight?.by_chapter || []);
+      setDivergence(insight?.divergence || []);
+      setDivTotal(insight?.divergence_total || 0);
     } catch (e) {
       setError(e?.status === 404 ? '资料不存在或已删除' : (e?.message || '读取失败'));
     } finally {
@@ -78,6 +95,53 @@ export default function DocumentDetailPage() {
       message.error(e.message || '生成失败');
     } finally {
       setCardBusy(false);
+    }
+  };
+
+  // 对齐工具：先 preview（只读）看影响清单，再 reconcile（只写 mastery）
+  const openAlign = () => {
+    setPreview(null);
+    setAlignOpen(true);
+  };
+
+  const closeAlign = () => {
+    setAlignOpen(false);
+    setPreview(null);
+  };
+
+  const previewAlign = async (chapter, direction) => {
+    if (alignBusy) return;
+    setAlignBusy(true);
+    setPreview(null);
+    try {
+      const qs = new URLSearchParams({ chapter, direction, document_id: String(id) });
+      setPreview(await api(`/mastery/reconcile/preview?${qs.toString()}`));
+    } catch (e) {
+      message.error(e.message || '预览失败');
+    } finally {
+      setAlignBusy(false);
+    }
+  };
+
+  const applyAlign = async () => {
+    if (!preview || alignBusy) return;
+    setAlignBusy(true);
+    try {
+      const res = await api('/mastery/reconcile', {
+        method: 'POST',
+        body: JSON.stringify({
+          chapter: preview.chapter,
+          direction: preview.direction,
+          document_id: Number(id),
+        }),
+      });
+      message.success(`已对齐 ${res.updated} 处`);
+      setPreview(null);
+      await load();
+    } catch (e) {
+      message.error(e.message || '对齐失败');
+    } finally {
+      setAlignBusy(false);
     }
   };
 
@@ -182,12 +246,51 @@ export default function DocumentDetailPage() {
                   </div>
                 </div>
               </div>
+              <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+                <div className="row between" style={{ gap: 8, marginBottom: 12 }}>
+                  <span style={{ fontSize: 12.5, color: 'var(--fg-2)' }}>按章节分布</span>
+                  <span className="muted" style={{ fontSize: 11.5 }}>加权掌握 · 卡 / 题</span>
+                </div>
+                {chapterRows.length > 0 ? (
+                  chapterRows.slice(0, 8).map((c) => (
+                    <div key={c.chapter} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8, minWidth: 0 }}>
+                      <span title={c.chapter} style={{
+                        flex: '0 0 84px', fontSize: 11.5, color: 'var(--fg-2)',
+                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                      }}>{c.chapter}</span>
+                      <span style={{
+                        flex: 1, minWidth: 0, height: 8, borderRadius: 99,
+                        background: 'var(--secondary)', overflow: 'hidden',
+                      }}>
+                        <span style={{
+                          display: 'block', height: '100%', borderRadius: 99,
+                          width: `${Math.max(2, pct(c.score))}%`,
+                          background: 'color-mix(in srgb, var(--primary) 45%, transparent)',
+                        }} />
+                      </span>
+                      <span className="muted" style={{
+                        flex: '0 0 auto', fontSize: 11.5, whiteSpace: 'nowrap',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}>{pct(c.score)}% · 卡 {c.cards} · 题 {c.questions}</span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="muted" style={{ fontSize: 12.5 }}>该资料题目未标注章节</div>
+                )}
+              </div>
               <div className="v3-acts">
                 <Button type="primary" onClick={() => navigate('/review')}>去复习</Button>
                 <span className="muted" style={{ fontSize: 12.5, fontVariantNumeric: 'tabular-nums' }}>
                   {cards.due > 0 ? `${cards.due} 张到期` : '暂无到期卡片'}
                 </span>
               </div>
+              {divTotal > 0 && (
+                <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--border)' }}>
+                  <Button type="link" size="small" style={{ paddingLeft: 0 }} onClick={openAlign}>
+                    卡片与题目掌握度差异 {divTotal} 处
+                  </Button>
+                </div>
+              )}
             </>
           ) : (
             <EmptyState icon={<CreditCardOutlined />} title="还没有掌握度数据"
@@ -302,6 +405,81 @@ export default function DocumentDetailPage() {
           )}
         </section>
       </div>
+
+      {/* 掌握度对齐：preview 只读看影响 → 确认后 reconcile（只改 mastery） */}
+      <Drawer title="掌握度对齐" width="min(480px, 100vw)" open={alignOpen} onClose={closeAlign}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="muted" style={{ fontSize: 12.5, lineHeight: 1.7 }}>
+            同一章节下，卡片与题目给出了不同结论。选一侧为准，把它的均值写到另一侧，只改掌握度，不动复习排期。
+          </div>
+
+          {divergence.length === 0 ? (
+            <div className="muted" style={{ fontSize: 12.5 }}>当前没有需要对齐的章节</div>
+          ) : divergence.map((d) => (
+            <div key={d.chapter} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
+              <div className="row between" style={{ gap: 12, alignItems: 'baseline' }}>
+                <div title={d.chapter} style={{
+                  minWidth: 0, fontSize: 13.5, fontWeight: 500,
+                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                }}>{d.chapter}</div>
+                <div className="muted" style={{
+                  flex: '0 0 auto', fontSize: 11.5, whiteSpace: 'nowrap',
+                  fontVariantNumeric: 'tabular-nums',
+                }}>差距 {Math.round(d.gap * 100)} 个百分点</div>
+              </div>
+              <div className="row" style={{
+                gap: 16, marginTop: 8, fontSize: 12.5, color: 'var(--fg-2)',
+                fontVariantNumeric: 'tabular-nums',
+              }}>
+                <span>卡片 {pct(d.card_score)}%</span>
+                <span>题目 {pct(d.question_score)}%</span>
+              </div>
+              <div className="row" style={{ gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+                <Button size="small" disabled={alignBusy}
+                  onClick={() => previewAlign(d.chapter, 'card_from_question')}>以卡片为准</Button>
+                <Button size="small" disabled={alignBusy}
+                  onClick={() => previewAlign(d.chapter, 'question_from_card')}>以题目为准</Button>
+              </div>
+
+              {preview && preview.chapter === d.chapter && (
+                <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: 12.5, color: 'var(--fg-2)', lineHeight: 1.7 }}>
+                    {DIRECTION_CN[preview.direction] || '对齐'}：把{SIDE_CN[preview.source.side]}均值{' '}
+                    <b style={{ fontWeight: 500, fontVariantNumeric: 'tabular-nums' }}>{pct(preview.source.score)}%</b>
+                    {' '}写入 {preview.target.count} {SIDE_CN[preview.target.side]}
+                  </div>
+                  <div style={{ maxHeight: 160, overflowY: 'auto', marginTop: 8 }}>
+                    {(preview.items || []).map((it) => (
+                      <div key={it.id} className="row between" style={{
+                        gap: 8, padding: '8px 0', borderBottom: '1px solid var(--border)',
+                        fontSize: 11.5,
+                      }}>
+                        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {esc(it.title || '未命名')}
+                        </span>
+                        <span className="muted" style={{
+                          flex: '0 0 auto', whiteSpace: 'nowrap',
+                          fontVariantNumeric: 'tabular-nums',
+                        }}>{pct(it.before)}% → {pct(it.after)}%</span>
+                      </div>
+                    ))}
+                  </div>
+                  {preview.items_total > (preview.items || []).length && (
+                    <div className="muted" style={{ fontSize: 11.5, marginTop: 4 }}>
+                      另有 {preview.items_total - (preview.items || []).length} 条未展示
+                    </div>
+                  )}
+                  <div className="row" style={{ gap: 8, marginTop: 12, justifyContent: 'flex-end' }}>
+                    <Button size="small" type="text" disabled={alignBusy}
+                      onClick={() => setPreview(null)}>取消</Button>
+                    <Button size="small" type="primary" loading={alignBusy} onClick={applyAlign}>确认对齐</Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Drawer>
     </div>
   );
 }

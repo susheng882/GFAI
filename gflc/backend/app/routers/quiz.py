@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""刷题：书目录式总览、动态推荐、组卷、判分、错题本。"""
+"""刷题：书目录式总览、动态推荐、组卷、判分、错题本、错题转卡片。"""
 import re
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
@@ -9,7 +10,7 @@ from sqlalchemy.orm import Session, aliased
 
 from app.core.errors import APIError, ErrCode
 from app.db.session import get_db
-from app.models.models import Attempt, Question, QuestionBank
+from app.models.models import Attempt, Card, CardDeck, Question, QuestionBank
 from app.routers.deps import get_current_user
 from app.schemas.schemas import QuestionOut, QuizSubmitIn
 from app.services.mastery import update_question_mastery
@@ -288,4 +289,96 @@ async def reset_attempts(question_id: int, user=Depends(get_current_user),
                                            Attempt.question_id == question_id))
     db.commit()
     return {"ok": True, "data": {"question_id": question_id, "deleted": int(res.rowcount or 0)}}
+
+
+# ---------- 错题 → 卡片（错误 → 强化回路） ----------
+# 零迁移：复用 cards 表，document_id 取题目所属文档，溯源靠 anchor_id（gflc::q::<id>）。
+WRONG_DECK_NAME = "错题收藏"
+
+
+def _opt_lines(options) -> list[str]:
+    """选项列表 → 「A. 文本」行；已带字母前缀的原样保留，避免出现「A. A. 文本」。"""
+    if not isinstance(options, list):
+        return []
+    out = []
+    for i, opt in enumerate(options):
+        txt = str(opt).strip()
+        if not txt:
+            continue
+        letter = chr(65 + i)
+        out.append(txt if re.match(rf"^{letter}\s*[.、)．]", txt) else f"{letter}. {txt}")
+    return out
+
+
+def _points(v) -> list[str]:
+    """analysis 的 steps / pitfalls 兼容 str 与 list，空值返回空列表。"""
+    if isinstance(v, str):
+        return [v.strip()] if v.strip() else []
+    if isinstance(v, (list, tuple)):
+        return [str(x).strip() for x in v if str(x).strip()]
+    return []
+
+
+def _card_front(q: Question) -> str:
+    """卡片正面：题干 + 选项列表。"""
+    head = (q.stem or "").strip()
+    opts = "\n".join(_opt_lines(q.options))
+    return "\n\n".join(p for p in (head, opts) if p) or "（空题目）"
+
+
+def _card_back(q: Question) -> str:
+    """卡片背面：正确答案 + 解析要点（steps / pitfalls）；无解析时只留答案。"""
+    ans = (q.answer or "").strip()
+    analysis = q.analysis if isinstance(q.analysis, dict) else {}
+    steps, pitfalls = _points(analysis.get("steps")), _points(analysis.get("pitfalls"))
+    lines = [f"正确答案：{ans}"] if ans else []
+    if steps:
+        lines.append("解题要点：")
+        lines.extend(f"{i}. {s}" for i, s in enumerate(steps, 1))
+    if pitfalls:
+        lines.append("易错点：" + "；".join(pitfalls))
+    return "\n".join(lines) or "（暂无答案）"
+
+
+def _wrong_deck(db: Session, user_id: int, document_id: int | None) -> CardDeck:
+    """复用该用户的「错题收藏」卡包，没有则自动创建（不做唯一约束，保持零迁移）。"""
+    deck = db.scalar(select(CardDeck).where(CardDeck.user_id == user_id,
+                                            CardDeck.name == WRONG_DECK_NAME)
+                     .order_by(CardDeck.id))
+    if deck is not None:
+        return deck
+    deck = CardDeck(user_id=user_id, document_id=document_id, parent_id=None,
+                    name=WRONG_DECK_NAME, kind="root", sort=0)
+    db.add(deck)
+    db.flush()
+    return deck
+
+
+@router.post("/questions/{question_id}/to-card")
+async def question_to_card(question_id: int, user=Depends(get_current_user),
+                           db: Session = Depends(get_db)):
+    """把一道错题落成复习卡片；同一题重复调用返回已有卡片，不重复建。"""
+    q = db.get(Question, question_id)
+    if q is None:
+        raise APIError(ErrCode.COMMON_404, "题目不存在", 404)
+    if q.user_id != user.id:
+        raise APIError(ErrCode.AUTH_403, "无权访问该题", 403)
+
+    anchor_id = f"gflc::q::{q.id}"
+    exist = db.scalar(select(Card).where(Card.user_id == user.id, Card.anchor_id == anchor_id))
+    if exist is not None:
+        return {"ok": True, "data": {"id": exist.id, "deck_id": exist.deck_id, "existed": True}}
+
+    deck = _wrong_deck(db, user.id, q.document_id)
+    chapter = (q.chapter or "").strip()
+    card = Card(user_id=user.id, document_id=q.document_id, deck_id=deck.id,
+                question=_card_front(q), answer=_card_back(q),
+                tag=f"错题 · {chapter or '未分章'}",
+                difficulty=q.difficulty or "mid", page=q.page or 0,
+                anchor_id=anchor_id,
+                due_at=datetime.now(timezone.utc), reps=0, lapses=0)
+    db.add(card)
+    db.commit()
+    db.refresh(card)
+    return {"ok": True, "data": {"id": card.id, "deck_id": card.deck_id, "existed": False}}
 

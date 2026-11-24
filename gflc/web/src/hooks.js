@@ -54,6 +54,14 @@ export function useTodayQueue() {
       const cards = dueRes.status === 'fulfilled' && Array.isArray(dueRes.value?.cards)
         ? dueRes.value.cards : null;
       if (cards) {
+        // 计数用 quota 的真实总数（不受 limit 封顶）；缺 quota 时退回按 cards 数
+        const q = dueRes.value?.quota;
+        if (q && Number.isFinite(Number(q.total_due))) {
+          const review = Number(q.total_due) || 0;
+          const fresh = Number(q.total_new) || 0;
+          setState({ review, fresh, total: review + fresh, loading: false });
+          return;
+        }
         const review = cards.filter((c) => (c.reps || 0) > 0).length;
         const fresh = cards.length - review;
         setState({ review, fresh, total: review + fresh, loading: false });

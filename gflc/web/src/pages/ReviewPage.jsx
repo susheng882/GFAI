@@ -58,6 +58,8 @@ export default function ReviewPage() {
   const { message, modal } = AntdApp.useApp();
   const navigate = useNavigate();
   const [due, setDue] = useState([]);
+  // /review/due 的配额信息（只增字段）；旧后端不返回时为 null，界面不显示
+  const [quota, setQuota] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [doneToday, setDoneToday] = useState(0);
@@ -83,7 +85,11 @@ export default function ReviewPage() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    try { setDue((await api('/review/due?limit=50'))?.cards || []); } catch { setDue([]); }
+    try {
+      const d = await api('/review/due?limit=50');
+      setDue((d && d.cards) || []);
+      setQuota((d && d.quota) || null);
+    } catch { setDue([]); setQuota(null); }
     setLoading(false);
   }, []);
   useEffect(() => { load(); }, [load]);
@@ -255,13 +261,20 @@ export default function ReviewPage() {
   const c = due[0];
   const remaining = due.length;
   const progress = Math.min(100, Math.round(doneToday / goal * 100));
+  // 新卡被配额压缩（heavy=压到 1，balanced=只给一半）时提示一次
+  const quotaCapped = !!quota && (quota.rule === 'heavy' || quota.rule === 'balanced');
   return (
     <div className="rev-page">
       {/* B5 今日队列条：复习 Y + 新学 Z = 今日 W，唯一荧光笔标 W */}
       <div className="queue-bar">
         <div className="queue-bar-t">
           <span>今日队列</span>
-          <span className="muted">复习与新学合并</span>
+          {quota ? (
+            <span className="muted">
+              <span className="mono">{quota.due_count}</span> 到期 ·{' '}
+              <span className="mono">{quota.new_count}</span> 新学
+            </span>
+          ) : <span className="muted">复习与新学合并</span>}
         </div>
         <div className="queue-bar-b">
           <span>复习 <span className="mono">{queue.review}</span></span>
@@ -270,6 +283,9 @@ export default function ReviewPage() {
           <span className="queue-op">=</span>
           <span>今日 <b className="hl mono">{queue.total}</b> 项</span>
         </div>
+        {quotaCapped && (
+          <div className="queue-zero">复习较多，今日新卡自动减少</div>
+        )}
         {!queue.total && !queue.loading && (
           <div className="queue-zero">今日暂无队列，去背诵页挑一个卡包开始</div>
         )}
