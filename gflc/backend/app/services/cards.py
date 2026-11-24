@@ -4,9 +4,10 @@
 import asyncio
 import hashlib
 import logging
+import os
 from datetime import datetime, timezone
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.ai.mock import mock_cards
@@ -72,10 +73,45 @@ def _chapter_name(ch_heading: str, item_chapter: str) -> str:
     return _UNSORTED
 
 
-async def generate_cards(db: Session, user_id: int, document_id: int, max_chunks: int = 10,
-                         on_progress=None) -> int:
+def _resolve_max_chunks(db: Session, document_id: int, requested: int | None) -> int:
+    """决定本次最多处理多少个切片。
+
+    取值优先级：显式入参 > 环境变量 CARD_MAX_CHUNKS > 按切片总数自适应。
+    自适应规则（原来固定 10，导致长教材只覆盖开头几页）：
+      ≤10 个切片  → 全做
+      11–30       → 20（小册子/短讲义）
+      31–80       → 35（教材单章）
+      >80         → 50（整本教材，超出部分留给「继续生成」）
+    上限硬夹 200，避免单次任务成本失控。
+    """
+    hard_cap = int(os.getenv("CARD_MAX_CHUNKS_CAP", "200"))
+    if requested:
+        return max(1, min(int(requested), hard_cap))
+    env = os.getenv("CARD_MAX_CHUNKS", "").strip()
+    if env.isdigit():
+        return max(1, min(int(env), hard_cap))
+    total = int(db.scalar(
+        select(func.count(Chunk.id)).where(Chunk.document_id == document_id)) or 0)
+    if total <= 10:
+        return total or 10
+    if total <= 30:
+        return 20
+    if total <= 80:
+        return 35
+    return 50
+
+
+async def generate_cards(db: Session, user_id: int, document_id: int,
+                         max_chunks: int | None = None, on_progress=None) -> int:
+    """从文档切片生成卡片。
+
+    max_chunks 为 None 时按切片总数自适应（见 _resolve_max_chunks）：
+    教材类（几十个切片）只取前 10 个会漏掉大半内容，之前固定 10 就是这个问题。
+    """
+    limit_chunks = _resolve_max_chunks(db, document_id, max_chunks)
     chunks = list(db.scalars(
-        select(Chunk).where(Chunk.document_id == document_id).order_by(Chunk.chunk_index).limit(max_chunks)
+        select(Chunk).where(Chunk.document_id == document_id)
+        .order_by(Chunk.chunk_index).limit(limit_chunks)
     ))
     use_mock = settings.MOCK_AI or not settings.LLM_API_KEY
     root = _root_deck(db, user_id, document_id)

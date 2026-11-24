@@ -22,21 +22,45 @@ from app.core.errors import APIError, ErrCode
 
 _log = logging.getLogger(__name__)
 
+# 视觉超额度只告警一次（逐页刷屏会让日志不可读）
+_VISION_QUOTA_WARNED = False
+
 
 def _record_vision_usage(user_id: int | None, task_type: str, res, model: str) -> None:
-    """视觉调用记账。
+    """视觉调用记账 + 预算预警。
 
     视觉识别是单次成本最高的调用（一页几千 prompt tokens），此前完全不写 cost_ledger，
-    导致「今日 tokens / 花费」严重失真。这里不改变任何控制流：记账失败只记日志。
+    导致「今日 tokens / 花费」严重失真。
+
+    这里只记账不拦截：视觉链路是一份文件内几十页的批量调用，中途硬拦会让整个文件
+    解析失败（前面页白跑），体验极差。额度耗尽改为**打警告日志**，由调用方/用户决定
+    是否停止批量任务；真正的硬拦截仍在 generate_json（卡片/笔记等单次调用）。
     """
     if not user_id:
         return
     try:
         tin = int(getattr(res, "prompt_tokens", 0) or 0)
         tout = int(getattr(res, "completion_tokens", 0) or 0)
-        if tin or tout:
-            from app.core.budget import budget
-            budget.record(user_id, task_type, tin, tout, model)
+        if not (tin or tout):
+            return
+        from app.core.budget import budget
+        budget.record(user_id, task_type, tin, tout, model)
+        # 超额度告警：每个进程只提醒一次（逐页刷屏没有意义，且会让日志不可读）
+        global _VISION_QUOTA_WARNED
+        if not _VISION_QUOTA_WARNED:
+            try:
+                u = budget.usage(user_id) or {}
+                tok, cost = int(u.get("today_tokens") or 0), float(u.get("today_cost_cny") or 0)
+                over_tok = settings.DAILY_USER_TOKENS and tok > settings.DAILY_USER_TOKENS
+                over_cost = settings.DAILY_USER_COST_CNY and cost > settings.DAILY_USER_COST_CNY
+                if over_tok or over_cost:
+                    _VISION_QUOTA_WARNED = True
+                    _log.warning(
+                        "视觉识别已超日额度（tokens %s/%s，cost ¥%.2f/¥%.2f）：视觉链路不硬拦，"
+                        "批量任务会继续跑；如需止损请停任务或调高 .env 额度",
+                        tok, settings.DAILY_USER_TOKENS, cost, settings.DAILY_USER_COST_CNY)
+            except Exception:  # noqa: BLE001 预警失败不影响记账
+                pass
     except Exception as e:  # noqa: BLE001  记账失败不能影响识别
         _log.warning("视觉调用记账失败：%s", e)
 
@@ -75,7 +99,12 @@ def _render_one(path: str, index: int, dpi: int, jpeg_quality: int) -> bytes:
             dpi = max(72, int(eff_dpi))
             _log.info("页面过大，渲染 DPI 自动下调至 %d（page=%d，原页 %.0f×%.0f pt）",
                       dpi, index + 1, w_pt, h_pt)
-        return page.get_pixmap(dpi=dpi).tobytes("jpeg", jpg_quality=jpeg_quality)
+        pix = page.get_pixmap(dpi=dpi)
+        try:
+            return pix.tobytes("jpeg", jpg_quality=jpeg_quality)
+        finally:
+            # Pixmap 持有解码后的原始位图（8124×5984 RGBA ≈ 190MB），不显式释放会等 GC
+            pix = None
     finally:
         doc.close()
 
@@ -483,6 +512,11 @@ async def ocr_pdf_to_pages(path: str, *, document_id=None, dpi: int | None = Non
         try:
             return await _one_page(idx, png)
         finally:
+            # 及时释放本页 JPEG 引用：教材级 PDF 单页可达 1.8MB，整本累积会顶到 90%+ 内存
+            try:
+                pages_bytes[idx] = b""
+            except Exception:  # noqa: BLE001 释放失败不影响结果
+                pass
             await _bump()
 
     # 并发全部提交，由 _ocr_sem 把同时在途的请求压到上限（默认 2），避免 429。
