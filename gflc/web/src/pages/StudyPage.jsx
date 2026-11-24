@@ -8,9 +8,9 @@ import { isTypingTarget, useTodayQueue } from '../hooks.js';
 import EmptyState from '../components/EmptyState.jsx';
 import Markdown from '../components/Markdown.jsx';
 import { AiExplainButton } from '../components/AiExplainDrawer.jsx';
-import QuizAnswerSheet from './QuizAnswerSheet.jsx';
-import QuizResult from './QuizResult.jsx';
-import WrongBook, { WrongPreview } from './WrongBook.jsx';
+import QuizAnswerSheet from '../components/QuizAnswerSheet.jsx';
+import QuizResult from '../components/QuizResult.jsx';
+import WrongBook, { WrongPreview } from '../components/WrongBook.jsx';
 
 const TEST_TYPES = [
   { value: 'all', label: '全部题型' },

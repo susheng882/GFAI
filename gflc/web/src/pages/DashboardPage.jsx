@@ -5,7 +5,7 @@ import { api, runTask } from '../api.js';
 import { esc, fmtTime, isTodayTask, reviewsText } from '../utils.js';
 import TodayQueue from '../components/TodayQueue.jsx';
 import LoopStatus from '../components/LoopStatus.jsx';
-import AiBoard from './AiBoard.jsx';
+import AiBoard from '../components/AiBoard.jsx';
 
 /* 指挥台 v3：默认「概览」= 闭环条 + hero + 卡包分布 + 四指标带 + 热力图 + 刷题背诵 + 快速上传（共 7 块）。
    系统与用量已迁至设置页「监控」tab（那里本就有调用/花费/tokens/队列），此页不再重复。
@@ -19,6 +19,7 @@ export default function DashboardPage() {
   const [dash, setDash] = useState(null);
   const [due, setDue] = useState([]);
   const [heat, setHeat] = useState(null);
+  const [forget, setForget] = useState(null);
   const [planTasks, setPlanTasks] = useState([]);
   const [mon, setMon] = useState(null);
   const [view, setView] = useState('overview');  // 旧值 'ai' 已废弃，避免落到空视图  // 旧值 'ai' 已废弃，避免落到空视图
@@ -48,12 +49,14 @@ export default function DashboardPage() {
     const results = await Promise.allSettled([
       api('/dashboard/stats'), api('/documents'), api('/dashboard/latest'),
       api('/review/due?limit=50'), api('/dashboard/heatmap?days=365'),
+      api('/dashboard/forgetting'),
     ]);
     if (results[0].status === 'fulfilled') setStats(results[0].value);
     if (results[1].status === 'fulfilled') setDocs(results[1].value || []);
     if (results[2].status === 'fulfilled') setDash(results[2].value || null);
     if (results[3].status === 'fulfilled') setDue((results[3].value?.cards) || []);
     if (results[4].status === 'fulfilled') setHeat(results[4].value || null);
+    if (results[5].status === 'fulfilled') setForget(results[5].value || null);
     await loadPlans();
     try { setMon(await api('/settings/monitor')); } catch { setMon(null); }
     setLoading(false);
@@ -169,6 +172,13 @@ export default function DashboardPage() {
             </section>
           )}
 
+          {/* 遗忘曲线：数据薄时不渲染（有复习历史才画），避免空图占位 */}
+          {(forget && (forget.points?.length || 0) >= 2) && (
+            <section className="v3-card v3-c12">
+              <ForgettingCurve forget={forget} />
+            </section>
+          )}
+
           <section className="v3-card v3-c6">
             <div className="v3-sh">刷题背诵<span className="meta">{dueCount} 张到期 · {newCount} 张新卡</span></div>
             <div className="row" style={{ gap: 8, marginBottom: 10 }}>
@@ -211,6 +221,43 @@ export default function DashboardPage() {
 function Metric({ k, v, unit, d }) {
   return (
     <div className="m"><div className="k">{k}</div><div className="v">{v}<small>{unit}</small></div><div className="d">{d}</div></div>
+  );
+}
+
+function ForgettingCurve({ forget }) {
+  const points = (forget && forget.points) || [];
+  if (points.length < 2) return null;
+  // 用内联 SVG 画折线：x=天数分桶，y=平均掌握度（0–1）
+  const W = 640, H = 180, PAD = 24;
+  const maxY = 1;
+  const xs = points.map((p, i) => PAD + i * ((W - PAD * 2) / (points.length - 1)));
+  const ys = points.map((p) => H - PAD - ((p.avg_mastery || 0) / maxY) * (H - PAD * 2));
+  const line = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${xs[i].toFixed(1)} ${ys[i].toFixed(1)}`).join(' ');
+  return (
+    <div>
+      <div className="v3-sh">遗忘曲线<span className="meta">隔越久记得越少</span></div>
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="150" preserveAspectRatio="none">
+        {[0, 0.5, 1].map((t) => (
+          <line key={t} x1={PAD} y1={(H - PAD - t * (H - PAD * 2)).toFixed(1)} x2={W - PAD}
+            y2={(H - PAD - t * (H - PAD * 2)).toFixed(1)} stroke="var(--border)" strokeWidth="1" />
+        ))}
+        <path d={`${line} L${xs[xs.length - 1].toFixed(1)} ${H - PAD} L${xs[0].toFixed(1)} ${H - PAD} Z`}
+          fill="var(--primary)" opacity=".06" />
+        <path d={line} fill="none" stroke="var(--primary)" strokeWidth="2"
+          strokeLinecap="round" strokeLinejoin="round" />
+        {points.map((p, i) => (
+          <circle key={i} cx={xs[i]} cy={ys[i]} r="3" fill="var(--primary)" />
+        ))}
+      </svg>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+        {points.map((p, i) => (
+          <span key={i} className="vmuted2" style={{ fontSize: 11.5 }}>{p.label}</span>
+        ))}
+      </div>
+      <div className="vmuted2" style={{ marginTop: 6, fontSize: 11.5, lineHeight: 1.7 }}>
+        基于 {forget.total_reviewed_cards} 张已复习卡片 · 掌握度 0–1 越高记得越牢，随复习次数积累曲线会更准确。
+      </div>
+    </div>
   );
 }
 

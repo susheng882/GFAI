@@ -98,7 +98,7 @@ async def lifespan(app: FastAPI):
 
 _IS_PROD = settings.APP_ENV.lower() in ("prod", "production", "live")
 app = FastAPI(
-    title="GFLC API", version="0.2.0", lifespan=lifespan,
+    title="GFLC API", version="1.0.0", lifespan=lifespan,
     # 接口文档挪到 /api/docs：/docs 已被前端「文档」页面占用，dev 下会被 Swagger 抢走路由
     docs_url=None if _IS_PROD else "/api/docs",
     redoc_url=None if _IS_PROD else "/api/redoc",

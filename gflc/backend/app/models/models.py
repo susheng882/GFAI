@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-"""核心数据模型（P0 建 7 张表；plan/review/error_case 进 P1 迁移补）。
-每个 chunk/card/question 都带溯源字段（页码/时间戳），这是产品可信度的地基。"""
+"""核心数据模型（当前 22 张表，迁移链 0001–0011）。
+每个 chunk/card/question 都带溯源字段（页码/时间戳），这是产品可信度的地基。
+
+历史注：早期 P0 仅 7 张表，plan/review 等经 0002/0008 等迁移补入；注释中曾提到的
+error_case 表未落地（已被 attempts + audit_logs 覆盖），特此澄清避免误导。"""
 from datetime import datetime
 
 from sqlalchemy import (JSON, DateTime, Float, ForeignKey, Index, Integer, String,
@@ -41,7 +44,7 @@ class Task(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     document_id: Mapped[int | None] = mapped_column(ForeignKey("documents.id"), nullable=True, index=True)
-    type: Mapped[str] = mapped_column(String(32))  # pdf_parse / video_parse / card_generate ...
+    type: Mapped[str] = mapped_column(String(32))  # pdf_parse / card_generate / question_import / plan_generate / video_upload / video_url / dashboard_generate
     status: Mapped[str] = mapped_column(String(16), default="pending")  # pending/running/ready/failed
     progress: Mapped[int] = mapped_column(Integer, default=0)
     error_code: Mapped[str | None] = mapped_column(String(32), nullable=True)

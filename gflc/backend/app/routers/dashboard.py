@@ -160,6 +160,66 @@ async def heatmap(days: int = 365, user=Depends(get_current_user),
     return {"ok": True, "data": build_heatmap(span, review_rows, quiz_rows, today=today)}
 
 
+@router.get("/forgetting")
+async def forgetting(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """遗忘曲线：按「当前回忆成功率 vs 距上次复习的天数」聚合。
+
+    口径：
+    - x 轴 = 距离上次评分的天数（1/2/3/7/14/30 分桶）
+    - y 轴 = 该桶内卡片的平均掌握度（0–1），代表「隔了这么多天还记得多少」
+
+    注意：当前数据很薄（复习日志少），返回点会很少甚至为空；前端应展示 0 数据
+    形态而非空图。随复习次数积累，曲线会自然成型。
+    """
+    buckets = [1, 2, 3, 7, 14, 30]
+    now = datetime.now(timezone.utc)
+
+    # 每张卡：最近一次评分时间 + 当前掌握度。SQL 层取聚合，不捞明细到 Python。
+    last_review = (
+        select(ReviewLog.card_id, func.max(ReviewLog.created_at).label("last_at"))
+        .where(ReviewLog.user_id == user.id, ReviewLog.rating >= 0)
+        .group_by(ReviewLog.card_id)
+    ).subquery()
+
+    rows = db.execute(
+        select(Card.mastery, last_review.c.last_at)
+        .join(last_review, last_review.c.card_id == Card.id)
+        .where(Card.user_id == user.id)
+    ).all()
+
+    # 分桶聚合：距上次评分天数 → 平均掌握度
+    points: list[dict] = []
+    for b in buckets:
+        upper = buckets[-1] * 365  # 最后一个桶上界放宽
+        lo, hi = (buckets[buckets.index(b) - 1] + 1) if buckets.index(b) > 0 else 1, b
+        vals = []
+        for m, last_at in rows:
+            if last_at is None:
+                continue
+            # last_at 可能是 naive（SQLite）或 aware（PostgreSQL），统一转 aware 再相减
+            if last_at.tzinfo is None:
+                last_at = last_at.replace(tzinfo=timezone.utc)
+            days = (now - last_at).days
+            if days <= 0:
+                days = 0
+            if buckets.index(b) == 0 and days <= 1:
+                vals.append(float(m or 0))
+            elif buckets.index(b) > 0 and buckets[buckets.index(b) - 1] < days <= b:
+                vals.append(float(m or 0))
+        if vals:
+            points.append({
+                "label": f"≤{b}天" if buckets.index(b) == 0 else f"{buckets[buckets.index(b)-1]+1}–{b}天",
+                "days": b, "avg_mastery": round(sum(vals) / len(vals), 3),
+                "cards": len(vals),
+            })
+
+    return {"ok": True, "data": {
+        "points": points,
+        "total_reviewed_cards": len(rows),
+        "note": "掌握度 0–1 越高记得越牢；数据随复习积累而充实",
+    }}
+
+
 @router.get("/today")
 async def today(limit: int | None = None, user=Depends(get_current_user),
                 db: Session = Depends(get_db)):
