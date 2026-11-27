@@ -558,3 +558,23 @@
   border-radius: 3px; text-align: center; font-weight: 500; }
 .gblank-on { color: var(--primary); background: var(--primary-soft, #eaf1f5); }
 .grec:last-child { border-bottom: none !important; }
+
+/* ---------- 顶栏搜索框（v7l） ---------- */
+.topbar-search {
+  display: flex; align-items: center; gap: 8px; width: 100%; max-width: 260px;
+  height: 30px; padding: 0 10px; border: 1px solid var(--line);
+  border-radius: var(--r-8); background: var(--base-100);
+  cursor: pointer; font-size: 11.5px; color: var(--ink-muted);
+  transition: border-color var(--t-fast) var(--ease-out), box-shadow var(--t-fast) var(--ease-out);
+}
+.topbar-search:hover { border-color: var(--primary-line); box-shadow: var(--sh-card); }
+.topbar-search-ph { flex: 1; text-align: left; }
+.topbar-search-kbd {
+  font-family: var(--mono); font-size: 10px; padding: 1px 5px;
+  border: 1px solid var(--line); border-radius: var(--r-5); color: var(--ink-faint);
+}
+.topbar-user { font-size: 12px; color: var(--ink-subtle); white-space: nowrap; }
+@media (max-width: 860px) {
+  .topbar-search-kbd, .topbar-user { display: none; }
+  .topbar-search { max-width: 150px; }
+}

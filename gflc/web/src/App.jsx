@@ -5,10 +5,11 @@ import {
   FileTextOutlined, CreditCardOutlined, VideoCameraOutlined,
   MessageOutlined, UnorderedListOutlined, CalendarOutlined,
   MenuFoldOutlined, MenuUnfoldOutlined, MenuOutlined, LogoutOutlined,
-  MoonOutlined, SunOutlined, SettingOutlined, SearchOutlined,
+  MoonOutlined, SunOutlined, SettingOutlined, SearchOutlined, BellOutlined,
 } from '@ant-design/icons';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { api } from './api.js';
+import { gflcTheme, gflcDarkTheme } from './theme.jsx';
 import AuthPage from './pages/AuthPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import DocumentsPage from './pages/DocumentsPage.jsx';
@@ -68,6 +69,12 @@ function CommandPalette({ open, onClose, navigate, dark, onToggleDark }) {
   const [sel, setSel] = useState(0);
   const inputRef = useRef(null);
   const cmds = useMemo(() => [
+    { key: 'act-recite', label: '开始背诵', hint: '动作',
+      run: () => navigate('/study?mode=recite') },
+    { key: 'act-train', label: '继续训练', hint: '动作',
+      run: () => navigate('/study') },
+    { key: 'act-video', label: '解析视频', hint: '动作',
+      run: () => navigate('/video') },
     ...NAV_GROUPS.flatMap((g) => g.items.map((it) => ({
       key: 'go:' + it.key, label: '前往 ' + it.name, hint: '页面',
       run: () => navigate('/' + it.key),
@@ -216,6 +223,24 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
             </button>
             <div><h1>{title[0]}</h1><div className="sub">{title[1]}</div></div>
           </div>
+          <div className="row" style={{ gap: 8, flex: 1, justifyContent: 'center', maxWidth: 480 }}>
+            {/* 顶栏常驻全局搜索：点击打开命令面板（原型 v7l 形态） */}
+            <button className="topbar-search" onClick={openCmd} title="搜索（⌘K）">
+              <SearchOutlined style={{ fontSize: 13, color: 'var(--ink-muted)' }} />
+              <span className="topbar-search-ph">搜索资料、卡片、题目</span>
+              <span className="topbar-search-kbd">⌘K</span>
+            </button>
+            <button className="gflc-nav-item" style={{ width: 30, height: 30, padding: 0, justifyContent: 'center' }} title="通知">
+              <BellOutlined />
+            </button>
+          </div>
+          <div className="row" style={{ gap: 6, width: 260, justifyContent: 'flex-end' }}>
+            <span className="topbar-user">{user?.email?.split('@')[0] || '同学'}</span>
+            <button className="gflc-nav-item" style={{ width: 30, height: 30, padding: 0, justifyContent: 'center' }}
+              onClick={onLogout} title="退出登录">
+              <LogoutOutlined />
+            </button>
+          </div>
         </header>
         <div className="gflc-content page-in">
           <Routes>
@@ -279,27 +304,10 @@ export default function App() {
   };
   // 必须 memo：ConfigProvider 每次收到新 theme 对象都会重算 token 并触发内部 setState，
   // 未 memo 时与 React 19 组合会直接撞上 "Maximum update depth exceeded"（#185）白屏。
+  // 苹果白主题（v7l 对齐）统一在 theme.jsx 维护。
   const antdConfig = useMemo(() => ({
     algorithm: dark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
-    token: {
-      colorPrimary: dark ? '#8ab4d0' : '#1f4d6b',
-      colorBgBase: dark ? '#0f0e0c' : '#f7f4ee',
-      colorBgContainer: dark ? '#1c1915' : '#fdfbf7',
-      colorText: dark ? '#ece5d8' : '#1f1b16',
-      colorTextSecondary: dark ? '#bcb3a3' : '#4a4238',
-      colorBorder: dark ? 'rgba(236,229,216,.13)' : 'rgba(31,27,22,.14)',
-      colorSuccess: dark ? '#6fb08c' : '#2f6b4f',
-      colorWarning: dark ? '#d8ab63' : '#8a6220',
-      colorError: dark ? '#e0776d' : '#a8322c',
-      borderRadius: 8,
-      fontSize: 13.5,
-      fontFamily: '"PingFang SC","Microsoft YaHei UI","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
-      controlHeight: 34,
-    },
-    components: {
-      Table: { headerBg: 'transparent', headerColor: 'var(--muted-foreground)', rowHoverBg: 'var(--accent)' },
-      Tabs: { horizontalItemGutter: 18 },
-    },
+    ...(dark ? gflcDarkTheme : gflcTheme),
   }), [dark]);
   return (
     <ConfigProvider theme={antdConfig}>

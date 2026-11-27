@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import { api, downloadText } from '../api.js';
 import { esc } from '../utils.js';
+import { TrendChart, BarsChart } from '../components/charts/index.jsx';
 
 /* 设置中心（对标 BiliNote）：供应商 / 模型 / 转录器 / Cookie / 诊断 / 监控。
    所有密钥由后端加密存储，这里只会看到掩码。 */
@@ -592,11 +593,11 @@ export default function SettingsPage() {
               <div className="row" style={{ gap: 12, flexWrap: 'wrap' }}>
                 <div className="v3-card" style={{ flex: '1 1 320px', padding: 14 }}>
                   <div className="v3-sh">近 7 天用量趋势</div>
-                  <MonitorTrend series={mon.cost_series || []} />
+                  <TrendChart data={mon.cost_series || []} />
                 </div>
                 <div className="v3-card" style={{ flex: '1 1 260px', padding: 14 }}>
                   <div className="v3-sh">模型调用分布</div>
-                  <MonitorBars models={mon.model_usage || []} />
+                  <BarsChart data={(mon.model_usage || []).map((m) => ({ label: (m.model || '').slice(0, 14), value: m.calls }))} />
                 </div>
               </div>
 
@@ -816,70 +817,6 @@ export default function SettingsPage() {
           </Form>
         )}
       </Modal>
-    </div>
-  );
-}
-
-
-/* 近 7 天用量趋势：双线（成本 / tokens），内联 SVG，无第三方依赖 */
-function MonitorTrend({ series }) {
-  const W = 520, H = 150, PAD_L = 40, PAD_R = 12, PAD_T = 14, PAD_B = 26;
-  if (!series || series.length < 2) {
-    return <div className="vmuted2" style={{ padding: '24px 0', textAlign: 'center' }}>数据不足，再跑几次模型调用就会画出来</div>;
-  }
-  const maxTok = Math.max(1, ...series.map((p) => +p.tokens || 0));
-  const maxCost = Math.max(1, ...series.map((p) => +p.cost || 0));
-  const n = series.length;
-  const X = (i) => PAD_L + i * ((W - PAD_L - PAD_R) / (n - 1));
-  const Ytok = (v) => H - PAD_B - (+v / maxTok) * (H - PAD_T - PAD_B);
-  const Ycost = (v) => H - PAD_B - (+v / maxCost) * (H - PAD_T - PAD_B);
-  const lineTok = series.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)} ${Ytok(+p.tokens || 0).toFixed(1)}`).join(' ');
-  const lineCost = series.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)} ${Ycost(+p.cost || 0).toFixed(1)}`).join(' ');
-  return (
-    <div>
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="150" preserveAspectRatio="none">
-        {[0, 0.5, 1].map((t) => (
-          <line key={t} x1={PAD_L} y1={(H - PAD_B - t * (H - PAD_T - PAD_B)).toFixed(1)}
-            x2={W - PAD_R} y2={(H - PAD_B - t * (H - PAD_T - PAD_B)).toFixed(1)}
-            stroke="var(--border)" strokeWidth="1" />
-        ))}
-        <path d={lineTok} fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d={lineCost} fill="none" stroke="var(--warning, #8a6220)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="5 3" />
-        {series.map((p, i) => (
-          <circle key={i} cx={X(i)} cy={Ytok(+p.tokens || 0)} r="2.5" fill="var(--primary)" />
-        ))}
-      </svg>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--muted)' }}>
-        {series.map((p, i) => <span key={i}>{p.day.slice(5)}</span>)}
-      </div>
-      <div style={{ display: 'flex', gap: 16, marginTop: 6, fontSize: 12 }}>
-        <span><i style={{ display: 'inline-block', width: 14, height: 2, background: 'var(--primary)', verticalAlign: 'middle', marginRight: 4 }} />tokens（左）</span>
-        <span><i style={{ display: 'inline-block', width: 14, height: 2, borderTop: '2px dashed #8a6220', verticalAlign: 'middle', marginRight: 4 }} />成本（右，最大 {maxCost} 元）</span>
-      </div>
-    </div>
-  );
-}
-
-/* 模型调用分布：横向条形（调用次数），内联 SVG */
-function MonitorBars({ models }) {
-  if (!models || models.length === 0) {
-    return <div className="vmuted2" style={{ padding: '24px 0', textAlign: 'center' }}>还没有调用记录</div>;
-  }
-  const maxCalls = Math.max(1, ...models.map((m) => +m.calls || 0));
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {models.slice(0, 8).map((m) => (
-        <div key={m.model}>
-          <div className="row between" style={{ fontSize: 11.5, marginBottom: 2 }}>
-            <span className="ellipsis" style={{ maxWidth: 200 }} title={m.model}>{m.model}</span>
-            <span className="vmuted2">{m.calls} 次</span>
-          </div>
-          <div style={{ height: 8, background: 'var(--bg, #eee9df)', borderRadius: 4, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((+m.calls / maxCalls) * 100)}%`,
-              background: 'var(--primary)', borderRadius: 4 }} />
-          </div>
-        </div>
-      ))}
     </div>
   );
 }
