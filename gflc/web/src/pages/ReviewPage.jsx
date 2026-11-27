@@ -71,6 +71,7 @@ export default function ReviewPage() {
   const [editCard, setEditCard] = useState(null);
   const [editSaving, setEditSaving] = useState(false);
   const [deferBusy, setDeferBusy] = useState(false);
+  const [wallOpen, setWallOpen] = useState(false);   // 卡片墙（v7l recite 对齐）
   // id → 掌握度真值（0–1）。现在 /review/due 直接返回 mastery，这里只记录本会话
   // 标记过掌握的卡，用于「取消掌握」入口判断（无需再拉 500 张卡）
   const [masteryMap, setMasteryMap] = useState({});
@@ -288,6 +289,74 @@ export default function ReviewPage() {
         )}
         {!queue.total && !queue.loading && (
           <div className="queue-zero">今日暂无队列，去背诵页挑一个卡包开始</div>
+        )}
+      </div>
+
+      {/* v7l 卡片墙：到期卡总览（编号+标题+章节+时间），点击进单卡 */}
+      <div className="v3-card" style={{ marginBottom: 12, padding: '12px 16px' }}>
+        <div className="row between" style={{ marginBottom: wallOpen ? 10 : 0 }}>
+          <span style={{ fontSize: 12, fontWeight: 500 }}>卡片墙<span className="meta" style={{ marginLeft: 8, color: 'var(--muted-foreground)', fontSize: 11 }}>
+            {due.length} 张 · 到期卡总览
+          </span></span>
+          <Button size="small" type="text" onClick={() => setWallOpen(!wallOpen)}>
+            {wallOpen ? '收起' : '展开'}
+          </Button>
+        </div>
+        {wallOpen && (
+          <div className="g4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
+            {due.slice(0, 16).map((d, i) => (
+              <div key={d.id} className="rc-card" style={{ padding: 12, cursor: 'pointer' }}
+                onClick={() => { setDue((arr) => arr.slice(0, 1).concat(arr.filter((x) => x.id !== d.id))); }}>
+                <div className="row between" style={{ marginBottom: 6 }}>
+                  <span className="num" style={{ fontSize: 10.5, color: 'var(--primary)' }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span className="vmuted2" style={{ fontSize: 10 }}>
+                    {d.due_at ? new Date(d.due_at).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '今天'}
+                  </span>
+                </div>
+                <div style={{ fontSize: 12, fontWeight: 500, lineHeight: 1.5, marginBottom: 6,
+                  overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                  {esc(d.question || '复习卡片')}
+                </div>
+                <div className="vmuted2" style={{ fontSize: 10.5 }}>
+                  {esc(d.chapter || d.tag || '未分章')} · 第 {d.reps + 1} 轮
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* v7l 卡片墙：到期卡总览（编号+标题+章节+时间），点击进单卡 */}
+      <div className="v3-card" style={{ marginBottom: 12, padding: '12px 16px' }}>
+        <div className="row between" style={{ marginBottom: wallOpen ? 10 : 0 }}>
+          <span style={{ fontSize: 12, fontWeight: 500 }}>卡片墙<span className="meta" style={{ marginLeft: 8, color: 'var(--muted-foreground)', fontSize: 11 }}>
+            {due.length} 张 · 到期卡总览
+          </span></span>
+          <Button size="small" type="text" onClick={() => setWallOpen(!wallOpen)}>
+            {wallOpen ? '收起' : '展开'}
+          </Button>
+        </div>
+        {wallOpen && (
+          <div className="g4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
+            {due.slice(0, 16).map((d, i) => (
+              <div key={d.id} className="rc-card" style={{ padding: 12, cursor: 'pointer' }}
+                onClick={() => { setDue((arr) => arr.slice(0, 1).concat(arr.filter((x) => x.id !== d.id))); }}>
+                <div className="row between" style={{ marginBottom: 6 }}>
+                  <span className="num" style={{ fontSize: 10.5, color: 'var(--primary)' }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span className="vmuted2" style={{ fontSize: 10 }}>
+                    {d.due_at ? new Date(d.due_at).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '今天'}
+                  </span>
+                </div>
+                <div style={{ fontSize: 12, fontWeight: 500, lineHeight: 1.5, marginBottom: 6,
+                  overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                  {esc(d.question || '复习卡片')}
+                </div>
+                <div className="vmuted2" style={{ fontSize: 10.5 }}>
+                  {esc(d.chapter || d.tag || '未分章')} · 第 {d.reps + 1} 轮
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
 

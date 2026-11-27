@@ -92,6 +92,41 @@ async def create_document(body: dict, user=Depends(get_current_user), db: Sessio
     return {"ok": True, "data": {"document": DocumentOut.model_validate(doc).model_dump(), "dedup": False}}
 
 
+@router.get("/groups")
+async def list_groups(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """资料分组树（v7l 左树）：按来源类型 + 学科关键词聚合，不迁移数据库。
+
+    返回 [{name, count, children:[{name, count}]}]，学科由标题关键词推断。
+    """
+    docs = [
+        d for d in crud.list_documents(db, user.id)
+        if d.source_type != "question_bank"
+        and not str(d.content_hash or "").startswith("qa-collection-")
+    ]
+    SUBJECTS = [
+        ("专业课", ["408", "数据结构", "操作系统", "组成原理", "计算机网络", "计算机"]),
+        ("数学", ["数学", "高数", "线代", "概率"]),
+        ("英语", ["英语", "词汇", "阅读", "作文"]),
+        ("政治", ["政治", "毛概", "马原", "思修"]),
+    ]
+    groups = []
+    for gname, keys in SUBJECTS:
+        children = []
+        for key in keys:
+            n = sum(1 for d in docs if key in (d.title or ""))
+            if n:
+                children.append({"name": key, "count": n})
+        total = sum(c["count"] for c in children)
+        if total:
+            groups.append({"name": gname, "count": total, "children": children})
+    # 未归类的进「其他」
+    matched = sum(g["count"] for g in groups)
+    other = len(docs) - matched
+    if other > 0:
+        groups.append({"name": "其他", "count": other, "children": []})
+    return {"ok": True, "data": {"groups": groups, "total": len(docs),
+            "size_bytes": sum(d.size or 0 for d in docs)}}
+
 @router.get("")
 async def list_documents(user=Depends(get_current_user), db: Session = Depends(get_db)):
     # 题库文件在「题库」页管理，不在资料列表里重复出现；

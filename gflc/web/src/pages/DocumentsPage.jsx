@@ -11,6 +11,9 @@ export default function DocumentsPage() {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const [viewMode, setViewMode] = useState(localStorage.getItem('gflc_docs_view') || 'list');
+  const [groups, setGroups] = useState(null);          // 左树分组
+  const [filterGroup, setFilterGroup] = useState('');  // 当前筛选分组
+  const [search, setSearch] = useState('');            // 搜索词
   const [docs, setDocs] = useState([]);
   const [notes, setNotes] = useState([]);
   const [busy, setBusy] = useState(false);
@@ -22,6 +25,8 @@ export default function DocumentsPage() {
   const [paperBusy, setPaperBusy] = useState(false);
   const fileRef = useRef(null);
 
+  const loadGroups = () => api('/documents/groups').then((r) => setGroups(r)).catch(() => setGroups(null));
+  useEffect(() => { loadGroups(); }, []);
   const load = useCallback(async () => {
     const [d, n] = await Promise.allSettled([api('/documents'), api('/notes')]);
     setDocs(d.status === 'fulfilled' ? d.value || [] : []);
@@ -178,8 +183,50 @@ export default function DocumentsPage() {
     } },
   ];
 
+  /* 按分组/搜索过滤 */
+  const shown = docs.filter((d) => {
+    if (filterGroup) {
+      const g = (groups?.groups || []).find((x) => x.name === filterGroup);
+      if (!g) return true;
+      const keys = (g.children || []).map((c) => c.name);
+      return keys.some((k) => (d.title || '').includes(k));
+    }
+    if (search) return (d.title || '').toLowerCase().includes(search.toLowerCase());
+    return true;
+  });
+
   return (
-    <div>
+    <div style={{ display: 'flex', gap: 12, alignItems: 'start' }}>
+      {/* 左树（v7l 分组） */}
+      <aside className="rc-card" style={{ width: 200, flexShrink: 0, padding: '10px 8px', position: 'sticky', top: 60 }}>
+        <div style={{ fontSize: 11, fontWeight: 500, color: 'var(--muted-foreground)', padding: '4px 8px 8px' }}>
+          资料库{groups ? ` · ${groups.total}` : ''}
+        </div>
+        <div className="ft-row" style={{ padding: '6px 8px', borderRadius: 6, cursor: 'pointer',
+          background: filterGroup === '' ? 'var(--secondary)' : 'transparent', fontSize: 11.5 }}
+          onClick={() => setFilterGroup('')}>
+          全部资料 <span className="num vmuted2" style={{ float: 'right' }}>{groups?.total ?? docs.length}</span>
+        </div>
+        {(groups?.groups || []).map((g) => (
+          <div key={g.name}>
+            <div className="ft-row" style={{ padding: '6px 8px', borderRadius: 6, cursor: 'pointer',
+              background: filterGroup === g.name ? 'var(--secondary)' : 'transparent',
+              fontSize: 11.5, fontWeight: filterGroup === g.name ? 500 : 400 }}
+              onClick={() => setFilterGroup(filterGroup === g.name ? '' : g.name)}>
+              {g.name} <span className="num vmuted2" style={{ float: 'right' }}>{g.count}</span>
+            </div>
+            {(g.children || []).map((c) => (
+              <div key={c.name} style={{ padding: '4px 8px 4px 18px', fontSize: 11, color: 'var(--muted-foreground)', cursor: 'pointer' }}
+                onClick={() => { setFilterGroup(g.name); setSearch(c.name); }}>
+                {c.name} <span className="num" style={{ float: 'right' }}>{c.count}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </aside>
+
+      {/* 右主区 */}
+      <div style={{ flex: 1, minWidth: 0 }}>
       <div className="vmuted2" style={{ marginBottom: 10 }}>
         这里是「教材/讲义」解析 → 生成笔记与背诵卡片；要导入真题试卷练题，请去 <a onClick={() => navigate('/banks')} style={{ color: 'var(--primary)', cursor: 'pointer' }}>题库页</a>
       </div>
@@ -231,7 +278,7 @@ export default function DocumentsPage() {
         </div>
       ) : (
         <div className="card" style={{ padding: '6px 14px' }}>
-          <Table rowKey="id" columns={columns} dataSource={docs} size="small" pagination={false}
+          <Table rowKey="id" columns={columns} dataSource={shown} size="small" pagination={false}
             scroll={{ x: 'max-content' }}
             locale={{ emptyText: '还没有资料，上传一份 PDF 开始。' }} />
         </div>
@@ -269,6 +316,7 @@ export default function DocumentsPage() {
             onChange={(v) => setPaperCount(v || 10)} style={{ width: 80 }} />
         </div>
       </Modal>
+      </div>
     </div>
   );
 }

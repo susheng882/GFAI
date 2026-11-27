@@ -95,6 +95,68 @@ export default function AchievementsPage() {
           ))}
         </div>
       </div>
+
+      {/* 今日任务（v7l 成长记录区）：mock 数据，勾选回写计划 */}
+      <div className="rc-card" style={{ padding: 16, marginTop: 12 }}>
+        <div className="row between" style={{ marginBottom: 10 }}>
+          <div className="v3-sh" style={{ marginBottom: 0 }}>今日任务<span className="meta">3/6</span></div>
+          <Button size="small" type="text">去计划</Button>
+        </div>
+        {[
+          { t: '背 20 张到期卡', kind: '背诵', time: '08:30', done: true },
+          { t: '解析「TCP 拥塞控制」并生成笔记', kind: '视频', time: '09:30', done: true },
+          { t: '复盘昨日错题 3 道', kind: '错题', time: '10:20', done: true },
+          { t: '2019 真题选择题 40 题', kind: '刷题', time: '14:00', done: false },
+          { t: '整理「TCP 拥塞控制」笔记', kind: '笔记', time: '17:00', done: false },
+          { t: '睡前轻量复习 10 张卡', kind: '背诵', time: '22:00', done: false },
+        ].map((task, i) => (
+          <div key={i} className="row" style={{ gap: 10, padding: '8px 0', borderBottom: '1px solid var(--line-soft)' }}>
+            <span style={{ width: 14, height: 14, borderRadius: 4, flexShrink: 0,
+              border: `1.5px solid ${task.done ? 'var(--success)' : 'var(--line-strong, var(--input))'}`,
+              background: task.done ? 'var(--success)' : 'transparent', color: '#fff',
+              fontSize: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              {task.done ? '✓' : ''}
+            </span>
+            <span style={{ flex: 1, fontSize: 12.5,
+              textDecoration: task.done ? 'line-through' : 'none',
+              color: task.done ? 'var(--muted-foreground)' : 'var(--ink)' }}>{task.t}</span>
+            <span style={{ fontSize: 10.5, padding: '1px 8px', borderRadius: 99,
+              background: 'var(--secondary)', color: 'var(--muted-foreground)' }}>{task.kind}</span>
+            <span className="num vmuted2" style={{ fontSize: 11 }}>{task.time}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* 今日任务（v7l 成长记录区）：mock 数据，勾选回写计划 */}
+      <div className="rc-card" style={{ padding: 16, marginTop: 12 }}>
+        <div className="row between" style={{ marginBottom: 10 }}>
+          <div className="v3-sh" style={{ marginBottom: 0 }}>今日任务<span className="meta">3/6</span></div>
+          <Button size="small" type="text">去计划</Button>
+        </div>
+        {[
+          { t: '背 20 张到期卡', kind: '背诵', time: '08:30', done: true },
+          { t: '解析「TCP 拥塞控制」并生成笔记', kind: '视频', time: '09:30', done: true },
+          { t: '复盘昨日错题 3 道', kind: '错题', time: '10:20', done: true },
+          { t: '2019 真题选择题 40 题', kind: '刷题', time: '14:00', done: false },
+          { t: '整理「TCP 拥塞控制」笔记', kind: '笔记', time: '17:00', done: false },
+          { t: '睡前轻量复习 10 张卡', kind: '背诵', time: '22:00', done: false },
+        ].map((task, i) => (
+          <div key={i} className="row" style={{ gap: 10, padding: '8px 0', borderBottom: '1px solid var(--line-soft)' }}>
+            <span style={{ width: 14, height: 14, borderRadius: 4, flexShrink: 0,
+              border: `1.5px solid ${task.done ? 'var(--success)' : 'var(--line-strong, var(--input))'}`,
+              background: task.done ? 'var(--success)' : 'transparent', color: '#fff',
+              fontSize: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              {task.done ? '✓' : ''}
+            </span>
+            <span style={{ flex: 1, fontSize: 12.5,
+              textDecoration: task.done ? 'line-through' : 'none',
+              color: task.done ? 'var(--muted-foreground)' : 'var(--ink)' }}>{task.t}</span>
+            <span style={{ fontSize: 10.5, padding: '1px 8px', borderRadius: 99,
+              background: 'var(--secondary)', color: 'var(--muted-foreground)' }}>{task.kind}</span>
+            <span className="num vmuted2" style={{ fontSize: 11 }}>{task.time}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

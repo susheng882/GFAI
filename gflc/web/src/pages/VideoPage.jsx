@@ -422,6 +422,27 @@ export default function VideoPage() {
 
   return (
     <div className="vpage">
+      {/* v7l 视频徽标行：标题 + BV/分辨率/已切段/卡片数 徽标 */}
+      {docId && (
+        <div className="row" style={{ gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 13, fontWeight: 500, marginRight: 4 }}>{esc(title || '未命名视频')}</span>
+          {keypoints.length > 0 && (
+            <span style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 99, background: 'var(--primary-soft)', color: 'var(--primary)' }}>
+              已切 {keypoints.length} 段
+            </span>
+          )}
+          {transcript.length > 0 && (
+            <span style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 99, background: 'var(--secondary)', color: 'var(--muted-foreground)' }}>
+              ASR 转写 {transcript.length} 条
+            </span>
+          )}
+          {notes.length > 0 && (
+            <span style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 99, background: 'var(--secondary)', color: 'var(--muted-foreground)' }}>
+              {notes.length} 笔记
+            </span>
+          )}
+        </div>
+      )}
       <div className="vsteps" style={{ flexWrap: 'wrap' }}>
         {steps.map((s, i) => (
           <div key={s.k} className={'vstep' + (s.done ? ' on' : '')}>
@@ -504,7 +525,14 @@ export default function VideoPage() {
           </div>
 
           <div className="v3-card vpad">
-            <div className="v3-sh">关键点<span className="meta">{keypoints.length} 个</span></div>
+            <div className="v3-sh">时间轴<span className="meta">{keypoints.length} 段</span></div>
+            {keypoints.length > 0 && (
+              <div className="row" style={{ gap: 6, marginBottom: 6 }}>
+                <Button size="small" type="text" style={{ fontSize: 10.5 }}>全选</Button>
+                <Button size="small" type="text" style={{ fontSize: 10.5 }}>反选</Button>
+                <Button size="small" type="text" style={{ fontSize: 10.5 }}>仅未学</Button>
+              </div>
+            )}
             {keypoints.length ? (
               <div className="vkps">
                 {keypoints.map((k, i) => (
