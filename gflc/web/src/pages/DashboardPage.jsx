@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { App as AntdApp, Button, Segmented, Tag, Upload } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { api, runTask } from '../api.js';
+import { TrendChart } from '../components/charts/index.jsx';
 import { esc, fmtTime, isTodayTask, reviewsText } from '../utils.js';
 import TodayQueue from '../components/TodayQueue.jsx';
 import LoopStatus from '../components/LoopStatus.jsx';
@@ -201,6 +202,16 @@ export default function DashboardPage() {
             ))}
           </section>
 
+          {/* ── v7l 系统信息卡 + AI 用量卡（批次2 对齐）── */}
+          <section className="v3-card v3-c6">
+            <div className="v3-sh">系统信息<span className="meta">本地运行</span></div>
+            <SysInfo mon={mon} />
+          </section>
+          <section className="v3-card v3-c6">
+            <div className="v3-sh">AI 用量<span className="meta">近 7 天</span></div>
+            <AiUsage mon={mon} />
+          </section>
+
           <section className="v3-card v3-c6">
             <div className="v3-sh">快速上传<span className="meta">PDF / Word / MD · 自动解析分卡</span></div>
             <div className="drop" onClick={() => fileRef.current?.click()}
@@ -221,6 +232,51 @@ export default function DashboardPage() {
 function Metric({ k, v, unit, d }) {
   return (
     <div className="m"><div className="k">{k}</div><div className="v">{v}<small>{unit}</small></div><div className="d">{d}</div></div>
+  );
+}
+
+/* v7l 系统信息卡：队列/并发/今日用量四行 + 状态徽标 */
+function SysInfo({ mon }) {
+  if (!mon) return <div className="vmuted2" style={{ padding: '20px 0' }}>加载中…</div>;
+  const w = mon.worker || {};
+  const rows = [
+    { k: '队列 / 视频并发', v: `${w.queue_size ?? 0} / ${w.video_workers ?? 0}` },
+    { k: '今日模型调用', v: mon.today?.calls ?? 0 },
+    { k: '今日成本', v: `¥${mon.today?.cost ?? 0}` },
+    { k: '今日 tokens', v: (mon.today?.tokens ?? 0).toLocaleString() },
+  ];
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingTop: 4 }}>
+      {rows.map((r) => (
+        <div className="row between" key={r.k} style={{ padding: '6px 0', borderBottom: '1px solid var(--line-soft, var(--border))' }}>
+          <span className="vmuted2" style={{ fontSize: 11.5 }}>{r.k}</span>
+          <span className="num" style={{ fontSize: 13, fontWeight: 500 }}>{r.v}</span>
+        </div>
+      ))}
+      <div className="row" style={{ gap: 6 }}>
+        <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'var(--success-soft)', color: 'var(--success)' }}>
+          ● {w.alive ? '运行正常' : 'worker 离线'}
+        </span>
+        <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'var(--info-soft)', color: 'var(--primary)' }}>
+          索引已就绪
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* v7l AI 用量卡：近7天趋势 + 今日合计 */
+function AiUsage({ mon }) {
+  if (!mon) return <div className="vmuted2" style={{ padding: '20px 0' }}>加载中…</div>;
+  return (
+    <div style={{ paddingTop: 4 }}>
+      <TrendChart data={mon.cost_series || []} height={140} />
+      <div className="row" style={{ gap: 14, marginTop: 8 }}>
+        <span className="vmuted2" style={{ fontSize: 11 }}>今日 {mon.today?.calls ?? 0} 次</span>
+        <span className="vmuted2" style={{ fontSize: 11 }}>成本 ¥{mon.today?.cost ?? 0}</span>
+        <span className="vmuted2" style={{ fontSize: 11 }}>tokens {(mon.today?.tokens ?? 0).toLocaleString()}</span>
+      </div>
+    </div>
   );
 }
 

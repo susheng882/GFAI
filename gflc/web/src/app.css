@@ -460,7 +460,7 @@
 .sheet-legend .lg-on { background: var(--secondary); border-color: transparent; }
 .sheet-legend .lg-flag { background: var(--warning-soft); border-color: var(--warning); }
 .sheet-legend .lg-cur { background: var(--primary); border-color: var(--primary); }
-.sheet-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; max-height: 46vh; overflow: auto; }
+.sheet-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; max-height: 46vh; overflow: auto; }
 .sheet-cell { position: relative; height: 40px; border: 1px solid var(--border); border-radius: var(--r-md);
   background: transparent; color: var(--muted-foreground); font-family: var(--mono); font-size: 12.5px; cursor: pointer;
   transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
@@ -578,3 +578,121 @@
   .topbar-search-kbd, .topbar-user { display: none; }
   .topbar-search { max-width: 150px; }
 }
+
+/* ---------- AI 伴侣三栏（v7l） ---------- */
+.qa-three { display: flex; gap: 12px; height: calc(100vh - 96px); min-height: 480px; }
+.qa-convs {
+  width: 190px; flex: 0 0 190px; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--sh-card); display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.qa-convs-hd { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--line-soft); }
+.qa-convs-list { flex: 1; overflow-y: auto; padding: 6px; }
+.qa-conv { padding: 8px 10px; border-radius: var(--r-8); cursor: pointer; transition: background var(--t-fast) var(--ease-out); }
+.qa-conv:hover { background: var(--secondary); }
+.qa-conv.on { background: var(--accent); }
+.qa-conv-t { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qa-conv-m { font-size: 10.5px; color: var(--muted-foreground); margin-top: 2px; }
+.qa-three .qa-wrap { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.qa-three .qa-wrap .chat { flex: 1; min-height: 0; }
+.qa-refs {
+  width: 236px; flex: 0 0 236px; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--sh-card); padding: 14px; overflow-y: auto;
+}
+@media (max-width: 1100px) {
+  .qa-refs { display: none; }
+  .qa-convs { width: 150px; flex-basis: 150px; }
+}
+@media (max-width: 860px) {
+  .qa-convs { display: none; }
+  .qa-three { height: auto; min-height: 0; }
+}
+
+/* ---------- AI 伴侣三栏（v7l） ---------- */
+.qa-three { display: flex; gap: 12px; height: calc(100vh - 96px); min-height: 480px; }
+.qa-convs {
+  width: 190px; flex: 0 0 190px; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--sh-card); display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.qa-convs-hd { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--line-soft); }
+.qa-convs-list { flex: 1; overflow-y: auto; padding: 6px; }
+.qa-conv { padding: 8px 10px; border-radius: var(--r-8); cursor: pointer; transition: background var(--t-fast) var(--ease-out); }
+.qa-conv:hover { background: var(--secondary); }
+.qa-conv.on { background: var(--accent); }
+.qa-conv-t { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qa-conv-m { font-size: 10.5px; color: var(--muted-foreground); margin-top: 2px; }
+.qa-three .qa-wrap { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.qa-three .qa-wrap .chat { flex: 1; min-height: 0; }
+.qa-refs {
+  width: 236px; flex: 0 0 236px; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--sh-card); padding: 14px; overflow-y: auto;
+}
+@media (max-width: 1100px) {
+  .qa-refs { display: none; }
+  .qa-convs { width: 150px; flex-basis: 150px; }
+}
+@media (max-width: 860px) {
+  .qa-convs { display: none; }
+  .qa-three { height: auto; min-height: 0; }
+}
+
+/* ---------- 通知抽屉（v7l） ---------- */
+.notif-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 320px; z-index: 60;
+  background: var(--card); box-shadow: var(--sh-float);
+  display: flex; flex-direction: column;
+}
+
+/* ---------- 通知抽屉（v7l） ---------- */
+.notif-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 320px; z-index: 60;
+  background: var(--card); box-shadow: var(--sh-float);
+  display: flex; flex-direction: column;
+}
+
+/* ---------- 工作区切换（v7l） ---------- */
+.ws-switch-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  width: 100%; height: 32px; padding: 0 10px;
+  background: var(--base-100); border: 1px solid var(--line); border-radius: var(--r-8);
+  cursor: pointer; font-size: 12.5px; color: var(--foreground);
+  transition: border-color var(--t-fast) var(--ease-out), box-shadow var(--t-fast) var(--ease-out);
+}
+.ws-switch-btn:hover { border-color: var(--primary-line); box-shadow: var(--sh-card); }
+.ws-menu {
+  position: absolute; top: 36px; left: 0; right: 0; z-index: 40;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  box-shadow: var(--sh-float); padding: 4px;
+}
+.ws-menu-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%; padding: 7px 10px; border: none; background: transparent;
+  border-radius: var(--r-7); cursor: pointer; font-size: 12.5px; color: var(--foreground);
+  text-align: left; transition: background var(--t-fast) var(--ease-out);
+}
+.ws-menu-item:hover { background: var(--secondary); }
+.ws-menu-divider { height: 1px; background: var(--line); margin: 4px 6px; }
+
+/* ---------- 工作区切换（v7l） ---------- */
+.ws-switch-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  width: 100%; height: 32px; padding: 0 10px;
+  background: var(--base-100); border: 1px solid var(--line); border-radius: var(--r-8);
+  cursor: pointer; font-size: 12.5px; color: var(--foreground);
+  transition: border-color var(--t-fast) var(--ease-out), box-shadow var(--t-fast) var(--ease-out);
+}
+.ws-switch-btn:hover { border-color: var(--primary-line); box-shadow: var(--sh-card); }
+.ws-menu {
+  position: absolute; top: 36px; left: 0; right: 0; z-index: 40;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  box-shadow: var(--sh-float); padding: 4px;
+}
+.ws-menu-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%; padding: 7px 10px; border: none; background: transparent;
+  border-radius: var(--r-7); cursor: pointer; font-size: 12.5px; color: var(--foreground);
+  text-align: left; transition: background var(--t-fast) var(--ease-out);
+}
+.ws-menu-item:hover { background: var(--secondary); }
+.ws-menu-divider { height: 1px; background: var(--line); margin: 4px 6px; }

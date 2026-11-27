@@ -5,10 +5,11 @@ import {
   FileTextOutlined, CreditCardOutlined, VideoCameraOutlined,
   MessageOutlined, UnorderedListOutlined, CalendarOutlined,
   MenuFoldOutlined, MenuUnfoldOutlined, MenuOutlined, LogoutOutlined,
-  MoonOutlined, SunOutlined, SettingOutlined, SearchOutlined, BellOutlined,
+  MoonOutlined, SunOutlined, SettingOutlined, SearchOutlined, BellOutlined, TrophyOutlined,
 } from '@ant-design/icons';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { api } from './api.js';
+import { esc } from './utils.js';
 import { gflcTheme, gflcDarkTheme } from './theme.jsx';
 import AuthPage from './pages/AuthPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
@@ -22,6 +23,7 @@ import ReviewPage from './pages/ReviewPage.jsx';
 import QAPage from './pages/QAPage.jsx';
 import VideoPage from './pages/VideoPage.jsx';
 import PlansPage from './pages/PlansPage.jsx';
+import AchievementsPage from './pages/AchievementsPage.jsx';
 import TasksPage from './pages/TasksPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 import TaskDock from './components/TaskDock.jsx';
@@ -33,6 +35,7 @@ const NAV_GROUPS = [
     { key: 'study', name: '学习', icon: <BookOutlined /> },
     { key: 'review', name: '复习', icon: <ClockCircleOutlined /> },
     { key: 'plans', name: '计划', icon: <CalendarOutlined /> },
+    { key: 'growth', name: '成长', icon: <TrophyOutlined /> },
   ] },
   { title: '资料', items: [
     { key: 'docs', name: '资料', icon: <FileTextOutlined /> },
@@ -57,6 +60,7 @@ const TITLES = {
   study: ['学习', '刷题、背诵、错题一页'],
   review: ['复习', '按遗忘曲线安排复习'],
   plans: ['计划', '目标拆解为每日任务，勾选完成'],
+  growth: ['成长', '等级、五维能力、里程碑'],
   qa: ['问答', '先查你的资料，再联网，最后用学科知识'],
   video: ['视频', '链接/上传 → 转写 → 结构化笔记（配图可跳转，大纲为思维导图）'],
   tasks: ['任务', '后台任务与进度'],
@@ -132,10 +136,19 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(localStorage.getItem('gflc_sidebar') === '1');
   const [drawer, setDrawer] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [notifs, setNotifs] = useState([]);
+  const [workspaces, setWorkspaces] = useState([]);
+  const [wsMenuOpen, setWsMenuOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const lastFocusRef = useRef(null);
   const openCmd = useCallback(() => { lastFocusRef.current = document.activeElement; setCmdOpen(true); }, []);
   const closeCmd = useCallback(() => { setCmdOpen(false); setTimeout(() => lastFocusRef.current?.focus?.(), 0); }, []);
+  // 通知：挂载时拉一次；点铃铛时再拉一次（实时算，不落库）
+  const loadNotifs = () => api('/notifications').then((r) => setNotifs(r || [])).catch(() => setNotifs([]));
+  useEffect(() => { loadNotifs(); }, []);
+  const loadWs = () => api('/workspaces').then((r) => setWorkspaces(r || [])).catch(() => setWorkspaces([]));
+  useEffect(() => { loadWs(); }, []);
   // Ctrl/⌘+K 全局可用；Esc 关闭；关闭后焦点回到原输入，避免打断正在输入的页面
   useEffect(() => {
     const onKey = (e) => {
@@ -182,6 +195,82 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </button>
         </div>
+        {!collapsed && (
+          <div className="ws-switch" style={{ position: 'relative', marginBottom: 12 }}>
+            <button className="ws-switch-btn" onClick={() => setWsMenuOpen(!wsMenuOpen)}>
+              <span className="num" style={{ fontWeight: 500, fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {workspaces.find((w) => w.current)?.name || '默认工作区'}
+              </span>
+              <span style={{ fontSize: 10, color: 'var(--muted-foreground)' }}>▼</span>
+            </button>
+            {wsMenuOpen && (
+              <div className="ws-menu pop-in">
+                {workspaces.map((w) => (
+                  <button key={w.id} type="button" className="ws-menu-item"
+                    onClick={async () => {
+                      try {
+                        await api(`/workspaces/${w.id}/current`, { method: 'PATCH' });
+                        await loadWs();
+                        setWsMenuOpen(false);
+                      } catch { /* 静默 */ }
+                    }}>
+                    <span>{esc(w.name)}</span>
+                    {w.current && <span style={{ fontSize: 10, color: 'var(--primary)' }}>✓</span>}
+                  </button>
+                ))}
+                <div className="ws-menu-divider" />
+                <button type="button" className="ws-menu-item"
+                  onClick={async () => {
+                    try {
+                      await api('/workspaces', { method: 'POST', body: JSON.stringify({ name: '新工作区' }) });
+                      await loadWs();
+                      setWsMenuOpen(false);
+                    } catch { /* 静默 */ }
+                  }}>
+                  <span className="vmuted2">+ 新建工作区</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+        {!collapsed && (
+          <div className="ws-switch" style={{ position: 'relative', marginBottom: 12 }}>
+            <button className="ws-switch-btn" onClick={() => setWsMenuOpen(!wsMenuOpen)}>
+              <span className="num" style={{ fontWeight: 500, fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {workspaces.find((w) => w.current)?.name || '默认工作区'}
+              </span>
+              <span style={{ fontSize: 10, color: 'var(--muted-foreground)' }}>▼</span>
+            </button>
+            {wsMenuOpen && (
+              <div className="ws-menu pop-in">
+                {workspaces.map((w) => (
+                  <button key={w.id} type="button" className="ws-menu-item"
+                    onClick={async () => {
+                      try {
+                        await api(`/workspaces/${w.id}/current`, { method: 'PATCH' });
+                        await loadWs();
+                        setWsMenuOpen(false);
+                      } catch { /* 静默 */ }
+                    }}>
+                    <span>{esc(w.name)}</span>
+                    {w.current && <span style={{ fontSize: 10, color: 'var(--primary)' }}>✓</span>}
+                  </button>
+                ))}
+                <div className="ws-menu-divider" />
+                <button type="button" className="ws-menu-item"
+                  onClick={async () => {
+                    try {
+                      await api('/workspaces', { method: 'POST', body: JSON.stringify({ name: '新工作区' }) });
+                      await loadWs();
+                      setWsMenuOpen(false);
+                    } catch { /* 静默 */ }
+                  }}>
+                  <span className="vmuted2">+ 新建工作区</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
         <nav className="gflc-nav">
           {NAV_GROUPS.map((g) => (
             <div className="gflc-nav-group" key={g.title}>
@@ -230,8 +319,13 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
               <span className="topbar-search-ph">搜索资料、卡片、题目</span>
               <span className="topbar-search-kbd">⌘K</span>
             </button>
-            <button className="gflc-nav-item" style={{ width: 30, height: 30, padding: 0, justifyContent: 'center' }} title="通知">
+            <button className="gflc-nav-item" style={{ width: 30, height: 30, padding: 0, justifyContent: 'center', position: 'relative' }}
+              title="通知" onClick={() => { loadNotifs(); setNotifOpen(true); }}>
               <BellOutlined />
+              {notifs.length > 0 && (
+                <span style={{ position: 'absolute', top: 3, right: 3, width: 7, height: 7, borderRadius: 99,
+                  background: 'var(--danger)', border: '2px solid var(--glass-hd, #fff)' }} />
+              )}
             </button>
           </div>
           <div className="row" style={{ gap: 6, width: 260, justifyContent: 'flex-end' }}>
@@ -256,12 +350,38 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
             <Route path="/qa" element={<QAPage />} />
             <Route path="/video" element={<VideoPage />} />
             <Route path="/plans" element={<PlansPage />} />
+            <Route path="/growth" element={<AchievementsPage />} />
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<Navigate to="/dash" replace />} />
           </Routes>
         </div>
       </main>
+      {/* 通知抽屉（v7l）：到期卡片/解析完成/连续达标 */}
+      {notifOpen && (
+        <>
+          <div className="cmd-overlay" onClick={() => setNotifOpen(false)} />
+          <aside className="notif-drawer slide-in" role="dialog" aria-label="通知">
+            <div className="row between" style={{ padding: '14px 16px', borderBottom: '1px solid var(--line-soft)' }}>
+              <span style={{ fontSize: 13, fontWeight: 500 }}>通知</span>
+              <button className="gflc-nav-item" style={{ width: 26, height: 26, padding: 0, justifyContent: 'center' }}
+                onClick={() => setNotifOpen(false)} title="关闭">✕</button>
+            </div>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '8px 16px' }}>
+              {notifs.length ? notifs.map((n, i) => (
+                <div key={i} style={{ padding: '10px 0', borderBottom: '1px solid var(--line-soft)' }}>
+                  <div className="row" style={{ gap: 6, marginBottom: 2 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: 99, flexShrink: 0,
+                      background: n.type === 'due_cards' ? 'var(--primary)' : n.type === 'parse_done' ? 'var(--success)' : 'var(--warning)' }} />
+                    <span style={{ fontSize: 12.5, fontWeight: 500 }}>{esc(n.title)}</span>
+                  </div>
+                  <div className="vmuted2" style={{ fontSize: 11.5, paddingLeft: 12 }}>{esc(n.body)}</div>
+                </div>
+              )) : <div className="vmuted2" style={{ padding: '24px 0', textAlign: 'center', fontSize: 12 }}>暂时没有新通知</div>}
+            </div>
+          </aside>
+        </>
+      )}
       <TaskDock />
       <CommandPalette open={cmdOpen} onClose={closeCmd} navigate={navigate}
         dark={dark} onToggleDark={onToggleDark} />

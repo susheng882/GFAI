@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { App as AntdApp, Button, Input, InputNumber, Modal, Table, Tag, Tooltip, Upload } from 'antd';
+import { App as AntdApp, Button, Input, InputNumber, Modal, Segmented, Table, Tag, Tooltip, Upload } from 'antd';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api, runTask } from '../api.js';
 import { esc, fmtTime } from '../utils.js';
@@ -10,6 +10,7 @@ export default function DocumentsPage() {
   const { message, modal } = AntdApp.useApp();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
+  const [viewMode, setViewMode] = useState(localStorage.getItem('gflc_docs_view') || 'list');
   const [docs, setDocs] = useState([]);
   const [notes, setNotes] = useState([]);
   const [busy, setBusy] = useState(false);
@@ -191,11 +192,46 @@ export default function DocumentsPage() {
         <input ref={fileRef} type="file" accept=".pdf,.docx,.md,.markdown,.txt" hidden
           onChange={(e) => { upload(e.target.files[0]); e.target.value = ''; }} />
       </div>
-      <div className="card" style={{ padding: '6px 14px' }}>
-        <Table rowKey="id" columns={columns} dataSource={docs} size="small" pagination={false}
-          scroll={{ x: 'max-content' }}
-          locale={{ emptyText: '还没有资料，上传一份 PDF 开始。' }} />
+      <div className="row between" style={{ marginBottom: 10 }}>
+        <Segmented size="small"
+          value={viewMode}
+          onChange={(v) => { setViewMode(v); localStorage.setItem('gflc_docs_view', v); }}
+          options={[
+            { label: '列表', value: 'list' },
+            { label: '网格', value: 'grid' },
+          ]} />
+        <span className="vmuted2" style={{ fontSize: 11.5 }}>{docs.length} 份资料</span>
       </div>
+      {viewMode === 'grid' ? (
+        <div className="g3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+          {docs.length ? docs.map((d) => (
+            <div key={d.id} className="rc-card" style={{ padding: 14, cursor: 'pointer' }}
+              onClick={() => navigate(`/docs/${d.id}`)}>
+              <div className="row between" style={{ marginBottom: 8 }}>
+                <Tag color={d.status === 'ready' ? 'success' : d.status === 'failed' ? 'error' : 'processing'}>
+                  {{ pending: '待解析', parsing: '解析中', ready: '就绪', failed: '失败' }[d.status] || d.status}
+                </Tag>
+                <span className="vmuted2" style={{ fontSize: 10.5 }}>
+                  {d.source_type === 'video' ? '视频' : d.source_type === 'note' ? '笔记' : '文档'}
+                </span>
+              </div>
+              <div style={{ fontWeight: 500, fontSize: 13, marginBottom: 6, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {esc(d.title || '未命名')}
+              </div>
+              <div className="row between">
+                <span className="vmuted2" style={{ fontSize: 11 }}>{d.chunks ?? '—'} 切片</span>
+                <span className="vmuted2" style={{ fontSize: 11 }}>{fmtTime(d.updated_at || d.created_at)}</span>
+              </div>
+            </div>
+          )) : <div className="vmuted2" style={{ padding: '40px 0', textAlign: 'center' }}>还没有资料，上传一份 PDF 开始。</div>}
+        </div>
+      ) : (
+        <div className="card" style={{ padding: '6px 14px' }}>
+          <Table rowKey="id" columns={columns} dataSource={docs} size="small" pagination={false}
+            scroll={{ x: 'max-content' }}
+            locale={{ emptyText: '还没有资料，上传一份 PDF 开始。' }} />
+        </div>
+      )}
       {notes.length > 0 && (
         <>
           <h2 style={{ fontSize: 13, fontWeight: 500, color: 'var(--fg-2)', margin: '24px 0 10px' }}>资料下的笔记</h2>

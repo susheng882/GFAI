@@ -526,6 +526,26 @@ export default function VideoPage() {
         </section>
 
         {!rightCollapsed && <section className="vcol-right v3-card">
+          {/* v7l 队列概览：提交中/转写中/排队/完成/失败 五态 */}
+          <div style={{ padding: '10px 12px', borderBottom: '1px solid var(--line-soft)' }}>
+            <div className="row between" style={{ marginBottom: 6 }}>
+              <span style={{ fontSize: 11, fontWeight: 500, color: 'var(--muted-foreground)' }}>队列概览</span>
+            </div>
+            <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
+              {[
+                { k: '提交中', v: batchStat.submitting, c: 'var(--primary)' },
+                { k: '转写中', v: batchStat.accepted, c: 'var(--warning)' },
+                { k: '排队', v: batchStat.queued, c: 'var(--muted-foreground)' },
+                { k: '完成', v: batchStat.done, c: 'var(--success)' },
+                { k: '失败', v: batchStat.failed, c: 'var(--danger)' },
+              ].map((s) => (
+                <span key={s.k} style={{
+                  fontSize: 10.5, padding: '2px 8px', borderRadius: 99,
+                  background: 'var(--secondary)', color: s.c,
+                }}>{s.k} <b className="num">{s.v}</b></span>
+              ))}
+            </div>
+          </div>
           <div className="vtabs">
             {tabs.map((t) => (
               <button key={t.key} type="button" disabled={!t.has}

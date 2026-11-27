@@ -26,12 +26,18 @@ export default function QAPage() {
   const [docs, setDocs] = useState([]);
   const [question, setQuestion] = useState('');
   const [suggests, setSuggests] = useState([]);
+  const [convs, setConvs] = useState([]);          // 会话列表（后端 /conversations）
+  const [convId, setConvId] = useState(null);      // 当前会话
+  const [sourcesAll, setSourcesAll] = useState([]); // 右栏引用汇总
   const chatRef = useRef(null);
   const fileRef = useRef(null);
 
   useEffect(() => { api('/documents').then((d) => setDocs(d || [])).catch(() => {}); }, []);
   // B2：后端已有 GET /qa/suggest，拉推荐问题并做成可点按钮
   useEffect(() => { api('/qa/suggest').then((r) => setSuggests(Array.isArray(r) ? r : [])).catch(() => setSuggests([])); }, []);
+  // 会话列表（AI 伴侣左栏）：刷新或删除后重拉
+  const loadConvs = () => api('/conversations').then((r) => setConvs(r || [])).catch(() => setConvs([]));
+  useEffect(() => { loadConvs(); }, []);
   useEffect(() => { if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight; }, [msgs]);
 
   const ask = async (text) => {
@@ -103,7 +109,35 @@ export default function QAPage() {
   };
 
   return (
-    <div className="qa-wrap">
+    <div className="qa-three">
+      {/* 左栏：会话列表（AI 伴侣） */}
+      <aside className="qa-convs">
+        <div className="qa-convs-hd">
+          <span style={{ fontSize: 12, fontWeight: 500 }}>会话</span>
+          <Button size="small" type="link" style={{ padding: '0 2px', height: 22 }}
+            onClick={() => { setConvId(null); setMsgs([]); setSourcesAll([]); }}>+ 新对话</Button>
+        </div>
+        <div className="qa-convs-list">
+          {convs.length ? convs.map((c) => (
+            <div key={c.id} className={'qa-conv' + (c.id === convId ? ' on' : '')}
+              onClick={() => {
+                setConvId(c.id);
+                api(`/conversations/${c.id}/messages`).then((r) => {
+                  const list = (r || []).map((m) => ({ role: m.role, text: m.content, sources: m.sources || [] }));
+                  setMsgs(list);
+                  const srcs = (r || []).filter((m) => m.role === 'assistant' && m.sources?.length)
+                    .flatMap((m) => m.sources);
+                  setSourcesAll(srcs);
+                }).catch(() => {});
+              }}>
+              <div className="qa-conv-t">{esc(c.title || '新对话')}</div>
+              <div className="qa-conv-m">{c.messages ?? 0} 条消息</div>
+            </div>
+          )) : <div className="vmuted2" style={{ padding: '16px 10px', fontSize: 11.5 }}>还没有会话，提问后自动创建</div>}
+        </div>
+      </aside>
+      {/* 中栏：聊天（原有 qa-wrap 内容） */}
+      <div className="qa-wrap">
       <div className={'chat' + (msgs.length ? '' : ' chat-empty')} ref={chatRef}>
         {msgs.length ? msgs.map((m, i) => (
           <Message key={i} m={m} docs={docs} onFollowup={ask}
@@ -133,6 +167,19 @@ export default function QAPage() {
           <Button type="primary" icon={<SendOutlined />} onClick={() => ask()}>提问</Button>
         </div>
       </div>
+      </div>
+      {/* 右栏：引用明细（最近一条 AI 消息的来源） */}
+      <aside className="qa-refs">
+        <div style={{ fontSize: 12, fontWeight: 500, marginBottom: 10 }}>引用明细</div>
+        {sourcesAll.length ? sourcesAll.slice(0, 6).map((src, i) => (
+          <div key={i} className="qa-ref" style={{ padding: '8px 0', borderBottom: '1px solid var(--line-soft, var(--border))' }}>
+            <div style={{ fontSize: 12, fontWeight: 500, marginBottom: 2 }}>{esc(src.title || `来源 ${i + 1}`)}</div>
+            <div className="vmuted2" style={{ fontSize: 11, lineHeight: 1.6 }}>
+              {(src.excerpt || src.page || '').toString().slice(0, 90)}
+            </div>
+          </div>
+        )) : <div className="vmuted2" style={{ fontSize: 11.5 }}>提问后这里会显示答案引用的资料与页码</div>}
+      </aside>
     </div>
   );
 }
