@@ -329,3 +329,35 @@ class PlatformCookie(Base):
     note: Mapped[str] = mapped_column(String(120), default="")
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(),
                                                  onupdate=func.now())
+
+
+class Conversation(Base):
+    """AI 伴侣会话（0012）。"""
+    __tablename__ = "conversations"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    title: Mapped[str] = mapped_column(String(120), default="新对话")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+
+class ConversationMessage(Base):
+    """AI 伴侣消息（0012）。sources=引用溯源，steps=步骤轨迹。"""
+    __tablename__ = "conversation_messages"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    conversation_id: Mapped[int] = mapped_column(ForeignKey("conversations.id"), index=True)
+    role: Mapped[str] = mapped_column(String(12))          # user | assistant
+    content: Mapped[str] = mapped_column(Text, default="")
+    sources: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    steps: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class Workspace(Base):
+    """工作区（0012）。多工作区切换，数据隔离迁移在 C8 验收时做。"""
+    __tablename__ = "workspaces"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    name: Mapped[str] = mapped_column(String(80))
+    current: Mapped[int] = mapped_column(Integer, default=0)   # 1=当前
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
