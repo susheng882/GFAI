@@ -184,9 +184,13 @@ export default function DocumentsPage() {
         这里是「教材/讲义」解析 → 生成笔记与背诵卡片；要导入真题试卷练题，请去 <a onClick={() => navigate('/banks')} style={{ color: 'var(--primary)', cursor: 'pointer' }}>题库页</a>
       </div>
       <div className="row between" style={{ marginBottom: 14 }}>
-        <div className="drop" style={{ padding: '12px 20px', flex: 1, maxWidth: 520 }} onClick={() => fileRef.current?.click()}
+        <div className="drop" style={{ padding: '20px 24px', flex: 1, maxWidth: 560 }}
+          onClick={() => fileRef.current?.click()}
           onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); upload(e.dataTransfer.files[0]); }}>
-          点击或拖拽 PDF 到此处上传 · 自动解析分卡
+          <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--ink)' }}>点击或拖拽 PDF / Word / MD 到此处</div>
+          <div style={{ fontSize: 10.5, color: 'var(--ink-subtle)', marginTop: 3 }}>
+            支持批量上传 · 自动解析分卡 · 本地文件不离开设备
+          </div>
         </div>
         <Button type="primary" loading={busy} onClick={() => fileRef.current?.click()}>上传资料</Button>
         <input ref={fileRef} type="file" accept=".pdf,.docx,.md,.markdown,.txt" hidden

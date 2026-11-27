@@ -69,8 +69,10 @@ export default function QuestionBanksPage() {
 
       {banks.length === 0 && !loading ? (
         <EmptyState
+          dashed
           title="还没有题库"
-          desc="上传一份真题试卷 PDF，自动识别题目并生成可练的题库；教材/讲义请去「资料」页解析成卡片。"
+          desc="把真题试卷 PDF 拖到这里，自动识别题目生成可练的题库"
+          sub="支持 PDF / Word / 图片 / 文本 · 单文件 ≤ 30 MB · 教材讲义请去「资料」页解析"
           action={<Button type="primary" icon={<FileAddOutlined />} onClick={() => fileRef.current?.click()}>导入题库</Button>}
         />
       ) : (

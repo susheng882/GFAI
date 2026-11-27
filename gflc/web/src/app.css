@@ -66,8 +66,8 @@
 .v3-chart { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
 .v3-chart .t { font-size: 12px; color: var(--muted-foreground); margin-bottom: 8px; }
 .v3-axis { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted-foreground); font-family: var(--mono); margin-top: 6px; }
-.drop { border: 1px dashed var(--input); border-radius: var(--r-lg); padding: 24px; text-align: center; color: var(--muted-foreground); cursor: pointer; transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease); }
-.drop:hover { border-color: var(--primary); background: var(--accent); color: var(--fg-2); }
+.drop { border: 1px dashed var(--input, rgba(0,0,0,.15)); border-radius: 10px; padding: 24px; text-align: center; color: var(--muted-foreground); cursor: pointer; background: var(--sunken); transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease); }
+.drop:hover { border-color: var(--primary-line); background: var(--primary-wash); }
 @media (max-width: 900px) { .v3-c4, .v3-c5, .v3-c6, .v3-c7, .v3-c8 { grid-column: span 12; } }
 @media (max-width: 640px) { .v3-strip .m { flex: 1 1 40%; } .v3-strip .m + .m { border-left: 0; } }
 

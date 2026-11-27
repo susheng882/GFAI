@@ -444,9 +444,9 @@ export default function VideoPage() {
           <div className="v3-card vpad">
             <Upload.Dragger multiple={false} showUploadList={false} disabled={busy}
               accept="video/*,audio/*" beforeUpload={(f) => { uploadFile(f); return false; }}>
-              <p style={{ margin: 0 }}><InboxOutlined style={{ fontSize: 22, color: 'var(--primary)' }} /></p>
-              <p className="vmuted">拖视频/音频到这里</p>
-              <p className="vmuted2">MP4 / MKV / MP3 / WAV</p>
+              <p style={{ margin: 0 }}><InboxOutlined style={{ fontSize: 24, color: 'var(--ink-subtle)' }} /></p>
+              <p style={{ margin: '6px 0 0', fontSize: 12, fontWeight: 500, color: 'var(--ink)' }}>把视频拖到这里，或点击选择文件</p>
+              <p className="vmuted2" style={{ fontSize: 10.5, marginTop: 2 }}>一次最多 3 个 · 支持批量拖入 · 自动按章节切片</p>
             </Upload.Dragger>
             <div className="vlink">
               <Input size="small" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="粘贴 B站 / YouTube 链接" />
