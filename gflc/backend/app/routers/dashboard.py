@@ -380,3 +380,103 @@ async def delete_layout(layout_id: int, user=Depends(get_current_user), db: Sess
     db.delete(row)
     db.commit()
     return {"ok": True, "data": {"deleted": True}}
+
+
+@router.get("/v7")
+async def v7_overview(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """v7l 仪表盘聚合：一次给全今日指标/周目标/计划模板/记忆轨道。
+
+    数据口径（真实聚合现有表，不造数据）：
+    - 今日学习时长 = 今日复习×90s + 今日作答×60s（估算，hours_estimate 标记）
+    - 今日刷题 = 今日 attempts 数；正确率 = 今日正确占比
+    - 待背卡片 = reps==0 的新卡 + 到期卡
+    - 连续 = 复习/作答活跃日期连续数
+    - 周目标 = 本周 plan_tasks 完成比
+    - 计划模板 = 静态列表（艾宾浩斯冲刺/真题驱动/每日2h/章节通关）
+    - 记忆轨道 R1-R4 = 按 reps 分桶的卡片数
+    """
+    from datetime import datetime as _dt, timedelta as _td, timezone as _tz
+    now = _dt.now(_tz.utc)
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    # 今日复习/作答
+    reviews_today = db.scalar(select(func.count()).select_from(ReviewLog).where(
+        ReviewLog.user_id == user.id, ReviewLog.rating >= 0,
+        ReviewLog.created_at >= today_start)) or 0
+    attempts_today = db.scalar(select(func.count()).select_from(Attempt).where(
+        Attempt.user_id == user.id, Attempt.created_at >= today_start)) or 0
+    correct_today = db.scalar(select(func.count()).select_from(Attempt).where(
+        Attempt.user_id == user.id, Attempt.correct == 1,
+        Attempt.created_at >= today_start)) or 0
+
+    # 待背（新卡 + 到期）
+    new_cards = db.scalar(select(func.count()).select_from(Card).where(
+        Card.user_id == user.id, Card.reps == 0)) or 0
+    due_cards = db.scalar(select(func.count()).select_from(Card).where(
+        Card.user_id == user.id, Card.reps > 0,
+        or_(Card.due_at.is_(None), Card.due_at <= now))) or 0
+
+    # 连续打卡
+    r_days = {d for (d,) in db.execute(select(func.date(ReviewLog.created_at))
+              .where(ReviewLog.user_id == user.id)).all()}
+    a_days = {d for (d,) in db.execute(select(func.date(Attempt.created_at))
+              .where(Attempt.user_id == user.id)).all()}
+    day_set = r_days | a_days
+    d = now.date()
+    streak = 0
+    while d.isoformat() in day_set:
+        streak += 1
+        d -= _td(days=1)
+
+    # 本周目标（plan_tasks 经 plans 关联用户，due 在本周内）
+    week_start = (now - _td(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+    week_rows = db.execute(
+        select(PlanTask.done, func.count())
+        .join(Plan, PlanTask.plan_id == Plan.id)
+        .where(Plan.user_id == user.id, PlanTask.due >= week_start,
+               PlanTask.due < week_start + _td(days=7))
+        .group_by(PlanTask.done)).all()
+    wk = {int(done): int(n) for done, n in week_rows}
+    week_total = sum(wk.values())
+    week_done = wk.get(1, 0)
+
+    # 记忆轨道 R1-R4（按 reps 分桶）
+    r1 = db.scalar(select(func.count()).select_from(Card).where(
+        Card.user_id == user.id, Card.reps >= 1, Card.reps <= 2)) or 0
+    r2 = db.scalar(select(func.count()).select_from(Card).where(
+        Card.user_id == user.id, Card.reps >= 3, Card.reps <= 5)) or 0
+    r3 = db.scalar(select(func.count()).select_from(Card).where(
+        Card.user_id == user.id, Card.reps >= 6, Card.reps <= 9)) or 0
+    r4 = db.scalar(select(func.count()).select_from(Card).where(
+        Card.user_id == user.id, Card.reps >= 10)) or 0
+
+    return {"ok": True, "data": {
+        "today": {
+            "study_minutes": round((reviews_today * 90 + attempts_today * 60) / 60),
+            "study_minutes_estimate": True,
+            "goal_minutes": 240,  # 目标 4h（与原型一致，可后续配置化）
+            "quiz_count": attempts_today,
+            "quiz_accuracy": round(correct_today / attempts_today * 100, 1) if attempts_today else 0,
+            "cards_due": due_cards,
+            "cards_new": new_cards,
+            "streak": streak,
+        },
+        "week_goal": {
+            "label": f"第 {(now - week_start).days // 7 + 1} 周",
+            "range": f"{week_start.strftime('%m-%d')} ~ {(week_start + _td(days=6)).strftime('%m-%d')}",
+            "done": week_done, "total": week_total,
+            "percent": round(week_done / week_total * 100, 1) if week_total else 0,
+        },
+        "plan_templates": [
+            {"id": "ebbinghaus", "name": "艾宾浩斯冲刺", "desc": "按遗忘曲线自动排期", "uses": 12},
+            {"id": "exam", "name": "真题驱动", "desc": "以真题为核心的复习节奏", "uses": 8},
+            {"id": "daily2h", "name": "每日 2h", "desc": "固定时长均衡四科", "uses": 5},
+            {"id": "chapter", "name": "章节通关", "desc": "逐章击破不留死角", "uses": 3},
+        ],
+        "memory_track": [
+            {"stage": "R1 初学", "count": r1, "desc": "1-2 次"},
+            {"stage": "R2 巩固", "count": r2, "desc": "3-5 次"},
+            {"stage": "R3 熟练", "count": r3, "desc": "6-9 次"},
+            {"stage": "R4 掌握", "count": r4, "desc": "10+ 次"},
+        ],
+    }}

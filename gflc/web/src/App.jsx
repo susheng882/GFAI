@@ -233,44 +233,6 @@ function Shell({ user, onLogout, dark, onToggleDark }) {
             )}
           </div>
         )}
-        {!collapsed && (
-          <div className="ws-switch" style={{ position: 'relative', marginBottom: 12 }}>
-            <button className="ws-switch-btn" onClick={() => setWsMenuOpen(!wsMenuOpen)}>
-              <span className="num" style={{ fontWeight: 500, fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {workspaces.find((w) => w.current)?.name || '默认工作区'}
-              </span>
-              <span style={{ fontSize: 10, color: 'var(--muted-foreground)' }}>▼</span>
-            </button>
-            {wsMenuOpen && (
-              <div className="ws-menu pop-in">
-                {workspaces.map((w) => (
-                  <button key={w.id} type="button" className="ws-menu-item"
-                    onClick={async () => {
-                      try {
-                        await api(`/workspaces/${w.id}/current`, { method: 'PATCH' });
-                        await loadWs();
-                        setWsMenuOpen(false);
-                      } catch { /* 静默 */ }
-                    }}>
-                    <span>{esc(w.name)}</span>
-                    {w.current && <span style={{ fontSize: 10, color: 'var(--primary)' }}>✓</span>}
-                  </button>
-                ))}
-                <div className="ws-menu-divider" />
-                <button type="button" className="ws-menu-item"
-                  onClick={async () => {
-                    try {
-                      await api('/workspaces', { method: 'POST', body: JSON.stringify({ name: '新工作区' }) });
-                      await loadWs();
-                      setWsMenuOpen(false);
-                    } catch { /* 静默 */ }
-                  }}>
-                  <span className="vmuted2">+ 新建工作区</span>
-                </button>
-              </div>
-            )}
-          </div>
-        )}
         <nav className="gflc-nav">
           {NAV_GROUPS.map((g) => (
             <div className="gflc-nav-group" key={g.title}>

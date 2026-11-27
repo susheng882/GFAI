@@ -16,6 +16,7 @@ export default function DashboardPage() {
   const { message } = AntdApp.useApp();
   const fileRef = useRef(null);
   const [stats, setStats] = useState(null);
+  const [v7, setV7] = useState(null);   // v7l 聚合：今日指标/周目标/模板/记忆轨道
   const [docs, setDocs] = useState([]);
   const [dash, setDash] = useState(null);
   const [due, setDue] = useState([]);
@@ -50,7 +51,7 @@ export default function DashboardPage() {
     const results = await Promise.allSettled([
       api('/dashboard/stats'), api('/documents'), api('/dashboard/latest'),
       api('/review/due?limit=50'), api('/dashboard/heatmap?days=365'),
-      api('/dashboard/forgetting'),
+      api('/dashboard/forgetting'), api('/dashboard/v7'),
     ]);
     if (results[0].status === 'fulfilled') setStats(results[0].value);
     if (results[1].status === 'fulfilled') setDocs(results[1].value || []);
@@ -58,6 +59,7 @@ export default function DashboardPage() {
     if (results[3].status === 'fulfilled') setDue((results[3].value?.cards) || []);
     if (results[4].status === 'fulfilled') setHeat(results[4].value || null);
     if (results[5].status === 'fulfilled') setForget(results[5].value || null);
+    if (results[6].status === 'fulfilled') setV7(results[6].value || null);
     await loadPlans();
     try { setMon(await api('/settings/monitor')); } catch { setMon(null); }
     setLoading(false);
@@ -117,6 +119,9 @@ export default function DashboardPage() {
       ) : (
         <div className="v3-grid">
           <LoopStatus />
+          {v7 && <V7Hero v7={v7} />}
+          <RecentLearning docs={docs} />
+          <RecentLearning docs={docs} />
           <section className="v3-card v3-hero v3-c8">
             <div className="lab">今天要复习</div>
             <div className="big"><span className="hl">{dueCount}</span><small>张到期</small></div>
@@ -236,6 +241,63 @@ function Metric({ k, v, unit, d }) {
 }
 
 /* v7l 系统信息卡：队列/并发/今日用量四行 + 状态徽标 */
+/* v7l 仪表盘顶部：四指标带 + 周目标条（数据来自 /dashboard/v7） */
+function V7Hero({ v7 }) {
+  const t = v7.today || {};
+  const wg = v7.week_goal || {};
+  const studyPct = Math.min(100, Math.round((t.study_minutes || 0) / Math.max(1, t.goal_minutes || 240) * 100));
+  const items = [
+    { k: '今日学习时长', v: `${Math.floor((t.study_minutes || 0) / 60)}h${(t.study_minutes || 0) % 60}m`, sub: `目标 4h · ${studyPct}%`, cls: 'primary' },
+    { k: '今日刷题', v: t.quiz_count ?? 0, sub: `正确率 ${t.quiz_accuracy ?? 0}%` },
+    { k: '待背卡片', v: (t.cards_due ?? 0) + (t.cards_new ?? 0), sub: `到期 ${t.cards_due ?? 0} · 新卡 ${t.cards_new ?? 0}` },
+    { k: '连续', v: t.streak ?? 0, sub: '天', cls: 'primary' },
+  ];
+  return (
+    <>
+      <section className="v3-card v3-c12 v3-strip">
+        {items.map((m) => (
+          <div className="m" key={m.k}>
+            <div className="k">{m.k}</div>
+            <div className="v">{m.v}<small>{m.sub}</small></div>
+          </div>
+        ))}
+      </section>
+      {wg.total > 0 && (
+        <section className="v3-card v3-c12" style={{ padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 14 }}>
+          <span style={{ fontSize: 12, fontWeight: 500, whiteSpace: 'nowrap' }}>本周目标 · {wg.label}</span>
+          <div className="prog" style={{ flex: 1 }}><i style={{ width: `${wg.percent || 0}%` }} /></div>
+          <span className="num vmuted2" style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>{wg.done}/{wg.total} 完成 · {wg.percent || 0}% · {wg.range}</span>
+        </section>
+      )}
+    </>
+  );
+}
+
+/* v7l 最近学习：视频/笔记/题库动态（documents 合成） */
+function RecentLearning({ docs }) {
+  const recent = (docs || []).filter((d) => d.status === 'ready').slice(0, 4);
+  if (!recent.length) return null;
+  const typeCn = { video: '视频', note: '笔记', question_bank: '题库', doc: '资料' };
+  return (
+    <section className="v3-card v3-c6">
+      <div className="v3-sh">最近学习</div>
+      {recent.map((d) => (
+        <div key={d.id} className="row between" style={{ padding: '8px 0', borderBottom: '1px solid var(--line-soft, var(--border))' }}>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontSize: 12.5, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {esc(d.title || '未命名')}
+            </div>
+            <div className="vmuted2" style={{ fontSize: 11 }}>
+              {(typeCn[d.source_type] || '资料')} · {d.chunks ?? 0} 切片
+            </div>
+          </div>
+          <span className="vmuted2 num" style={{ fontSize: 10.5, flexShrink: 0 }}>{fmtTime(d.updated_at || d.created_at)}</span>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 function SysInfo({ mon }) {
   if (!mon) return <div className="vmuted2" style={{ padding: '20px 0' }}>加载中…</div>;
   const w = mon.worker || {};
