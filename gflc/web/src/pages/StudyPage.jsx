@@ -700,8 +700,11 @@ function GroupRecite({ groups, blanksShown, onToggleBlank, onRate, onExit }) {
                       {shown ? '隐藏重点' : '显示全部重点'}
                     </Button>
                   )}
-                  <Button size="small" onClick={() => onRate(c.id, 3)}>记住了</Button>
-                  <Button size="small" type="text" onClick={() => onRate(c.id, 1)}>再练一次</Button>
+                  {/* 四档评分（v7l）：忘记1天/模糊3天/记得7天/熟练14天 */}
+                  <Button size="small" type="text" danger onClick={() => onRate(c.id, 1)}>忘记 · 1天</Button>
+                  <Button size="small" type="text" onClick={() => onRate(c.id, 2)}>模糊 · 3天</Button>
+                  <Button size="small" onClick={() => onRate(c.id, 3)}>记得 · 7天</Button>
+                  <Button size="small" type="primary" onClick={() => onRate(c.id, 4)}>熟练 · 14天</Button>
                 </div>
               </div>
             );
