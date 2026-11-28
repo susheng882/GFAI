@@ -12,6 +12,9 @@ import {
 import {
   examHistory,
   examPaper,
+  quizOptionStats,
+  quizRelated,
+  quizRelatedPoints,
   quizSession,
   reciteCards,
   reciteGroups,
@@ -147,6 +150,28 @@ function QuizPanel() {
         </Card>
 
         <Card>
+          <SectionTitle title="本题统计" sub="全网作答选项分布" action={<Badge tone="line">1,024 人作答</Badge>} />
+          <div className="flex flex-col gap-1.5">
+            {quizOptionStats.map((o) => (
+              <div key={o.key} className="flex items-center gap-2">
+                <span className="gf-num w-4 shrink-0 text-[11px] font-medium text-ink">{o.key}</span>
+                <Progress value={o.pct} tone={o.tone} height="h-1" className="flex-1" />
+                <span className="gf-num w-[38px] shrink-0 text-right text-[11px] text-ink3">{o.pct}%</span>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        <Card>
+          <SectionTitle title="相关知识点" sub="本题关联的考点标签" />
+          <div className="flex flex-wrap gap-1.5">
+            {quizRelatedPoints.map((p) => (
+              <Badge key={p} tone="neutral">{p}</Badge>
+            ))}
+          </div>
+        </Card>
+
+        <Card>
           <SectionTitle title="本轮设置" sub="按模式自动套用" />
           <div className="flex flex-col gap-1.5">
             {quizSession.settings.map((s) => (
@@ -158,6 +183,28 @@ function QuizPanel() {
           </div>
         </Card>
       </div>
+
+      <Card className="xl:col-span-12">
+        <SectionTitle title="同类真题推荐" sub="按知识点与难度匹配，可一键加入本轮" action={<Badge tone="brand">{quizRelated.length} 道</Badge>} />
+        <ul className="flex flex-col">
+          {quizRelated.map((q, i) => (
+            <li
+              key={q.id}
+              className="flex items-center gap-2.5 border-b border-line py-2 last:border-b-0"
+            >
+              <span className="gf-num flex h-5 w-5 shrink-0 items-center justify-center rounded-[6px] bg-page text-[10px] text-ink2">
+                {i + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[12px] leading-[17px] text-ink">{q.stem}</p>
+                <p className="mt-0.5 truncate text-[10px] text-ink3">{q.from} · 难度 {q.difficulty}</p>
+              </div>
+              <Badge tone="line">{q.tag}</Badge>
+              <Btn variant="ghost" size="xs">去做</Btn>
+            </li>
+          ))}
+        </ul>
+      </Card>
     </div>
   );
 }

@@ -9,8 +9,8 @@ import {
   SearchIcon,
   SparkIcon,
 } from '../NavIcons.jsx';
-import { Badge, Btn, Card, Divider, SectionTitle, cx } from '../ui.jsx';
-import { noteFolders, noteList, noteOpen } from '../mock/index.js';
+import { Badge, Btn, Card, Divider, Kpi, MeterRow, SectionTitle, cx } from '../ui.jsx';
+import { noteFolders, noteList, noteOpen, noteStats, notesRecent } from '../mock/index.js';
 
 /** 把 [[双链]] 渲染为可高亮的胶囊，双链高亮开关关闭时只显示文字 */
 function RichText({ text, highlight }) {
@@ -221,6 +221,19 @@ export default function NotesPage() {
       <div className="grid grid-cols-1 gap-2.5 min-[760px]:grid-cols-12">
         <Card className="min-[760px]:col-span-3">
           <FolderTree active={activeFolder} onPick={setActiveFolder} />
+          <Divider className="my-2.5" />
+          <SectionTitle title="笔记统计" sub="全部笔记概览" action={<Badge tone="brand">{noteStats.total} 篇</Badge>} />
+          <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+              <Kpi label="总字数" value={noteStats.words} unit="字" tone="ink" />
+              <Kpi label="双链" value={noteStats.links} unit="条" tone="brand" />
+            </div>
+            <div className="flex flex-col gap-1.5 pt-1">
+              {noteStats.dist.map((d) => (
+                <MeterRow key={d.label} label={d.label} value={d.value} total={noteStats.total} tone={d.tone} suffix={`${d.value} 篇`} />
+              ))}
+            </div>
+          </div>
         </Card>
 
         <Card className="min-[760px]:col-span-9 min-[1440px]:col-span-4">
@@ -260,6 +273,27 @@ export default function NotesPage() {
           <NoteEditor note={editorNote} highlight={highlight} />
         </Card>
       </div>
+
+      <Card>
+        <SectionTitle title="最近编辑" sub="最新变动的 4 条笔记" action={<Badge tone="line">时间线</Badge>} />
+        <ul className="flex flex-col">
+          {notesRecent.map((r, i) => (
+            <li key={r.id} className="relative flex items-start gap-2.5 pb-3 last:pb-0">
+              <span className={cx('mt-1 flex h-2 w-2 shrink-0 rounded-full', i === 0 ? 'bg-brand' : 'bg-line2')} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <p className="min-w-0 flex-1 truncate text-[12px] leading-[17px] text-ink">{r.title}</p>
+                  <span className="shrink-0 text-[10px] text-ink3">{r.time}</span>
+                </div>
+                <p className="mt-0.5 text-[10px] leading-[14px] text-ink3">
+                  <Badge tone="neutral">{r.folder}</Badge>
+                  <span className="ml-1.5">{r.action}</span>
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Card>
 
       {editorOpen ? (
         <div className="fixed inset-0 z-40 flex justify-end min-[1440px]:hidden">

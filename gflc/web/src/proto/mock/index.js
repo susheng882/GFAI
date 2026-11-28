@@ -348,7 +348,34 @@ export const noteList = [
   { id: 'n8', title: '红黑树插入的三种修正情形', excerpt: '变色、左旋、右旋的组合判断。', folder: '数据结构', words: 748, links: 3, updated: '11-22 16:32' },
   { id: 'n9', title: '二重积分换元法的雅可比行列式', excerpt: '极坐标下 r 就是雅可比行列式的值。', folder: '数学一', words: 604, links: 1, updated: '11-22 10:08' },
   { id: 'n10', title: '英语一 阅读长难句拆解 03', excerpt: '定语从句嵌套时的主干剥离方法。', folder: '英语一', words: 386, links: 2, updated: '11-21 19:44' },
+  { id: 'n11', title: 'B 树与 B+ 树在磁盘索引中的取舍', excerpt: 'B+ 树非叶结点只存索引，扇出更大、范围查询更友好。', folder: '数据结构', words: 856, links: 3, updated: '11-21 09:02' },
+  { id: 'n12', title: '矩阵相似对角化与特征值重数的关系', excerpt: '几何重数等于代数重数才是充要条件。', folder: '数学一', words: 528, links: 2, updated: '11-20 21:16' },
+  { id: 'n13', title: '唯物史观两大基本规律背诵口诀', excerpt: '生产力决定生产关系，经济基础决定上层建筑。', folder: '政治', words: 342, links: 1, updated: '11-20 16:40' },
+  { id: 'n14', title: '浮点数规格化与舍入误差的来源', excerpt: '阶码溢出与尾数舍入是误差两大主因。', folder: '408 计算机', words: 690, links: 2, updated: '11-19 20:08' },
+  { id: 'n15', title: '英语一 完形填空上下文信号词', excerpt: '转折、因果、递进三类信号词锁定答案。', folder: '英语一', words: 458, links: 1, updated: '11-18 22:34' },
 ];
+
+/** 笔记页 · 最近编辑时间线 */
+export const notesRecent = [
+  { id: 'nr1', title: '信号量与 PV 操作的直觉理解', folder: '操作系统', time: '今天 09:12', action: '编辑正文' },
+  { id: 'nr2', title: 'TCP 拥塞控制四算法对比', folder: '计算机网络', time: '今天 09:02', action: '补充双链' },
+  { id: 'nr3', title: '页面置换算法 LRU 与 Clock 对比', folder: '操作系统', time: '昨天 22:30', action: 'AI 补写' },
+  { id: 'nr4', title: '红黑树插入的三种修正情形', folder: '数据结构', time: '昨天 20:18', action: '调整大纲' },
+];
+
+/** 笔记页 · 右侧统计卡 */
+export const noteStats = {
+  total: noteList.length,
+  words: noteList.reduce((s, n) => s + n.words, 0),
+  links: noteList.reduce((s, n) => s + n.links, 0),
+  weekNew: 4,
+  dist: [
+    { label: '操作系统', value: 5, tone: 'brand' },
+    { label: '计算机网络', value: 3, tone: 'ok' },
+    { label: '数据结构', value: 3, tone: 'warn' },
+    { label: '数学一', value: 3, tone: 'ink' },
+  ],
+};
 
 export const noteOpen = {
   id: 'n1',
@@ -418,6 +445,33 @@ export const bankStats = {
   accuracy: 67,
   weekNew: 2,
   importedPdf: 5,
+};
+
+/** 题库页 · 题库概览（右栏统计卡） */
+export const bankOverview = {
+  banks: questionBanks.length,
+  questions: questionBanks.reduce((s, b) => s + b.questions, 0),
+  parsed: 7,
+  pending: 2,
+  chapters: 42,
+  accuracy: 67,
+  dist: [
+    { label: '408 计算机', value: 6, tone: 'brand' },
+    { label: '数学一', value: 4, tone: 'ok' },
+    { label: '英语一', value: 3, tone: 'warn' },
+    { label: '政治', value: 3, tone: 'ink' },
+  ],
+};
+
+/** 题库页 · 解析队列 */
+export const bankQueue = {
+  processing: 2,
+  queued: 1,
+  items: [
+    { id: 'bq1', name: '408 真题卷 2026（扫描版）', stage: '切题中', progress: 62, tone: 'brand' },
+    { id: 'bq2', name: '数学一 冲刺押题卷（三）', stage: 'OCR 识别', progress: 34, tone: 'warn' },
+    { id: 'bq3', name: '政治 时政选择题 12 月', stage: '排队中', progress: 0, tone: 'ink' },
+  ],
 };
 
 /* ================= 卡包（Decks） ================= */
@@ -520,6 +574,25 @@ export const quizSession = {
     { label: '计时上限', value: '90 秒 / 题' },
   ],
 };
+
+/** 刷题 · 同类真题推荐 */
+export const quizRelated = [
+  { id: 'qr1', tag: '2021 · 408', stem: '段式存储管理中，段表项通常不包含哪个字段？', difficulty: '简单', from: '408 真题卷 2021' },
+  { id: 'qr2', tag: '2020 · 408', stem: '引入快表（TLB）后，有效访存时间如何计算？', difficulty: '中等', from: '408 真题卷 2020' },
+  { id: 'qr3', tag: '2019 · 408', stem: '请求分页系统中，缺页中断由硬件还是软件产生？', difficulty: '简单', from: '408 真题卷 2019' },
+  { id: 'qr4', tag: '章节题', stem: '页面大小从 4 KB 增到 8 KB，页内偏移占几位？', difficulty: '中等', from: '操作系统 章节题' },
+];
+
+/** 刷题 · 本题选项分布 */
+export const quizOptionStats = [
+  { key: 'A', pct: 32, tone: 'brand' },
+  { key: 'B', pct: 28, tone: 'ok' },
+  { key: 'C', pct: 24, tone: 'warn' },
+  { key: 'D', pct: 16, tone: 'ink' },
+];
+
+/** 刷题 · 相关知识点 chip */
+export const quizRelatedPoints = ['页式存储', '页内偏移计算', '逻辑地址拆分', '缺页中断', '快表 TLB', '段页式对比'];
 
 /** 背诵区：卡包分组 */
 export const reciteGroups = [
@@ -1581,9 +1654,13 @@ export default {
   noteFolders,
   noteList,
   noteOpen,
+  notesRecent,
+  noteStats,
   bankTree,
   questionBanks,
   bankStats,
+  bankOverview,
+  bankQueue,
   deckSubjects,
   deckChapters,
   deckProficiency,
@@ -1592,6 +1669,9 @@ export default {
   deckEditor,
   studyModes,
   quizSession,
+  quizRelated,
+  quizOptionStats,
+  quizRelatedPoints,
   reciteGroups,
   reciteCards,
   examPaper,
