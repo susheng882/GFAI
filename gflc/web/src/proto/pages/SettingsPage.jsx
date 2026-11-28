@@ -736,7 +736,7 @@ export default function SettingsPage({ onLogout }) {
   };
 
   return (
-    <div className="flex animate-fade-up items-start gap-2.5">
+    <div className="flex animate-fade-up items-stretch gap-2.5">
       <Card pad={false} className="flex w-[188px] shrink-0 flex-col self-stretch p-2">
         <p className="px-2 pb-1 pt-1 text-[11px] text-ink3">设置分组</p>
         <div className="flex min-h-0 flex-1 flex-col gap-0.5">

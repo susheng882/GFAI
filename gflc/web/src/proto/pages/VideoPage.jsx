@@ -74,7 +74,7 @@ export default function VideoPage() {
   const gotoNotes = () => navigate('/notes');
 
   return (
-    <div className="flex h-[calc(100vh-96px)] min-h-[620px] animate-fade-up items-stretch gap-2.5">
+    <div className="flex min-h-[620px] flex-1 animate-fade-up items-stretch gap-2.5">
       {/* 左：视频列表 */}
       <div className="flex w-[238px] shrink-0 flex-col gap-2.5">
         <Card pad={false} className="flex flex-none flex-col overflow-hidden">
@@ -208,7 +208,7 @@ export default function VideoPage() {
                 {videoMeta.resolution}
               </span>
             </div>
-            <div className="flex flex-1 flex-col items-center justify-center gap-2">
+            <div className="flex flex-col items-center justify-center gap-2">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white">
                 <PlayIcon size={18} />
               </span>

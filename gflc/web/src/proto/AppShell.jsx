@@ -518,7 +518,7 @@ export default function AppShell({ children, user = defaultProfile, onLogout = (
           onLogout={onLogout}
         />
         <main className="min-h-0 flex-1 overflow-y-auto">
-          <div className="mx-auto w-full max-w-shell px-6 py-5">{children}</div>
+          <div className="mx-auto w-full max-w-shell px-6 pb-6 pt-5">{children}</div>
         </main>
       </div>
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
