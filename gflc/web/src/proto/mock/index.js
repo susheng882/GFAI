@@ -1329,6 +1329,13 @@ export const videoMeta = {
 };
 
 /** 右侧 Tab 定义 */
+export const noteStyles = [
+  { id: 'academic', name: '学术风', desc: '严谨推导 · 适合复习回顾' },
+  { id: 'spoken', name: '口语风', desc: '讲人话 · 适合快速理解' },
+  { id: 'exam', name: '考点风', desc: '对标真题 · 标注高频考点' },
+  { id: 'mindmap', name: '思维导图', desc: '结构速览 · 适合全局把握' },
+];
+
 export const videoTabs = [
   { id: 'summary', label: '摘要' },
   { id: 'outline', label: '大纲' },

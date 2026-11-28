@@ -11,6 +11,7 @@ import {
   VideoIcon,
 } from '../NavIcons.jsx';
 import {
+  noteStyles,
   videoFigures,
   videoList,
   videoMeta,
@@ -36,6 +37,39 @@ export default function VideoPage() {
   const [active, setActive] = useState('v1');
   const [tab, setTab] = useState('summary');
   const [outlineId, setOutlineId] = useState('o3');
+  const [linkInput, setLinkInput] = useState('');
+  const [noteStyle, setNoteStyle] = useState('academic');
+  const [noteWidth, setNoteWidth] = useState(() => {
+    try {
+      const n = Number(window.localStorage.getItem('gflc_vnote_w'));
+      return n >= 280 && n <= 520 ? n : 352;
+    } catch { return 352; }
+  });
+  const noteDragRef = React.useRef(null);
+
+  const startNoteResize = (e) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startW = noteWidth;
+    const onMove = (ev) => {
+      const next = Math.min(520, Math.max(280, startW + (startX - ev.clientX)));
+      setNoteWidth(Math.round(next));
+    };
+    const onUp = () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.body.style.cursor = '';
+      try { window.localStorage.setItem('gflc_vnote_w', String(noteDragRef.current)); } catch { /* noop */ }
+    };
+    document.body.style.cursor = 'col-resize';
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  };
+
+  /* 拖拽过程中记录最新宽度 */
+  React.useEffect(() => {
+    noteDragRef.current = noteWidth;
+  }, [noteWidth]);
 
   const gotoNotes = () => navigate('/notes');
 
@@ -87,6 +121,51 @@ export default function VideoPage() {
                     </Badge>
                     <span className="gf-num shrink-0 text-[10px] leading-[14px] text-ink3">{v.duration}</span>
                     <span className="ml-auto shrink-0 text-[10px] leading-[14px] text-ink3">{v.progress}%</span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </Card>
+
+        {/* 解析链接（v7l 视频页） */}
+        <Card>
+          <SectionTitle title="解析链接" sub="粘贴 B 站 / YouTube 链接" />
+          <div className="flex gap-1.5">
+            <input
+              value={linkInput}
+              onChange={(e) => setLinkInput(e.target.value)}
+              placeholder="https://…"
+              className="min-w-0 flex-1 rounded-[8px] border border-line bg-page px-2 py-1.5 text-[11px] leading-[16px] text-ink placeholder:text-ink3 focus:border-brand focus:outline-none"
+            />
+            <Btn variant="solid" size="sm" disabled={!linkInput.trim()}>解析</Btn>
+          </div>
+          <p className="mt-1.5 text-[10px] leading-[14px] text-ink3">链接任务不占上传额度 · 支持批量粘贴</p>
+        </Card>
+
+        {/* 笔记风格设置（v7l） */}
+        <Card>
+          <SectionTitle title="笔记风格" sub="生成时按此风格输出" />
+          <div className="flex flex-col gap-1">
+            {noteStyles.map((st) => {
+              const on = st.id === noteStyle;
+              return (
+                <button
+                  key={st.id}
+                  type="button"
+                  onClick={() => setNoteStyle(st.id)}
+                  className={cx(
+                    'flex items-center gap-2 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-150 ease-apple',
+                    on ? 'bg-brandSoft' : 'hover:bg-sel/60',
+                  )}
+                >
+                  <span className={cx('h-2.5 w-2.5 shrink-0 rounded-full border-2',
+                    on ? 'border-brand bg-brand' : 'border-line2')} />
+                  <span className="min-w-0">
+                    <span className={cx('block text-[11px] leading-[16px]', on ? 'font-medium text-brand' : 'text-ink2')}>
+                      {st.name}
+                    </span>
+                    <span className="block text-[10px] leading-[14px] text-ink3">{st.desc}</span>
                   </span>
                 </button>
               );
@@ -249,8 +328,13 @@ export default function VideoPage() {
         </Card>
       </div>
 
-      {/* 右：Tab */}
-      <Card pad={false} className="flex w-[352px] shrink-0 flex-col overflow-hidden">
+      {/* 右：Tab（宽度可拖拽 280-520px） */}
+      <Card pad={false} className="relative flex shrink-0 flex-col overflow-hidden" style={{ width: noteWidth }}>
+        <span
+          onMouseDown={startNoteResize}
+          className="absolute left-0 top-0 z-20 h-full w-[5px] cursor-col-resize hover:bg-brand/15"
+          title="拖拽调整宽度"
+        />
         <div className="grid grid-cols-4 gap-1 px-3 pt-3">
           {videoTabs.map((t) => {
             const on = t.id === tab;

@@ -88,14 +88,53 @@ function LogoMark({ mini }) {
   );
 }
 
-function Sidebar({ mini, onToggle, onLogout, user }) {
+function Sidebar({ mini, onToggle, onLogout, user, width = 228, onResize }) {
+  const [dragging, setDragging] = useState(false);
+  const startX = useRef(0);
+  const startW = useRef(228);
+
+  const onMouseDown = (e) => {
+    e.preventDefault();
+    startX.current = e.clientX;
+    startW.current = width;
+    setDragging(true);
+    const onMove = (ev) => {
+      const delta = ev.clientX - startX.current;
+      const next = Math.min(320, Math.max(180, startW.current + delta));
+      onResize?.(next);
+    };
+    const onUp = () => {
+      setDragging(false);
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  };
+
   return (
     <aside
       className={cx(
-        'flex h-full shrink-0 flex-col border-r border-line bg-sider shadow-sider transition-[width] duration-200 ease-apple',
-        mini ? 'w-[64px]' : 'w-[228px]',
+        'relative flex h-full shrink-0 flex-col border-r border-line bg-sider shadow-sider',
+        mini ? 'w-[64px]' : 'transition-[width] duration-200 ease-apple',
       )}
+      style={mini ? undefined : { width }}
     >
+      {/* 拖拽手柄：右侧边缘，调整侧栏宽度 */}
+      {!mini && (
+        <span
+          onMouseDown={onMouseDown}
+          className={cx(
+            'absolute right-0 top-0 z-20 h-full w-[5px] cursor-col-resize',
+            dragging ? 'bg-brand/30' : 'hover:bg-brand/15',
+          )}
+          title="拖拽调整侧栏宽度"
+        />
+      )}
       <div className={cx('flex h-14 shrink-0 items-center border-b border-line', mini ? 'justify-center px-0' : 'gap-2.5 px-4')}>
         <LogoMark mini={mini} />
         {mini ? null : (
@@ -424,7 +463,24 @@ export default function AppShell({ children, user = defaultProfile, onLogout = (
     }
   });
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [sbWidth, setSbWidth] = useState(() => {
+    try {
+      const n = Number(window.localStorage.getItem('gflc_sbwidth'));
+      return n >= 180 && n <= 320 ? n : 228;
+    } catch {
+      return 228;
+    }
+  });
   const pageKey = usePageKey();
+
+  const onResizeSb = useCallback((w) => {
+    setSbWidth(Math.round(w));
+    try {
+      window.localStorage.setItem('gflc_sbwidth', String(Math.round(w)));
+    } catch {
+      /* noop */
+    }
+  }, []);
 
   const toggleMini = useCallback(() => {
     setMini((v) => {
@@ -451,7 +507,7 @@ export default function AppShell({ children, user = defaultProfile, onLogout = (
 
   return (
     <div className="flex h-full w-full overflow-hidden bg-page">
-      <Sidebar mini={mini} onToggle={toggleMini} onLogout={onLogout} user={user} />
+      <Sidebar mini={mini} onToggle={toggleMini} onLogout={onLogout} user={user} width={sbWidth} onResize={onResizeSb} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar
           pageKey={pageKey}

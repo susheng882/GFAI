@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
   ArrowRightIcon,
@@ -107,6 +107,7 @@ export default function DocumentsPage() {
 
   const anchorId = params.get('doc');
   const anchorPage = params.get('page') || '1';
+  const [listPage, setListPage] = useState(1);
   const anchorDoc = useMemo(() => docs.find((d) => d.id === anchorId), [docs, anchorId]);
 
   const filtered = useMemo(() => {
@@ -118,6 +119,11 @@ export default function DocumentsPage() {
         (!q || d.title.includes(q)),
     );
   }, [docs, query, subject, kind]);
+
+  /* 筛选条件变化时回到第一页 */
+  useEffect(() => {
+    setListPage(1);
+  }, [query, subject, kind]);
 
   const closeDrawer = () => {
     const next = new URLSearchParams(params);
@@ -208,7 +214,7 @@ export default function DocumentsPage() {
                 <span className="text-right">操作</span>
               </div>
               <ul>
-                {filtered.map((d) => {
+                {filtered.slice((listPage - 1) * 12, listPage * 12).map((d) => {
                   const Icon = KIND_ICON[d.kind] || DocsIcon;
                   return (
                     <li
@@ -240,6 +246,30 @@ export default function DocumentsPage() {
                   );
                 })}
               </ul>
+              {filtered.length > 12 && (
+                <div className="flex items-center justify-between px-1 pt-2 text-[10px] text-ink3">
+                  <span className="gf-num">共 {filtered.length} 条 · 每页 12 条</span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      disabled={listPage <= 1}
+                      onClick={() => setListPage((p) => Math.max(1, p - 1))}
+                      className="rounded-[6px] border border-line px-2 py-0.5 transition-colors duration-150 ease-apple hover:bg-sel/60 disabled:opacity-40"
+                    >
+                      上一页
+                    </button>
+                    <span className="gf-num px-1">{listPage} / {Math.ceil(filtered.length / 12)}</span>
+                    <button
+                      type="button"
+                      disabled={listPage >= Math.ceil(filtered.length / 12)}
+                      onClick={() => setListPage((p) => Math.min(Math.ceil(filtered.length / 12), p + 1))}
+                      className="rounded-[6px] border border-line px-2 py-0.5 transition-colors duration-150 ease-apple hover:bg-sel/60 disabled:opacity-40"
+                    >
+                      下一页
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">

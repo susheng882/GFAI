@@ -124,11 +124,34 @@ export function Progress({ value = 0, tone = 'brand', height = 'h-1.5', classNam
 }
 
 /** 空状态 */
-export function Empty({ text = '暂无内容', hint, className = '' }) {
+export function Empty({ text = '暂无内容', hint, action, dashed = false, className = '' }) {
+  const body = (
+    <>
+      <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-line bg-page text-ink3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <path d="M14 2v6h6" />
+          <path d="M9 13h6M9 17h4" />
+        </svg>
+      </span>
+      <p className="text-[12px] font-medium text-ink2">{text}</p>
+      {hint ? <p className="max-w-[360px] text-[11px] leading-[16px] text-ink3">{hint}</p> : null}
+      {action}
+    </>
+  );
+  if (dashed) {
+    return (
+      <div className={cx(
+        'flex min-h-[132px] flex-col items-center justify-center gap-1.5 rounded-[10px] border border-dashed border-line2 bg-page px-4 py-6 text-center',
+        className,
+      )}>
+        {body}
+      </div>
+    );
+  }
   return (
-    <div className={cx('flex flex-col items-center justify-center gap-1 py-8 text-center', className)}>
-      <p className="text-[12px] text-ink3">{text}</p>
-      {hint ? <p className="text-[11px] text-ink3">{hint}</p> : null}
+    <div className={cx('flex flex-col items-center justify-center gap-1.5 py-10 text-center', className)}>
+      {body}
     </div>
   );
 }
