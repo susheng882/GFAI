@@ -329,9 +329,10 @@ def main():
             r = c.get(f"/api/videos/{vdoc_id}/stream")
             check("GET /videos/{id}/stream", r.status_code in (200, 404, 400),
                   f"http={r.status_code}")
-    # 平台降级：不可达链接应返回明确错误，而不是 500
+    # URL 预检：截断/无效链接应 400 拒绝（修复前接口 200 但任务层 TASK-500 假阳性）
     r = c.post("/api/videos/url", json={"url": "https://www.youtube.com/watch?v=x"})
-    check("POST /api/videos/url 返回 task_id", r.status_code == 200 and r.json()["data"].get("task_id"))
+    check("POST /api/videos/url 无效链接 400 拒绝", r.status_code == 400,
+          f"http={r.status_code}")
 
     c.post("/api/auth/logout")
     check("POST /api/auth/logout", True)

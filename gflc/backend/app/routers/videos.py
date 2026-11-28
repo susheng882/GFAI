@@ -174,6 +174,16 @@ async def upload_video(file: UploadFile = File(...), templates: str = Form("summ
 async def from_url(body: VideoUrlIn, user=Depends(get_current_user), db: Session = Depends(get_db)):
     if not (body.url or "").strip():
         raise APIError(ErrCode.COMMON_400, "请提供视频链接")
+    # URL 预检：明显无效的链接（如 YouTube 截断 ID）直接 400，
+    # 不再进后台任务等 yt_dlp 失败（此前任务层 TASK-500，接口层却 200，测试假阳性）。
+    import re as _re
+    url = body.url.strip()
+    looks_like = (
+        url.startswith(("http://", "https://"))
+        and _re.search(r"(youtube|youtu\.be|bilibili|b23\.tv|ixigua|douyin)", url)
+    )
+    if looks_like and _re.search(r"(youtube[.]com/watch[?]v=[^&]{1,10}$|youtu[.]be/[A-Za-z0-9_-]{1,10}$)", url):
+        raise APIError(ErrCode.COMMON_400, "链接不完整，请提供完整视频链接")
     tpls = _parse_templates(body.templates)
     t = runner.create_task(db, user.id, "video_url")
     runner.submit(t.id, "video_url",
