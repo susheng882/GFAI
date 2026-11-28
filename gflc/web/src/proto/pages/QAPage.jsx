@@ -123,7 +123,7 @@ export default function QAPage() {
           </div>
         </Card>
 
-        <Card pad={false} className="flex flex-col overflow-hidden">
+        <Card pad={false} className="flex min-h-[480px] flex-1 flex-col overflow-hidden">
           <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[8px] bg-brandSoft text-brand">
               <QaIcon size={13} />
@@ -137,7 +137,7 @@ export default function QAPage() {
             </span>
           </div>
 
-          <div ref={bodyRef} className="h-[520px] overflow-y-auto px-4 py-3">
+          <div ref={bodyRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
             {messages.length === 0 && !ai ? (
               <div className="flex h-full flex-col gap-4">
                 <div className="flex flex-col items-center gap-1.5 pt-3 text-center">

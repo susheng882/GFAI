@@ -31,30 +31,131 @@ function RichText({ text, highlight }) {
   });
 }
 
-function FolderTree({ active, onPick }) {
+
+/* AI 整理抽屉：mock 建议列表，可一键应用 */
+function AiTidyDrawer({ open, onClose, onApply }) {
+  const [suggestions, setSuggestions] = useState([
+    { id: 1, from: '数据结构', to: '计算机基础', note: '《红黑树笔记》', reason: '内容属于基础章节' },
+    { id: 2, from: '操作系统', to: '进程与调度', note: '《死锁条件》', reason: '与进程调度主题一致' },
+    { id: 3, from: '未分类', to: '数学一', note: '《极限计算要点》', reason: '检测到数学公式内容' },
+  ]);
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50">
+      <div className="absolute inset-0 bg-ink/30" onClick={onClose} />
+      <aside className="absolute right-0 top-0 flex h-full w-[360px] animate-slide-in flex-col bg-card shadow-pop">
+        <div className="flex items-center justify-between border-b border-line px-4 py-3">
+          <div>
+            <p className="text-[13px] font-medium text-ink">AI 整理建议</p>
+            <p className="text-[10px] text-ink3">根据内容与双链关系自动归类</p>
+          </div>
+          <button type="button" onClick={onClose} className="flex h-6 w-6 items-center justify-center rounded-[6px] text-ink3 hover:bg-page">
+            <CloseIcon size={13} />
+          </button>
+        </div>
+        <div className="flex min-h-0 flex-1 flex-col gap-1.5 overflow-y-auto p-3">
+          {suggestions.map((sg) => (
+            <div key={sg.id} className="rounded-[10px] border border-line bg-page p-2.5">
+              <div className="flex items-center gap-1.5 text-[11px]">
+                <SparkIcon size={12} className="shrink-0 text-brand" />
+                <span className="min-w-0 flex-1 truncate font-medium text-ink">{sg.note}</span>
+                <Badge tone="brand">移动</Badge>
+              </div>
+              <p className="mt-1.5 text-[11px] leading-[16px] text-ink2">
+                {sg.from} <ArrowRightIcon size={11} className="mx-0.5 inline-block" /> {sg.to}
+              </p>
+              <p className="mt-0.5 text-[10px] leading-[14px] text-ink3">{sg.reason}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSuggestions((arr) => arr.filter((x) => x.id !== sg.id));
+                  onApply?.(sg);
+                }}
+                className="mt-2 h-6 w-full rounded-[6px] bg-brand text-[11px] font-medium text-white transition-colors duration-150 ease-apple hover:bg-brand/90"
+              >
+                应用
+              </button>
+            </div>
+          ))}
+          {suggestions.length === 0 && (
+            <div className="flex flex-1 flex-col items-center justify-center gap-1 py-10 text-center">
+              <SparkIcon size={16} className="text-ink3" />
+              <p className="text-[11px] text-ink3">整理完成，笔记已全部归类</p>
+            </div>
+          )}
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+function FolderTree({ active, onPick, onPickNote, activeNote, folders, notes }) {
+  const [open, setOpen] = useState(() => new Set(folders.map((f) => f.id)));
+  const toggle = (id) => {
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
   return (
     <>
-      <SectionTitle title="文件夹" sub="按科目归档，拖拽可改归属" action={<Badge tone="line">{noteFolders.length}</Badge>} />
-      <ul className="flex flex-col gap-0.5">
-        {noteFolders.map((f) => (
-          <li key={f.id}>
-            <button
-              type="button"
-              onClick={() => onPick(f.id)}
-              className={cx(
-                'flex h-6 w-full items-center gap-1 rounded-[7px] pr-1.5 text-left transition-colors duration-200 ease-apple',
-                active === f.id ? 'bg-sel' : 'hover:bg-page',
-                f.depth ? 'pl-5' : 'pl-1.5',
-              )}
-            >
-              <span className={cx('min-w-0 flex-1 truncate text-[12px]', active === f.id ? 'text-ink' : 'text-ink2')}>
-                {f.name}
-              </span>
-              <span className="gf-num shrink-0 text-[10px] text-ink3">{f.count}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <SectionTitle title="文件树" sub="文件夹与笔记统一浏览" action={<Badge tone="line">{folders.length} 夹</Badge>} />
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+        <ul className="flex flex-col gap-0.5">
+          {folders.map((f) => {
+            const kids = notes.filter((n) => n.folder === f.name);
+            const isOpen = open.has(f.id);
+            return (
+              <li key={f.id}>
+                {/* 文件夹行：可展开 */}
+                <button
+                  type="button"
+                  onClick={() => toggle(f.id)}
+                  className={cx(
+                    'flex h-6 w-full items-center gap-1 rounded-[7px] pr-1.5 text-left transition-colors duration-200 ease-apple',
+                    active === f.id ? 'bg-sel' : 'hover:bg-page',
+                    f.depth ? 'pl-5' : 'pl-1.5',
+                  )}
+                >
+                  <span className={cx('flex h-3 w-3 shrink-0 items-center justify-center transition-transform duration-200 ease-apple', isOpen ? '' : '-rotate-90')}>
+                    <ChevronDownIcon size={10} />
+                  </span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-[#C8A24B]">
+                    <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <span className={cx('min-w-0 flex-1 truncate text-[12px]', active === f.id ? 'text-ink' : 'text-ink2')}>
+                    {f.name}
+                  </span>
+                  <span className="gf-num shrink-0 text-[10px] text-ink3">{kids.length}</span>
+                </button>
+                {/* 文件夹下笔记（资源管理器式） */}
+                {isOpen && kids.length > 0 && (
+                  <ul className="ml-2.5 flex flex-col gap-0.5 border-l border-line pl-1.5">
+                    {kids.map((n) => (
+                      <li key={n.id}>
+                        <button
+                          type="button"
+                          onClick={() => onPickNote(n.id)}
+                          className={cx(
+                            'flex h-6 w-full items-center gap-1 rounded-[7px] pr-1 text-left transition-colors duration-200 ease-apple',
+                            activeNote === n.id ? 'bg-brandSoft' : 'hover:bg-page',
+                          )}
+                        >
+                          <NotesIcon size={11} className="shrink-0 text-ink3" />
+                          <span className={cx('min-w-0 flex-1 truncate text-[11.5px]', activeNote === n.id ? 'font-medium text-brand' : 'text-ink2')}>
+                            {n.title}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       <Divider className="my-2" />
       <button type="button" className="flex h-6 w-full items-center gap-1.5 rounded-[7px] px-1.5 text-[11px] text-ink3 hover:bg-page hover:text-ink">
         <PlusIcon size={12} />
@@ -136,6 +237,7 @@ export default function NotesPage() {
   const [highlight, setHighlight] = useState(true);
   const [sort, setSort] = useState('recent');
   const [editorOpen, setEditorOpen] = useState(false);
+  const [aiTidyOpen, setAiTidyOpen] = useState(false);
 
   const list = useMemo(() => {
     const q = query.trim();
@@ -215,12 +317,13 @@ export default function NotesPage() {
             打开编辑器
           </Btn>
           <Btn variant="line" size="sm" icon={<SparkIcon size={13} />}>AI 补写</Btn>
+          <Btn variant="line" size="sm" icon={<SparkIcon size={13} />} onClick={() => setAiTidyOpen(true)}>AI 整理</Btn>
         </div>
       </Card>
 
       <div className="grid grid-cols-1 gap-2.5 min-[760px]:grid-cols-12">
         <Card className="min-[760px]:col-span-3">
-          <FolderTree active={activeFolder} onPick={setActiveFolder} />
+          <FolderTree active={activeFolder} onPick={setActiveFolder} onPickNote={setActiveNote} activeNote={activeNote} folders={noteFolders} notes={noteList} />
           <Divider className="my-2.5" />
           <SectionTitle title="笔记统计" sub="全部笔记概览" action={<Badge tone="brand">{noteStats.total} 篇</Badge>} />
           <div className="flex flex-col gap-2">
@@ -321,6 +424,8 @@ export default function NotesPage() {
           </p>
         </div>
       </Card>
+
+      <AiTidyDrawer open={aiTidyOpen} onClose={() => setAiTidyOpen(false)} />
     </div>
   );
 }
