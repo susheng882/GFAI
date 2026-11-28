@@ -1,0 +1,401 @@
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { App as AntdApp, ConfigProvider, theme as antdTheme, Spin } from 'antd';
+import {
+  AppstoreOutlined, FormOutlined, BookOutlined, ClockCircleOutlined,
+  FileTextOutlined, CreditCardOutlined, VideoCameraOutlined,
+  MessageOutlined, UnorderedListOutlined, CalendarOutlined,
+  MenuFoldOutlined, MenuUnfoldOutlined, MenuOutlined, LogoutOutlined,
+  MoonOutlined, SunOutlined, SettingOutlined, SearchOutlined, BellOutlined, TrophyOutlined,
+} from '@ant-design/icons';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { api } from './api.js';
+import { esc } from './utils.js';
+import { gflcTheme, gflcDarkTheme } from './theme.jsx';
+import AuthPage from './pages/AuthPage.jsx';
+import DashboardPage from './pages/DashboardPage.jsx';
+import DocumentsPage from './pages/DocumentsPage.jsx';
+import DocumentDetailPage from './pages/DocumentDetailPage.jsx';
+import NotesPage from './pages/NotesPage.jsx';
+import DecksPage from './pages/DecksPage.jsx';
+import StudyPage from './pages/StudyPage.jsx';
+import QuestionBanksPage from './pages/QuestionBanksPage.jsx';
+import ReviewPage from './pages/ReviewPage.jsx';
+import QAPage from './pages/QAPage.jsx';
+import VideoPage from './pages/VideoPage.jsx';
+import PlansPage from './pages/PlansPage.jsx';
+import AchievementsPage from './pages/AchievementsPage.jsx';
+import TasksPage from './pages/TasksPage.jsx';
+import SettingsPage from './pages/SettingsPage.jsx';
+import TaskDock from './components/TaskDock.jsx';
+
+const NAV_GROUPS = [
+  { title: '学习', items: [
+    { key: 'dash', name: '概览', icon: <AppstoreOutlined /> },
+    { key: 'notes', name: '笔记', icon: <FormOutlined /> },
+    { key: 'study', name: '学习', icon: <BookOutlined /> },
+    { key: 'review', name: '复习', icon: <ClockCircleOutlined /> },
+    { key: 'plans', name: '计划', icon: <CalendarOutlined /> },
+    { key: 'growth', name: '成长', icon: <TrophyOutlined /> },
+  ] },
+  { title: '资料', items: [
+    { key: 'docs', name: '资料', icon: <FileTextOutlined /> },
+    { key: 'banks', name: '题库', icon: <BookOutlined /> },
+    { key: 'deck', name: '卡包', icon: <CreditCardOutlined /> },
+    { key: 'video', name: '视频', icon: <VideoCameraOutlined /> },
+  ] },
+  { title: '助手', items: [
+    { key: 'qa', name: '问答', icon: <MessageOutlined /> },
+  ] },
+  { title: '系统', items: [
+    { key: 'tasks', name: '任务', icon: <UnorderedListOutlined /> },
+    { key: 'settings', name: '设置', icon: <SettingOutlined /> },
+  ] },
+];
+const TITLES = {
+  dash: ['概览', '系统与学习指标；学习任务按需生成'],
+  notes: ['笔记', '文件夹管理，AI 协作补写'],
+  docs: ['资料', '上传教材/讲义，解析并生成卡片'],
+  banks: ['题库', '上传试卷 PDF，自动抽题成题库'],
+  deck: ['卡包', '按大纲章节组织的背诵卡包'],
+  study: ['学习', '刷题、背诵、错题一页'],
+  review: ['复习', '按遗忘曲线安排复习'],
+  plans: ['计划', '目标拆解为每日任务，勾选完成'],
+  growth: ['成长', '等级、五维能力、里程碑'],
+  qa: ['问答', '先查你的资料，再联网，最后用学科知识'],
+  video: ['视频', '链接/上传 → 转写 → 结构化笔记（配图可跳转，大纲为思维导图）'],
+  tasks: ['任务', '后台任务与进度'],
+  settings: ['设置', '模型供应商、转录器、B 站 Cookie、诊断与监控'],
+};
+
+/* B13 全局命令面板：键盘流（↑↓ 选择 / Enter 执行 / Esc 关闭），输入框聚焦不与页面冲突 */
+function CommandPalette({ open, onClose, navigate, dark, onToggleDark }) {
+  const [q, setQ] = useState('');
+  const [sel, setSel] = useState(0);
+  const inputRef = useRef(null);
+  const cmds = useMemo(() => [
+    { key: 'act-recite', label: '开始背诵', hint: '动作',
+      run: () => navigate('/study?mode=recite') },
+    { key: 'act-train', label: '继续训练', hint: '动作',
+      run: () => navigate('/study') },
+    { key: 'act-video', label: '解析视频', hint: '动作',
+      run: () => navigate('/video') },
+    ...NAV_GROUPS.flatMap((g) => g.items.map((it) => ({
+      key: 'go:' + it.key, label: '前往 ' + it.name, hint: '页面',
+      run: () => navigate('/' + it.key),
+    }))),
+    { key: 'new-note', label: '新建笔记', hint: '笔记', run: () => {
+      navigate('/notes');
+      setTimeout(() => window.dispatchEvent(new CustomEvent('gflc:cmd', { detail: { cmd: 'new-note' } })), 0);
+    } },
+    { key: 'tidy', label: '触发 AI 整理', hint: '笔记', run: () => {
+      navigate('/notes');
+      setTimeout(() => window.dispatchEvent(new CustomEvent('gflc:cmd', { detail: { cmd: 'tidy' } })), 0);
+    } },
+    { key: 'theme', label: dark ? '切换为浅色主题' : '切换为深色主题', hint: '外观', run: onToggleDark },
+  ], [navigate, dark, onToggleDark]);
+  const list = cmds.filter((c) => (c.label + c.hint).toLowerCase().includes(q.trim().toLowerCase())).slice(0, 8);
+  useEffect(() => {
+    if (!open) return;
+    setQ(''); setSel(0);
+    const t = setTimeout(() => inputRef.current?.focus(), 0);
+    return () => clearTimeout(t);
+  }, [open]);
+  useEffect(() => { setSel(0); }, [q]);
+  if (!open) return null;
+  const exec = (c) => { if (!c) return; c.run(); onClose(); };
+  return (
+    <div className="cmd-overlay" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="cmd-panel" role="dialog" aria-label="命令面板">
+        <div className="cmd-input-row">
+          <SearchOutlined />
+          <input ref={inputRef} value={q} placeholder="搜索命令或页面…" aria-label="搜索命令"
+            onChange={(e) => setQ(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowDown') { e.preventDefault(); setSel((s) => Math.min(list.length - 1, s + 1)); }
+              else if (e.key === 'ArrowUp') { e.preventDefault(); setSel((s) => Math.max(0, s - 1)); }
+              else if (e.key === 'Enter') { e.preventDefault(); exec(list[sel]); }
+              else if (e.key === 'Escape') { e.preventDefault(); onClose(); }
+            }} />
+          <span className="cmd-esc mono">Esc</span>
+        </div>
+        <div className="cmd-list">
+          {list.length ? list.map((c, i) => (
+            <button type="button" key={c.key} className={'cmd-item' + (i === sel ? ' on' : '')}
+              onMouseEnter={() => setSel(i)} onClick={() => exec(c)}>
+              <span>{c.label}</span><span className="cmd-hint">{c.hint}</span>
+            </button>
+          )) : <div className="cmd-empty">没有匹配的命令</div>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Shell({ user, onLogout, dark, onToggleDark }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [collapsed, setCollapsed] = useState(localStorage.getItem('gflc_sidebar') === '1');
+  const [drawer, setDrawer] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [notifs, setNotifs] = useState([]);
+  const [workspaces, setWorkspaces] = useState([]);
+  const [wsMenuOpen, setWsMenuOpen] = useState(false);
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const lastFocusRef = useRef(null);
+  const openCmd = useCallback(() => { lastFocusRef.current = document.activeElement; setCmdOpen(true); }, []);
+  const closeCmd = useCallback(() => { setCmdOpen(false); setTimeout(() => lastFocusRef.current?.focus?.(), 0); }, []);
+  // 通知：挂载时拉一次；点铃铛时再拉一次（实时算，不落库）
+  const loadNotifs = () => api('/notifications').then((r) => setNotifs(r || [])).catch(() => setNotifs([]));
+  useEffect(() => { loadNotifs(); }, []);
+  const loadWs = () => api('/workspaces').then((r) => setWorkspaces(r || [])).catch(() => setWorkspaces([]));
+  useEffect(() => { loadWs(); }, []);
+  // Ctrl/⌘+K 全局可用；Esc 关闭；关闭后焦点回到原输入，避免打断正在输入的页面
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && String(e.key).toLowerCase() === 'k') {
+        e.preventDefault();
+        if (cmdOpen) closeCmd(); else openCmd();
+        return;
+      }
+      if (e.key === 'Escape' && cmdOpen) { e.preventDefault(); closeCmd(); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [cmdOpen, openCmd, closeCmd]);
+  const current = location.pathname.split('/')[1] || 'dash';
+  const title = TITLES[current] || TITLES.dash;
+  const go = (key) => { navigate('/' + key); setDrawer(false); };
+
+  // 全局双链跳转：[[笔记]] 在任意页面点击都要能跳到笔记页。
+  // 之前监听只挂在 NotesPage 里，导致问答/复习/视频等页点链接无反应。
+  // 这里统一收口：收到跳转事件 → 导航到 /notes 并带上 open 参数，NotesPage 挂载后自行打开。
+  useEffect(() => {
+    const onJump = (e) => {
+      const title = e.detail?.title;
+      if (!title) return;
+      const q = encodeURIComponent(title);
+      const anchor = e.detail?.anchor ? `&anchor=${encodeURIComponent(e.detail.anchor)}` : '';
+      // 已在本页则交给 NotesPage 自己的监听处理，避免重复 navigate 打断状态
+      if (location.pathname === '/notes') return;
+      navigate(`/notes?open=${q}${anchor}`);
+    };
+    window.addEventListener('gflc:note-jump', onJump);
+    return () => window.removeEventListener('gflc:note-jump', onJump);
+  }, [location.pathname, navigate]);
+  return (
+    <div className={'gflc-app' + (dark ? ' gflc-dark' : '') + (collapsed ? ' sider-collapsed' : '')}>
+      <aside className={'gflc-sider' + (collapsed ? ' collapsed' : '') + (drawer ? ' open' : '')}>
+        <div className="gflc-brand">
+          <span className="logo">G</span>{!collapsed && <span className="bt">GrowthForward</span>}
+          <button
+            className="gflc-nav-item" style={{ height: 24, width: 24, marginLeft: 'auto', padding: 0, justifyContent: 'center' }}
+            onClick={() => { const v = !collapsed; setCollapsed(v); localStorage.setItem('gflc_sidebar', v ? '1' : '0'); }}
+            title={collapsed ? '展开侧栏' : '收起侧栏'}
+          >
+            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          </button>
+        </div>
+        {!collapsed && (
+          <div className="ws-switch" style={{ position: 'relative', marginBottom: 12 }}>
+            <button className="ws-switch-btn" onClick={() => setWsMenuOpen(!wsMenuOpen)}>
+              <span className="num" style={{ fontWeight: 500, fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {workspaces.find((w) => w.current)?.name || '默认工作区'}
+              </span>
+              <span style={{ fontSize: 10, color: 'var(--muted-foreground)' }}>▼</span>
+            </button>
+            {wsMenuOpen && (
+              <div className="ws-menu pop-in">
+                {workspaces.map((w) => (
+                  <button key={w.id} type="button" className="ws-menu-item"
+                    onClick={async () => {
+                      try {
+                        await api(`/workspaces/${w.id}/current`, { method: 'PATCH' });
+                        await loadWs();
+                        setWsMenuOpen(false);
+                      } catch { /* 静默 */ }
+                    }}>
+                    <span>{esc(w.name)}</span>
+                    {w.current && <span style={{ fontSize: 10, color: 'var(--primary)' }}>✓</span>}
+                  </button>
+                ))}
+                <div className="ws-menu-divider" />
+                <button type="button" className="ws-menu-item"
+                  onClick={async () => {
+                    try {
+                      await api('/workspaces', { method: 'POST', body: JSON.stringify({ name: '新工作区' }) });
+                      await loadWs();
+                      setWsMenuOpen(false);
+                    } catch { /* 静默 */ }
+                  }}>
+                  <span className="vmuted2">+ 新建工作区</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+        <nav className="gflc-nav">
+          {NAV_GROUPS.map((g) => (
+            <div className="gflc-nav-group" key={g.title}>
+              <div className="gflc-nav-title">{g.title}</div>
+              {g.items.map((item) => (
+                <div
+                  key={item.key}
+                  className={'gflc-nav-item' + (current === item.key ? ' active' : '')}
+                  onClick={() => go(item.key)}
+                  title={item.name}
+                >
+                  <span className="ic">{item.icon}</span>
+                  <span className="gflc-nav-label">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </nav>
+        <div className="gflc-sider-foot">
+          <div className="row between" style={{ fontSize: 12, color: 'var(--muted-foreground)' }}>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {String(user?.email || 'U')[0].toUpperCase()} · {user?.email}
+            </span>
+            <button className="gflc-nav-item" style={{ width: 24, height: 24, padding: 0, justifyContent: 'center' }} onClick={onToggleDark} title="切换主题">
+              {dark ? <SunOutlined /> : <MoonOutlined />}
+            </button>
+          </div>
+          <button className="gflc-nav-item" style={{ width: '100%', marginTop: 8 }} onClick={onLogout}>
+            <span className="ic"><LogoutOutlined /></span><span className="gflc-nav-label">退出登录</span>
+          </button>
+        </div>
+      </aside>
+      <div className={'gflc-scrim' + (drawer ? ' on' : '')} onClick={() => setDrawer(false)} />
+      <main className="gflc-main">
+        <header className="gflc-topbar">
+          <div className="row" style={{ gap: 10 }}>
+            <button className="gflc-nav-item gflc-menu-btn" style={{ width: 30, height: 30, padding: 0, justifyContent: 'center' }} onClick={() => setDrawer(!drawer)} title="打开导航">
+              <MenuOutlined />
+            </button>
+            <div><h1>{title[0]}</h1><div className="sub">{title[1]}</div></div>
+          </div>
+          <div className="row" style={{ gap: 8, flex: 1, justifyContent: 'center', maxWidth: 480 }}>
+            {/* 顶栏常驻全局搜索：点击打开命令面板（原型 v7l 形态） */}
+            <button className="topbar-search" onClick={openCmd} title="搜索（⌘K）">
+              <SearchOutlined style={{ fontSize: 13, color: 'var(--ink-muted)' }} />
+              <span className="topbar-search-ph">搜索资料、卡片、题目</span>
+              <span className="topbar-search-kbd">⌘K</span>
+            </button>
+            <button className="gflc-nav-item" style={{ width: 30, height: 30, padding: 0, justifyContent: 'center', position: 'relative' }}
+              title="通知" onClick={() => { loadNotifs(); setNotifOpen(true); }}>
+              <BellOutlined />
+              {notifs.length > 0 && (
+                <span style={{ position: 'absolute', top: 3, right: 3, width: 7, height: 7, borderRadius: 99,
+                  background: 'var(--danger)', border: '2px solid var(--glass-hd, #fff)' }} />
+              )}
+            </button>
+          </div>
+          <div className="row" style={{ gap: 6, width: 260, justifyContent: 'flex-end' }}>
+            <span className="topbar-user">{user?.email?.split('@')[0] || '同学'}</span>
+            <button className="gflc-nav-item" style={{ width: 30, height: 30, padding: 0, justifyContent: 'center' }}
+              onClick={onLogout} title="退出登录">
+              <LogoutOutlined />
+            </button>
+          </div>
+        </header>
+        <div className="gflc-content page-in">
+          <Routes>
+            <Route path="/" element={<Navigate to="/dash" replace />} />
+            <Route path="/dash" element={<DashboardPage />} />
+            <Route path="/docs" element={<DocumentsPage />} />
+            <Route path="/docs/:id" element={<DocumentDetailPage />} />
+            <Route path="/notes" element={<NotesPage />} />
+            <Route path="/deck" element={<DecksPage />} />
+            <Route path="/study" element={<StudyPage />} />
+            <Route path="/banks" element={<QuestionBanksPage />} />
+            <Route path="/review" element={<ReviewPage />} />
+            <Route path="/qa" element={<QAPage />} />
+            <Route path="/video" element={<VideoPage />} />
+            <Route path="/plans" element={<PlansPage />} />
+            <Route path="/growth" element={<AchievementsPage />} />
+            <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="*" element={<Navigate to="/dash" replace />} />
+          </Routes>
+        </div>
+      </main>
+      {/* 通知抽屉（v7l）：到期卡片/解析完成/连续达标 */}
+      {notifOpen && (
+        <>
+          <div className="cmd-overlay" onClick={() => setNotifOpen(false)} />
+          <aside className="notif-drawer slide-in" role="dialog" aria-label="通知">
+            <div className="row between" style={{ padding: '14px 16px', borderBottom: '1px solid var(--line-soft)' }}>
+              <span style={{ fontSize: 13, fontWeight: 500 }}>通知</span>
+              <button className="gflc-nav-item" style={{ width: 26, height: 26, padding: 0, justifyContent: 'center' }}
+                onClick={() => setNotifOpen(false)} title="关闭">✕</button>
+            </div>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '8px 16px' }}>
+              {notifs.length ? notifs.map((n, i) => (
+                <div key={i} style={{ padding: '10px 0', borderBottom: '1px solid var(--line-soft)' }}>
+                  <div className="row" style={{ gap: 6, marginBottom: 2 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: 99, flexShrink: 0,
+                      background: n.type === 'due_cards' ? 'var(--primary)' : n.type === 'parse_done' ? 'var(--success)' : 'var(--warning)' }} />
+                    <span style={{ fontSize: 12.5, fontWeight: 500 }}>{esc(n.title)}</span>
+                  </div>
+                  <div className="vmuted2" style={{ fontSize: 11.5, paddingLeft: 12 }}>{esc(n.body)}</div>
+                </div>
+              )) : <div className="vmuted2" style={{ padding: '24px 0', textAlign: 'center', fontSize: 12 }}>暂时没有新通知</div>}
+            </div>
+          </aside>
+        </>
+      )}
+      <TaskDock />
+      <CommandPalette open={cmdOpen} onClose={closeCmd} navigate={navigate}
+        dark={dark} onToggleDark={onToggleDark} />
+    </div>
+  );
+}
+
+function InnerApp({ user, setUser, dark, toggleDark }) {
+  const { message } = AntdApp.useApp();
+
+  useEffect(() => {
+    api('/auth/me').then((d) => setUser(d?.user || null)).catch(() => setUser(null));
+  }, []);
+
+  const logout = async () => {
+    try { await api('/auth/logout', { method: 'POST' }); } catch { /* 忽略登出接口错误 */ }
+    setUser(null);
+  };
+
+  return (
+    <>
+      {user === undefined ? (
+        <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Spin size="large" /></div>
+      ) : !user ? (
+        <AuthPage onAuth={(u) => { setUser(u); message.success('欢迎回来'); }} />
+      ) : (
+        <Shell user={user} onLogout={logout} dark={dark} onToggleDark={toggleDark} />
+      )}
+    </>
+  );
+}
+
+export default function App() {
+  const [user, setUser] = useState(undefined);
+  const [dark, setDark] = useState(localStorage.getItem('gflc_dark') === '1');
+  const toggleDark = () => {
+    const next = !dark;
+    setDark(next);
+    localStorage.setItem('gflc_dark', next ? '1' : '0');
+  };
+  // 必须 memo：ConfigProvider 每次收到新 theme 对象都会重算 token 并触发内部 setState，
+  // 未 memo 时与 React 19 组合会直接撞上 "Maximum update depth exceeded"（#185）白屏。
+  // 苹果白主题（v7l 对齐）统一在 theme.jsx 维护。
+  const antdConfig = useMemo(() => ({
+    algorithm: dark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+    ...(dark ? gflcDarkTheme : gflcTheme),
+  }), [dark]);
+  return (
+    <ConfigProvider theme={antdConfig}>
+      <AntdApp>
+        <InnerApp user={user} setUser={setUser} dark={dark} toggleDark={toggleDark} />
+      </AntdApp>
+    </ConfigProvider>
+  );
+}

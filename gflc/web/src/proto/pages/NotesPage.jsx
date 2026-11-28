@@ -1,0 +1,292 @@
+import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  ArrowRightIcon,
+  ChevronDownIcon,
+  CloseIcon,
+  NotesIcon,
+  PlusIcon,
+  SearchIcon,
+  SparkIcon,
+} from '../NavIcons.jsx';
+import { Badge, Btn, Card, Divider, SectionTitle, cx } from '../ui.jsx';
+import { noteFolders, noteList, noteOpen } from '../mock/index.js';
+
+/** 把 [[双链]] 渲染为可高亮的胶囊，双链高亮开关关闭时只显示文字 */
+function RichText({ text, highlight }) {
+  const parts = String(text).split(/(\[\[[^\]]+\]\])/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('[[') && part.endsWith(']]')) {
+      const label = part.slice(2, -2);
+      return (
+        <span
+          key={i}
+          className={highlight ? 'rounded-[4px] bg-brandSoft px-0.5 text-brand' : 'text-ink underline decoration-line2 underline-offset-2'}
+        >
+          {label}
+        </span>
+      );
+    }
+    return <React.Fragment key={i}>{part}</React.Fragment>;
+  });
+}
+
+function FolderTree({ active, onPick }) {
+  return (
+    <>
+      <SectionTitle title="文件夹" sub="按科目归档，拖拽可改归属" action={<Badge tone="line">{noteFolders.length}</Badge>} />
+      <ul className="flex flex-col gap-0.5">
+        {noteFolders.map((f) => (
+          <li key={f.id}>
+            <button
+              type="button"
+              onClick={() => onPick(f.id)}
+              className={cx(
+                'flex h-6 w-full items-center gap-1 rounded-[7px] pr-1.5 text-left transition-colors duration-200 ease-apple',
+                active === f.id ? 'bg-sel' : 'hover:bg-page',
+                f.depth ? 'pl-5' : 'pl-1.5',
+              )}
+            >
+              <span className={cx('min-w-0 flex-1 truncate text-[12px]', active === f.id ? 'text-ink' : 'text-ink2')}>
+                {f.name}
+              </span>
+              <span className="gf-num shrink-0 text-[10px] text-ink3">{f.count}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <Divider className="my-2" />
+      <button type="button" className="flex h-6 w-full items-center gap-1.5 rounded-[7px] px-1.5 text-[11px] text-ink3 hover:bg-page hover:text-ink">
+        <PlusIcon size={12} />
+        新建文件夹
+      </button>
+    </>
+  );
+}
+
+function NoteEditor({ note, highlight, onClose }) {
+  return (
+    <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex items-center gap-2">
+        <Badge tone="brand">{note.folder}</Badge>
+        <span className="min-w-0 flex-1 truncate text-[10px] text-ink3">{note.source}</span>
+        {onClose ? (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="关闭编辑器"
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[7px] text-ink3 hover:bg-sel hover:text-ink"
+          >
+            <CloseIcon size={13} />
+          </button>
+        ) : null}
+      </div>
+      <h3 className="mt-1.5 truncate text-[15px] font-medium leading-[22px] text-ink">{note.title}</h3>
+      <p className="mt-1 text-[10px] text-ink3">
+        更新于 {note.updated} · {note.words} 字 · 约 {note.readMinutes} 分钟读完
+      </p>
+      <div className="mt-1.5 flex flex-wrap items-center gap-1">
+        {note.tags.map((t) => (
+          <Badge key={t} tone="neutral">{t}</Badge>
+        ))}
+      </div>
+      <Divider className="my-2.5" />
+      <div className="flex flex-col gap-2">
+        {note.blocks.map((b, i) => {
+          if (b.type === 'h2') {
+            return (
+              <p key={i} className="text-[13px] font-medium leading-[20px] text-ink">
+                {b.text}
+              </p>
+            );
+          }
+          if (b.type === 'quote') {
+            return (
+              <p key={i} className="border-l-2 border-line2 pl-2 text-[11px] leading-[17px] text-ink2">
+                <RichText text={b.text} highlight={highlight} />
+              </p>
+            );
+          }
+          return (
+            <p key={i} className="text-[12px] leading-[19px] text-ink2">
+              <RichText text={b.text} highlight={highlight} />
+            </p>
+          );
+        })}
+      </div>
+      <Divider className="my-2.5" />
+      <p className="text-[11px] text-ink3">反向链接 · {note.backlinks.length} 条</p>
+      <ul className="mt-1 flex flex-col gap-1">
+        {note.backlinks.map((b) => (
+          <li key={b.id} className="flex items-center gap-2">
+            <NotesIcon size={11} className="shrink-0 text-ink3" />
+            <span className="min-w-0 flex-1 truncate text-[11px] text-ink2">{b.title}</span>
+            <span className="shrink-0 text-[10px] text-ink3">{b.time}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function NotesPage() {
+  const [activeFolder, setActiveFolder] = useState('f3');
+  const [activeNote, setActiveNote] = useState('n1');
+  const [query, setQuery] = useState('');
+  const [highlight, setHighlight] = useState(true);
+  const [sort, setSort] = useState('recent');
+  const [editorOpen, setEditorOpen] = useState(false);
+
+  const list = useMemo(() => {
+    const q = query.trim();
+    const base = noteList.filter((n) => !q || n.title.includes(q) || n.excerpt.includes(q));
+    if (sort === 'words') return [...base].sort((a, b) => b.words - a.words);
+    return base;
+  }, [query, sort]);
+
+  const picked = list.find((n) => n.id === activeNote) || list[0] || noteList[0];
+  const editorNote = picked
+    ? {
+        ...noteOpen,
+        id: picked.id,
+        title: picked.title,
+        folder: picked.folder,
+        updated: picked.updated,
+        words: picked.words,
+        readMinutes: Math.max(1, Math.round(picked.words / 300)),
+        blocks:
+          picked.id === noteOpen.id
+            ? noteOpen.blocks
+            : [
+                { type: 'p', text: picked.excerpt },
+                { type: 'p', text: `本节内容来自《${picked.folder}》目录下的沉淀，关联 [[${noteList[0].title}]] 与 [[${noteList[1].title}]]。` },
+                { type: 'quote', text: '提示：原型阶段笔记正文为 mock 摘要，编辑后自动保存到本地草稿。' },
+              ],
+      }
+    : noteOpen;
+
+  return (
+    <div className="flex animate-fade-up flex-col gap-2.5">
+      <Card>
+        <div className="flex flex-wrap items-center gap-2">
+          <Btn variant="solid" size="sm" icon={<PlusIcon size={13} />}>新建笔记</Btn>
+          <div className="flex h-8 w-[200px] shrink-0 items-center gap-1.5 rounded-[10px] border border-line bg-card px-2.5">
+            <SearchIcon size={13} className="shrink-0 text-ink3" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="搜索标题或正文"
+              className="h-full w-full min-w-0 bg-transparent text-[12px] text-ink placeholder:text-ink3 focus:outline-none"
+            />
+          </div>
+          <div className="flex shrink-0 items-center rounded-[10px] bg-sel p-0.5">
+            {[
+              ['recent', '最近编辑'],
+              ['words', '字数'],
+            ].map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSort(key)}
+                className={cx(
+                  'h-7 rounded-[8px] px-2.5 text-[11px] transition-colors duration-200 ease-apple',
+                  sort === key ? 'bg-card text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)]' : 'text-ink3 hover:text-ink',
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setHighlight((v) => !v)}
+            className={cx(
+              'flex h-7 shrink-0 items-center gap-1.5 rounded-[8px] px-2.5 text-[11px] transition-colors duration-200 ease-apple',
+              highlight ? 'bg-brandSoft text-brand' : 'text-ink3 hover:bg-sel hover:text-ink',
+            )}
+          >
+            <span className={cx('h-1.5 w-1.5 rounded-full', highlight ? 'bg-brand' : 'bg-line2')} />
+            双链高亮
+          </button>
+          <span className="ml-auto hidden text-[11px] text-ink3 sm:block">
+            共 <span className="gf-num text-ink">{list.length}</span> 条 · 本周新增 4 条
+          </span>
+          <Btn variant="line" size="sm" className="min-[1440px]:hidden" icon={<NotesIcon size={13} />} onClick={() => setEditorOpen(true)}>
+            打开编辑器
+          </Btn>
+          <Btn variant="line" size="sm" icon={<SparkIcon size={13} />}>AI 补写</Btn>
+        </div>
+      </Card>
+
+      <div className="grid grid-cols-1 gap-2.5 min-[760px]:grid-cols-12">
+        <Card className="min-[760px]:col-span-3">
+          <FolderTree active={activeFolder} onPick={setActiveFolder} />
+        </Card>
+
+        <Card className="min-[760px]:col-span-9 min-[1440px]:col-span-4">
+          <SectionTitle
+            title="笔记列表"
+            sub="点击切换右侧编辑器"
+            action={<span className="text-[11px] text-ink3">按{sort === 'recent' ? '最近编辑' : '字数'}排序</span>}
+          />
+          <ul>
+            {list.map((n) => (
+              <li key={n.id}>
+                <button
+                  type="button"
+                  onClick={() => setActiveNote(n.id)}
+                  className={cx(
+                    'flex w-full flex-col items-start rounded-[8px] border-b border-line px-1.5 py-1.5 text-left transition-colors duration-200 ease-apple last:border-b-0',
+                    activeNote === n.id ? 'bg-brandSoft/60' : 'hover:bg-page',
+                  )}
+                >
+                  <div className="flex w-full items-center gap-2">
+                    <p className={cx('min-w-0 flex-1 truncate text-[12px] leading-[17px]', activeNote === n.id ? 'text-brand' : 'text-ink')}>
+                      {n.title}
+                    </p>
+                    <span className="shrink-0 text-[10px] text-ink3">{n.updated}</span>
+                  </div>
+                  <div className="flex w-full items-center gap-2">
+                    <p className="min-w-0 flex-1 truncate text-[10px] leading-[14px] text-ink3">{n.excerpt}</p>
+                    <span className="gf-num shrink-0 text-[10px] text-ink3">{n.words} 字 · {n.links} 链</span>
+                  </div>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </Card>
+
+        <Card className="hidden min-[1440px]:col-span-5 min-[1440px]:flex">
+          <NoteEditor note={editorNote} highlight={highlight} />
+        </Card>
+      </div>
+
+      {editorOpen ? (
+        <div className="fixed inset-0 z-40 flex justify-end min-[1440px]:hidden">
+          <button type="button" aria-label="关闭编辑器" onClick={() => setEditorOpen(false)} className="absolute inset-0 bg-ink/20" />
+          <aside className="relative flex h-full w-[460px] animate-fade-up flex-col border-l border-line bg-card px-4 py-3 shadow-pop">
+            <NoteEditor note={editorNote} highlight={highlight} onClose={() => setEditorOpen(false)} />
+            <div className="mt-2 flex shrink-0 items-center gap-2 border-t border-line pt-2">
+              {noteOpen.aiActions.map((a) => (
+                <Btn key={a} variant="line" size="xs" icon={<SparkIcon size={11} />}>{a}</Btn>
+              ))}
+              <Link to="/deck" className="ml-auto flex items-center gap-1 text-[11px] text-ink2 hover:text-ink">
+                生成卡片
+                <ArrowRightIcon size={11} />
+              </Link>
+            </div>
+          </aside>
+        </div>
+      ) : null}
+
+      <Card pad={false} className="min-[1440px]:hidden">
+        <div className="flex items-center gap-2 px-4 py-2.5">
+          <ChevronDownIcon size={13} className="shrink-0 text-ink3" />
+          <p className="min-w-0 flex-1 truncate text-[11px] text-ink3">
+            窗口宽度 ≥ 1440px 时笔记编辑器与文件夹、列表并排显示；当前宽度下编辑器以抽屉形式打开。
+          </p>
+        </div>
+      </Card>
+    </div>
+  );
+}

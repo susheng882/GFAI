@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GFLC v8 · 苹果浅灰白体系：系统栈字体、无渐变发光、无彩色阴影 */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-page font-sans text-[14px] leading-[1.5] text-ink;
+    margin: 0;
+  }
+
+  ::selection {
+    background: #e8f1fd;
+    color: #1d1d1f;
+  }
+
+  /* 细滚动条，避免深色滚动条破坏浅灰观感 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #d2d2d7 transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #d2d2d7;
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid #0071e3;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* 语义复用类（≤12 个，其余全部走 Tailwind utilities） */
+@layer components {
+  .gf-card {
+    @apply rounded-[16px] border border-line bg-card;
+  }
+
+  .gf-card-pad {
+    @apply p-4;
+  }
+
+  .gf-title {
+    @apply text-[14px] font-medium leading-[20px] text-ink;
+  }
+
+  .gf-sub {
+    @apply text-[12px] font-normal leading-[18px] text-ink3;
+  }
+
+  .gf-nav {
+    @apply flex h-[34px] w-full items-center gap-2.5 rounded-[10px] px-2.5 text-[13px] text-ink2 transition-colors duration-200 ease-apple hover:bg-sel hover:text-ink;
+  }
+
+  .gf-nav-on {
+    @apply bg-sel text-ink;
+  }
+
+  .gf-btn {
+    @apply inline-flex h-8 select-none items-center justify-center gap-1.5 rounded-[10px] px-3 text-[12px] font-medium transition-colors duration-200 ease-apple;
+  }
+
+  .gf-btn-solid {
+    @apply bg-brand text-white hover:bg-[#0062C4] disabled:cursor-not-allowed disabled:bg-line2;
+  }
+
+  .gf-btn-line {
+    @apply border border-line bg-card text-ink hover:bg-sel;
+  }
+
+  .gf-input {
+    @apply h-9 w-full rounded-[10px] border border-line bg-card px-3 text-[13px] text-ink placeholder:text-ink3 focus:border-line2 focus:outline-none;
+  }
+
+  .gf-badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-[2px] text-[10px] font-medium leading-[14px];
+  }
+
+  .gf-num {
+    @apply tabular-nums;
+    font-variant-numeric: tabular-nums;
+  }
+}
