@@ -62,7 +62,7 @@ export default function ReviewPage() {
       </Card>
 
       <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-12">
-        <Card className="xl:col-span-8">
+        <Card className="xl:col-span-9">
           <SectionTitle
             title={`第 ${done + 1} 张 · ${reviewCard.chapter}`}
             sub={`${reviewCard.interval} · 已复习 ${reviewCard.reviews} 次 · 遗忘 ${reviewCard.lapses} 次`}
@@ -157,7 +157,7 @@ export default function ReviewPage() {
           </div>
         </Card>
 
-        <div className="flex flex-col gap-2.5 xl:col-span-4">
+        <div className="flex flex-col gap-2.5 xl:col-span-3">
           <Card>
             <SectionTitle
               title="今日队列"
