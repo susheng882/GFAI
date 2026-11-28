@@ -4,7 +4,6 @@ import {
   ArrowRightIcon,
   UploadIcon,
   SparkIcon,
-  TargetIcon,
   FlameIcon,
   PlayIcon,
   NotesIcon,

@@ -89,7 +89,7 @@ function AiTidyDrawer({ open, onClose, onApply }) {
   );
 }
 
-function FolderTree({ active, onPick, onPickNote, activeNote, folders, notes }) {
+function FolderTree({ active, onPickNote, activeNote, folders, notes }) {
   const [open, setOpen] = useState(() => new Set(folders.map((f) => f.id)));
   const toggle = (id) => {
     setOpen((prev) => {
@@ -322,8 +322,8 @@ export default function NotesPage() {
       </Card>
 
       <div className="grid grid-cols-1 gap-2.5 min-[760px]:grid-cols-12">
-        <Card className="min-[760px]:col-span-3">
-          <FolderTree active={activeFolder} onPick={setActiveFolder} onPickNote={setActiveNote} activeNote={activeNote} folders={noteFolders} notes={noteList} />
+        <Card className="min-[760px]:col-span-4">
+          <FolderTree active={activeFolder} onPickNote={setActiveNote} activeNote={activeNote} folders={noteFolders} notes={noteList} />
           <Divider className="my-2.5" />
           <SectionTitle title="笔记统计" sub="全部笔记概览" action={<Badge tone="brand">{noteStats.total} 篇</Badge>} />
           <div className="flex flex-col gap-2">
@@ -339,41 +339,51 @@ export default function NotesPage() {
           </div>
         </Card>
 
-        <Card className="min-[760px]:col-span-9 min-[1440px]:col-span-4">
-          <SectionTitle
-            title="笔记列表"
-            sub="点击切换右侧编辑器"
-            action={<span className="text-[11px] text-ink3">按{sort === 'recent' ? '最近编辑' : '字数'}排序</span>}
-          />
-          <ul>
-            {list.map((n) => (
-              <li key={n.id}>
-                <button
-                  type="button"
-                  onClick={() => setActiveNote(n.id)}
-                  className={cx(
-                    'flex w-full flex-col items-start rounded-[8px] border-b border-line px-1.5 py-1.5 text-left transition-colors duration-200 ease-apple last:border-b-0',
-                    activeNote === n.id ? 'bg-brandSoft/60' : 'hover:bg-page',
-                  )}
-                >
-                  <div className="flex w-full items-center gap-2">
-                    <p className={cx('min-w-0 flex-1 truncate text-[12px] leading-[17px]', activeNote === n.id ? 'text-brand' : 'text-ink')}>
-                      {n.title}
-                    </p>
-                    <span className="shrink-0 text-[10px] text-ink3">{n.updated}</span>
-                  </div>
-                  <div className="flex w-full items-center gap-2">
-                    <p className="min-w-0 flex-1 truncate text-[10px] leading-[14px] text-ink3">{n.excerpt}</p>
-                    <span className="gf-num shrink-0 text-[10px] text-ink3">{n.words} 字 · {n.links} 链</span>
-                  </div>
-                </button>
-              </li>
-            ))}
-          </ul>
+        {/* 编辑器（原笔记列表已并入文件树，此处直接放大） */}
+        <Card className="hidden min-[760px]:col-span-5 min-[1440px]:flex">
+          <NoteEditor note={editorNote} highlight={highlight} />
         </Card>
 
-        <Card className="hidden min-[1440px]:col-span-5 min-[1440px]:flex">
-          <NoteEditor note={editorNote} highlight={highlight} />
+        {/* 右侧：链接相关笔记 */}
+        <Card className="hidden min-[1440px]:col-span-3 min-[1440px]:flex">
+          <SectionTitle title="相关笔记" sub="反链与同文件夹" action={<Badge tone="brand">{editorNote.backlinks?.length || 0} 链</Badge>} />
+          <div className="flex flex-col gap-1">
+            {(editorNote.backlinks || []).map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => {
+                  const target = noteList.find((x) => x.title === b.title);
+                  if (target) setActiveNote(target.id);
+                }}
+                className="flex w-full flex-col items-start rounded-[8px] border-b border-line px-1.5 py-1.5 text-left transition-colors duration-200 ease-apple last:border-b-0 hover:bg-page"
+              >
+                <span className="min-w-0 max-w-full truncate text-[11.5px] leading-[16px] text-ink2">{b.title}</span>
+                <span className="gf-num text-[10px] leading-[14px] text-ink3">{b.time}</span>
+              </button>
+            ))}
+            {(!editorNote.backlinks || editorNote.backlinks.length === 0) && (
+              <p className="py-6 text-center text-[11px] text-ink3">暂无反向链接</p>
+            )}
+          </div>
+          <Divider className="my-2" />
+          <SectionTitle title="同文件夹" sub={editorNote.folder || ''} />
+          <div className="flex flex-col gap-1">
+            {noteList
+              .filter((x) => x.id !== editorNote.id && x.folder === (editorNote.folder || '').split(' / ').pop())
+              .slice(0, 5)
+              .map((x) => (
+                <button
+                  key={x.id}
+                  type="button"
+                  onClick={() => setActiveNote(x.id)}
+                  className="flex items-center gap-1.5 rounded-[8px] px-1.5 py-1.5 text-left transition-colors duration-200 ease-apple hover:bg-page"
+                >
+                  <span className="h-1 w-1 shrink-0 rounded-full bg-line2" />
+                  <span className="min-w-0 flex-1 truncate text-[11.5px] leading-[16px] text-ink2">{x.title}</span>
+                </button>
+              ))}
+          </div>
         </Card>
       </div>
 

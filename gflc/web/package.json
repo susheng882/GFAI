@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5173",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1 --port 5173"
+    "preview": "vite preview --host 127.0.0.1 --port 5173",
+    "lint": "eslint src/proto/",
+    "format": "prettier --write src/proto/"
   },
   "dependencies": {
     "@ant-design/charts": "^2.6.7",
@@ -30,10 +32,15 @@
     "remark-math": "6.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@vitejs/plugin-react": "5.2.0",
     "autoprefixer": "^10.7.0",
     "daisyui": "^4.12.24",
+    "eslint": "^10.16.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.8",
     "postcss": "^8.5.33",
+    "prettier": "^3.10.1",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "vite": "7.3.8"
