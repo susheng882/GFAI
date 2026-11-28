@@ -130,6 +130,24 @@ async def import_questions(file: UploadFile = File(...), user=Depends(get_curren
     return {"ok": True, "data": {"task_id": t.id, "document_id": doc.id}}
 
 
+@router.get("/folders")
+async def list_folders(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """题库文件夹树（v7l 左树）：按学科分组（从题库 subject 聚合）+ 年份/类型。"""
+    banks = list(db.scalars(select(QuestionBank).where(QuestionBank.user_id == user.id)))
+    by_subject: dict[str, int] = {}
+    for b in banks:
+        sname = (b.subject or "未分类").strip()
+        by_subject[sname] = by_subject.get(sname, 0) + 1
+    subjects = [{"id": f"subj-{i}", "name": k, "count": v}
+                for i, (k, v) in enumerate(sorted(by_subject.items(), key=lambda x: -x[1]))]
+    return {"ok": True, "data": {
+        "subjects": subjects,
+        "total": len(banks),
+        "years": [],  # 年份分组留给按 created_at 聚合（mock 对齐占位）
+        "kinds": [{"id": "kind-pdf", "name": "PDF 试卷", "count": len(banks)}],
+    }}
+
+
 @router.get("/banks")
 async def list_banks(user=Depends(get_current_user), db: Session = Depends(get_db)):
     """题库集列表：含题数、章节分布、科目。"""

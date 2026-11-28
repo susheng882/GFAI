@@ -50,6 +50,22 @@ def _out(c: Card, note_title: str | None = None) -> dict:
             "note_title": note_title}
 
 
+@router.get("/upcoming")
+async def upcoming(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """未来 7 天到期卡片数（复习页柱状图）。"""
+    from datetime import timedelta
+    now = datetime.now(timezone.utc)
+    out = []
+    for i in range(7):
+        day_start = (now + timedelta(days=i)).replace(hour=0, minute=0, second=0, microsecond=0)
+        day_end = day_start + timedelta(days=1)
+        n = db.scalar(select(func.count()).select_from(Card).where(
+            Card.user_id == user.id, Card.reps > 0,
+            Card.due_at >= day_start, Card.due_at < day_end)) or 0
+        out.append({"day": (now + timedelta(days=i)).strftime("%m-%d"), "count": int(n)})
+    return {"ok": True, "data": out}
+
+
 @router.get("/due")
 async def due(limit: int = 20, new_limit: int | None = None,
               user=Depends(get_current_user), db: Session = Depends(get_db)):

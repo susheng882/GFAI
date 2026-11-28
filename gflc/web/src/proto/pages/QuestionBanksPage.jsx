@@ -11,6 +11,7 @@ import {
 } from '../NavIcons.jsx';
 import { Badge, Btn, Card, Divider, Kpi, MeterRow, Progress, SectionTitle, cx } from '../ui.jsx';
 import { bankOverview, bankQueue, bankStats, bankTree, questionBanks } from '../mock/index.js';
+import { apiGet } from "../api.js";
 
 const KIND_TONE = { 真题: 'brand', 模拟: 'warn', 章节: 'neutral', 错题: 'bad' };
 const ROW_GRID =

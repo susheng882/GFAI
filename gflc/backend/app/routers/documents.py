@@ -127,6 +127,25 @@ async def list_groups(user=Depends(get_current_user), db: Session = Depends(get_
     return {"ok": True, "data": {"groups": groups, "total": len(docs),
             "size_bytes": sum(d.size or 0 for d in docs)}}
 
+@router.get("/storage")
+async def doc_storage(user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """存储占用统计（v7l 存储条）：按来源类型聚合文档大小。"""
+    docs = [d for d in crud.list_documents(db, user.id)]
+    total = sum(d.size or 0 for d in docs)
+    by_type: dict[str, int] = {}
+    for d in docs:
+        t = d.source_type or "other"
+        by_type[t] = by_type.get(t, 0) + (d.size or 0)
+    dist = [
+        {"type": t, "bytes": b, "pct": round(b / total * 100, 1) if total else 0}
+        for t, b in sorted(by_type.items(), key=lambda x: -x[1])
+    ]
+    return {"ok": True, "data": {
+        "used_bytes": total, "used": f"{total / 1048576:.1f} MB",
+        "quota": "5 GB", "dist": dist,
+    }}
+
+
 @router.get("")
 async def list_documents(user=Depends(get_current_user), db: Session = Depends(get_db)):
     # 题库文件在「题库」页管理，不在资料列表里重复出现；

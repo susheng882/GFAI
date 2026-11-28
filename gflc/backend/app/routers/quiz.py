@@ -241,6 +241,36 @@ async def submit(body: QuizSubmitIn, user=Depends(get_current_user), db: Session
     }}
 
 
+@router.get("/related/{question_id}")
+async def related(question_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """同类真题推荐 + 选项分布 + 相关知识点（v7l 刷题页右栏/底部）。"""
+    q = db.scalar(select(Question).where(Question.id == question_id, Question.user_id == user.id))
+    if not q:
+        raise APIError(ErrCode.COMMON_404, "题目不存在", 404)
+    # 同章节题目（排除自身，最多 4 道）
+    siblings = list(db.scalars(select(Question).where(
+        Question.user_id == user.id, Question.chapter == q.chapter, Question.id != q.id)
+        .order_by(Question.id).limit(4)))
+    related_qs = [{"id": x.id, "stem": (x.stem or "")[:80], "chapter": x.chapter or "未分类"}
+                  for x in siblings]
+    # 选项分布：本题各选项被选择次数（来自 attempts）
+    dist_rows = db.execute(
+        select(Attempt.user_answer, func.count()).where(Attempt.question_id == question_id)
+        .group_by(Attempt.user_answer)).all()
+    total_attempts = sum(n for _, n in dist_rows) or 1
+    dist = [{"option": (ans or "空"), "count": n,
+             "pct": round(n / total_attempts * 100, 1)} for ans, n in dist_rows]
+    # 相关知识点：章节名 + 五段解析的 point
+    points = []
+    if q.chapter:
+        points.append(q.chapter)
+    if isinstance(q.analysis, dict) and q.analysis.get("point"):
+        points.append(q.analysis["point"][:60])
+    return {"ok": True, "data": {
+        "related": related_qs, "option_dist": dist, "points": points,
+    }}
+
+
 @router.get("/wrong")
 async def wrong(bank_id: int | None = None, user=Depends(get_current_user),
                 db: Session = Depends(get_db)):

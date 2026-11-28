@@ -40,6 +40,32 @@ async def create_plan(body: PlanIn, user=Depends(get_current_user), db: Session 
     return {"ok": True, "data": {"task_id": t.id}}
 
 
+@router.get("/events")
+async def plan_events(view: str = "month", user=Depends(get_current_user), db: Session = Depends(get_db)):
+    """日历事件（v7l 计划页月/周/日）：plan_tasks 映射为事件数组。"""
+    from datetime import datetime as _dt, timedelta as _td, timezone as _tz
+    now = _dt.now(_tz.utc)
+    if view == "week":
+        start = now - _td(days=now.weekday())
+        end = start + _td(days=7)
+    elif view == "day":
+        start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        end = start + _td(days=1)
+    else:  # month
+        start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        end = (start + _td(days=32)).replace(day=1)
+    rows = db.execute(
+        select(PlanTask, Plan).join(Plan, PlanTask.plan_id == Plan.id)
+        .where(Plan.user_id == user.id, PlanTask.due >= start, PlanTask.due < end)
+    ).all()
+    events = [{
+        "id": t.id, "plan_id": p.id, "title": t.title[:60],
+        "date": (t.due or p.created_at).strftime("%Y-%m-%d"),
+        "done": bool(t.done), "plan": (p.goal or "")[:40],
+    } for t, p in rows]
+    return {"ok": True, "data": events}
+
+
 @router.get("")
 async def list_plans(user=Depends(get_current_user), db: Session = Depends(get_db)):
     rows = list(db.scalars(select(Plan).where(Plan.user_id == user.id).order_by(Plan.id.desc()).limit(30)))
